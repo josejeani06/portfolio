@@ -1,0 +1,449 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Case Study — Building a Scalable Integration Platform</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a class="brand" href="index.html"><span class="brand-mark"></span><span>Ivan Jose</span></a>
+      <div class="nav-links">
+        <a href="#problem" data-section-link="problem">Problem</a>
+        <a href="#framework" data-section-link="framework">Framework</a>
+        <a href="#decisions" data-section-link="decisions">Decisions</a>
+        <a href="#reflection" data-section-link="reflection">Reflection</a>
+        <a href="index.html">Home</a>
+        <span class="nav-indicator" aria-hidden="true"></span>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <section class="case-hero" id="overview">
+      <div class="container">
+        <div class="eyebrow">Case Study 02 · Platform Integrations</div>
+        <h1 class="case-title">
+          <button
+            class="hover-preview-trigger title-preview-trigger"
+            type="button"
+            data-preview="integration-manage"
+            aria-label="Preview integration platform"
+            data-hover-hint="Click to view card"
+          >
+            Building a reusable integration flow for any API connection.
+          </button>
+          <span class="case-title-mobile">Building a reusable integration flow for any API connection.</span>
+        </h1>
+        <p class="lead">
+          Connecting one app is easy. Designing a repeatable system that can support CRMs, ecommerce tools, webhooks,
+          custom APIs, attribution, automation triggers, and future integrations without redesigning everything each time?
+          That is where the fun starts.
+        </p>
+        <div class="case-actions">
+          <a class="button secondary" href="#decisions">View decisions</a>
+          <a class="button secondary" href="#framework">See the framework</a>
+        </div>
+
+        <div class="case-summary">
+          <div class="callout">
+            <h3>North Star</h3>
+            <p>
+              Design one reusable integration framework where connecting third-party apps feels familiar, fast, and trustworthy
+              even when the underlying APIs, fields, and business logic are different.
+            </p>
+          </div>
+          <div class="panel kv">
+            <div class="kv-item"><span>My role</span><strong>UX flow, UI, states, validations, components, QA</strong></div>
+            <div class="kv-item"><span>Team</span><strong>PM, FE/BE engineers, QA, Product Design</strong></div>
+            <div class="kv-item"><span>Challenge</span><strong>Unify many API setups into one product experience</strong></div>
+            <div class="kv-item"><span>Outcome</span><strong>Reusable flow for faster integration support</strong></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container screenshot">
+        <img src="images/integration-manage.jpeg" alt="Integration management screen">
+        <div class="caption">Final management screen: connected accounts, status, attribution setup, and next actions.</div>
+      </div>
+    </section>
+
+    <section class="section" id="problem">
+      <div class="container split">
+        <div>
+          <div class="eyebrow">The problem</div>
+          <h2>Every new integration felt like starting over.</h2>
+        </div>
+        <div class="panel">
+          <p>Lettrlabs’ vision is to become a one-stop shop for direct mail. But customers do not keep their data in one place. Their leads, customers, lifecycle events, purchases, jobs, and CRM activity live across different platforms.</p>
+          <p>Before this project, each app could become its own experience. Different fields, auth requirements, setup steps, and implementation patterns made integrations harder to design, build, remember, and maintain.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>Why integrations mattered</h2>
+          <p>The goal was not just “connect an app.” The goal was to make customer data useful across direct mail workflows.</p>
+        </div>
+
+        <div class="card-grid">
+          <div class="mini-card">
+            <div class="icon">01</div>
+            <h3>Use existing customer data</h3>
+            <p>Customers could bring their own CRM or app data instead of relying only on purchased data.</p>
+          </div>
+          <div class="mini-card">
+            <div class="icon">02</div>
+            <h3>Trigger automations</h3>
+            <p>Customer events and lifecycle data could trigger direct mail automatically.</p>
+          </div>
+          <div class="mini-card">
+            <div class="icon">03</div>
+            <h3>Power attribution and analytics</h3>
+            <p>Connected data could support attribution, reporting, data merge, and audience expansion.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="framework">
+      <div class="container framework-layout">
+        <div class="framework-intro">
+          <div class="framework-sticky">
+            <div class="eyebrow">The shift</div>
+            <h2>From one-off integrations to a reusable platform pattern.</h2>
+            <p>The goal was to make the next integration feel familiar: same structure, same states, same mental model, with only the app-specific inputs changing.</p>
+          </div>
+        </div>
+        <div class="panel flow-panel">
+          <div class="flow">
+            <div class="flow-step hover-preview-trigger" data-preview="integration-framework-1" data-hover-hint="Click to view card" tabindex="0" role="button" aria-label="Preview select integration card"><div class="flow-num">1</div><div><h3>Select integration</h3><p>Use the same shell, logo slot, app name, and description pattern.</p></div></div>
+            <div class="flow-step hover-preview-trigger" data-preview="integration-framework-2" data-hover-hint="Click to view card" tabindex="0" role="button" aria-label="Preview connect account card"><div class="flow-num">2</div><div><h3>Connect account</h3><p>Support OAuth when available, or a simple credential form when needed.</p></div></div>
+            <div class="flow-step hover-preview-trigger" data-preview="integration-framework-3" data-hover-hint="Click to view card" tabindex="0" role="button" aria-label="Preview test and validate card"><div class="flow-num">3</div><div><h3>Test and validate</h3><p>Show loading, progress, success, failure, syncing, and recovery states.</p></div></div>
+            <div class="flow-step hover-preview-trigger" data-preview="integration-framework-4" data-hover-hint="Click to view card" tabindex="0" role="button" aria-label="Preview customize attribution card"><div class="flow-num">4</div><div><h3>Customize attribution</h3><p>Let users finish the setup only when extra business logic is needed.</p></div></div>
+            <div class="flow-step hover-preview-trigger" data-preview="integration-framework-5" data-hover-hint="Click to view card" tabindex="0" role="button" aria-label="Preview manage accounts card"><div class="flow-num">5</div><div><h3>Manage accounts</h3><p>List multiple accounts, statuses, sync details, remove actions, and next steps.</p></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>Before vs. after</h2>
+          <p>The design goal was to make the next integration feel like configuration, not reinvention.</p>
+        </div>
+
+        <div class="comparison-table">
+          <div class="row">
+            <div class="cell"><small>Before</small>Each app risked becoming a custom flow with custom screens and custom behavior.</div>
+            <div class="cell"><small>After</small>One reusable lifecycle supported new apps by changing the logo, name, fields, and custom attributes.</div>
+          </div>
+          <div class="row">
+            <div class="cell"><small>Before</small>Early concepts asked users for too much information and exposed unnecessary complexity.</div>
+            <div class="cell"><small>After</small>The flow was reduced to the essential information needed to connect, test, and continue.</div>
+          </div>
+          <div class="row">
+            <div class="cell"><small>Before</small>Integrations were harder to remember, maintain, and extend across product and engineering.</div>
+            <div class="cell"><small>After</small>The pattern became easier for devs to reuse and easier for the product team to scale.</div>
+          </div>
+          <div class="row">
+            <div class="cell"><small>Before</small>Connection success was the end of the flow.</div>
+            <div class="cell"><small>After</small>Connection became the start of attribution, automation, one-off orders, and analytics workflows.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>Supported integration ecosystem</h2>
+          <p>The framework was designed to support different sources of customer data, not just one CRM.</p>
+        </div>
+        <div class="panel">
+          <div class="badge-row">
+            <span class="badge">Salesforce</span>
+            <span class="badge">HubSpot</span>
+            <span class="badge">Housecall Pro</span>
+            <span class="badge">ServiceTitan</span>
+            <span class="badge">Shopify</span>
+            <span class="badge">Klaviyo</span>
+            <span class="badge">AccuLynx</span>
+            <span class="badge">Gorgias</span>
+            <span class="badge">Attentive</span>
+            <span class="badge">Bloomerang</span>
+            <span class="badge">Fundraiser</span>
+            <span class="badge">Zapier</span>
+            <span class="badge">Webhooks</span>
+            <span class="badge">Open API</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>Connection lifecycle</h2>
+          <p>This lifecycle made the experience predictable across different integration types.</p>
+        </div>
+
+        <div class="card-grid">
+          <div class="mini-card"><div class="icon">↳</div><h3>Disconnected → Connect</h3><p>Users start from a consistent entry point whether the integration uses OAuth, API keys, or simple credential fields.</p></div>
+          <div class="mini-card"><div class="icon">⟳</div><h3>Testing → Syncing</h3><p>Loading and progress states explain that the system is validating credentials and reading the needed data.</p></div>
+          <div class="mini-card"><div class="icon">✓</div><h3>Connected → Configure</h3><p>Success is followed by clear next actions, including attribution setup and automation creation.</p></div>
+          <div class="mini-card"><div class="icon">!</div><h3>Failed → Recover</h3><p>Error and failed states help users understand what happened and how to continue.</p></div>
+          <div class="mini-card"><div class="icon">●</div><h3>Active → Manage</h3><p>Connected accounts appear in a reusable management list with status, sync details, remove, and setup actions.</p></div>
+          <div class="mini-card"><div class="icon">+</div><h3>Add another account</h3><p>The same integration can support multiple accounts, which is important for real business workflows.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="decisions">
+      <div class="container">
+        <div class="section-head">
+          <h2>Key design decisions</h2>
+          <p>The product value came from deciding what users should not have to care about.</p>
+        </div>
+        <div class="panel">
+          <div class="decision hover-preview-trigger decision-hover-zone" data-preview="integration-decision-1" data-hover-hint="Click to view card">
+            <div><div class="decision-label">Decision 01</div><h3><button class="decision-trigger" type="button">Reduce setup to the essentials</button></h3></div>
+            <p>Early concepts exposed too much data and too many fields. The final direction focused on the few required inputs needed to connect, test, and move forward.</p>
+            <div class="mobile-preview-inline"><div class="preview-card-shell mobile-preview-shell"><div class="preview-visual"><div class="visual-scene visual-image-frame"><img src="images/integration-connect-form.jpeg" alt="Integration connect form preview"></div></div><div class="preview-copy"><div class="preview-kicker">Design decision</div><h3 class="preview-title">Reduce setup to the essentials</h3><p class="preview-text">The final direction focused on the few required inputs needed to connect, test, and move forward.</p></div></div></div>
+          </div>
+          <div class="decision hover-preview-trigger decision-hover-zone" data-preview="integration-decision-2" data-hover-hint="Click to view card">
+            <div><div class="decision-label">Decision 02</div><h3><button class="decision-trigger" type="button">Separate connection from configuration</button></h3></div>
+            <p>Connecting the app and customizing attribution are related, but they are not the same job. Separating them kept the first step simple while still supporting deeper setup when business logic required it.</p>
+            <div class="mobile-preview-inline"><div class="preview-card-shell mobile-preview-shell"><div class="preview-visual"><div class="visual-scene visual-image-frame"><img src="images/integration-attribution.jpeg" alt="Integration attribution preview"></div></div><div class="preview-copy"><div class="preview-kicker">Design decision</div><h3 class="preview-title">Separate connection from configuration</h3><p class="preview-text">Separating the first connection step from attribution setup kept the flow simple.</p></div></div></div>
+          </div>
+          <div class="decision hover-preview-trigger decision-hover-zone" data-preview="integration-decision-3" data-hover-hint="Click to view card">
+            <div><div class="decision-label">Decision 03</div><h3><button class="decision-trigger" type="button">Make the UI reusable by default</button></h3></div>
+            <p>I designed the flow so the logo, app name, fields, and custom attributes could change without forcing a full redesign. This made future integrations feel more like swapping configuration into a stable product pattern.</p>
+            <div class="mobile-preview-inline"><div class="preview-card-shell mobile-preview-shell"><div class="preview-visual"><div class="visual-scene visual-image-frame"><img src="images/integration-manage.jpeg" alt="Integration manage preview"></div></div><div class="preview-copy"><div class="preview-kicker">Design decision</div><h3 class="preview-title">Make the UI reusable by default</h3><p class="preview-text">Future integrations feel more like swapping configuration into a stable product pattern.</p></div></div></div>
+          </div>
+          <div class="decision hover-preview-trigger decision-hover-zone" data-preview="integration-decision-4" data-hover-hint="Click to view card">
+            <div><div class="decision-label">Decision 04</div><h3><button class="decision-trigger" type="button">Show status beyond the detail page</button></h3></div>
+            <p>Success and sync states were not limited to one screen. The account list and in-app notifications helped users understand when their connection was active, syncing, failed, or ready for the next step.</p>
+            <div class="mobile-preview-inline"><div class="preview-card-shell mobile-preview-shell"><div class="preview-visual"><div class="visual-scene visual-image-frame"><img src="images/integration-connected.jpeg" alt="Integration connected preview"></div></div><div class="preview-copy"><div class="preview-kicker">Design decision</div><h3 class="preview-title">Show status beyond the detail page</h3><p class="preview-text">Success and sync states were visible in the account list and follow-up notifications.</p></div></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="reflection">
+      <div class="container split">
+        <div>
+          <div class="eyebrow">Reflection</div>
+          <h2>Technical complexity does not always need a complex interface.</h2>
+        </div>
+        <div class="panel">
+          <p>My first assumption was that connecting integrations would require many fields and a lot of visible configuration. But after working through the flow with the team, the better answer was the simpler one: ask for only what is essential, validate it clearly, and let the backend do the heavy lifting.</p>
+          <p>Version 2 would refine syncing status, add stronger search for integrations, expand OAuth support, and use AI to help preselect fields for automation, data merge, and attribution setup.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <p class="quote">“This project taught me that good platform design is not about showing all the data. It is about knowing which data matters, hiding the rest, and making the next integration easier than the last.”</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">© Ivan Jose · Product Design Portfolio</div>
+  </footer>
+
+  <div class="preview-card" id="preview-card" hidden aria-live="polite">
+    <div class="preview-card-shell">
+      <button class="preview-close" id="preview-close" type="button" aria-label="Close preview">×</button>
+      <div class="preview-visual" id="preview-visual"></div>
+      <div class="preview-copy">
+        <div class="preview-kicker" id="preview-kicker"></div>
+        <h3 class="preview-title" id="preview-title"></h3>
+        <p class="preview-text" id="preview-text"></p>
+        <div class="preview-actions">
+          <a class="button" id="preview-visit" href="#" target="_blank" rel="noreferrer">Visit</a>
+          <button class="button secondary" id="preview-dismiss" type="button">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const previewData = {
+      "integration-manage": { kicker: "Platform integrations", title: "Reusable integration platform", text: "A single management surface for connected accounts, statuses, attribution setup, and next actions.", url: "#framework", visual: "integration-manage" },
+      "integration-framework-1": { kicker: "Framework step", title: "Select integration", text: "Use a familiar shell so new apps feel like configuration inside one stable system.", url: "#framework", visual: "integration-manage" },
+      "integration-framework-2": { kicker: "Framework step", title: "Connect account", text: "Credential setup stays lightweight, with OAuth or simple form inputs depending on the source.", url: "#framework", visual: "integration-connect" },
+      "integration-framework-3": { kicker: "Framework step", title: "Test and validate", text: "Loading and syncing states make backend validation visible instead of feeling stuck or opaque.", url: "#framework", visual: "integration-connected" },
+      "integration-framework-4": { kicker: "Framework step", title: "Customize attribution", text: "Connection stays separate from deeper business logic so only the users who need more setup see it.", url: "#framework", visual: "integration-attribution" },
+      "integration-framework-5": { kicker: "Framework step", title: "Manage accounts", text: "The reusable management view supports multiple accounts, status, sync details, and follow-up actions.", url: "#framework", visual: "integration-manage" },
+      "integration-decision-1": { kicker: "Design decision", title: "Reduce setup to the essentials", text: "The final direction focused on the few required inputs needed to connect, test, and move forward.", url: "#decisions", visual: "integration-connect" },
+      "integration-decision-2": { kicker: "Design decision", title: "Separate connection from configuration", text: "Connecting the app and customizing attribution are related, but they are not the same job.", url: "#decisions", visual: "integration-attribution" },
+      "integration-decision-3": { kicker: "Design decision", title: "Make the UI reusable by default", text: "Future integrations feel more like swapping configuration into a stable product pattern.", url: "#framework", visual: "integration-manage" },
+      "integration-decision-4": { kicker: "Design decision", title: "Show status beyond the detail page", text: "Success and sync states are visible in the account list and in follow-up notifications.", url: "#decisions", visual: "integration-connected" }
+    };
+
+    const visualMarkup = {
+      "integration-manage": `<div class="visual-scene visual-image-frame"><img src="images/integration-manage.jpeg" alt="Integration management preview"></div>`,
+      "integration-connect": `<div class="visual-scene visual-image-frame"><img src="images/integration-connect-form.jpeg" alt="Integration connect form preview"></div>`,
+      "integration-attribution": `<div class="visual-scene visual-image-frame"><img src="images/integration-attribution.jpeg" alt="Integration attribution preview"></div>`,
+      "integration-connected": `<div class="visual-scene visual-image-frame"><img src="images/integration-connected.jpeg" alt="Integration connected preview"></div>`
+    };
+
+    const previewCard = document.getElementById("preview-card");
+    const previewVisual = document.getElementById("preview-visual");
+    const previewKicker = document.getElementById("preview-kicker");
+    const previewTitle = document.getElementById("preview-title");
+    const previewText = document.getElementById("preview-text");
+    const previewVisit = document.getElementById("preview-visit");
+    const previewClose = document.getElementById("preview-close");
+    const previewDismiss = document.getElementById("preview-dismiss");
+    const triggers = document.querySelectorAll(".hover-preview-trigger");
+    const sectionLinks = document.querySelectorAll("[data-section-link]");
+    const navIndicator = document.querySelector(".nav-indicator");
+    const mobileQuery = window.matchMedia("(max-width: 900px)");
+    const sectionNodes = {
+      problem: document.getElementById("problem"),
+      framework: document.getElementById("framework"),
+      decisions: document.getElementById("decisions"),
+      reflection: document.getElementById("reflection")
+    };
+
+    let activeTrigger = null;
+    let pinned = false;
+    let pointerX = window.innerWidth / 2;
+    let pointerY = window.innerHeight / 2;
+
+    function isMobileView() { return mobileQuery.matches; }
+    function populatePreview(key) {
+      const entry = previewData[key];
+      if (!entry) return;
+      previewKicker.textContent = entry.kicker;
+      previewTitle.textContent = entry.title;
+      previewText.textContent = entry.text;
+      previewVisit.href = entry.url;
+      previewVisual.innerHTML = visualMarkup[entry.visual] || "";
+    }
+    function placePreview(x, y) {
+      const width = 420;
+      const height = 430;
+      const offset = 24;
+      const left = Math.min(Math.max(16, x + offset), window.innerWidth - width - 16);
+      const top = Math.min(Math.max(16, y - 26), window.innerHeight - height - 16);
+      previewCard.style.left = left + "px";
+      previewCard.style.top = top + "px";
+    }
+    function showPreview(trigger, shouldPin = false) {
+      if (isMobileView()) return;
+      const key = trigger.dataset.preview;
+      if (!previewData[key]) return;
+      activeTrigger = trigger;
+      pinned = shouldPin;
+      populatePreview(key);
+      previewCard.hidden = false;
+      previewCard.classList.add("is-visible");
+      previewCard.dataset.pinned = pinned ? "true" : "false";
+      placePreview(pointerX, pointerY);
+    }
+    function hidePreview(force = false) {
+      if (!force && pinned) return;
+      previewCard.hidden = true;
+      previewCard.classList.remove("is-visible");
+      previewCard.dataset.pinned = "false";
+      activeTrigger = null;
+      pinned = false;
+    }
+    function setActiveNav(sectionKey) {
+      if (!navIndicator) return;
+      let activeLink = null;
+      sectionLinks.forEach((link) => {
+        const isActive = link.dataset.sectionLink === sectionKey;
+        link.classList.toggle("is-active", isActive);
+        if (isActive) activeLink = link;
+      });
+      if (!activeLink) {
+        navIndicator.style.opacity = "0";
+        return;
+      }
+      navIndicator.style.opacity = "1";
+      navIndicator.style.width = activeLink.offsetWidth + "px";
+      navIndicator.style.transform = "translateX(" + activeLink.offsetLeft + "px)";
+    }
+    function updateActiveSection() {
+      const navHeight = document.querySelector(".nav")?.offsetHeight || 72;
+      const threshold = navHeight + 28;
+      let current = "problem";
+      Object.entries(sectionNodes).forEach(([key, node]) => {
+        if (!node) return;
+        if (node.getBoundingClientRect().top <= threshold) current = key;
+      });
+      setActiveNav(current);
+    }
+
+    triggers.forEach((trigger) => {
+      trigger.addEventListener("mouseenter", (event) => {
+        if (isMobileView()) return;
+        pointerX = event.clientX;
+        pointerY = event.clientY;
+        showPreview(trigger, false);
+      });
+      trigger.addEventListener("mousemove", (event) => {
+        if (isMobileView()) return;
+        pointerX = event.clientX;
+        pointerY = event.clientY;
+        if (!pinned) placePreview(pointerX, pointerY);
+      });
+      trigger.addEventListener("mouseleave", () => {
+        if (isMobileView()) return;
+        if (!pinned) hidePreview(true);
+      });
+      trigger.addEventListener("focus", () => {
+        if (isMobileView()) return;
+        const rect = trigger.getBoundingClientRect();
+        pointerX = rect.left + rect.width / 2;
+        pointerY = rect.top + rect.height / 2;
+        showPreview(trigger, true);
+      });
+      trigger.addEventListener("click", (event) => {
+        if (isMobileView()) return;
+        event.preventDefault();
+        pointerX = event.clientX || pointerX;
+        pointerY = event.clientY || pointerY;
+        showPreview(trigger, true);
+      });
+    });
+
+    document.addEventListener("mousemove", (event) => {
+      if (isMobileView()) return;
+      pointerX = event.clientX;
+      pointerY = event.clientY;
+      if (!previewCard.hidden && !pinned) placePreview(pointerX, pointerY);
+    });
+    previewCard.addEventListener("mouseenter", () => { if (activeTrigger) pinned = true; });
+    previewClose.addEventListener("click", () => hidePreview(true));
+    previewDismiss.addEventListener("click", () => hidePreview(true));
+    document.addEventListener("click", (event) => {
+      if (previewCard.hidden || !pinned) return;
+      const clickedTrigger = event.target.closest(".hover-preview-trigger");
+      if (previewCard.contains(event.target) || clickedTrigger) return;
+      hidePreview(true);
+    });
+    document.addEventListener("keydown", (event) => { if (event.key === "Escape") hidePreview(true); });
+    mobileQuery.addEventListener("change", () => { if (isMobileView()) hidePreview(true); });
+    window.addEventListener("scroll", updateActiveSection, { passive: true });
+    window.addEventListener("resize", updateActiveSection);
+    updateActiveSection();
+  </script>
+</body>
+</html>

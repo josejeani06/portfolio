@@ -1,0 +1,2171 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Case Study — Modernizing a Core Targeting Map</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    .nav-right{display:flex;align-items:baseline;gap:18px}
+    .nav-prototype-link{
+      position:relative;
+      display:inline-flex;
+      align-items:center;
+      align-self:baseline;
+      gap:10px;
+      min-height:42px;
+      padding:0 16px;
+      border:1px solid transparent;
+      border-radius:999px;
+      background:
+        linear-gradient(rgba(236,234,223,.96),rgba(236,234,223,.96)) padding-box,
+        linear-gradient(135deg,#ff8a2a 0%,#ff4d8d 24%,#8f6dff 52%,#2cc8ff 76%,#7cf0a6 100%) border-box;
+      color:#33312a;
+      font-size:13px;
+      font-weight:800;
+      line-height:1;
+      letter-spacing:-.01em;
+      white-space:nowrap;
+      box-shadow:0 10px 24px rgba(20,19,13,.08);
+      transition:transform .2s ease,box-shadow .2s ease,background .2s ease;
+    }
+    .nav-prototype-link:hover{
+      transform:translateY(-1px);
+      box-shadow:0 14px 28px rgba(20,19,13,.12);
+    }
+    .nav-prototype-icon{width:16px;height:16px;display:block;flex:0 0 16px}
+    .nav-prototype-icon svg{display:block;width:100%;height:100%}
+    @media (max-width:980px){
+      .nav-right{gap:12px}
+      .nav-prototype-link{padding:0 13px;min-height:38px;font-size:12px}
+    }
+    @media (max-width:760px){
+      .nav-prototype-link span:last-child{display:none}
+      .nav-prototype-link{padding:0 11px;min-width:38px;justify-content:center}
+    }
+    .pattern-head,.section-head{display:flex;flex-direction:column;align-items:flex-start;gap:12px}
+    .pattern-head h2,.section-head h2{margin:0}
+    .pattern-head p,.section-head p{max-width:780px;margin:0;color:#615d52;font-size:17px;line-height:1.7}
+    .hero-meta{display:grid;justify-items:start;gap:10px}
+    .hero-status-tag{display:inline-flex;align-items:center;min-height:30px;padding:0 12px;border-radius:999px;border:1px solid rgba(207,59,35,.16);background:rgba(236,234,223,.96);color:#cf3b23;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+    .story-diagram{margin-top:28px;padding:28px;border:var(--surface-border);border-radius:var(--surface-radius);background:var(--surface);box-shadow:var(--surface-shadow)}
+    .diagram-title{margin:0 0 18px;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:rgba(207,59,35,.88);font-weight:800}
+    .diagram-title-outside{margin:0 0 14px}
+    .story-diagram.no-inner-title{margin-top:0}
+    .diagram-flow{display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap}
+    .diagram-node{padding:0;border:0;border-radius:0;background:transparent;min-width:140px;flex:1;color:var(--text)}
+    .diagram-node strong{display:block;color:var(--ink);font-size:16px;margin-bottom:4px}
+    .diagram-node span{font-size:13px;line-height:1.45;color:var(--muted)}
+    .diagram-flow-equal{align-items:flex-start}
+    .diagram-flow-equal .diagram-node{display:flex;flex-direction:column;justify-content:flex-start;min-height:0}
+    .diagram-flow-flat .diagram-node{min-width:0}
+    .diagram-flow-flat .diagram-node strong{margin-bottom:6px}
+    .diagram-arrow{color:rgba(28,27,22,.42);font-weight:800}
+    .diagram-split{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .diagram-column{padding:0;border:0;border-radius:0;background:transparent}
+    .diagram-column h3{margin:0 0 14px}
+    .stack{display:grid;gap:10px}
+    .stack-item{padding:0;border:0;border-radius:0;background:transparent;font-size:14px;color:var(--text)}
+    .stack-item.bad,.stack-item.good{border:0;background:transparent}
+    .metric-strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:24px}
+    .metric-tile{padding:20px;border-radius:12px;background:var(--surface);border:var(--surface-border);box-shadow:var(--surface-shadow)}
+    .metric-tile strong{display:block;font-size:30px;line-height:1;color:var(--ink);margin-bottom:8px}
+    .metric-tile span{font-size:13px;color:var(--muted);line-height:1.45}
+    .compare-section-head{display:flex;justify-content:space-between;align-items:end;gap:24px;margin-bottom:28px}
+    .compare-section-head h2{margin:0}
+    .compare-section-head p{max-width:560px;margin:0;color:#615d52}
+    .compare-views{display:grid}
+    .compare-view[hidden]{display:none}
+    .compare-stage{position:relative;padding:28px;border-radius:var(--surface-radius);border:var(--surface-border);background:linear-gradient(180deg,#eceadf,#e5e2d5);box-shadow:var(--surface-shadow)}
+    .compare-stage-head{display:grid;grid-template-columns:minmax(220px,320px) minmax(0,1fr);gap:24px;align-items:start;margin-bottom:18px}
+    .compare-stage-head h3{margin:0;color:var(--ink);font-size:28px;line-height:1.05}
+    .compare-stage-copy{margin:0;color:var(--muted);max-width:none;min-width:0;white-space:normal;overflow:visible;text-overflow:clip}
+    .compare-slider{--position:48%;position:relative;border-radius:12px;overflow:hidden;border:1px solid rgba(28,27,22,.12);background:#e5e2d5}
+    .compare-slider-frame{position:relative;aspect-ratio:16/9;min-height:420px;background:
+      linear-gradient(180deg,rgba(255,255,255,.72),rgba(230,227,215,.9))}
+    .compare-image{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center center}
+    .compare-image.is-after{clip-path:inset(0 calc(100% - var(--position)) 0 0)}
+    .compare-divider{position:absolute;top:0;bottom:0;left:var(--position);width:2px;background:rgba(255,255,255,.95);box-shadow:0 0 0 1px rgba(207,59,35,.16);transform:translateX(-50%);pointer-events:none}
+    .compare-handle{position:absolute;left:var(--position);top:50%;width:62px;height:62px;border-radius:999px;background:#1c1b16;border:2px solid rgba(242,240,230,.78);display:grid;place-items:center;transform:translate(-50%,-50%);box-shadow:0 14px 32px rgba(14,13,8,.34);pointer-events:none}
+    .compare-handle::before{content:"↔";font-size:22px;font-weight:800;color:#f2f0e6;letter-spacing:.04em}
+    .compare-label{position:absolute;top:18px;z-index:2;padding:8px 12px;border-radius:999px;background:rgba(20,19,13,.7);backdrop-filter:blur(10px);color:#f2f0e6;font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+    .compare-label.before{left:18px}
+    .compare-label.after{right:18px}
+    .compare-range{position:absolute;inset:0;opacity:0;cursor:ew-resize}
+    .compare-placeholder{padding:40px 0 8px}
+    .compare-placeholder-card{padding:28px;border-radius:12px;border:1px dashed rgba(207,59,35,.22);background:rgba(236,234,223,.76)}
+    .compare-placeholder-card h3{margin:0 0 10px;color:var(--ink)}
+    .compare-placeholder-card p{margin:0;color:var(--muted);max-width:560px}
+    .decision-log-table{border:var(--surface-border);border-radius:12px;background:var(--surface);box-shadow:var(--surface-shadow);overflow:hidden}
+    .decision-log-head,.decision-log-body{display:grid;grid-template-columns:1.1fr 1.1fr 1.2fr 1fr}
+    .decision-log-head{border-bottom:1px solid rgba(28,27,22,.1);background:rgba(255,255,255,.4)}
+    .decision-log-head div{padding:18px 20px;color:rgba(207,59,35,.82);font-weight:800;text-transform:uppercase;letter-spacing:.08em;font-size:13px}
+    .decision-log-head div + div,.decision-log-cell + .decision-log-cell{border-left:1px solid rgba(28,27,22,.08)}
+    .decision-log-body + .decision-log-body{border-top:1px solid rgba(28,27,22,.1)}
+    .decision-log-cell{padding:18px 20px;font-size:14px;line-height:1.55;color:var(--muted)}
+    .decision-log-cell p{margin:0}
+    .strategy-architecture{margin-top:28px;padding:28px 0 0;border-top:1px solid rgba(28,27,22,.12)}
+    .strategy-entry-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr)) auto;gap:18px;align-items:start}
+    .strategy-entry{min-width:0}
+    .strategy-entry strong,.strategy-result strong{display:block;margin-bottom:8px;color:var(--ink);font-size:18px;line-height:1.15}
+    .strategy-entry span,.strategy-result span{display:block;color:var(--muted);font-size:14px;line-height:1.5}
+    .strategy-link{display:flex;align-items:center;justify-content:center;color:rgba(207,59,35,.38);font-size:32px;font-weight:700;min-height:62px}
+    .strategy-result{margin-top:22px;padding-top:18px;border-top:1px solid rgba(28,27,22,.12);max-width:460px}
+    .persona-table-shell{margin-top:40px;padding:28px;border:var(--surface-border);border-radius:12px;background:linear-gradient(180deg,rgba(255,255,255,.96),rgba(236,234,223,.96));box-shadow:var(--surface-shadow)}
+    .persona-table-head{display:grid;justify-items:start;align-items:start;gap:10px;margin-bottom:18px}
+    .persona-table-head p{margin:0;max-width:720px;color:var(--muted);font-size:14px;line-height:1.6}
+    .persona-table-title{margin:0;color:var(--ink);font-size:13px;letter-spacing:.12em;text-transform:uppercase;font-weight:800}
+    .persona-table{width:100%;border-collapse:collapse}
+    .persona-table thead th{padding:16px 18px;border-bottom:1px solid rgba(28,27,22,.12);color:rgba(207,59,35,.82);font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;text-align:left}
+    .persona-table tbody tr + tr td{border-top:1px solid rgba(28,27,22,.1)}
+    .persona-table td{padding:18px;vertical-align:top;color:#615d52;font-size:15px;line-height:1.6}
+    .persona-table td strong{display:block;margin-bottom:6px;color:var(--ink);font-size:18px;line-height:1.12}
+    .persona-table td small{display:block;margin-top:8px;color:rgba(207,59,35,.78);font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+    .discovery-band{margin-top:18px;padding:32px;border-radius:var(--surface-radius);background:#eceadf;border:1px solid rgba(28,27,22,.1);box-shadow:var(--surface-shadow)}
+    .discovery-evidence-intro{display:grid;gap:22px;margin-bottom:28px}
+    .discovery-evidence-intro p{margin:0;color:#33312a;font-size:18px;line-height:1.7}
+    .discovery-evidence-table{border-top:1px solid rgba(28,27,22,.12)}
+    .discovery-evidence-head,
+    .discovery-evidence-row{display:grid;grid-template-columns:minmax(180px,.4fr) minmax(0,1fr);gap:24px}
+    .discovery-evidence-head{padding:18px 0 16px}
+    .discovery-evidence-head div{color:#14130d;font-size:15px;font-weight:800;letter-spacing:-.01em}
+    .discovery-evidence-row{padding:20px 0;border-top:1px solid rgba(28,27,22,.1)}
+    .discovery-evidence-row div:first-child{color:#14130d;font-size:17px;font-weight:700;line-height:1.35}
+    .discovery-evidence-row div:last-child{color:#615d52;font-size:17px;line-height:1.55}
+    .discovery-insight{margin-top:28px;padding:24px 26px;border-radius:20px;background:linear-gradient(180deg,#ece4d3,#e5e2d5);border:1px solid rgba(207,59,35,.18)}
+    .discovery-insight p{margin:0;color:#14130d;font-size:18px;line-height:1.68}
+    .discovery-insight p + p{margin-top:16px}
+    .discovery-insight strong{font-weight:800}
+    .question-copy{max-width:none;padding-top:8px}
+    .question-copy p{margin:0}
+    .question-copy p + p{margin-top:18px}
+    .business-copy{max-width:none;padding-top:8px}
+    .business-copy p{margin:0;color:#615d52}
+    .business-copy p + p{margin-top:18px}
+    .dark-copy{max-width:none;padding-top:8px}
+    .dark-copy p{margin:0;color:rgba(242,240,230,.9)}
+    .dark-copy p + p{margin-top:18px}
+    .question-journey{margin-top:34px;padding-top:18px;border-top:1px solid rgba(242,240,230,.14)}
+    .question-journey .diagram-title-outside{margin-bottom:22px;color:rgba(240,238,228,.72)}
+    .journey-groups{display:grid;gap:34px}
+    .journey-group{position:relative;padding-left:82px}
+    .journey-group-head{margin:0 0 18px;color:rgba(240,238,228,.74);font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+    .journey-group-line{position:absolute;left:27px;top:32px;bottom:12px;width:3px;border-radius:999px;background:linear-gradient(180deg,rgba(242,240,230,.58),rgba(242,240,230,.14))}
+    .journey-group-items{display:grid;gap:28px}
+    .journey-timeline-item{position:relative;display:grid;grid-template-columns:auto 1fr;gap:22px;align-items:start}
+    .journey-timeline-marker{position:relative;z-index:1;display:grid;place-items:center;width:56px;height:56px;border-radius:999px;border:3px solid #14130d;background:#f2f0e6;color:#14130d;font-size:21px;font-weight:800;line-height:1;box-shadow:0 0 0 8px rgba(20,19,13,.22)}
+    .journey-timeline-copy{padding-top:4px}
+    .journey-timeline-copy h3{margin:0 0 10px;color:#f2f0e6;font-size:28px;line-height:1.08}
+    .journey-timeline-copy p{margin:0;max-width:780px;color:rgba(242,240,230,.88);font-size:15px;line-height:1.62}
+    .journey-timeline-item.is-risk .journey-timeline-marker{border-color:#e08a70;background:#3a1a16;color:#ffe6dc;box-shadow:0 0 0 8px rgba(224,120,90,.16)}
+    .journey-timeline-item.is-risk .journey-timeline-copy h3{color:#fff0ea}
+    .journey-map{display:grid;gap:28px}
+    .journey-lane{display:grid;gap:16px}
+    .journey-lane-head{display:flex;justify-content:space-between;align-items:end;gap:18px}
+    .journey-lane-head h3{margin:0;color:#f2f0e6}
+    .journey-lane-head p{margin:0;color:rgba(240,238,228,.78);font-size:14px}
+    .journey-steps{position:relative;display:grid;gap:18px;padding-top:18px}
+    .journey-steps.cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .journey-steps.cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}
+    .journey-steps::before{content:"";position:absolute;left:26px;right:26px;top:0;height:1px;background:rgba(242,240,230,.16)}
+    .journey-steps::after{content:"";position:absolute;left:18px;top:-2px;width:140px;height:6px;background:linear-gradient(90deg,rgba(242,240,230,0),rgba(242,240,230,.6),rgba(242,240,230,0));filter:blur(3px);animation:journeySweep 3.8s ease-in-out infinite}
+    .journey-step{position:relative;padding-top:16px}
+    .journey-step::before{content:"";position:absolute;left:0;top:-8px;width:14px;height:14px;border-radius:50%;background:#e9e6da;box-shadow:0 0 0 6px rgba(242,240,230,.08)}
+    .journey-step strong{display:block;margin-bottom:6px;color:#f2f0e6;font-size:16px;line-height:1.2}
+    .journey-step span{display:block;color:rgba(242,240,230,.84);font-size:14px;line-height:1.5}
+    .journey-step.is-risk::before{background:#e39a83;box-shadow:0 0 0 6px rgba(224,120,90,.12)}
+    .journey-step.is-risk strong{color:#ffd9cb}
+    @keyframes journeySweep{0%,100%{transform:translateX(0);opacity:.45}50%{transform:translateX(calc(100% - 160px));opacity:1}}
+    .strategy-flow{margin-top:28px;padding-top:24px;border-top:1px solid rgba(28,27,22,.12);display:grid;grid-template-columns:minmax(0,1.35fr) 110px minmax(300px,.95fr);gap:24px;align-items:center}
+    .strategy-flow-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 20px}
+    .strategy-flow-item{position:relative;padding-left:18px}
+    .strategy-flow-item::before{content:"";position:absolute;left:0;top:.6em;width:8px;height:8px;border-radius:50%;background:rgba(207,59,35,.74)}
+    .strategy-flow-item strong{display:block;margin-bottom:6px;color:var(--ink);font-size:18px;line-height:1.15}
+    .strategy-flow-item span{display:block;color:#615d52;font-size:14px;line-height:1.5}
+    .strategy-flow-merge{position:relative;display:flex;align-items:center;justify-content:center;color:#cf3b23;font-size:40px;font-weight:800;min-height:120px}
+    .strategy-flow-merge::before{content:none}
+    .strategy-flow-merge span{position:relative;padding:0;background:transparent}
+    .strategy-core{padding:24px 24px 22px;border:1px solid rgba(207,59,35,.14);border-radius:12px;background:linear-gradient(180deg,#eceadf,#e5e2d5);box-shadow:0 18px 38px rgba(20,19,13,.08)}
+    .strategy-core-kicker{display:block;margin-bottom:10px;color:rgba(207,59,35,.82);font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+    .strategy-core strong{display:block;margin-bottom:8px;color:var(--ink);font-size:22px;line-height:1.05}
+    .strategy-core span{display:block;color:#615d52;font-size:14px;line-height:1.55}
+    .roadmap-shell{margin-top:38px;padding-top:34px;border-top:1px solid rgba(28,27,22,.12)}
+    .roadmap-shell h3{margin:0 0 18px;color:var(--ink);font-size:32px;line-height:1.04}
+    .roadmap-shell p{margin:0;color:#615d52;font-size:17px;line-height:1.74;max-width:1120px}
+    .roadmap-shell p + p{margin-top:18px}
+    .roadmap-flow{margin-top:28px;padding:0;border:0;border-radius:0;background:transparent;box-shadow:none;display:grid;grid-template-columns:minmax(0,1fr) 44px minmax(0,1fr) 44px minmax(0,1fr) 44px minmax(0,1fr);column-gap:22px;row-gap:24px;align-items:stretch}
+    .roadmap-line{color:#14130d;font-size:16px;line-height:1.45;white-space:normal}
+    .roadmap-line.phase{display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:0 14px;border-radius:999px;background:#cf3b23;color:#f2f0e6;font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;width:max-content;box-shadow:0 10px 22px rgba(207,59,35,.12)}
+    .roadmap-line.phase:first-child{margin-top:0}
+    .roadmap-line.arrow{display:flex;align-items:center;justify-content:center;align-self:center;color:rgba(207,59,35,.82);font-size:34px;line-height:1;font-weight:800}
+    .roadmap-phase{position:relative;display:grid;gap:14px;min-height:240px;padding:22px 22px 24px;border:1px solid rgba(28,27,22,.12);border-radius:24px;background:#f4f2ea;align-content:start}
+    .roadmap-phase:not(:last-child)::after{content:none}
+    .roadmap-phase-list{display:grid;gap:10px}
+    .roadmap-phase-item{position:relative;padding-left:18px;color:#14130d;font-size:17px;line-height:1.5}
+    .roadmap-phase-item::before{content:"";position:absolute;left:0;top:.62em;width:8px;height:8px;border-radius:50%;background:rgba(207,59,35,.7)}
+    .roadmap-feedback-note{margin-top:18px;color:#615d52;font-size:15px;line-height:1.65;font-style:italic}
+    .future-opportunity{padding-top:34px;border-top:1px solid rgba(242,240,230,.12);display:grid;gap:18px;max-width:1320px}
+    .future-opportunity h3{margin:0;color:#f2f0e6;font-size:32px;line-height:1.04}
+    .future-opportunity p{margin:0;color:rgba(242,240,230,.88);font-size:17px;line-height:1.74;max-width:none}
+    #prototype{background:linear-gradient(180deg,#14130d,#0d0c08);color:#f2f0e6}
+    #prototype .eyebrow{color:rgba(240,238,228,.84)}
+    #prototype h2,#prototype h3{color:#f2f0e6}
+    #prototype .story-diagram{background:rgba(255,255,255,.06);border:1px solid rgba(242,240,230,.12);box-shadow:none}
+    #prototype .diagram-title{color:rgba(240,238,228,.74)}
+    #prototype .stack-item{color:rgba(242,240,230,.84)}
+    #prototype .button.secondary{border-color:rgba(242,240,230,.2)}
+    .image-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:28px}
+    .image-grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .case-image-card{border:var(--surface-border);border-radius:12px;background:var(--surface);box-shadow:var(--surface-shadow);overflow:hidden}
+    .case-image-card img{display:block;width:100%;height:auto;background:#f4f2ea}
+    .case-image-caption{padding:16px 18px 18px}
+    .case-image-caption strong{display:block;margin-bottom:6px;color:var(--ink);font-size:16px;line-height:1.2}
+    .case-image-caption span{display:block;color:var(--muted);font-size:13px;line-height:1.5}
+    .scroll-story{display:grid;grid-template-columns:minmax(0,.82fr) minmax(380px,1.18fr);gap:42px;align-items:start;margin-top:42px}
+    #design-evolution .scroll-story{position:relative;grid-template-columns:minmax(280px,.72fr) minmax(0,1.28fr);gap:56px}
+    .scroll-story-copy{position:relative;display:grid;padding-left:24px;padding-right:18px}
+    .scroll-story-step{position:relative;min-height:80vh;padding:32px 0;display:grid;align-content:start;opacity:.48;transform:translateY(16px);transition:opacity .32s ease .12s,transform .32s ease .12s}
+    #design-evolution .scroll-story-step{min-height:74vh;padding:10vh 0;align-content:center}
+    .scroll-story-step + .scroll-story-step{padding-top:48px;border-top:1px solid rgba(28,27,22,.14)}
+    .scroll-story-step.is-active{opacity:1;transform:translateY(0)}
+    .scroll-story-step-label,.scroll-story-label{display:block;margin-bottom:12px;color:rgba(207,59,35,.82);font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+    .scroll-story-step h3{margin:0 0 12px;color:var(--ink);font-size:clamp(24px,3vw,34px);line-height:1.02}
+    .scroll-story-step p{margin:0;color:#615d52;font-size:16px;line-height:1.65;max-width:34ch}
+    .scroll-story-step p + p{margin-top:14px}
+    .scroll-story-sticky{position:sticky;top:clamp(180px,calc(50vh - min(36vh,280px)),340px);align-self:start}
+    #design-evolution .scroll-story-sticky{position:sticky;top:calc(50vh - 280px);align-self:start;transform:none}
+    .scroll-story-stage{position:relative;height:72vh;min-height:560px;max-height:760px;overflow:visible}
+    #design-evolution .scroll-story-stage{height:560px;min-height:0;max-height:calc(100vh - 160px)}
+    .scroll-story-media{position:absolute;inset:0;margin:0;display:grid;place-items:center;opacity:0;pointer-events:none;transform:scale(.985);transition:opacity .32s ease,transform .32s ease;cursor:zoom-in}
+    .scroll-story-media.is-active{opacity:1;pointer-events:auto;transform:scale(1)}
+    .scroll-story-media img{display:block;width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain;object-position:center center;background:transparent;margin:auto}
+    .scroll-story-mobile-media{display:none}
+    .scroll-story-media-caption{display:none}
+    .scroll-story-media-caption strong{display:block;margin-bottom:6px;color:var(--ink);font-size:18px;line-height:1.12}
+    .scroll-story-media-caption span{display:block;color:var(--muted);font-size:14px;line-height:1.55}
+    .scroll-story-progress{position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(180deg,rgba(207,59,35,.04),rgba(207,59,35,.18))}
+    .scroll-story-progress::after{content:"";position:absolute;left:0;right:0;height:84px;border-radius:999px;background:linear-gradient(180deg,#e07a55,#cf3b23);transform:translateY(var(--story-progress,0px));transition:transform .26s ease}
+    #concept-shift{background:linear-gradient(180deg,#0d0c08,#0a0a06);color:#f2f0e6}
+    #concept-shift .eyebrow,
+    #concept-shift .section-head p,
+    #concept-shift .business-copy p,
+    #concept-shift .scroll-story-step p,
+    #concept-shift .alignment-card p,
+    #concept-shift .stack-item{color:rgba(242,240,230,.82)}
+    #concept-shift .section-head h2,
+    #concept-shift .scroll-story-step h3,
+    #concept-shift .story-diagram h3,
+    #concept-shift .alignment-card h3{color:#f2f0e6}
+    #concept-shift .scroll-story-step-label,
+    #concept-shift .diagram-title{color:rgba(240,238,228,.74)}
+    #concept-shift .scroll-story-step + .scroll-story-step,
+    #concept-shift .story-diagram,
+    #concept-shift .alignment-card{border-color:rgba(242,240,230,.12)}
+    #future-vision{background:linear-gradient(180deg,#14130d,#0a0a06);color:#f2f0e6}
+    #concept-shift .scroll-story-media img{background:transparent}
+    #concept-shift .story-diagram,
+    #concept-shift .alignment-card{background:rgba(255,255,255,.05);box-shadow:none}
+    .concept-carousel{margin-top:42px}
+    .concept-carousel-shell{position:relative;padding:0 72px}
+    .concept-carousel-viewport{overflow:hidden}
+    .concept-carousel-track{display:flex;transition:transform .42s ease}
+    .concept-carousel-slide{min-width:100%;display:grid;grid-template-columns:minmax(0,.82fr) minmax(420px,1.08fr);gap:42px;align-items:center}
+    .concept-carousel-copy{padding-right:12px}
+    .concept-carousel-label{display:block;margin-bottom:12px;color:rgba(240,238,228,.74);font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+    .concept-carousel-copy h3{margin:0 0 12px;color:#f2f0e6;font-size:clamp(24px,3vw,34px);line-height:1.02}
+    .concept-carousel-copy p{margin:0;color:rgba(242,240,230,.82);font-size:16px;line-height:1.65;max-width:34ch}
+    .concept-carousel-copy p + p{margin-top:14px}
+    .concept-carousel-media{margin:0;display:grid;place-items:center;cursor:zoom-in}
+    .concept-carousel-media img{display:block;width:auto;height:auto;max-width:100%;max-height:560px;object-fit:contain;object-position:center center;margin:auto;background:transparent}
+    .concept-carousel-btn{position:absolute;top:50%;transform:translateY(-50%);width:56px;height:56px;border-radius:999px;border:1px solid rgba(207,59,35,.14);background:#f4f2ea;color:#cf3b23;display:grid;place-items:center;cursor:pointer;z-index:2;box-shadow:0 14px 30px rgba(14,13,8,.2);transition:background .22s ease,border-color .22s ease,box-shadow .22s ease,opacity .22s ease}
+    .concept-carousel-btn:hover{background:#f4f2ea;border-color:rgba(207,59,35,.3);box-shadow:0 18px 36px rgba(14,13,8,.26)}
+    .concept-carousel-icon{display:grid;place-items:center;width:34px;height:34px;border-radius:999px;font-size:30px;font-weight:800;line-height:1}
+    .concept-carousel-btn.prev{left:0}
+    .concept-carousel-btn.next{right:0}
+    .concept-carousel-btn[disabled]{opacity:.45;cursor:default}
+    .concept-carousel-meta{display:flex;justify-content:center;gap:10px;margin-top:18px}
+    .concept-carousel-dot{width:10px;height:10px;border-radius:999px;border:0;background:rgba(242,240,230,.28);cursor:pointer;transition:background .22s ease,transform .22s ease}
+    .concept-carousel-dot.is-active{background:#f2f0e6;transform:scale(1.1)}
+    #discovery{padding:92px 0}
+    #discovery .discovery-band{margin-top:34px}
+    #mental-models.section-dark{background:linear-gradient(180deg,#1c1b16,#14130d)}
+    #mental-models.section-dark .persona-table-shell{background:rgba(255,255,255,.06);border-color:rgba(242,240,230,.12);box-shadow:none}
+    #mental-models.section-dark .persona-table-head p,
+    #mental-models.section-dark .persona-table td{color:rgba(242,240,230,.84)}
+    #mental-models.section-dark .persona-table-title,
+    #mental-models.section-dark .persona-table td strong{color:#f2f0e6}
+    #mental-models.section-dark .persona-table thead th{color:rgba(240,238,228,.72);border-bottom-color:rgba(242,240,230,.12)}
+    #mental-models.section-dark .persona-table tbody tr + tr td{border-top-color:rgba(242,240,230,.1)}
+    #mental-models.section-dark .persona-table td::before{color:rgba(240,238,228,.72)}
+    .image-lightbox{position:fixed;inset:0;z-index:140;background:rgba(10,10,8,.92);padding:32px;display:grid;place-items:center}
+    .image-lightbox[hidden]{display:none}
+    .image-lightbox-shell{position:relative;width:min(1200px,100%);max-height:100%;display:grid;gap:18px}
+    .image-lightbox-close{position:absolute;right:0;top:-6px;width:46px;height:46px;border:1px solid rgba(255,255,255,.22);border-radius:999px;background:rgba(20,19,13,.82);color:#f2f0e6;font-size:30px;line-height:1;cursor:pointer}
+    .image-lightbox-media{margin:0;display:grid;gap:14px}
+    .image-lightbox-media img{width:100%;max-height:78vh;object-fit:contain;border-radius:12px;background:#0d0c08}
+    .image-lightbox-caption{display:grid;gap:6px;padding-right:64px}
+    .image-lightbox-caption strong{color:#f2f0e6;font-size:20px;line-height:1.1}
+    .image-lightbox-caption span{color:rgba(242,240,230,.78);font-size:15px;line-height:1.6}
+    .alignment-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:24px}
+    .alignment-card{padding:22px;border:var(--surface-border);border-radius:12px;background:var(--surface);box-shadow:var(--surface-shadow)}
+    .alignment-card h3{margin:0 0 8px;color:var(--ink)}
+    .alignment-card p{margin:0;color:var(--muted);font-size:14px;line-height:1.55}
+    #summary .story-diagram{background:#0d0c08;border:1px solid rgba(242,240,230,.12);box-shadow:none}
+    #summary .diagram-title{color:rgba(240,238,228,.72)}
+    #summary .diagram-node{color:rgba(242,240,230,.88)}
+    #summary .diagram-node strong{color:#f2f0e6}
+    #summary .diagram-node span{color:rgba(242,240,230,.72)}
+    #summary .diagram-arrow{color:rgba(240,238,228,.4)}
+    .audience-builder-section{scroll-margin-top:144px;padding-top:104px;background:linear-gradient(180deg,#e9e6da 0%,#eceadf 100%)}
+    .audience-builder-layout{display:grid;grid-template-columns:minmax(260px,.72fr) minmax(0,1.28fr);gap:34px;align-items:start}
+    .audience-builder-copy{position:sticky;top:112px;display:grid;gap:18px}
+    .audience-builder-copy .section-head p{max-width:520px}
+    .audience-builder-actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+    .audience-builder-actions .button{margin-top:0}
+    .audience-builder-points{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:4px}
+    .audience-builder-point{padding:16px;border-radius:12px;border:1px solid rgba(28,27,22,.12);background:#f4f2ea}
+    .audience-builder-point strong{display:block;margin-bottom:5px;color:var(--ink);font-size:15px;line-height:1.18}
+    .audience-builder-point span{display:block;color:var(--muted);font-size:13px;line-height:1.45}
+    .audience-builder-frame-shell{min-width:0}
+    .audience-builder-frame{position:relative;overflow:hidden;border-radius:18px;border:1px solid rgba(28,27,22,.14);background:#14130d;box-shadow:0 24px 72px rgba(20,19,13,.14)}
+    .audience-builder-frame::before{content:"";display:block;height:34px;background:linear-gradient(180deg,#eceadf,#e5e2d5);border-bottom:1px solid rgba(28,27,22,.12)}
+    .audience-builder-window-dots{position:absolute;top:13px;left:16px;display:flex;gap:7px;z-index:1}
+    .audience-builder-window-dots span{width:8px;height:8px;border-radius:999px;background:rgba(207,59,35,.42)}
+    .audience-builder-frame img{display:block;width:100%;height:auto;aspect-ratio:1600/724;object-fit:contain;background:#edeee8}
+    .audience-builder-caption{margin:14px 0 0;color:var(--muted);font-size:13px;line-height:1.55}
+    @media(max-width:900px){.diagram-split,.metric-strip,.image-grid,.image-grid.three,.alignment-grid,.scroll-story{grid-template-columns:1fr}.diagram-flow{display:grid}.diagram-arrow{display:none}.metric-tile strong{font-size:24px}.compare-section-head,.compare-stage-head{grid-template-columns:1fr;display:grid;gap:16px;align-items:start}.compare-stage{padding:20px}.compare-slider-frame{min-height:260px;aspect-ratio:4/3}.compare-handle{width:52px;height:52px}.compare-stage-copy{white-space:normal;overflow:visible;text-overflow:clip}.decision-log-head{display:none}.decision-log-body{grid-template-columns:1fr;gap:0;padding:16px 18px}.decision-log-body + .decision-log-body{border-top:1px solid rgba(28,27,22,.1)}.decision-log-cell{padding:0;border:0}.decision-log-cell + .decision-log-cell{margin-top:10px}.decision-log-cell::before{content:attr(data-label);display:block;margin-bottom:4px;color:rgba(207,59,35,.58);font-weight:800;text-transform:uppercase;letter-spacing:.08em;font-size:12px}.persona-table-shell{padding:20px}.persona-table-head{display:grid;justify-items:start;align-items:start;gap:10px}.persona-table thead{display:none}.persona-table,.persona-table tbody,.persona-table tr,.persona-table td{display:block;width:100%}.persona-table tbody tr + tr td{border-top:0}.persona-table tr + tr{border-top:1px solid rgba(28,27,22,.1)}.persona-table td{padding:14px 0}.persona-table td::before{content:attr(data-label);display:block;margin-bottom:6px;color:rgba(207,59,35,.58);font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}.discovery-band{margin-top:20px;padding:22px}.discovery-evidence-intro{gap:18px;margin-bottom:22px}.discovery-evidence-intro p,.discovery-insight p,.future-opportunity p,.roadmap-shell p{font-size:16px}.discovery-evidence-head{display:none}.discovery-evidence-row{grid-template-columns:1fr;gap:8px;padding:16px 0}.discovery-evidence-row div:first-child{font-size:15px}.discovery-evidence-row div:last-child{font-size:15px}.question-copy,.business-copy,.dark-copy{max-width:none;padding-top:0}.question-journey{margin-top:28px;padding-top:16px}.journey-groups{gap:28px}.journey-group{padding-left:58px}.journey-group-line{left:20px;top:28px}.journey-timeline-item{gap:16px}.journey-timeline-marker{width:42px;height:42px;font-size:16px}.journey-timeline-copy h3{font-size:21px}.journey-timeline-copy p{font-size:14px}.journey-map{gap:22px}.journey-lane-head{flex-direction:column;align-items:flex-start}.journey-steps.cols-3,.journey-steps.cols-4{grid-template-columns:1fr}.journey-steps::before,.journey-steps::after{display:none}.journey-step{padding-top:0;padding-left:18px}.journey-step::before{left:0;top:.45em;width:8px;height:8px;box-shadow:none}.strategy-flow{padding-top:22px;grid-template-columns:1fr;gap:18px}.strategy-flow-list{grid-template-columns:1fr 1fr;gap:14px}.strategy-flow-merge{min-height:0;justify-content:flex-start;font-size:30px}.strategy-flow-merge::before{content:none}.strategy-flow-merge span{padding:0;background:transparent}.strategy-core{padding:18px 18px 16px}.roadmap-flow{padding:0;grid-template-columns:1fr;gap:18px}.roadmap-line.arrow{display:flex;min-height:20px;font-size:28px;transform:rotate(90deg)}.roadmap-phase{min-height:0;padding:18px 18px 20px}.roadmap-phase:not(:last-child)::after{content:none}.roadmap-shell h3,.future-opportunity h3{font-size:28px}.scroll-story{gap:18px}.scroll-story-copy{order:2;padding-left:0;padding-right:0}.scroll-story-sticky{position:relative;top:auto;order:1}.scroll-story-stage{height:auto;min-height:auto;aspect-ratio:4/5}.scroll-story-step{min-height:0;opacity:1;transform:none;padding:12px 0 24px}.scroll-story-progress{display:none}.concept-carousel-slide{grid-template-columns:1fr;gap:18px}.concept-carousel-copy{order:2;padding-right:0}.concept-carousel-media{order:1}.concept-carousel-media img{max-height:none}.concept-carousel-shell{padding-bottom:72px}.concept-carousel-btn{top:auto;bottom:0;transform:none}.concept-carousel-btn.prev{left:0}.concept-carousel-btn.next{right:0}.image-lightbox{padding:20px}.image-lightbox-caption{padding-right:0}}
+    @media(max-width:900px){.concept-carousel-shell{padding:0 0 76px}.journey-group{padding-left:0}.journey-group-line{display:none}.compare-slider-frame{min-height:0;aspect-ratio:16/9}.compare-image{object-fit:contain}}
+    @media(min-width:761px) and (max-width:900px){#design-evolution .scroll-story{grid-template-columns:minmax(240px,.72fr) minmax(0,1.28fr);gap:32px}#design-evolution .scroll-story-copy{order:initial;padding-left:20px;padding-right:12px}#design-evolution .scroll-story-sticky{display:block;position:sticky;top:calc(50vh - 240px);order:initial}#design-evolution .scroll-story-stage{height:480px;min-height:0;max-height:calc(100vh - 140px);aspect-ratio:auto}#design-evolution .scroll-story-step{min-height:74vh;opacity:.48;transform:translateY(16px)}#design-evolution .scroll-story-step.is-active{opacity:1;transform:translateY(0)}#design-evolution .scroll-story-progress{display:block}}
+    @media(max-width:760px){.scroll-story-sticky{display:none}.scroll-story-mobile-media{display:block;margin:0 0 18px;cursor:zoom-in}.scroll-story-mobile-media img{display:block;width:100%;height:auto;border-radius:12px;background:#f4f2ea}.scroll-story-step{gap:0}.scroll-story-step + .scroll-story-step{margin-top:22px;padding-top:28px}}
+    @media(max-width:900px){.strategy-flow-merge{justify-content:center;align-items:center;min-height:42px;line-height:1}.strategy-flow-merge span{display:inline-block;transform:rotate(90deg);transform-origin:center}}
+    @media(max-width:640px){.compare-stage{width:100%;max-width:100%;min-width:0;padding:18px;border-radius:12px;overflow:hidden}.compare-stage-head{min-width:0}.compare-stage-head h3{font-size:26px}.compare-slider{width:100%;max-width:100%;min-width:0;border-radius:10px}.compare-slider-frame{width:100%;min-height:0;aspect-ratio:16/9}.compare-image{object-fit:contain}.compare-label{top:12px;padding:7px 10px;font-size:10px;letter-spacing:.1em}.compare-label.before{left:12px}.compare-label.after{right:12px}.compare-handle{width:46px;height:46px}.compare-handle::before{font-size:18px}}
+    @media(max-width:1100px){.audience-builder-layout{grid-template-columns:1fr}.audience-builder-copy{position:static}.audience-builder-copy .section-head p{max-width:780px}}
+    @media(max-width:680px){.audience-builder-points{grid-template-columns:1fr}.audience-builder-frame{border-radius:12px;margin-left:-8px;margin-right:-8px}.audience-builder-frame::before{height:28px}.audience-builder-window-dots{top:10px;left:12px}.audience-builder-frame img{min-height:360px;object-fit:cover;object-position:left center}.audience-builder-caption{font-size:12px}}
+  </style>
+
+  <style>
+    /* ============================================================
+       Editorial reskin — reusable overrides
+       (palette + de-box + full-width text + scroll reveal)
+       Drop this block + the reveal script into any case-study page.
+       ============================================================ */
+    body.case-study-page{
+      --bg:#eceadf;
+      --surface:transparent;
+      --surface-2:#e5e2d5;
+      --text:#1c1b16;
+      --muted:#615d52;
+      --ink:#14130d;
+      --line:rgba(28,27,22,.16);
+      --hair:rgba(28,27,22,.14);
+      --blue:#cf3b23;
+      --blue-2:#a92f1b;
+      --blue-soft:rgba(207,59,35,.10);
+      --surface-border:0;
+      --surface-shadow:none;
+      --shadow:none;
+      background:#eceadf;
+      color:#1c1b16;
+    }
+    .case-study-page::before{background:linear-gradient(180deg,#efede4,#e6e3d7)}
+    .case-study-page .landing-grid{
+      background-image:
+        linear-gradient(rgba(28,27,22,.10) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(28,27,22,.10) 1px,transparent 1px);
+      background-size:66px 66px,66px 66px;
+      opacity:.5;
+      mask-image:radial-gradient(circle at 50% 22%, black 66%, transparent 100%);
+    }
+
+    /* nav + brand */
+    .nav{background:rgba(236,234,223,.74);border-bottom:1px solid rgba(28,27,22,.16)}
+    .brand-mark{background:#cf3b23;box-shadow:none;border-radius:3px}
+    .nav-indicator{background:#cf3b23}
+
+    /* dark sections -> ink (keep each section's original light/dark polarity) */
+    #audit{background:linear-gradient(180deg,#1c1b16,#131209)}
+    .section-dark{background:linear-gradient(180deg,#1f1d16,#141308)}
+    .section-dark-soft{background:linear-gradient(180deg,#2a2820,#201e17)}
+    .callout{background:#14130d}
+
+    /* buttons */
+    .button.secondary{background:rgba(236,234,223,.9);border-color:rgba(28,27,22,.16);color:var(--text)}
+
+    /* ---- full-width text: kill the half/split column for prose ---- */
+    .split{grid-template-columns:1fr;gap:18px}
+    /* full-width text — never cap or clip a paragraph or a title */
+    .business-copy,.dark-copy,.question-copy,.lede,
+    .business-copy p,.dark-copy p,.question-copy p,.lede p,
+    .pattern-head h2,.section-head h2,.section-head p,.section-head-stack p,
+    .showcase-head,.showcase-head h2,.showcase-head p,
+    .compare-section-head p,.persona-table-head p,.journey-timeline-copy p,
+    .roadmap-shell p,.roadmap-shell,.future-opportunity,.future-opportunity p,
+    .discovery-evidence-intro p,.discovery-insight p,.discovery-evidence-row div,
+    .case-title,.lead,.quote,h1,h2,h3{max-width:none}
+
+    /* ---- de-box: flatten generic cards/panels ---- */
+    .panel{box-shadow:none}
+
+    /* ============ Reusable scroll reveal ============ */
+    .reveal-ready{opacity:0;transform:translateY(22px);transition:opacity .7s cubic-bezier(.2,1,.22,1),transform .7s cubic-bezier(.2,1,.22,1)}
+    .reveal-ready.is-visible{opacity:1;transform:none}
+    @media (prefers-reduced-motion:reduce){
+      .reveal-ready{opacity:1 !important;transform:none !important;transition:none !important}
+    }
+
+    /* ============ Image showcases (blog-style, reusable) ============ */
+    .showcase{padding:86px 0}
+    .showcase .container{display:flex;flex-direction:column;gap:32px}
+    .showcase-head{max-width:none;display:flex;flex-direction:column;gap:14px}
+    .showcase-head h2{font-size:clamp(30px,4.6vw,56px);line-height:1.0;letter-spacing:-.03em}
+    .showcase-head p{margin:0;max-width:none;color:var(--muted);font-size:clamp(17px,1.7vw,20px);line-height:1.62}
+    .stage{border-radius:24px;padding:clamp(18px,4vw,54px);display:grid;place-items:center;
+      background:radial-gradient(120% 150% at 18% -10%,rgba(207,59,35,.12),transparent 55%),linear-gradient(180deg,#eae7db,#e1ddce)}
+    .stage.stage-cool{background:radial-gradient(120% 150% at 82% -10%,rgba(70,96,150,.14),transparent 55%),linear-gradient(180deg,#e6e8e1,#dde0d6)}
+    .shot{width:100%;margin:0}
+    .shot-frame{border-radius:12px;overflow:hidden;background:#faf9f4;border:1px solid rgba(28,27,22,.12);box-shadow:0 42px 90px rgba(20,19,13,.24)}
+    .shot-bar{height:38px;display:flex;align-items:center;gap:8px;padding:0 16px;background:linear-gradient(180deg,#f3f1ea,#e8e5dc);border-bottom:1px solid rgba(28,27,22,.10)}
+    .shot-bar span{width:11px;height:11px;border-radius:50%;background:rgba(28,27,22,.16)}
+    .shot-media{position:relative;min-height:clamp(240px,40vw,540px);display:grid;place-items:center;background:linear-gradient(135deg,#f1efe7,#e6e3d8);overflow:hidden}
+    .shot-media img{position:relative;z-index:1;display:block;width:100%;height:auto}
+    .shot-ph{position:absolute;inset:0;z-index:0;display:grid;place-items:center;align-content:center;gap:10px;text-align:center;padding:28px;color:#8a857a}
+    .shot-ph strong{font-weight:700;color:#5f5b50;font-size:15px;letter-spacing:.01em}
+    .shot-ph code{font-family:ui-monospace,Menlo,monospace;font-size:13px;color:var(--blue-2);background:rgba(207,59,35,.08);padding:4px 9px;border-radius:6px}
+    .shot-cap{margin:16px 4px 0;color:var(--muted);font-size:14px}
+    .reveal-ready .stage{transform:scale(.986);transition:transform .8s cubic-bezier(.2,1,.22,1)}
+    .reveal-ready.is-visible .stage{transform:none}
+
+    /* ---- big-number band ---- */
+    .metric-strip{gap:0;border-top:2px solid var(--ink);margin-top:30px}
+    .metric-tile{padding:26px 20px 24px 0;border-right:1px solid var(--hair);background:transparent;box-shadow:none;border-radius:0}
+    .metric-tile:last-child{border-right:0}
+    .metric-tile strong{font-size:clamp(38px,5vw,64px);font-weight:800;letter-spacing:-.03em;color:var(--blue);line-height:.9;margin-bottom:10px}
+    .metric-tile span{font-size:13.5px;color:var(--muted)}
+
+    @media(max-width:760px){
+      .shot-media{min-height:200px}
+      .metric-tile{border-right:0;border-bottom:1px solid var(--hair);padding-right:0}
+    }
+
+    /* ---- Design-evolution scroll story: native sticky image, swaps per step ---- */
+    #design-evolution .scroll-story{align-items:start}
+    #design-evolution .scroll-story-copy{padding-top:0;padding-bottom:0}
+    #design-evolution .scroll-story-step{min-height:88vh;padding:6vh 0;align-content:center}
+    #design-evolution .scroll-story-step:first-child{padding-top:2vh}
+    #design-evolution .scroll-story-step:last-child{padding-bottom:12vh}
+    #design-evolution .scroll-story-sticky{
+      position:sticky;top:0;height:100vh;
+      display:flex;align-items:center;justify-content:center;
+      align-self:start;transform:none;margin:0}
+    #design-evolution .scroll-story-stage{
+      position:relative;width:100%;height:min(72vh,600px);min-height:0;max-height:none}
+    @media(max-width:760px){
+      #design-evolution .scroll-story-sticky{display:none}
+      #design-evolution .scroll-story-step{min-height:0;padding:0}
+    }
+
+    /* ---- overflow fix so position:sticky works (clip, not hidden) ---- */
+    html{overflow-x:clip}
+    body.case-study-page{overflow-x:clip}
+
+    /* ---- business context: remove divider lines around big numbers ---- */
+    .metric-strip{gap:34px 26px;border-top:0}
+    .metric-tile{padding:0;border-right:0}
+    .metric-tile:last-child{border-right:0}
+
+    /* ---- concept shift: image on top, text below, arrows floating top-right ---- */
+    #concept-carousel .concept-carousel-shell{padding:0}
+    #concept-carousel .concept-carousel-slide{grid-template-columns:1fr;gap:20px}
+    #concept-carousel .concept-carousel-media{order:1}
+    #concept-carousel .concept-carousel-copy{order:2;padding-right:0}
+    #concept-carousel .concept-carousel-copy p{max-width:none}
+    #concept-carousel .concept-carousel-media img{max-height:none;width:100%}
+    #concept-carousel .concept-carousel-btn{position:absolute;top:14px;bottom:auto;transform:none;width:40px;height:40px}
+    #concept-carousel .concept-carousel-btn.prev{left:auto;right:62px}
+    #concept-carousel .concept-carousel-btn.next{right:14px}
+
+    /* ---- refinement videos ---- */
+    .video-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:22px;margin-top:8px}
+    .vid{margin:0}
+    .vid-frame{position:relative;aspect-ratio:16/10;border-radius:14px;overflow:hidden;border:1px solid rgba(28,27,22,.14);background:linear-gradient(135deg,#e9e6da,#e1ddce);box-shadow:0 30px 70px rgba(20,19,13,.16)}
+    .vid-media{position:relative;z-index:1;width:100%;height:100%;object-fit:cover;display:block;background:transparent}
+    .vid-ph{position:absolute;inset:0;z-index:0;display:grid;place-items:center;align-content:center;gap:9px;text-align:center;padding:22px;color:#8a857a}
+    .vid-ph strong{font-weight:700;color:#5f5b50;font-size:14px}
+    .vid-ph code{font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--blue-2);background:rgba(207,59,35,.08);padding:3px 8px;border-radius:6px}
+    .vid figcaption{margin:12px 2px 0;color:var(--muted);font-size:14px}
+
+    /* ---- design system: AI harness ---- */
+    .ai-badge{display:inline-flex;align-items:center;gap:8px;padding:5px 12px;border-radius:999px;border:1px solid rgba(255,125,99,.5);color:#ff7d63;font-family:ui-monospace,Menlo,monospace;font-size:11px;font-weight:700;letter-spacing:.16em}
+    .ai-badge::before{content:"";width:8px;height:8px;border-radius:50%;background:#ff7d63;animation:aipulse 2.4s ease-out infinite}
+    @keyframes aipulse{0%{box-shadow:0 0 0 0 rgba(255,125,99,.5)}70%{box-shadow:0 0 0 8px rgba(255,125,99,0)}100%{box-shadow:0 0 0 0 rgba(255,125,99,0)}}
+    .harness-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:6px}
+    .harness-card{border:1px solid rgba(242,240,230,.16);border-radius:12px;background:rgba(255,255,255,.035);overflow:hidden;display:flex;flex-direction:column}
+    .harness-file{font-family:ui-monospace,Menlo,monospace;font-size:12px;color:rgba(242,240,230,.66);padding:12px 16px;border-bottom:1px solid rgba(242,240,230,.12);background:rgba(255,255,255,.03);display:flex;align-items:center;gap:9px}
+    .harness-file::before{content:"";width:9px;height:9px;border-radius:50%;background:#ff7d63;flex:0 0 9px}
+    .harness-card h3{padding:16px 16px 0;margin:0;color:#f7f5ec;font-size:18px}
+    .harness-card p{padding:8px 16px 18px;margin:0;color:rgba(242,240,230,.78);font-size:14px;line-height:1.56}
+    @media(prefers-reduced-motion:reduce){.ai-badge::before{animation:none}}
+    @media(max-width:760px){.harness-grid{grid-template-columns:1fr}}
+
+    /* ---- validation: evidence columns ---- */
+    .evidence-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:26px;margin-top:8px}
+    .evidence-col{padding-top:18px;border-top:2px solid var(--ink)}
+    .evidence-tag{display:inline-flex;align-items:center;min-height:26px;padding:0 12px;border-radius:999px;font-family:Manrope,sans-serif;font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:14px}
+    .evidence-tag.solid{background:var(--blue);color:#fff4ec}
+    .evidence-tag.neutral{background:rgba(28,27,22,.08);color:var(--ink)}
+    .evidence-tag.outline{background:transparent;border:1px solid var(--blue);color:var(--blue-2)}
+    .evidence-col p{margin:0;color:#514d45;font-size:16px;line-height:1.62}
+    @media(max-width:900px){.evidence-grid{grid-template-columns:1fr;gap:0}.evidence-col{border-top:1px solid var(--hair);padding:18px 0}}
+
+    /* ---- outcome: numbered result rows ---- */
+    .result-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;margin-top:8px;border-top:2px solid var(--ink)}
+    .result-item{padding:24px 28px 24px 0;border-bottom:1px solid var(--hair)}
+    .result-item:nth-child(odd){border-right:1px solid var(--hair)}
+    .result-item:nth-child(even){padding-left:28px}
+    .result-idx{display:block;font-family:ui-monospace,Menlo,monospace;font-size:12px;font-weight:700;color:var(--blue);letter-spacing:.1em;margin-bottom:8px}
+    .result-item h3{margin:0 0 8px;color:var(--ink);font-size:20px}
+    .result-item p{margin:0;color:#514d45;font-size:15.5px;line-height:1.6}
+    @media(max-width:760px){.result-grid{grid-template-columns:1fr}.result-item{border-right:0;padding-left:0;padding-right:0}}
+
+    /* ==================================================================
+       TYPE SCALE — one consistent set (h1–h6 + text lg/md/sm/xs)
+       h1  hero display        h4  small title / strong label
+       h2  section + statement h5  meta label
+       h3  card / sub title    h6  eyebrow / uppercase tag
+       text-lg lead  ·  text-md body  ·  text-sm caption  ·  text-xs micro
+       ================================================================== */
+    body.case-study-page{
+      --h1:clamp(44px,6vw,82px);
+      --h2:clamp(29px,3.4vw,44px);
+      --h3:clamp(20px,1.9vw,25px);
+      --h4:18px;
+      --h5:15px;
+      --h6:12px;
+      --text-lg:clamp(18px,1.5vw,21px);
+      --text-md:16px;
+      --text-sm:14px;
+      --text-xs:12px;
+    }
+    .case-title,h1{font-size:var(--h1);line-height:1.0}
+    h2,.section-head h2,.pattern-head h2,.compare-section-head h2,.showcase-head h2{font-size:var(--h2);line-height:1.04}
+    .roadmap-shell h3,.future-opportunity h3,.scroll-story-step h3,.concept-carousel-copy h3,.compare-stage-head h3,.journey-timeline-copy h3{font-size:var(--h2);line-height:1.05}
+    h3,.alignment-card h3,.diagram-column h3,.harness-card h3,.result-item h3,.panel h3,.mini-card h3{font-size:var(--h3);line-height:1.12}
+    h4{font-size:var(--h4)}
+    h5{font-size:var(--h5)}
+    h6{font-size:var(--h6)}
+    .eyebrow{font-size:var(--h6)}
+    .lead,.section-head p,.section-head-stack p,.showcase-head p{font-size:var(--text-lg);line-height:1.6}
+    .business-copy p,.dark-copy p,.question-copy p,.lede p{font-size:var(--text-md);line-height:1.7}
+    .shot-cap,.vid figcaption,.audience-builder-caption,.caption,.roadmap-feedback-note{font-size:var(--text-sm)}
+
+    /* ---- responsive nav: drop secondary links on small desktop ---- */
+    @media(max-width:1240px){.nav-opt2{display:none}}
+    @media(max-width:1120px){.nav-opt{display:none}}
+
+    /* ---- design system: breathing room between button and md docs ---- */
+    #design-system .harness-grid{margin-top:52px}
+
+    /* ---- refinement: video (60) + clickable feature list (40) ---- */
+    .refine-carousel{margin-top:14px;display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:36px;align-items:center}
+    .refine-viewport{overflow:hidden;border-radius:16px}
+    .refine-track{display:flex;transition:transform .45s cubic-bezier(.2,1,.22,1)}
+    .refine-slide{min-width:100%}
+    .refine-slide .vid-frame{aspect-ratio:1/1;width:100%;max-width:none;margin:0}
+    .refine-controls{display:flex;flex-direction:column;gap:10px}
+    .refine-item{position:relative;overflow:hidden;appearance:none;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:5px;padding:16px 18px 18px;border:1px solid var(--line);border-radius:14px;background:transparent;transition:background .2s ease,border-color .2s ease}
+    .refine-item:hover{border-color:rgba(207,59,35,.4)}
+    .refine-item.is-active{background:#fff;border-color:transparent;box-shadow:0 16px 40px rgba(20,19,13,.10)}
+    .refine-item-persona{font-family:Manrope,sans-serif;font-size:12px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--blue)}
+    .refine-item-title{font-size:var(--h3);font-weight:700;color:var(--ink);line-height:1.14}
+    .refine-item-desc{font-size:14px;line-height:1.5;color:var(--muted)}
+    .refine-item-bar{position:absolute;left:0;bottom:0;height:3px;width:100%;background:transparent}
+    .refine-item.is-active .refine-item-bar{background:rgba(207,59,35,.16)}
+    .refine-item-bar i{display:block;height:100%;width:0;background:var(--blue);transition:width .12s linear}
+    @media(max-width:900px){.refine-carousel{grid-template-columns:1fr;gap:22px}}
+
+    /* ---- map audience builder: stacked (title, button, capture, 4 boxes) ---- */
+    #map-audience-builder .container{display:block}
+    #map-audience-builder .audience-builder-actions{margin-top:22px}
+    #map-audience-builder .audience-builder-frame{margin-top:26px}
+    #map-audience-builder .audience-builder-points{grid-template-columns:repeat(4,minmax(0,1fr));margin-top:30px}
+    @media(max-width:900px){#map-audience-builder .audience-builder-points{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:560px){#map-audience-builder .audience-builder-points{grid-template-columns:1fr}}
+
+    /* ---- compare: de-box, slider shown directly ---- */
+    #compare .compare-stage{background:none;border:0;box-shadow:none;padding:0}
+    #compare .compare-slider{margin-top:6px}
+
+    /* ---- business context: white ---- */
+    #business-context{background:#ffffff}
+
+    /* ---- concept arrows: chevrons, centered on the image's left/right ---- */
+    #concept-carousel .concept-carousel-btn{position:absolute;top:50%;bottom:auto;transform:translateY(-50%);width:46px;height:46px;z-index:5;background:rgba(255,251,246,.92);backdrop-filter:blur(6px);color:var(--ink);border:1px solid rgba(28,27,22,.12);box-shadow:0 10px 26px rgba(20,19,13,.18)}
+    #concept-carousel .concept-carousel-btn:hover{background:#fff;border-color:rgba(28,27,22,.22)}
+    #concept-carousel .concept-carousel-btn.prev{left:12px;right:auto}
+    #concept-carousel .concept-carousel-btn.next{right:12px;left:auto}
+    #concept-carousel .concept-carousel-icon{width:22px;height:22px;background:transparent}
+    #concept-carousel .concept-carousel-icon svg{width:22px;height:22px;display:block}
+
+    /* ---- product strategy: colored, convergence presentation ---- */
+    #strategy{background:linear-gradient(158deg,#d0431f,#a92f1b)}
+    #strategy .eyebrow{color:#ffe0d6}
+    #strategy h2{color:#fff6f0}
+    #strategy .section-head p,#strategy .section-head-stack p{color:rgba(255,241,233,.92)}
+    .converge{display:grid;grid-template-columns:minmax(0,1fr) 84px minmax(260px,.92fr);gap:22px;align-items:center;margin-top:34px}
+    .converge-inputs{display:grid;grid-template-columns:1fr;gap:12px}
+    .converge-chip{background:rgba(255,252,248,.94);border:1px solid rgba(28,27,22,.10);border-radius:14px;padding:15px 18px;box-shadow:0 12px 30px rgba(120,60,30,.08);display:flex;justify-content:space-between;align-items:baseline;gap:16px}
+    .converge-chip strong{color:var(--ink);font-size:17px}
+    .converge-chip span{color:#6a5c50;font-size:13.5px;text-align:right}
+    .converge-arrow{display:grid;place-items:center;color:#fff4ec;font-size:42px;font-weight:800;line-height:1}
+    .converge-core{background:linear-gradient(180deg,#1f1d16,#14130d);color:#f2f0e6;border-radius:18px;padding:28px 26px;box-shadow:0 26px 60px rgba(60,25,10,.26)}
+    .converge-core-kicker{display:inline-flex;align-items:center;gap:8px;font-family:ui-monospace,Menlo,monospace;font-size:11px;font-weight:700;letter-spacing:.14em;color:#ff8a6f;margin-bottom:12px}
+    .converge-core strong{display:block;color:#fff4ec;font-size:clamp(22px,2.4vw,28px);line-height:1.08;margin-bottom:10px}
+    .converge-core p{margin:0;color:rgba(242,240,230,.82);font-size:14.5px;line-height:1.6}
+    @media(max-width:900px){.converge{grid-template-columns:1fr;gap:16px}.converge-arrow{transform:rotate(90deg);font-size:32px}}
+
+    /* ---- responsive nav ---- */
+    @media(max-width:1200px){.nav-prototype-link{display:none}}
+
+    /* ---- refinement: no drop shadow under the video ---- */
+    .refine-slide .vid-frame{box-shadow:none}
+
+    /* ---- audience builder: lazy prototype embed with Play facade ---- */
+    #map-audience-builder .proto-stage{position:relative;aspect-ratio:16/9;background:#101318}
+    #map-audience-builder .proto-poster{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.52)}
+    #map-audience-builder .proto-overlay{position:absolute;inset:0;display:grid;place-items:center;background:linear-gradient(180deg,rgba(10,9,6,.34),rgba(10,9,6,.5))}
+    #map-audience-builder .proto-play{display:inline-flex;align-items:center;gap:11px;padding:14px 24px;border-radius:999px;border:0;background:var(--blue);color:#fff4ec;font-weight:800;font-size:16px;cursor:pointer;box-shadow:0 18px 44px rgba(20,19,13,.34);transition:transform .2s ease,background .2s ease}
+    #map-audience-builder .proto-play:hover{transform:translateY(-2px);background:var(--blue-2)}
+    #map-audience-builder .proto-play svg{width:16px;height:16px}
+    #map-audience-builder .proto-embed iframe{display:block;width:100%;height:min(72vh,760px);border:0;background:#fff}
+
+    /* ---- compare slider: smooth transition during the first-view sweep ---- */
+    .compare-slider.intro-sweep .compare-divider,
+    .compare-slider.intro-sweep .compare-handle{transition:left 1.5s cubic-bezier(.45,0,.15,1)}
+    .compare-slider.intro-sweep .compare-image.is-after{transition:clip-path 1.5s cubic-bezier(.45,0,.15,1)}
+  </style>
+</head>
+<body class="case-study-page">
+  <div class="landing-grid" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a class="brand" href="index.html"><span class="brand-mark"></span><span>Ivan Jose</span></a>
+      <div class="nav-right">
+        <div class="nav-links">
+          <a href="#summary" data-section-link="summary">Summary</a>
+          <a href="#business-context" data-section-link="discovery">Discovery</a>
+          <a href="#concept-shift" data-section-link="product-design">Product Design</a>
+          <a href="#prototype" data-section-link="prototype">AI Prototype</a>
+          <a href="#design-system" data-section-link="design-system">Design System</a>
+          <a href="#outcome" data-section-link="results">Results</a>
+          <span class="nav-indicator" aria-hidden="true"></span>
+        </div>
+        <a class="nav-prototype-link" href="#map-audience-builder">
+          <span class="nav-prototype-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="aiPrototypeGradient" x1="2" y1="3" x2="22" y2="21" gradientUnits="userSpaceOnUse">
+                  <stop offset="0" stop-color="#ff8a2a"/>
+                  <stop offset=".28" stop-color="#ff4d8d"/>
+                  <stop offset=".56" stop-color="#8f6dff"/>
+                  <stop offset=".8" stop-color="#2cc8ff"/>
+                  <stop offset="1" stop-color="#7cf0a6"/>
+                </linearGradient>
+              </defs>
+              <path d="M12 2.6 13.76 8l5.45 1.76-5.45 1.74L12 16.9l-1.74-5.4L4.8 9.76 10.26 8 12 2.6Z" fill="url(#aiPrototypeGradient)"/>
+              <path d="m18.2 13.8.9 2.7 2.7.9-2.7.88-.9 2.72-.88-2.72-2.72-.88 2.72-.9.88-2.7Z" fill="url(#aiPrototypeGradient)"/>
+              <path d="m6.24 14.58.64 1.93 1.94.64-1.94.63-.64 1.94-.62-1.94-1.94-.63 1.94-.64.62-1.93Z" fill="url(#aiPrototypeGradient)"/>
+            </svg>
+          </span>
+          <span>See working prototype</span>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <section class="case-hero" id="summary">
+      <div class="container">
+        <div class="hero-meta">
+          <div class="eyebrow">Flagship Case Study · LettrLabs</div>
+          <div class="hero-status-tag">Shipped Product</div>
+        </div>
+        <h1 class="case-title">
+          <button class="hover-preview-trigger title-preview-trigger" type="button" data-preview="lettrlabs" aria-label="Preview LettrLabs" data-hover-hint="Click to view card">
+            Redesigning LettrLabs’ Map Workflow into an Audience Builder
+          </button>
+          <span class="case-title-mobile">Redesigning LettrLabs’ Map Workflow into an Audience Builder</span>
+        </h1>
+        <p class="lead">
+          I helped modernize a two-year-old geographic audience builder inside LettrLabs’ automation flow. The original ask was to fix map bugs, but the deeper issue was that customers often needed Customer Success just to create an automation. I shifted the work from “make the map better” to “help different users build audiences without getting blocked.”
+        </p>
+        <div class="case-actions">
+          <a class="button secondary" href="https://www.lettrlabs.com/" target="_blank" rel="noreferrer">Visit LettrLabs</a>
+          <a class="button secondary" href="audience-builder-prototype/index.html" target="_blank" rel="noreferrer">Open map prototype</a>
+          <span class="prototype-note">I built the prototype in Codex to make the interaction model tangible before engineering committed to implementation details.</span>
+        </div>
+
+        <div class="case-summary">
+          <div class="callout">
+            <h3>Executive summary</h3>
+            <p>
+              The redesign shipped to production, removed seven audited blockers from the primary targeting path, reduced filtering wait time from roughly 3 minutes to 13–22 seconds, supported multiple audience-building mental models, and created the foundation for future paid data-filtering features.
+            </p>
+          </div>
+          <div class="panel kv">
+            <div class="kv-item"><span>Business weight</span><strong>95% of automations use maps</strong></div>
+            <div class="kv-item"><span>Revenue risk</span><strong>3 enterprise customers ≈ 75% of revenue</strong></div>
+            <div class="kv-item"><span>Timeline</span><strong>6 weeks</strong></div>
+            <div class="kv-item"><span>Process</span><strong>Uses AI prototype</strong></div>
+          </div>
+        </div>
+
+        <div class="story-diagram">
+          <p class="diagram-title">Why this mattered</p>
+          <div class="diagram-flow">
+            <div class="diagram-node"><strong>Customer</strong><span>Wants to launch direct mail</span></div>
+            <div class="diagram-arrow">→</div>
+            <div class="diagram-node"><strong>Map</strong><span>Defines the audience</span></div>
+            <div class="diagram-arrow">→</div>
+            <div class="diagram-node"><strong>Automation</strong><span>Runs the campaign</span></div>
+            <div class="diagram-arrow">→</div>
+            <div class="diagram-node"><strong>Revenue</strong><span>Core customer value</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="compare">
+      <div class="container">
+        <div class="compare-section-head">
+          <div class="pattern-head">
+            <div class="eyebrow">Comparison</div>
+            <h2>Old UX vs New</h2>
+            <p>Compare how the redesign changed the map workflow from a rigid setup modal into an audience-building workspace.</p>
+          </div>
+        </div>
+
+        <div class="compare-views">
+          <div class="compare-view" id="compare-map">
+            <div class="compare-stage">
+              <div class="compare-slider" data-compare-slider style="--position:52%">
+                <div class="compare-slider-frame">
+                  <span class="compare-label before">Old</span>
+                  <span class="compare-label after">New</span>
+                  <img class="compare-image is-before" src="images/map-compare-new.png" alt="New map workflow with reusable map controls, map context, and audience actions." />
+                  <img class="compare-image is-after" src="images/map-compare-old.png" alt="Old map workflow inside an automation modal." />
+                  <div class="compare-divider" aria-hidden="true"></div>
+                  <div class="compare-handle" aria-hidden="true"></div>
+                  <input class="compare-range" type="range" min="0" max="100" value="52" aria-label="Compare old and new map experience" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-dark-soft" id="question">
+      <div class="container split">
+        <div class="pattern-head">
+          <div class="eyebrow">The question that changed the project</div>
+          <h2>Why do customers need Customer Success just to create an audience?</h2>
+        </div>
+        <div class="question-copy">
+          <p>
+            At first, the project looked like a bug-fix pass on an old map. But the more I looked at the flow, the less I believed bugs were the real problem. The map itself was not impossibly hard. The workflow around it was full of setup gates, dead clicks, missing controls, and repeated work.
+          </p>
+          <p>
+            My reframing was simple: we were not only designing map interactions. We were designing how people think about building an audience.
+          </p>
+        </div>
+      </div>
+      <div class="container question-journey">
+        <p class="diagram-title diagram-title-outside">Expected vs. actual customer journey</p>
+        <div class="journey-groups" aria-label="Expected vs actual customer journey timeline">
+          <div class="journey-group">
+            <div class="journey-group-line" aria-hidden="true"></div>
+            <p class="journey-group-head">Expected</p>
+            <div class="journey-group-items">
+              <div class="journey-timeline-item">
+                <div class="journey-timeline-marker">1</div>
+                <div class="journey-timeline-copy">
+                  <h3>Customer defines the audience first</h3>
+                  <p>The natural starting point is the targeting decision itself: who they want to reach, before setup friction or map tooling gets in the way.</p>
+                </div>
+              </div>
+              <div class="journey-timeline-item">
+                <div class="journey-timeline-marker">2</div>
+                <div class="journey-timeline-copy">
+                  <h3>Customer configures automation next</h3>
+                  <p>Once the audience is clear, the rest of the workflow should feel sequential and support campaign setup instead of interrupting it.</p>
+                </div>
+              </div>
+              <div class="journey-timeline-item">
+                <div class="journey-timeline-marker">3</div>
+                <div class="journey-timeline-copy">
+                  <h3>Customer launches with confidence</h3>
+                  <p>The ideal path ends in a campaign-ready audience without extra translation, repeated effort, or support dependency.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="journey-group">
+            <div class="journey-group-line" aria-hidden="true"></div>
+            <p class="journey-group-head">Reality</p>
+            <div class="journey-group-items">
+              <div class="journey-timeline-item is-risk">
+                <div class="journey-timeline-marker">1</div>
+                <div class="journey-timeline-copy">
+                  <h3>Customer opens the map too early</h3>
+                  <p>The old flow assumed the map was the right first step even when users actually arrived with a ZIP, county, CSV, or saved area in mind.</p>
+                </div>
+              </div>
+              <div class="journey-timeline-item is-risk">
+                <div class="journey-timeline-marker">2</div>
+                <div class="journey-timeline-copy">
+                  <h3>Blockers stop momentum</h3>
+                  <p>Setup gates, missing controls, and dead clicks turned a basic audience task into a support problem before users could make real progress.</p>
+                </div>
+              </div>
+              <div class="journey-timeline-item is-risk">
+                <div class="journey-timeline-marker">3</div>
+                <div class="journey-timeline-copy">
+                  <h3>Customer Success fills the gap</h3>
+                  <p>Instead of the product carrying the workflow, customers relied on CS to explain what to do next and repeated setup the next time they returned.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="business-context">
+      <div class="container split">
+        <div class="pattern-head">
+          <div class="eyebrow">Business context</div>
+          <h2>This was not a side screen. It sat inside the money path.</h2>
+        </div>
+        <div class="business-copy">
+          <p>
+            Around 95% of customers who create automations use the map. Three major enterprise customers made up roughly 75% of revenue, and they relied heavily on map-based targeting. They had also been asking for the experience to be updated, so the cost of leaving it alone was not just UX friction—it was revenue risk.
+          </p>
+          <p>
+            The map also mattered to future strategy. Today, filtering relied on USDA-backed data. A clearer audience-building model would make it easier to migrate toward LettrLabs-owned data later and introduce paid filtering, audience refinement, and ROI-focused targeting features.
+          </p>
+        </div>
+      </div>
+      <div class="container metric-strip">
+        <div class="metric-tile"><strong>95%</strong><span>of automation users need the map to create campaigns</span></div>
+        <div class="metric-tile"><strong>75%</strong><span>approx. revenue concentration from 3 enterprise customers</span></div>
+        <div class="metric-tile"><strong>7</strong><span>audited blockers removed from the primary path</span></div>
+        <div class="metric-tile"><strong>13–22s</strong><span>new filtering wait time, down from roughly 3 minutes</span></div>
+      </div>
+    </section>
+
+    <section class="section" id="discovery">
+      <div class="container split">
+        <div class="pattern-head">
+          <div class="eyebrow">Discovery</div>
+          <h2>I wanted to understand whether the problem was really the map, or whether the map was simply where the friction became visible.</h2>
+        </div>
+        <div class="business-copy">
+          <p>
+            To answer that, I triangulated across sources instead of trusting one. I analyzed behavioral data in Hotjar—heatmaps, drop-offs, and rage clicks—and turned it into a journey map focused on where actions, validations, and edge cases actually broke down. Alongside that, I categorized the interview notes PM and CS had gathered into recurring patterns, ran a full UX audit, and used AI-assisted Playwright walkthroughs to replay the flow.
+          </p>
+          <p>
+            The goal was not to collect more observations. It was to compare bad paths against easier happy paths, and see whether they all pointed to the same structural problem.
+          </p>
+        </div>
+      </div>
+      <div class="container discovery-band">
+        <div class="discovery-evidence-table" role="table" aria-label="Discovery evidence sources">
+          <div class="discovery-evidence-head" role="row">
+            <div role="columnheader">Source</div>
+            <div role="columnheader">Evidence</div>
+          </div>
+          <div class="discovery-evidence-row" role="row">
+            <div role="cell">Active users</div>
+            <div role="cell">~1,500 automation users</div>
+          </div>
+          <div class="discovery-evidence-row" role="row">
+            <div role="cell">Product research</div>
+            <div role="cell">~20 interviews gathered by PM and CS, which I categorized into recurring patterns and personas</div>
+          </div>
+          <div class="discovery-evidence-row" role="row">
+            <div role="cell">Behavioral data (Hotjar)</div>
+            <div role="cell">Heatmaps, drop-offs, and rage clicks I analyzed and mapped to specific broken actions, validations, and edge cases</div>
+          </div>
+          <div class="discovery-evidence-row" role="row">
+            <div role="cell">Customer Success</div>
+            <div role="cell">~40 map-related support tickets every week</div>
+          </div>
+          <div class="discovery-evidence-row" role="row">
+            <div role="cell">UX audit</div>
+            <div role="cell">End-to-end workflow review of the existing targeting experience</div>
+          </div>
+          <div class="discovery-evidence-row" role="row">
+            <div role="cell">AI evaluation</div>
+            <div role="cell">An AI “user” plus Playwright walkthroughs helped surface broken paths, compare bad flows against easier happy paths, and summarize the overall pattern across those answers.</div>
+          </div>
+        </div>
+        <div class="discovery-insight">
+          <p>Across every source, the same pattern surfaced: the issues looked different individually, but traced back to a handful of root causes.</p>
+          <p>So instead of fixing them one by one, I grouped them into <strong>seven recurring blockers</strong> that accounted for most of the friction—which reframed the project from fixing bugs to redesigning the audience-building workflow.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="audit">
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">UX audit</div>
+          <h2>I used the audit to move the conversation from “bugs” to blockers.</h2>
+          <p>The strongest signal was not that the UI looked old. It was that the product kept saying “not yet” without helping customers move forward.</p>
+        </div>
+        <div class="comparison-table">
+          <div class="comparison-head">
+            <div>Blocker</div>
+            <div>Fix</div>
+          </div>
+          <div class="row"><div class="cell" data-label="Blocker">Users needed an automation name before adding locations.</div><div class="cell" data-label="Fix">I pushed to let users explore and build an audience before unrelated setup gates interrupted them.</div></div>
+          <div class="row"><div class="cell" data-label="Blocker">Old users had to rebuild locations they already created.</div><div class="cell" data-label="Fix">Saved locations gave repeat users a faster way to reuse previous work.</div></div>
+          <div class="row"><div class="cell" data-label="Blocker">Customers who targeted ZIP codes, counties, or states had to rely on drawing and radius tools.</div><div class="cell" data-label="Fix">Geographic selection supported ZIP, city, county, state, and broader targeting models.</div></div>
+          <div class="row"><div class="cell" data-label="Blocker">Some clicks did nothing or gave weak feedback.</div><div class="cell" data-label="Fix">Loading, success, warning, empty, validation, and recovery states replaced dead-end interactions—designed to read without relying on color alone, with clear focus and keyboard states.</div></div>
+          <div class="row"><div class="cell" data-label="Blocker">Users had control problems when they only wanted part of a larger location.</div><div class="cell" data-label="Fix">Include and exclude controls gave customers more control over the final audience.</div></div>
+          <div class="row"><div class="cell" data-label="Blocker">Filtering could take roughly 3 minutes.</div><div class="cell" data-label="Fix">Filtering improved to roughly 13–22 seconds while still working within USDA-backed data constraints.</div></div>
+          <div class="row"><div class="cell" data-label="Blocker">Support had become part of the setup process.</div><div class="cell" data-label="Fix">The redesign reduced dependency by making the primary path more self-explanatory and less blocked.</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-dark" id="mental-models">
+      <div class="container split">
+        <div class="pattern-head">
+          <div class="eyebrow">Problem behind the problem</div>
+          <h2>The old experience treated everyone like one user.</h2>
+        </div>
+        <div class="dark-copy">
+          <p>
+            The old system was optimized for one assumed behavior: open the map, draw a shape, create a radius, continue. But customers didn't arrive with one mental model—and the four that mattered each expected a different starting point.
+          </p>
+          <p>
+            Once I saw those differences, the direction became clearer: the map needed to support multiple ways to begin, then consolidate them into one audience.
+          </p>
+        </div>
+      </div>
+      <div class="container">
+        <div class="persona-table-shell">
+          <div class="persona-table-head">
+            <p class="persona-table-title">Persona Summary</p>
+            <p>These personas did not need different products. They needed one audience-building workflow that could adapt to how they already thought about the task.</p>
+          </div>
+          <table class="persona-table">
+            <thead>
+              <tr>
+                <th>Persona</th>
+                <th>Usually starts with</th>
+                <th>What the product needs to support</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-label="Persona"><strong>Power users</strong>Operators already comfortable with audience controls and refinement logic.</td>
+                <td data-label="Usually starts with">CSV upload, include / exclude rules, and filtering controls.</td>
+                <td data-label="What the product needs to support">Fast import, precise refinement, and confidence that complex audience edits will hold together.</td>
+              </tr>
+              <tr>
+                <td data-label="Persona"><strong>Local marketers</strong>People who already know the geography they want to target.</td>
+                <td data-label="Usually starts with">ZIP, city, county, or state targeting.</td>
+                <td data-label="What the product needs to support">Direct geographic selection without forcing drawing tools as the default path.</td>
+              </tr>
+              <tr>
+                <td data-label="Persona"><strong>Repeat users</strong>Customers returning to a workflow they have already configured before.</td>
+                <td data-label="Usually starts with">Saved and reusable locations.</td>
+                <td data-label="What the product needs to support">Quick reuse, minimal rebuild work, and continuity from prior campaigns.</td>
+              </tr>
+              <tr>
+                <td data-label="Persona"><strong>New users</strong>People who still need the visual reassurance of the map to orient themselves.</td>
+                <td data-label="Usually starts with">Map-first exploration.</td>
+                <td data-label="What the product needs to support">Clear entry actions, visible guidance, and map feedback that teaches the workflow while they use it.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="concept-shift">
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">Concept shift</div>
+          <h2>The first concept was not what we shipped.</h2>
+          <p>The early direction was more task-first than map-first. I kept the concept visible because it shows how the framing changed before the final product direction solidified.</p>
+        </div>
+        <div class="concept-carousel" id="concept-carousel">
+          <div class="concept-carousel-shell">
+            <button class="concept-carousel-btn prev" type="button" aria-label="Previous concept">
+              <span class="concept-carousel-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></span>
+            </button>
+            <div class="concept-carousel-viewport">
+              <div class="concept-carousel-track">
+                <article class="concept-carousel-slide is-active">
+                  <div class="concept-carousel-copy">
+                    <span class="concept-carousel-label">Concept 01</span>
+                    <h3>Start from the customer’s job, not the map control.</h3>
+                    <p>My first proposal gave people clear entry points before they had to manipulate a map: search for a place, define an area, reuse a saved area, or upload a CSV.</p>
+                    <p>This was a direct response to the personas: not everyone arrived ready to draw, so the entry point had to match how they already thought about the task.</p>
+                  </div>
+                  <figure class="concept-carousel-media" data-lightbox-title="Initial task-first concept" data-lightbox-caption="Users could choose the path that matched their intent before committing to map interaction.">
+                    <img src="images/map-concept-task-first-cards.jpeg" alt="Initial task-first map concept with search, define area, saved area, and upload CSV cards." />
+                  </figure>
+                </article>
+                <article class="concept-carousel-slide">
+                  <div class="concept-carousel-copy">
+                    <span class="concept-carousel-label">Concept 02</span>
+                    <h3>Simplify the entry pattern without losing flexibility.</h3>
+                    <p>The alternate version flattened the choices into a tighter list so the starting paths scanned faster. It made the options clearer, but it also pushed the map further out of the first impression.</p>
+                    <p>That trade-off mattered. The team still wanted the map to feel central to the product, even if the product logic itself had expanded beyond freeform map interaction.</p>
+                  </div>
+                  <figure class="concept-carousel-media" data-lightbox-title="Alternate entry pattern" data-lightbox-caption="A simpler stacked layout made the choices clearer, but still reduced the map from the first visible action.">
+                    <img src="images/map-concept-task-first-list.jpeg" alt="Alternate initial concept with stacked actions for define area, saved area, and upload CSV." />
+                  </figure>
+                </article>
+              </div>
+            </div>
+            <button class="concept-carousel-btn next" type="button" aria-label="Next concept">
+              <span class="concept-carousel-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></span>
+            </button>
+          </div>
+          <div class="concept-carousel-meta" aria-label="Concept slide navigation">
+            <button class="concept-carousel-dot is-active" type="button" aria-label="Show concept 1"></button>
+            <button class="concept-carousel-dot" type="button" aria-label="Show concept 2"></button>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <div class="story-diagram">
+          <p class="diagram-title">Why the concept changed</p>
+          <div class="diagram-split">
+            <div class="diagram-column">
+              <h3>Product view</h3>
+              <div class="stack">
+                <div class="stack-item">Start with the customer’s job.</div>
+                <div class="stack-item">Let CSV, saved areas, search, and map tools become equal entry points.</div>
+                <div class="stack-item">Reduce support dependency by matching how different personas already think.</div>
+              </div>
+            </div>
+            <div class="diagram-column">
+              <h3>Business view</h3>
+              <div class="stack">
+                <div class="stack-item">Keep the map visible because it is central to the product experience.</div>
+                <div class="stack-item">Make the map feel more capable before users move into targeting details.</div>
+                <div class="stack-item">Preserve visual trust while still reducing the steps needed to build an audience.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="alignment-grid">
+          <div class="alignment-card"><h3>Why PM agreed</h3><p>PM research showed customers approached audience creation differently. A single rigid map-first path did not reflect the clustered personas they were seeing.</p></div>
+          <div class="alignment-card"><h3>Why engineering agreed</h3><p>Multiple entry points could still resolve into one audience model, which made the experience easier to reason about than separate one-off workflows.</p></div>
+          <div class="alignment-card"><h3>Why CS agreed</h3><p>Support questions were often about helping customers reach the audience they already had in mind, not about teaching them more map interaction.</p></div>
+        </div>
+        <div class="business-copy" style="margin-top:24px;max-width:none">
+          <p>
+            The final compromise kept the map prominent, but the product logic shifted. We were no longer only improving a map screen. We were making the path to audience creation easier and less fragile while still respecting the business need for a strong map-led experience.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="design-evolution">
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">Design evolution</div>
+          <h2>I used early concepts to make the interaction model tangible.</h2>
+          <p>These explorations helped the team discuss the actual behavior of the product: how users start, how they add locations, how the map responds, and how selected areas become a usable audience.</p>
+        </div>
+        <div class="scroll-story" data-scroll-gallery>
+          <div class="scroll-story-copy">
+            <article class="scroll-story-step is-active" data-scroll-step="empty-state-click">
+              <figure class="scroll-story-mobile-media" data-lightbox-title="Empty state with click actions" data-lightbox-caption="The empty state made radius, polygon, and ZIP targeting discoverable before users had added any service area.">
+                <img src="images/map-concept-empty-state-click.jpeg" alt="Empty state concept with add radius, add polygon, and add zip codes menu." />
+              </figure>
+              <span class="scroll-story-label">Exploration 01</span>
+              <h3>Make the first click useful before the audience exists.</h3>
+              <p>The empty state exposed radius, polygon, and ZIP-based targeting immediately, so users did not have to hunt for the correct starting action after landing on a blank canvas.</p>
+              <p>That gave the map a clearer invitation: pick a mode, understand the job, and start building with feedback instead of guessing.</p>
+            </article>
+            <article class="scroll-story-step" data-scroll-step="radius">
+              <figure class="scroll-story-mobile-media" data-lightbox-title="Radius mode" data-lightbox-caption="Radius creation became more direct with drag interaction, feedback, and an estimated structure count.">
+                <img src="images/map-concept-radius.jpeg" alt="Radius mode concept with drag handle, instructions, and estimated structure count." />
+              </figure>
+              <span class="scroll-story-label">Exploration 02</span>
+              <h3>Make radius creation feel immediate and measurable.</h3>
+              <p>The radius concept focused on drag interaction, live feedback, and an estimated structure count so the action felt more like shaping an audience than operating a geometry tool.</p>
+            </article>
+            <article class="scroll-story-step" data-scroll-step="polygon">
+              <figure class="scroll-story-mobile-media" data-lightbox-title="Polygon mode" data-lightbox-caption="Drawing became a guided mode with instructions, visible points, and a clear finish action.">
+                <img src="images/map-concept-polygon.jpeg" alt="Polygon mode concept with guided instructions and finish polygon action." />
+              </figure>
+              <span class="scroll-story-label">Exploration 03</span>
+              <h3>Turn polygon drawing into a guided mode.</h3>
+              <p>Instead of asking people to infer the workflow, the concept added visible points, clear instructions, and a distinct finish action so the tool felt intentional rather than fragile.</p>
+            </article>
+            <article class="scroll-story-step" data-scroll-step="county-zip">
+              <figure class="scroll-story-mobile-media" data-lightbox-title="County and ZIP targeting" data-lightbox-caption="Geographic selection supported users who already knew the regions they wanted and did not need freeform drawing.">
+                <img src="images/map-concept-county-zip.jpeg" alt="County and ZIP concept showing selected county on a map." />
+              </figure>
+              <span class="scroll-story-label">Exploration 04</span>
+              <h3>Support users who already know the place they want.</h3>
+              <p>County and ZIP targeting acknowledged that many users did not need freeform drawing at all. They already had a region in mind and wanted direct selection paths that respected that mental model.</p>
+            </article>
+            <article class="scroll-story-step" data-scroll-step="locations-table">
+              <figure class="scroll-story-mobile-media" data-lightbox-title="Early map with locations" data-lightbox-caption="This explored the map as a workspace where selected areas could be reviewed and edited below the canvas.">
+                <img src="images/map-concept-locations-table.jpeg" alt="Early map concept showing locations and service area table." />
+              </figure>
+              <span class="scroll-story-label">Exploration 05</span>
+              <h3>Treat the map like a workspace, not a one-off drawing tool.</h3>
+              <p>This version paired the map with a review table so selected areas could be inspected and edited in context instead of disappearing into an abstract setup step.</p>
+              <p>The point was to make location logic feel concrete. Users needed to trust what they had built before moving into campaign setup.</p>
+            </article>
+            <div class="scroll-story-progress" aria-hidden="true"></div>
+          </div>
+          <div class="scroll-story-sticky">
+            <div class="scroll-story-stage">
+              <figure class="scroll-story-media is-active" data-scroll-media="empty-state-click" data-lightbox-title="Empty state with click actions" data-lightbox-caption="The empty state made radius, polygon, and ZIP targeting discoverable before users had added any service area.">
+                <img src="images/map-concept-empty-state-click.jpeg" alt="Empty state concept with add radius, add polygon, and add zip codes menu." />
+              </figure>
+              <figure class="scroll-story-media" data-scroll-media="radius" data-lightbox-title="Radius mode" data-lightbox-caption="Radius creation became more direct with drag interaction, feedback, and an estimated structure count.">
+                <img src="images/map-concept-radius.jpeg" alt="Radius mode concept with drag handle, instructions, and estimated structure count." />
+              </figure>
+              <figure class="scroll-story-media" data-scroll-media="polygon" data-lightbox-title="Polygon mode" data-lightbox-caption="Drawing became a guided mode with instructions, visible points, and a clear finish action.">
+                <img src="images/map-concept-polygon.jpeg" alt="Polygon mode concept with guided instructions and finish polygon action." />
+              </figure>
+              <figure class="scroll-story-media" data-scroll-media="county-zip" data-lightbox-title="County and ZIP targeting" data-lightbox-caption="Geographic selection supported users who already knew the regions they wanted and did not need freeform drawing.">
+                <img src="images/map-concept-county-zip.jpeg" alt="County and ZIP concept showing selected county on a map." />
+              </figure>
+              <figure class="scroll-story-media" data-scroll-media="locations-table" data-lightbox-title="Early map with locations" data-lightbox-caption="This explored the map as a workspace where selected areas could be reviewed and edited below the canvas.">
+                <img src="images/map-concept-locations-table.jpeg" alt="Early map concept showing locations and service area table." />
+              </figure>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="strategy">
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">Product strategy</div>
+          <h2>I reframed the map as an audience builder.</h2>
+          <p>That shift helped me decide what belonged in the experience and what should stay secondary.</p>
+        </div>
+        <div class="converge">
+          <div class="converge-inputs">
+            <div class="converge-chip"><strong>Search</strong><span>ZIP, city, county, state</span></div>
+            <div class="converge-chip"><strong>CSV upload</strong><span>Bring existing contacts</span></div>
+            <div class="converge-chip"><strong>Saved areas</strong><span>Reuse prior setup</span></div>
+            <div class="converge-chip"><strong>Map tools</strong><span>Radius and polygon</span></div>
+            <div class="converge-chip"><strong>Include / exclude</strong><span>Refine the audience</span></div>
+          </div>
+          <div class="converge-arrow" aria-hidden="true">→</div>
+          <div class="converge-core">
+            <span class="converge-core-kicker">◆ AUDIENCE BUILDER</span>
+            <strong>One model, many ways to begin.</strong>
+            <p>Every input converges into a single audience—so people focus on total reach and cost, not which tool they used to get there.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section showcase" id="feature-refine">
+      <div class="container">
+        <div class="showcase-head">
+          <div class="eyebrow">Refinement</div>
+          <h2>One audience, built from anywhere.</h2>
+          <p>Search, CSV, saved areas, radius, and polygon all resolve into a single audience—then include and exclude controls make partial-area targeting easy to reason about.</p>
+        </div>
+        <div class="refine-carousel" id="refine-carousel">
+          <div class="refine-viewport">
+            <div class="refine-track">
+              <article class="refine-slide"><div class="vid-frame"><video class="vid-media" muted playsinline preload="metadata" poster="images/map-audience-builder.png"><source src="images/location-search.mp4" type="video/mp4"></video></div></article>
+              <article class="refine-slide"><div class="vid-frame"><video class="vid-media" muted playsinline preload="metadata"><source src="images/radius-animation.mp4" type="video/mp4"></video></div></article>
+              <article class="refine-slide"><div class="vid-frame"><video class="vid-media" muted playsinline preload="metadata"><source src="images/polygon-animation.mp4" type="video/mp4"></video></div></article>
+              <article class="refine-slide"><div class="vid-frame"><video class="vid-media" muted playsinline preload="metadata"><source src="images/zip-hover.mp4" type="video/mp4"></video></div></article>
+              <article class="refine-slide"><div class="vid-frame"><video class="vid-media" muted playsinline preload="metadata"><source src="images/boundary-zoom.mp4" type="video/mp4"></video></div></article>
+              <article class="refine-slide"><div class="vid-frame"><video class="vid-media" muted playsinline preload="metadata"><source src="images/bulk-locations.mp4" type="video/mp4"></video></div></article>
+            </div>
+          </div>
+          <div class="refine-controls" role="tablist" aria-label="Refinement features">
+            <button class="refine-item is-active" type="button" role="tab">
+              <span class="refine-item-persona">For local marketers</span>
+              <span class="refine-item-title">Search any place</span>
+              <span class="refine-item-desc">They already know the region—type a ZIP, city, county, or state and go.</span>
+              <span class="refine-item-bar" aria-hidden="true"><i></i></span>
+            </button>
+            <button class="refine-item" type="button" role="tab">
+              <span class="refine-item-persona">For new &amp; repeat users</span>
+              <span class="refine-item-title">Size a radius</span>
+              <span class="refine-item-desc">Quick coverage around a point, with a live structure count as they drag.</span>
+              <span class="refine-item-bar" aria-hidden="true"><i></i></span>
+            </button>
+            <button class="refine-item" type="button" role="tab">
+              <span class="refine-item-persona">For power users</span>
+              <span class="refine-item-title">Draw a custom area</span>
+              <span class="refine-item-desc">They need an exact shape the standard tools can't cut—guided polygon mode.</span>
+              <span class="refine-item-bar" aria-hidden="true"><i></i></span>
+            </button>
+            <button class="refine-item" type="button" role="tab">
+              <span class="refine-item-persona">For new users</span>
+              <span class="refine-item-title">Click the map to select</span>
+              <span class="refine-item-desc">They want to see the map first—hover and click an area with nothing to learn.</span>
+              <span class="refine-item-bar" aria-hidden="true"><i></i></span>
+            </button>
+            <button class="refine-item" type="button" role="tab">
+              <span class="refine-item-persona">For local marketers</span>
+              <span class="refine-item-title">See real boundaries</span>
+              <span class="refine-item-desc">Target by real administrative lines—county and ZIP boundaries on the map.</span>
+              <span class="refine-item-bar" aria-hidden="true"><i></i></span>
+            </button>
+            <button class="refine-item" type="button" role="tab">
+              <span class="refine-item-persona">For power users</span>
+              <span class="refine-item-title">Upload locations in bulk</span>
+              <span class="refine-item-desc">They arrive with a list—import it via CSV instead of rebuilding by hand.</span>
+              <span class="refine-item-bar" aria-hidden="true"><i></i></span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="decisions">
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">Decision making</div>
+          <h2>The hardest parts were not UI decisions. They were trade-offs.</h2>
+          <p>I tried to make the cost of each decision visible so PM, business, design, and engineering could align faster.</p>
+        </div>
+        <div class="decision-log-table">
+          <div class="decision-log-head">
+            <div>Question</div>
+            <div>Trade-off</div>
+            <div>Decision</div>
+            <div>Future</div>
+          </div>
+          <div class="decision-log-body">
+            <div class="decision-log-cell" data-label="Question"><p>Should we start with tasks or the map?</p></div>
+            <div class="decision-log-cell" data-label="Trade-off"><p>Task-first was clearer for CSV and saved-area users.</p></div>
+            <div class="decision-log-cell" data-label="Decision"><p>We shipped map-first because business stakeholders believed visual context helped users trust the product.</p></div>
+            <div class="decision-log-cell" data-label="Future"><p>I would still A/B test task-first.</p></div>
+          </div>
+          <div class="decision-log-body">
+            <div class="decision-log-cell" data-label="Question"><p>Should clicking the map become the main interaction?</p></div>
+            <div class="decision-log-cell" data-label="Trade-off"><p>One-click selection was powerful, but combining radius, polygon, and place selection could overload the control.</p></div>
+            <div class="decision-log-cell" data-label="Decision"><p>We kept radius and polygon as primary CTAs and made place selection available through clearer map controls.</p></div>
+            <div class="decision-log-cell" data-label="Future"><p>Test a combined select mode once we have more usage data.</p></div>
+          </div>
+          <div class="decision-log-body">
+            <div class="decision-log-cell" data-label="Question"><p>Should we ship everything at once?</p></div>
+            <div class="decision-log-cell" data-label="Trade-off"><p>A full release would be cleaner, but the scope touched targeting, filtering, saved locations, CSV, exclusions, and QA.</p></div>
+            <div class="decision-log-cell" data-label="Decision"><p>We scoped the release so useful improvements could ship within the 6-week window instead of waiting for a larger all-at-once rollout.</p></div>
+            <div class="decision-log-cell" data-label="Future"><p>Use faster feedback loops between phases.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-dark" id="prototype">
+      <div class="container split">
+        <div class="pattern-head">
+          <div class="eyebrow">AI prototype</div>
+          <h2>The prototype changed how the team discussed the problem.</h2>
+        </div>
+        <div class="dark-copy">
+          <p>
+            I built the first interactive prototype in Codex—the first time our team worked from an AI-assisted prototype instead of static Figma screens. Suddenly PM, business stakeholders, and engineering could react to a working model, and it changed how we discussed the problem.
+          </p>
+          <p>
+            This is where much of the validation happened. We pressure-tested the interaction, compared map APIs across three different sources to find the right one, and checked the UX stability of selecting and adding places directly in the prototype—which is what made the call to make clicking the easier, primary way to build an audience.
+          </p>
+          <p>
+            In feedback, 9 out of 9 engineers said the prototype was helpful—for researching map APIs, validating feasibility, understanding edge cases, and discussing implementation risks earlier.
+          </p>
+          <a class="button" href="https://josejeani06.github.io/lettrlabs-service-area-map-builder/" target="_blank" rel="noreferrer">View Initial Prototype</a>
+        </div>
+      </div>
+      <div class="container">
+        <div class="story-diagram">
+          <p class="diagram-title">How prototyping changed the workflow</p>
+          <div class="diagram-split">
+            <div class="diagram-column"><h3>Before</h3><div class="stack"><div class="stack-item">Problem</div><div class="stack-item">PRD</div><div class="stack-item">UX strategy</div><div class="stack-item">Design</div><div class="stack-item">Engineering</div></div></div>
+            <div class="diagram-column"><h3>With prototype</h3><div class="stack"><div class="stack-item good">Problem</div><div class="stack-item good">Working prototype</div><div class="stack-item good">PM + CS feedback</div><div class="stack-item good">Business review</div><div class="stack-item good">Engineering feasibility</div><div class="stack-item good">Design refinement</div></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="engineering">
+      <div class="container split">
+        <div class="pattern-head">
+          <div class="eyebrow">Engineering partnership</div>
+          <h2>I learned to design with constraints instead of designing around them.</h2>
+        </div>
+        <div class="business-copy">
+          <p>
+            Engineering evaluated at least three map APIs. My role was to clarify which user interactions mattered most: selecting ZIPs, cities, counties, and states; supporting radius and polygon; rendering large datasets; keeping feedback responsive; and making exclusions understandable.
+          </p>
+          <p>
+            I also learned how engineers read Figma differently. When flows were confusing, I did not only explain the screen. I explained the concept behind the screen, the customer need, and the trade-off. That made handoff feel more like a shared product conversation than a file review.
+          </p>
+        </div>
+      </div>
+      <div class="container">
+        <div class="roadmap-shell">
+          <h3>Shipping strategy</h3>
+          <p>Because this workflow sat on the critical path for automation, we could not afford to wait for a perfect release.</p>
+          <p>Instead, we broke the work into phases so customers could benefit earlier while we collected feedback before investing in later functionality.</p>
+          <div class="roadmap-flow">
+              <div class="roadmap-phase">
+                <div class="roadmap-line phase">Phase 1</div>
+                <div class="roadmap-phase-list">
+                  <div class="roadmap-phase-item">Search</div>
+                  <div class="roadmap-phase-item">Radius</div>
+                  <div class="roadmap-phase-item">Polygon</div>
+                  <div class="roadmap-phase-item">ZIP</div>
+                  <div class="roadmap-phase-item">County</div>
+                  <div class="roadmap-phase-item">State</div>
+                </div>
+              </div>
+              <div class="roadmap-line arrow" aria-hidden="true">→</div>
+              <div class="roadmap-phase">
+                <div class="roadmap-line phase">Phase 2</div>
+                <div class="roadmap-phase-list">
+                  <div class="roadmap-phase-item">CSV upload</div>
+                  <div class="roadmap-phase-item">Bulk locations</div>
+                </div>
+              </div>
+              <div class="roadmap-line arrow" aria-hidden="true">→</div>
+              <div class="roadmap-phase">
+                <div class="roadmap-line phase">Phase 3</div>
+                <div class="roadmap-phase-list">
+                  <div class="roadmap-phase-item">Saved locations</div>
+                </div>
+              </div>
+              <div class="roadmap-line arrow" aria-hidden="true">→</div>
+              <div class="roadmap-phase">
+                <div class="roadmap-line phase">Phase 4</div>
+                <div class="roadmap-phase-list">
+                  <div class="roadmap-phase-item">Exclude</div>
+                </div>
+              </div>
+          </div>
+          <div class="roadmap-feedback-note">*Collect feedback between phases and reiterate.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-dark" id="design-system">
+      <div class="container split">
+        <div class="pattern-head">
+          <div class="eyebrow">Design system</div>
+          <span class="ai-badge">AI-READY SYSTEM</span>
+          <h2>The prototype felt production-grade because it drew from a design system I built to be AI-ready.</h2>
+        </div>
+        <div class="dark-copy">
+          <p>
+            Before designing new screens, I made consistency the foundation. I standardized every component on shared variables, then built a small Figma tool that flags when a layer is using an outdated variable—so the system could not silently drift as it grew. Once components were consistent and organized by category, I used AI to draft each one's definition: its purpose, and where it should and should not be used.
+          </p>
+          <p>
+            Then I made the system readable by machines, not just people. These layered docs act as an AI harness—an instruction set a model reads to write copy, follow recipes, and audit designs the same way a designer would. I also connected the system to code through Figma Code Connect and Storybook, so the final prototype could inherit the real components, states, and copy instead of approximating them.
+          </p>
+          <a class="button" href="design-system-case-study.html">Read the design system case study →</a>
+        </div>
+      </div>
+      <div class="container">
+        <div class="harness-grid">
+          <article class="harness-card">
+            <div class="harness-file">ux-copy.md</div>
+            <h3>UX copy guide</h3>
+            <p>A machine-readable voice-and-tone reference: brand personality, when to be brief versus instructive, length limits per surface, and grammar rules. Because it's structured, designers and AI both produce copy that already sounds like the product—no rewrite pass.</p>
+          </article>
+          <article class="harness-card">
+            <div class="harness-file">component-specs.md</div>
+            <h3>Component specs</h3>
+            <p>Every component documented—shared styling, the CSS for the ones that need it, and explicit do's and don'ts—so reuse and implementation follow one source of truth instead of tribal knowledge.</p>
+          </article>
+          <article class="harness-card">
+            <div class="harness-file">qa-audit.md</div>
+            <h3>QA &amp; audit rules</h3>
+            <p>A reference set of patterns, common violations, and known deviations. Any new design is audited against it and returns violations, deviations, and new patterns—so problems surface as rule-breaks rather than opinions.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="validation">
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">Validation</div>
+          <h2>I separated what we knew from what we expected.</h2>
+          <p>I wanted the case for the redesign to stay credible, so I treated measured facts, support signals, and projections differently.</p>
+        </div>
+        <div class="evidence-grid">
+          <div class="evidence-col">
+            <span class="evidence-tag solid">Measured</span>
+            <p>95% map usage in automations, seven blockers removed, filtering reduced from ~3 minutes to 13–22 seconds, and 9/9 engineers finding the prototype useful.</p>
+          </div>
+          <div class="evidence-col">
+            <span class="evidence-tag neutral">Support signals</span>
+            <p>Ticket categories pointed to repeated reuse issues, ZIP/county targeting needs, and control problems around selecting only part of a larger area.</p>
+          </div>
+          <div class="evidence-col">
+            <span class="evidence-tag outline">Projected</span>
+            <p>The first release removed the core blockers behind roughly 40 map tickets a week, so we projected support volume dropping toward 10–15 as saved maps, place-click, CSV, and exclusions shipped—plus higher self-adoption and easier conversion into paid data-filtering.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section audience-builder-section" id="map-audience-builder">
+      <div class="container">
+        <div class="section-head section-head-stack">
+          <div class="eyebrow">Map audience builder</div>
+          <h2>The final direction turned targeting into a workspace, not a one-path map tool.</h2>
+          <p>Users can search, draw, upload CSVs, reuse saved maps, select geography levels, and review included households without leaving the audience-building context.</p>
+        </div>
+        <div class="audience-builder-actions">
+          <a class="button" href="audience-builder-prototype/index.html" target="_blank" rel="noreferrer">View Working Prototype</a>
+        </div>
+        <div class="audience-builder-frame proto-embed" id="proto-embed" data-proto-src="audience-builder-prototype/index.html">
+          <div class="audience-builder-window-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+          <div class="proto-stage">
+            <img class="proto-poster" src="images/map-audience-builder.png" alt="LettrLabs audience builder prototype preview" />
+            <div class="proto-overlay">
+              <button class="proto-play" type="button" aria-label="Play the interactive prototype">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+                <span>Play Prototype</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <p class="audience-builder-caption">The interactive prototype loads only when you press play.</p>
+        <div class="audience-builder-points" aria-label="Audience builder capabilities">
+          <div class="audience-builder-point"><strong>Multiple starts</strong><span>Search, CSV, saved maps, radius, polygon, or direct map selection.</span></div>
+          <div class="audience-builder-point"><strong>Clear control</strong><span>Include and exclude modes make partial-area targeting easier to reason about.</span></div>
+          <div class="audience-builder-point"><strong>Visible feedback</strong><span>Selected locations, household counts, and map state stay visible as users work.</span></div>
+          <div class="audience-builder-point"><strong>Build-ready detail</strong><span>The prototype helped engineering evaluate API behavior and interaction edge cases.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="outcome">
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">Outcome</div>
+          <h2>The redesign shipped and turned the map into a stronger automation foundation.</h2>
+          <p>The biggest win was not just a cleaner interface. It was a workflow that better matched how customers actually build audiences.</p>
+        </div>
+        <div class="result-grid">
+          <div class="result-item"><span class="result-idx">01 / CUSTOMER</span><h3>More ways to build an audience</h3><p>Customers can start from ZIPs, counties, states, CSVs, saved areas, radius, polygon, include rules, or exclude rules instead of depending on one rigid map path.</p></div>
+          <div class="result-item"><span class="result-idx">02 / BUSINESS</span><h3>Risk removed from the money path</h3><p>The work reduced risk around a workflow used by roughly 95% of automation customers and heavily used by enterprise accounts representing major revenue.</p></div>
+          <div class="result-item"><span class="result-idx">03 / ENGINEERING</span><h3>Less ambiguity before build</h3><p>The prototype and phased approach reduced ambiguity before build, helped API research, and gave QA clearer states and paths to validate.</p></div>
+          <div class="result-item"><span class="result-idx">04 / PLATFORM</span><h3>A foundation to build on</h3><p>The audience-building model now has a clearer foundation for LettrLabs-owned data, premium filters, and future ROI-based audience recommendations.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="future-vision">
+      <div class="container">
+        <div class="future-opportunity">
+          <h3>Future opportunities</h3>
+          <p>One idea we intentionally postponed was separating audience creation from automation entirely.</p>
+          <p>Instead of forcing customers to begin inside an automation, audience building could become its own reusable experience.</p>
+          <p>Customers could define audiences once, save them, then reuse them across multiple automations.</p>
+          <p>Although it was not part of the six-week release, I still believe this architecture better supports long-term scalability because it narrows the user’s focus to a single job: building an audience.</p>
+          <p>Another is live insight on the map itself—a real structure or household count shown as users select an area. Once the targeting data is self-hosted instead of pulled from USDA-backed sources, the map could surface that number in real time, giving people faster feedback while building an audience instead of waiting on a separate filtering pass.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-dark" id="reflection">
+      <div class="container split">
+        <div class="pattern-head">
+          <div class="eyebrow">Reflection</div>
+          <h2>I still think the task-first idea deserved a test, but the final compromise made sense.</h2>
+        </div>
+        <div class="dark-copy">
+          <p>
+            My strongest rejected idea was a task-first entry point with three choices: use the map, upload a CSV, or use saved locations. I still believe it would have helped users who arrived with a clear job to do. But I also understood the concern: some customers needed to see the map first to orient themselves and trust the workflow.
+          </p>
+          <p>
+            If I had more time, I would build a faster feedback loop after each phase and measure time to first audience, map-related CS tickets, completion rate, filtering abandonment, saved-location reuse, and conversion from basic targeting into paid filtering. I would also A/B test the task-first entry point against the shipped map-first flow, scored per persona and use case, and read the results against the same heatmaps, drop-offs, and rage-click patterns I used in discovery—so the validation loop closes with the same behavioral evidence it opened with.
+          </p>
+        </div>
+      </div>
+      <div class="container">
+        <p class="quote">
+          “We stopped optimizing for map interactions and started optimizing for how people think about building an audience.”
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <a class="button secondary" href="index.html">← Back to portfolio</a>
+    </div>
+  </footer>
+
+  <div class="preview-card" id="preview-card" hidden aria-live="polite">
+    <div class="preview-card-shell">
+      <button class="preview-close" id="preview-close" type="button" aria-label="Close preview">×</button>
+      <div class="preview-visual" id="preview-visual"></div>
+      <div class="preview-copy">
+        <div class="preview-kicker" id="preview-kicker"></div>
+        <h3 class="preview-title" id="preview-title"></h3>
+        <p class="preview-text" id="preview-text"></p>
+        <div class="preview-actions">
+          <a class="button" id="preview-visit" href="#" target="_blank" rel="noreferrer">Visit</a>
+          <button class="button secondary" id="preview-dismiss" type="button">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="image-lightbox" id="image-lightbox" hidden aria-hidden="true">
+    <div class="image-lightbox-shell">
+      <button class="image-lightbox-close" id="image-lightbox-close" type="button" aria-label="Close fullscreen image">×</button>
+      <figure class="image-lightbox-media">
+        <img id="image-lightbox-image" alt="" />
+        <figcaption class="image-lightbox-caption">
+          <strong id="image-lightbox-title"></strong>
+          <span id="image-lightbox-text"></span>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <script>
+    const previewData = {
+      lettrlabs: {
+        kicker: "Live site",
+        title: "LettrLabs homepage",
+        text: "All-in-one direct mail marketing with AI-assisted design, personalization, targeting, and tracking.",
+        url: "https://www.lettrlabs.com/",
+        visual: "hero"
+      },
+      "saved-locations": {
+        kicker: "After preview",
+        title: "Saved locations",
+        text: "Returning customers can start from previous targeting work instead of rebuilding an audience from zero.",
+        url: "https://www.lettrlabs.com/",
+        visual: "saved"
+      },
+      "map-click": {
+        kicker: "After preview",
+        title: "Map click targeting",
+        text: "Click the map, pick the geographic level, and move from exploration to selection without switching tools.",
+        url: "https://www.lettrlabs.com/",
+        visual: "map"
+      },
+      "include-exclude": {
+        kicker: "After preview",
+        title: "Include and exclude",
+        text: "Audience refinement becomes a high-confidence action instead of a cleanup job after a broad selection.",
+        url: "https://www.lettrlabs.com/",
+        visual: "filter"
+      },
+      "feedback-states": {
+        kicker: "After preview",
+        title: "Feedback states",
+        text: "Success, warning, and validation states make the workflow feel guided instead of fragile.",
+        url: "https://www.lettrlabs.com/",
+        visual: "feedback"
+      },
+      "decision-start": {
+        kicker: "Design decision",
+        title: "Multiple ways to start",
+        text: "The side panel supports CSV upload, saved areas, search, and map-first entry points for different mental models.",
+        url: "https://www.lettrlabs.com/",
+        visual: "start"
+      },
+      "decision-click": {
+        kicker: "Design decision",
+        title: "Make clicking useful",
+        text: "The map becomes a direct selection surface, not just a visual wrapper around side-panel controls.",
+        url: "https://www.lettrlabs.com/",
+        visual: "map"
+      },
+      "decision-consolidate": {
+        kicker: "Design decision",
+        title: "Consolidate selections",
+        text: "Different targeting paths resolve into one understandable audience summary with reach and cost clarity.",
+        url: "https://www.lettrlabs.com/",
+        visual: "consolidate"
+      },
+      "decision-prototype": {
+        kicker: "Design decision",
+        title: "Prototype before build",
+        text: "Interactive prototypes helped de-risk feasibility discussions before implementation became expensive.",
+        url: "audience-builder-prototype/index.html",
+        visual: "prototype"
+      }
+    };
+
+    const visualMarkup = {
+      hero: `
+        <div class="visual-scene visual-hero">
+          <div class="mini-browser">
+            <div class="mini-browser-bar"></div>
+            <div class="hero-grid-mini">
+              <div class="hero-copy-mini"></div>
+              <div class="hero-panel-mini"></div>
+              <div class="hero-pill-mini"></div>
+              <div class="hero-pill-mini short"></div>
+            </div>
+          </div>
+        </div>
+      `,
+      saved: `
+        <div class="visual-scene visual-saved">
+          <div class="mini-sidebar"></div>
+          <div class="mini-canvas">
+            <div class="mini-card-stack">
+              <span></span><span></span><span></span>
+            </div>
+            <div class="mini-table"></div>
+          </div>
+        </div>
+      `,
+      map: `
+        <div class="visual-scene visual-map">
+          <div class="map-dot dot-a"></div>
+          <div class="map-dot dot-b"></div>
+          <div class="map-dot dot-c"></div>
+          <div class="map-dot dot-d"></div>
+          <div class="map-panel"></div>
+          <div class="map-chip chip-a"></div>
+          <div class="map-chip chip-b"></div>
+        </div>
+      `,
+      filter: `
+        <div class="visual-scene visual-filter">
+          <div class="filter-column"></div>
+          <div class="filter-band include"></div>
+          <div class="filter-band exclude"></div>
+          <div class="filter-pill"></div>
+          <div class="filter-pill short"></div>
+        </div>
+      `,
+      feedback: `
+        <div class="visual-scene visual-feedback">
+          <div class="toast success"></div>
+          <div class="toast warning"></div>
+          <div class="toast neutral"></div>
+        </div>
+      `,
+      start: `
+        <div class="visual-scene visual-start">
+          <div class="choice-card wide"></div>
+          <div class="choice-card"></div>
+          <div class="choice-card"></div>
+          <div class="choice-card"></div>
+        </div>
+      `,
+      consolidate: `
+        <div class="visual-scene visual-consolidate">
+          <div class="metric-card"></div>
+          <div class="metric-card"></div>
+          <div class="metric-chart"></div>
+        </div>
+      `,
+      prototype: `
+        <div class="visual-scene visual-prototype">
+          <div class="proto-frame one"></div>
+          <div class="proto-frame two"></div>
+          <div class="proto-connector"></div>
+        </div>
+      `
+    };
+
+    const previewCard = document.getElementById("preview-card");
+    const previewVisual = document.getElementById("preview-visual");
+    const previewKicker = document.getElementById("preview-kicker");
+    const previewTitle = document.getElementById("preview-title");
+    const previewText = document.getElementById("preview-text");
+    const previewVisit = document.getElementById("preview-visit");
+    const previewClose = document.getElementById("preview-close");
+    const previewDismiss = document.getElementById("preview-dismiss");
+    const triggers = document.querySelectorAll(".hover-preview-trigger");
+    const sectionLinks = document.querySelectorAll("[data-section-link]");
+    const navIndicator = document.querySelector(".nav-indicator");
+    const storyGalleries = Array.from(document.querySelectorAll("[data-scroll-gallery]")).map((gallery) => ({
+      node: gallery,
+      steps: Array.from(gallery.querySelectorAll("[data-scroll-step]")),
+      media: Array.from(gallery.querySelectorAll("[data-scroll-media]")),
+      progress: gallery.querySelector(".scroll-story-progress")
+    }));
+    const imageLightbox = document.getElementById("image-lightbox");
+    const imageLightboxImage = document.getElementById("image-lightbox-image");
+    const imageLightboxTitle = document.getElementById("image-lightbox-title");
+    const imageLightboxText = document.getElementById("image-lightbox-text");
+    const imageLightboxClose = document.getElementById("image-lightbox-close");
+    const navCategories = [
+      { key: "summary", ids: ["summary", "compare", "question"] },
+      { key: "discovery", ids: ["business-context", "discovery", "mental-models", "audit"] },
+      { key: "product-design", ids: ["concept-shift", "design-evolution", "strategy", "feature-refine", "decisions"] },
+      { key: "prototype", ids: ["prototype"] },
+      { key: "design-system", ids: ["design-system", "engineering"] },
+      { key: "results", ids: ["validation", "map-audience-builder", "outcome", "future-vision", "reflection"] }
+    ];
+    const allSections = Array.prototype.slice.call(document.querySelectorAll("main section[id]"));
+
+    const mobileQuery = window.matchMedia("(max-width: 900px)");
+    let activeTrigger = null;
+    let pinned = false;
+    let pointerX = window.innerWidth / 2;
+    let pointerY = window.innerHeight / 2;
+
+    function isMobileView() {
+      return mobileQuery.matches;
+    }
+
+    function populatePreview(key) {
+      const entry = previewData[key];
+      if (!entry) return;
+      previewKicker.textContent = entry.kicker;
+      previewTitle.textContent = entry.title;
+      previewText.textContent = entry.text;
+      previewVisit.href = entry.url;
+      previewVisual.innerHTML = visualMarkup[entry.visual] || "";
+    }
+
+    function placePreview(x, y) {
+      const width = 420;
+      const height = 430;
+      const offset = 24;
+      const left = Math.min(Math.max(16, x + offset), window.innerWidth - width - 16);
+      const top = Math.min(Math.max(16, y - 26), window.innerHeight - height - 16);
+      previewCard.style.left = left + "px";
+      previewCard.style.top = top + "px";
+    }
+
+    function showPreview(trigger, shouldPin = false) {
+      if (isMobileView()) return;
+      const key = trigger.dataset.preview;
+      if (!previewData[key]) return;
+      activeTrigger = trigger;
+      pinned = shouldPin;
+      populatePreview(key);
+      previewCard.hidden = false;
+      previewCard.classList.add("is-visible");
+      previewCard.dataset.pinned = pinned ? "true" : "false";
+      placePreview(pointerX, pointerY);
+    }
+
+    function setActiveNav(sectionKey) {
+      if (!navIndicator) return;
+      let activeLink = null;
+      sectionLinks.forEach((link) => {
+        const isActive = link.dataset.sectionLink === sectionKey;
+        link.classList.toggle("is-active", isActive);
+        if (isActive) activeLink = link;
+      });
+      if (!activeLink) {
+        navIndicator.style.opacity = "0";
+        return;
+      }
+      navIndicator.style.opacity = "1";
+      navIndicator.style.width = activeLink.offsetWidth + "px";
+      navIndicator.style.transform = "translateX(" + activeLink.offsetLeft + "px)";
+    }
+
+    function updateActiveSection() {
+      const navHeight = document.querySelector(".nav")?.offsetHeight || 72;
+      const threshold = navHeight + 40;
+      let currentId = allSections.length ? allSections[0].id : null;
+      allSections.forEach((sec) => {
+        if (sec.getBoundingClientRect().top <= threshold) currentId = sec.id;
+      });
+      let key = navCategories[0].key;
+      navCategories.forEach((cat) => {
+        if (cat.ids.indexOf(currentId) !== -1) key = cat.key;
+      });
+      setActiveNav(key);
+    }
+
+    function hidePreview(force = false) {
+      if (!force && pinned) return;
+      previewCard.hidden = true;
+      previewCard.classList.remove("is-visible");
+      previewCard.dataset.pinned = "false";
+      activeTrigger = null;
+      pinned = false;
+    }
+
+    function setStoryGalleryActive(gallery, id) {
+      if (!gallery) return;
+      let activeIndex = 0;
+      gallery.steps.forEach((step, index) => {
+        const isActive = step.dataset.scrollStep === id;
+        step.classList.toggle("is-active", isActive);
+        if (isActive) activeIndex = index;
+      });
+      gallery.media.forEach((media) => {
+        const isActive = media.dataset.scrollMedia === id;
+        media.classList.toggle("is-active", isActive);
+      });
+      if (gallery.progress && gallery.steps.length > 1) {
+        const ratio = activeIndex / (gallery.steps.length - 1);
+        const trackHeight = Math.max(0, gallery.progress.offsetHeight - 84);
+        gallery.progress.style.setProperty("--story-progress", `${trackHeight * ratio}px`);
+      }
+      gallery.node.dataset.activeStep = id;
+    }
+
+    function updateDesignEvolutionSticky() {
+      // Stickiness is now handled purely with CSS (position: sticky).
+      // Just clear any inline styles an earlier version may have left behind.
+      const sticky = document.querySelector("#design-evolution .scroll-story-sticky");
+      if (!sticky) return;
+      sticky.style.position = "";
+      sticky.style.top = "";
+      sticky.style.left = "";
+      sticky.style.bottom = "";
+      sticky.style.width = "";
+    }
+
+    function updateStoryGalleries() {
+      const anchor = window.innerHeight * 0.5;
+      storyGalleries.forEach((gallery) => {
+        let nextStep = gallery.steps[0];
+        let nearest = Number.POSITIVE_INFINITY;
+        gallery.steps.forEach((step) => {
+          const marker = step.querySelector("h3") || step;
+          const rect = marker.getBoundingClientRect();
+          const distance = Math.abs(rect.top + rect.height * 0.5 - anchor);
+          if (distance < nearest) {
+            nearest = distance;
+            nextStep = step;
+          }
+        });
+        if (nextStep) setStoryGalleryActive(gallery, nextStep.dataset.scrollStep);
+      });
+      updateDesignEvolutionSticky();
+    }
+
+    function getActiveGalleryMedia(galleryNode) {
+      return galleryNode?.querySelector(".scroll-story-media.is-active");
+    }
+
+    function openImageLightbox(media) {
+      if (!media) return;
+      const image = media.querySelector("img");
+      if (!image) return;
+      imageLightboxImage.src = image.currentSrc || image.src;
+      imageLightboxImage.alt = image.alt || "";
+      imageLightboxTitle.textContent = media.dataset.lightboxTitle || "";
+      imageLightboxText.textContent = media.dataset.lightboxCaption || "";
+      imageLightbox.hidden = false;
+      imageLightbox.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeImageLightbox() {
+      imageLightbox.hidden = true;
+      imageLightbox.setAttribute("aria-hidden", "true");
+      imageLightboxImage.src = "";
+      document.body.style.overflow = "";
+    }
+
+    const conceptCarousel = document.getElementById("concept-carousel");
+    if (conceptCarousel) {
+      const track = conceptCarousel.querySelector(".concept-carousel-track");
+      const slides = Array.from(conceptCarousel.querySelectorAll(".concept-carousel-slide"));
+      const prevButton = conceptCarousel.querySelector(".concept-carousel-btn.prev");
+      const nextButton = conceptCarousel.querySelector(".concept-carousel-btn.next");
+      const dots = Array.from(conceptCarousel.querySelectorAll(".concept-carousel-dot"));
+      let conceptIndex = 0;
+
+      const conceptShell = conceptCarousel.querySelector(".concept-carousel-shell");
+      function positionConceptArrows() {
+        const active = slides[conceptIndex];
+        const media = active && active.querySelector(".concept-carousel-media");
+        if (!media || !conceptShell) return;
+        const m = media.getBoundingClientRect();
+        const s = conceptShell.getBoundingClientRect();
+        const centerY = (m.top - s.top) + m.height / 2;
+        [prevButton, nextButton].forEach((btn) => { if (btn) btn.style.top = centerY + "px"; });
+      }
+      function renderConceptCarousel() {
+        track.style.transform = `translateX(-${conceptIndex * 100}%)`;
+        slides.forEach((slide, index) => slide.classList.toggle("is-active", index === conceptIndex));
+        dots.forEach((dot, index) => dot.classList.toggle("is-active", index === conceptIndex));
+        if (prevButton) prevButton.disabled = conceptIndex === 0;
+        if (nextButton) nextButton.disabled = conceptIndex === slides.length - 1;
+        positionConceptArrows();
+      }
+      window.addEventListener("resize", positionConceptArrows, { passive: true });
+      window.addEventListener("load", positionConceptArrows);
+
+      prevButton?.addEventListener("click", () => {
+        if (conceptIndex > 0) {
+          conceptIndex -= 1;
+          renderConceptCarousel();
+        }
+      });
+
+      nextButton?.addEventListener("click", () => {
+        if (conceptIndex < slides.length - 1) {
+          conceptIndex += 1;
+          renderConceptCarousel();
+        }
+      });
+
+      dots.forEach((dot, index) => {
+        dot.addEventListener("click", () => {
+          conceptIndex = index;
+          renderConceptCarousel();
+        });
+      });
+
+      slides.forEach((slide) => {
+        slide.querySelector(".concept-carousel-media")?.addEventListener("click", () => {
+          openImageLightbox(slide.querySelector(".concept-carousel-media"));
+        });
+      });
+
+      renderConceptCarousel();
+    }
+
+    triggers.forEach((trigger) => {
+      trigger.addEventListener("mouseenter", (event) => {
+        if (isMobileView()) return;
+        pointerX = event.clientX;
+        pointerY = event.clientY;
+        showPreview(trigger, false);
+      });
+
+      trigger.addEventListener("mousemove", (event) => {
+        if (isMobileView()) return;
+        pointerX = event.clientX;
+        pointerY = event.clientY;
+        if (!pinned) placePreview(pointerX, pointerY);
+      });
+
+      trigger.addEventListener("mouseleave", () => {
+        if (isMobileView()) return;
+        if (!pinned) hidePreview(true);
+      });
+
+      trigger.addEventListener("focus", () => {
+        if (isMobileView()) return;
+        const rect = trigger.getBoundingClientRect();
+        pointerX = rect.left + rect.width / 2;
+        pointerY = rect.top + rect.height / 2;
+        showPreview(trigger, true);
+      });
+
+      trigger.addEventListener("click", (event) => {
+        if (isMobileView()) return;
+        event.preventDefault();
+        pointerX = event.clientX || pointerX;
+        pointerY = event.clientY || pointerY;
+        showPreview(trigger, true);
+      });
+    });
+
+    document.addEventListener("mousemove", (event) => {
+      if (isMobileView()) return;
+      pointerX = event.clientX;
+      pointerY = event.clientY;
+      if (!previewCard.hidden && !pinned) placePreview(pointerX, pointerY);
+    });
+
+    previewCard.addEventListener("mouseenter", () => {
+      if (activeTrigger) pinned = true;
+    });
+
+    previewClose.addEventListener("click", () => hidePreview(true));
+    previewDismiss.addEventListener("click", () => hidePreview(true));
+
+    document.addEventListener("click", (event) => {
+      if (previewCard.hidden || !pinned) return;
+      const clickedTrigger = event.target.closest(".hover-preview-trigger");
+      if (previewCard.contains(event.target) || clickedTrigger) return;
+      hidePreview(true);
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key !== "Escape") return;
+      if (!imageLightbox.hidden) {
+        closeImageLightbox();
+        return;
+      }
+      hidePreview(true);
+    });
+
+    mobileQuery.addEventListener("change", () => {
+      if (isMobileView()) hidePreview(true);
+      closeImageLightbox();
+    });
+
+    const compareSliders = document.querySelectorAll("[data-compare-slider]");
+
+    compareSliders.forEach((slider) => {
+      const range = slider.querySelector(".compare-range");
+      if (!range) return;
+      const frame = slider.querySelector(".compare-slider-frame") || slider;
+
+      const syncSlider = () => {
+        slider.style.setProperty("--position", `${range.value}%`);
+      };
+
+      range.addEventListener("input", () => {
+        slider.classList.remove("intro-sweep");
+        syncSlider();
+      });
+
+      // First-view reveal: start on the old design, then sweep to the new one.
+      const START = 88, END = 40;
+      const reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      range.value = reduceMotion ? END : START;
+      syncSlider();
+
+      if (!reduceMotion && "IntersectionObserver" in window) {
+        let played = false;
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting || played) return;
+            played = true;
+            slider.classList.add("intro-sweep");
+            requestAnimationFrame(() => requestAnimationFrame(() => {
+              range.value = END;
+              syncSlider();
+            }));
+            setTimeout(() => slider.classList.remove("intro-sweep"), 1700);
+            io.disconnect();
+          });
+        }, { threshold: 0.45 });
+        io.observe(frame);
+      }
+    });
+
+    storyGalleries.forEach((gallery) => {
+      gallery.media.forEach((media) => {
+        media.addEventListener("click", () => openImageLightbox(media));
+      });
+    });
+
+    document.querySelectorAll(".scroll-story-mobile-media").forEach((media) => {
+      media.addEventListener("click", () => openImageLightbox(media));
+    });
+
+    imageLightboxClose.addEventListener("click", closeImageLightbox);
+    imageLightbox.addEventListener("click", (event) => {
+      if (event.target === imageLightbox) closeImageLightbox();
+    });
+
+    window.addEventListener("scroll", updateActiveSection, { passive: true });
+    window.addEventListener("scroll", updateStoryGalleries, { passive: true });
+    window.addEventListener("resize", updateActiveSection);
+    window.addEventListener("resize", updateStoryGalleries);
+    updateActiveSection();
+    updateStoryGalleries();
+  </script>
+  <script>
+    /* ===== Lazy-load the audience-builder prototype on demand ===== */
+    (function () {
+      var embed = document.getElementById("proto-embed");
+      if (!embed) return;
+      var play = embed.querySelector(".proto-play");
+      var src = embed.getAttribute("data-proto-src");
+      if (!play || !src) return;
+      play.addEventListener("click", function () {
+        var stage = embed.querySelector(".proto-stage");
+        var iframe = document.createElement("iframe");
+        iframe.src = src;
+        iframe.title = "LettrLabs audience builder prototype";
+        iframe.setAttribute("allow", "fullscreen");
+        iframe.setAttribute("loading", "lazy");
+        if (stage) { stage.replaceWith(iframe); } else { embed.appendChild(iframe); }
+      });
+    })();
+  </script>
+
+  <script>
+    /* ===== Refinement pill-controlled video carousel ===== */
+    (function () {
+      var root = document.getElementById("refine-carousel");
+      if (!root) return;
+      var track = root.querySelector(".refine-track");
+      var slides = Array.prototype.slice.call(root.querySelectorAll(".refine-slide"));
+      var items = Array.prototype.slice.call(root.querySelectorAll(".refine-item"));
+      var index = 0;
+      function setBar(n, pct) {
+        var bar = items[n] && items[n].querySelector(".refine-item-bar i");
+        if (bar) bar.style.width = pct + "%";
+      }
+      function go(i) {
+        index = (i + slides.length) % slides.length;
+        track.style.transform = "translateX(-" + (index * 100) + "%)";
+        items.forEach(function (item, n) {
+          var active = n === index;
+          item.classList.toggle("is-active", active);
+          item.setAttribute("aria-selected", active ? "true" : "false");
+          if (!active) setBar(n, 0);
+        });
+        slides.forEach(function (slide, n) {
+          var video = slide.querySelector("video");
+          if (!video) return;
+          if (n === index) { try { video.currentTime = 0; } catch (e) {} var p = video.play(); if (p && p.catch) p.catch(function () {}); }
+          else { video.pause(); }
+        });
+      }
+      slides.forEach(function (slide, n) {
+        var video = slide.querySelector("video");
+        if (!video) return;
+        video.addEventListener("timeupdate", function () {
+          if (n === index && video.duration) setBar(n, (video.currentTime / video.duration) * 100);
+        });
+        // Timer: advance to the next feature once this clip finishes.
+        video.addEventListener("ended", function () { if (n === index) go(index + 1); });
+      });
+      items.forEach(function (item, n) { item.addEventListener("click", function () { go(n); }); });
+      go(0);
+    })();
+  </script>
+
+  <script>
+    /* ===== Reusable scroll reveal =====
+       Adds .reveal-ready to safe section containers and animates them in.
+       Skips interactive/sticky widgets so nothing breaks. No-ops when JS or
+       IntersectionObserver is unavailable, so content is never left hidden. */
+    (function () {
+      if (!("IntersectionObserver" in window)) return;
+      if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      var SKIP = ".scroll-story, .compare-views, .concept-carousel, .audience-builder-frame-shell, .scroll-story-sticky";
+      var blocks = document.querySelectorAll("main .section > .container");
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
+      blocks.forEach(function (block) {
+        if (block.querySelector(SKIP)) return;
+        block.classList.add("reveal-ready");
+        io.observe(block);
+      });
+    })();
+  </script>
+</body>
+</html>

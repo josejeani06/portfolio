@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ivan Jose — Product Design Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="landing-page">
+  <div class="landing-grid" aria-hidden="true"></div>
+  <div class="landing-blob" aria-hidden="true"></div>
+
+  <nav class="nav landing-nav-shell">
+    <div class="container nav-inner">
+      <a class="brand" href="index.html"><span class="brand-mark"></span><span>Ivan Jose</span></a>
+      <div class="nav-links landing-nav">
+        <a href="#work">Work</a>
+        <a href="#approach">Approach</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <section class="landing-hero glow-zone">
+      <div class="container landing-hero-inner">
+        <div class="landing-kicker reveal-up">Hey, I am Ivan from Philippines, your next Product Designer</div>
+        <h1 class="landing-title reveal-up reveal-delay-1">
+          I turn <span class="scramble-word" data-word="messy">messy</span>
+          <span class="title-nowrap">product logic into</span>
+          <span>clear interfaces people trust.</span>
+        </h1>
+        <p class="landing-copy reveal-up reveal-delay-2">
+          I design product experiences that feel clear, thoughtful, and easy to use. I like taking something complex,
+          simplifying it, and turning it into a flow people can actually understand.
+        </p>
+        <div class="landing-actions reveal-up reveal-delay-3">
+          <a class="button landing-button" href="#work">View case studies</a>
+          <a class="landing-text-link landing-behance-link" href="https://www.behance.net/ivancreatives" target="_blank" rel="noreferrer">
+            <span class="behance-mark" aria-hidden="true">Bē</span>
+            <span>Visit Portfolio</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="landing-proof glow-zone">
+      <div class="container landing-proof-grid reveal-up">
+        <div class="proof-block">
+          <span class="proof-label">Focus</span>
+          <p>Core workflows, platform integrations, and enterprise-facing product surfaces.</p>
+        </div>
+        <div class="proof-block">
+          <span class="proof-label">Strength</span>
+          <p>System reuse, interaction thinking, engineer collaboration, QA, and visual polish.</p>
+        </div>
+        <div class="proof-block">
+          <span class="proof-label">Approach</span>
+          <p>Simplify the visible layer, preserve the real complexity underneath, and prototype early.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="landing-section" id="work">
+      <div class="container">
+        <div class="landing-section-head reveal-up">
+          <div>
+            <div class="eyebrow">Selected work</div>
+            <h2>Case studies built around shipped product decisions.</h2>
+          </div>
+          <p>Each study shows how I approach structure, interaction, systems thinking, and implementation detail in B2B SaaS.</p>
+        </div>
+
+        <div class="landing-case-list">
+          <a class="landing-case reveal-up hover-preview-trigger" href="map-case-study.html" data-preview="landing-map" data-hover-hint="Click to view card">
+            <div class="landing-case-index">01</div>
+            <div class="landing-case-body">
+              <div class="landing-case-meta">Core targeting workflow</div>
+              <h3>Modernizing a legacy audience map for faster, more flexible geographic targeting.</h3>
+              <p>Redesigned a complex targeting flow so users could start from saved areas, CSVs, map clicks, radius, and exclusions without feeling trapped inside one path.</p>
+            </div>
+            <div class="landing-case-tags">
+              <span>Workflow redesign</span>
+              <span>Interaction systems</span>
+              <span>Prototype-led</span>
+            </div>
+          </a>
+
+          <a class="landing-case reveal-up reveal-delay-1 hover-preview-trigger" href="integration-case-study.html" data-preview="landing-integration" data-hover-hint="Click to view card">
+            <div class="landing-case-index">02</div>
+            <div class="landing-case-body">
+              <div class="landing-case-meta">Platform integrations</div>
+              <h3>Designing a reusable connection flow for OAuth, credentials, validation, and account management.</h3>
+              <p>Created a scalable pattern for integrations so each new app could inherit the same product logic, states, and UI structure instead of starting from zero.</p>
+            </div>
+            <div class="landing-case-tags">
+              <span>OAuth</span>
+              <span>Status design</span>
+              <span>Platform UX</span>
+            </div>
+          </a>
+
+          <div class="landing-case landing-case-muted reveal-up reveal-delay-2">
+            <div class="landing-case-index">03</div>
+            <div class="landing-case-body">
+              <div class="landing-case-meta">Coming next</div>
+              <h3>Enterprise organization management for roles, payments, permissions, and multi-tenant administration.</h3>
+              <p>The next study will cover admin tooling, access structure, billing visibility, and organization-level controls across a growing SaaS platform.</p>
+            </div>
+            <div class="landing-case-tags">
+              <span>RBAC</span>
+              <span>Billing</span>
+              <span>Analytics</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="landing-section glow-zone" id="approach">
+      <div class="container landing-approach reveal-up">
+        <div class="landing-approach-copy">
+          <div class="eyebrow">Approach</div>
+          <h2>
+            <span>Reuse what works.</span>
+            <span>Reduce what distracts.</span>
+            <span class="approach-third-line">Make the interaction carry the clarity.</span>
+          </h2>
+        </div>
+        <div class="landing-approach-list">
+          <div>
+            <span class="approach-number">01</span>
+            <p>I start with product logic and mental models, not decoration. The UI should explain how the system behaves.</p>
+          </div>
+          <div>
+            <span class="approach-number">02</span>
+            <p>I prefer extending a design language over inventing new components unless the current system has clearly stopped helping.</p>
+          </div>
+          <div>
+            <span class="approach-number">03</span>
+            <p>I prototype with engineering in mind so the team can pressure-test states, transitions, and feasibility before build cost rises.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="landing-section landing-cta-section glow-zone" id="contact">
+      <div class="container landing-cta reveal-up">
+        <div>
+          <div class="eyebrow">Next step</div>
+          <h2>Need a designer who can work through product complexity without making the interface feel heavy?</h2>
+        </div>
+        <a class="button landing-button" href="mailto:hello@ivanjose.design">Say hello</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer landing-footer">
+    <div class="container">© Ivan Jose · Product Design Portfolio</div>
+  </footer>
+
+  <div class="preview-card" id="preview-card" hidden aria-live="polite">
+    <div class="preview-card-shell">
+      <button class="preview-close" id="preview-close" type="button" aria-label="Close preview">×</button>
+      <div class="preview-visual" id="preview-visual"></div>
+      <div class="preview-copy">
+        <div class="preview-kicker" id="preview-kicker"></div>
+        <h3 class="preview-title" id="preview-title"></h3>
+        <p class="preview-text" id="preview-text"></p>
+        <div class="preview-actions">
+          <a class="button" id="preview-visit" href="#" target="_blank" rel="noreferrer">Visit</a>
+          <button class="button secondary" id="preview-dismiss" type="button">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const root = document.documentElement;
+    const blob = document.querySelector(".landing-blob");
+    const revealNodes = document.querySelectorAll(".reveal-up");
+    const scrambleWord = document.querySelector(".scramble-word");
+    const glowZones = document.querySelectorAll(".glow-zone");
+    const previewCard = document.getElementById("preview-card");
+    const previewVisual = document.getElementById("preview-visual");
+    const previewKicker = document.getElementById("preview-kicker");
+    const previewTitle = document.getElementById("preview-title");
+    const previewText = document.getElementById("preview-text");
+    const previewVisit = document.getElementById("preview-visit");
+    const previewClose = document.getElementById("preview-close");
+    const previewDismiss = document.getElementById("preview-dismiss");
+    const previewTriggers = document.querySelectorAll(".landing-case.hover-preview-trigger");
+    const previewMobileQuery = window.matchMedia("(max-width: 900px)");
+    let targetX = window.innerWidth * 0.5;
+    let targetY = window.innerHeight * 0.28;
+    let currentX = targetX;
+    let currentY = targetY;
+    let blobActive = false;
+    let blobFrame = null;
+    let scrambleFrame = null;
+    let scrambleHovering = false;
+    let scrambleLastTick = 0;
+    let activePreviewTrigger = null;
+    let previewPinned = false;
+    const scrambleWords = ["clean", "clear", "smart", "solid", "sharp", "human", "craft", "flows", "focus"];
+    const previewData = {
+      "landing-map": {
+        kicker: "Case study 01",
+        title: "Modernizing a core targeting map",
+        text: "A redesign of a legacy audience builder so users can start from saved areas, CSVs, map clicks, radius, and exclusions without feeling trapped inside one path.",
+        url: "map-case-study.html",
+        visual: `<div class="visual-scene visual-start"><div class="choice-card wide"></div><div class="choice-card"></div><div class="choice-card"></div><div class="choice-card"></div></div>`
+      },
+      "landing-integration": {
+        kicker: "Case study 02",
+        title: "Reusable integration flow",
+        text: "A scalable connection pattern for OAuth, credentials, validation states, attribution setup, and account management across multiple apps.",
+        url: "integration-case-study.html",
+        visual: `<div class="visual-scene visual-image-frame"><img src="images/integration-manage.jpeg" alt="Integration platform preview"></div>`
+      }
+    };
+
+    function isPreviewMobile() {
+      return previewMobileQuery.matches;
+    }
+
+    function populatePreview(key) {
+      const entry = previewData[key];
+      if (!entry) return;
+      previewKicker.textContent = entry.kicker;
+      previewTitle.textContent = entry.title;
+      previewText.textContent = entry.text;
+      previewVisit.href = entry.url;
+      previewVisual.innerHTML = entry.visual;
+    }
+
+    function placePreview(x, y) {
+      const width = 420;
+      const height = 430;
+      const offset = 24;
+      const left = Math.min(Math.max(16, x + offset), window.innerWidth - width - 16);
+      const top = Math.min(Math.max(16, y - 26), window.innerHeight - height - 16);
+      previewCard.style.left = left + "px";
+      previewCard.style.top = top + "px";
+    }
+
+    function showPreview(trigger, shouldPin) {
+      if (!previewCard || isPreviewMobile()) return;
+      const key = trigger.dataset.preview;
+      if (!previewData[key]) return;
+      activePreviewTrigger = trigger;
+      previewPinned = shouldPin;
+      populatePreview(key);
+      previewCard.hidden = false;
+      previewCard.classList.add("is-visible");
+      previewCard.dataset.pinned = previewPinned ? "true" : "false";
+      placePreview(targetX, targetY);
+    }
+
+    function hidePreview(force) {
+      if (!previewCard) return;
+      if (!force && previewPinned) return;
+      previewCard.hidden = true;
+      previewCard.classList.remove("is-visible");
+      previewCard.dataset.pinned = "false";
+      activePreviewTrigger = null;
+      previewPinned = false;
+    }
+
+    function stopScramble(node) {
+      if (!node) return;
+      scrambleHovering = false;
+      if (scrambleFrame) {
+        window.cancelAnimationFrame(scrambleFrame);
+        scrambleFrame = null;
+      }
+      node.textContent = node.dataset.word || "messy";
+      node.classList.remove("is-scrambling");
+    }
+
+    function startScramble(node) {
+      if (!node) return;
+      const finalWord = node.dataset.word || node.textContent || "";
+
+      if (scrambleFrame) window.cancelAnimationFrame(scrambleFrame);
+
+      scrambleHovering = true;
+      scrambleLastTick = 0;
+      node.classList.add("is-scrambling");
+
+      function tick(timestamp) {
+        if (!scrambleHovering) return;
+
+        if (!scrambleLastTick || timestamp - scrambleLastTick >= 220) {
+          const candidates = scrambleWords.filter((word) => word !== node.textContent && word.length >= finalWord.length);
+          const nextWord = candidates[Math.floor(Math.random() * candidates.length)] || finalWord;
+          node.textContent = nextWord;
+          scrambleLastTick = timestamp;
+        }
+
+        scrambleFrame = window.requestAnimationFrame(tick);
+      }
+
+      tick();
+    }
+
+    function renderBlob() {
+      currentX += (targetX - currentX) * 0.14;
+      currentY += (targetY - currentY) * 0.14;
+      if (blob) {
+        const offset = blob.offsetWidth / 2;
+        blob.style.transform = "translate3d(" + (currentX - offset) + "px," + (currentY - offset) + "px,0)";
+      }
+
+      if (Math.abs(targetX - currentX) > 0.1 || Math.abs(targetY - currentY) > 0.1 || blobActive) {
+        blobFrame = window.requestAnimationFrame(renderBlob);
+      } else {
+        blobFrame = null;
+      }
+    }
+
+    function updateBlobPosition(event) {
+      if (!blob) return;
+      const zone = event.target.closest(".glow-zone");
+      if (!zone) {
+        blobActive = false;
+        blob.classList.remove("is-active");
+        return;
+      }
+      targetX = event.clientX;
+      targetY = event.clientY;
+      blobActive = true;
+      blob.classList.add("is-active");
+      if (!blobFrame) blobFrame = window.requestAnimationFrame(renderBlob);
+    }
+
+    window.addEventListener("pointermove", updateBlobPosition, { passive: true });
+    glowZones.forEach((zone) => {
+      zone.addEventListener("pointerleave", () => {
+        if (!blob) return;
+        blobActive = false;
+        blob.classList.remove("is-active");
+      });
+    });
+    document.addEventListener("pointerleave", () => {
+      if (!blob) return;
+      blobActive = false;
+      blob.classList.remove("is-active");
+    });
+
+    if (scrambleWord && !prefersReducedMotion) {
+      scrambleWord.addEventListener("mouseenter", () => startScramble(scrambleWord));
+      scrambleWord.addEventListener("mouseleave", () => stopScramble(scrambleWord));
+      scrambleWord.addEventListener("focus", () => startScramble(scrambleWord));
+      scrambleWord.addEventListener("blur", () => stopScramble(scrambleWord));
+    }
+
+    previewTriggers.forEach((trigger) => {
+      trigger.addEventListener("mouseenter", (event) => {
+        if (isPreviewMobile()) return;
+        targetX = event.clientX;
+        targetY = event.clientY;
+        showPreview(trigger, false);
+      });
+      trigger.addEventListener("mousemove", (event) => {
+        if (isPreviewMobile()) return;
+        targetX = event.clientX;
+        targetY = event.clientY;
+        if (!previewPinned) placePreview(targetX, targetY);
+      });
+      trigger.addEventListener("mouseleave", () => {
+        if (isPreviewMobile()) return;
+        if (!previewPinned) hidePreview(true);
+      });
+      trigger.addEventListener("focus", () => {
+        if (isPreviewMobile()) return;
+        const rect = trigger.getBoundingClientRect();
+        targetX = rect.left + rect.width / 2;
+        targetY = rect.top + rect.height / 2;
+        showPreview(trigger, true);
+      });
+      trigger.addEventListener("blur", () => {
+        if (isPreviewMobile()) return;
+        hidePreview(true);
+      });
+    });
+
+    document.addEventListener("mousemove", (event) => {
+      if (isPreviewMobile() || !previewCard || previewCard.hidden) return;
+      targetX = event.clientX;
+      targetY = event.clientY;
+      if (!previewPinned) placePreview(targetX, targetY);
+    });
+    previewCard?.addEventListener("mouseenter", () => {
+      if (activePreviewTrigger) previewPinned = true;
+    });
+    previewClose?.addEventListener("click", () => hidePreview(true));
+    previewDismiss?.addEventListener("click", () => hidePreview(true));
+    document.addEventListener("click", (event) => {
+      if (!previewCard || previewCard.hidden || !previewPinned) return;
+      const clickedTrigger = event.target.closest(".landing-case.hover-preview-trigger");
+      if (previewCard.contains(event.target) || clickedTrigger) return;
+      hidePreview(true);
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") hidePreview(true);
+    });
+    previewMobileQuery.addEventListener("change", () => {
+      if (isPreviewMobile()) hidePreview(true);
+    });
+
+    if (!prefersReducedMotion) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
+        });
+      }, { threshold: 0.14 });
+
+      revealNodes.forEach((node) => observer.observe(node));
+    } else {
+      revealNodes.forEach((node) => node.classList.add("is-visible"));
+    }
+  </script>
+</body>
+</html>
