@@ -294,11 +294,11 @@
     .break-item p + p{margin-top:12px;color:rgba(242,240,230,.62);font-size:13.5px}
 
     /* ============ Results table — the before/after ============ */
-    .results-table{margin-top:32px;border-top:2px solid var(--ink)}
-    .results-row{display:grid;grid-template-columns:minmax(0,1.5fr) 130px 34px 130px;align-items:center;gap:14px;padding:18px 0;border-bottom:1px solid var(--hair)}
-    .results-row.head{padding:12px 0;border-bottom:1px solid var(--line)}
+    .results-table{--result-gutter:24px;--result-value-width:176px;--result-arrow-width:52px;margin-top:32px;border-top:2px solid var(--ink)}
+    .results-row{display:grid;grid-template-columns:minmax(0,1fr) var(--result-value-width) var(--result-arrow-width) var(--result-value-width);align-items:center;gap:0;padding:18px var(--result-gutter);border-bottom:1px solid var(--hair)}
+    .results-row.head{padding:14px var(--result-gutter);border-bottom:1px solid var(--line)}
     .results-row.head span{font-size:var(--text-xs);font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
-    .results-row > :nth-child(2),.results-row > :nth-child(3),.results-row > :nth-child(4){justify-self:stretch;text-align:center}
+    .results-column-label,.result-value,.r-arrow{display:grid;place-items:center;width:100%;min-width:0;text-align:center}
     .results-row b{font-weight:700;color:var(--ink);font-size:var(--text-md)}
     .results-row b small{display:block;font-weight:500;color:var(--muted);font-size:var(--text-sm);margin-top:4px;line-height:1.5}
     .r-before{font-size:20px;font-weight:800;color:var(--muted);font-variant-numeric:tabular-nums}
@@ -474,8 +474,8 @@
     /* Evidence and audit tables stay white—even inside a dark section. */
     /* Measured before/after results use the same comparison language. */
     .results-table{border:1px solid rgba(242,240,230,.16);border-radius:14px;background:#12110c;overflow:hidden}
-    .results-row{padding:16px 18px;margin:0;border-bottom-color:rgba(242,240,230,.12)}
-    .results-row.head{padding-top:14px;padding-bottom:14px;background:#12110c;border-bottom-color:rgba(242,240,230,.16);color:#f2f0e6;text-transform:uppercase;font-size:var(--text-xs);font-weight:800;letter-spacing:.08em}
+    .results-row{padding:16px var(--result-gutter);margin:0;border-bottom-color:rgba(242,240,230,.12)}
+    .results-row.head{padding:14px var(--result-gutter);background:#12110c;border-bottom-color:rgba(242,240,230,.16);color:#f2f0e6;text-transform:uppercase;font-size:var(--text-xs);font-weight:800;letter-spacing:.08em}
     .results-row.head span:nth-child(2){color:#ff8a6f}.results-row.head span:last-child{color:#7dc98d}
     .results-row b,.results-row b small{color:#f2f0e6}
     .results-row .r-before{padding:8px 10px;border-radius:8px;background:rgba(207,59,35,.12);color:#ffd0c5}
@@ -523,7 +523,7 @@
       .limit .state{text-align:left}
       .loop{grid-template-columns:1fr}
       .loop-node{border-right:0;border-bottom:1px solid var(--hair);padding-right:0}
-      .results-row{grid-template-columns:1fr 74px 22px 74px;gap:10px}
+      .results-table{--result-gutter:14px;--result-value-width:74px;--result-arrow-width:26px}
       .r-before,.r-after{font-size:17px}
     }
   </style>
@@ -814,23 +814,23 @@
 
         <div class="results-table">
           <div class="results-row head">
-            <span>Check</span><span>Before</span><span></span><span>After</span>
+            <span class="results-check-label">Check</span><span class="results-column-label">Before</span><span class="results-arrow-label" aria-hidden="true"></span><span class="results-column-label">After</span>
           </div>
           <div class="results-row">
             <b>Refs that attach to a DOM node<small>If a ref doesn't attach, the app around it can't focus, measure or animate that component.</small></b>
-            <span class="r-before">77</span><span class="r-arrow" aria-hidden="true">→</span><span class="r-after">95</span>
+            <span class="result-value r-before">77</span><span class="r-arrow" aria-hidden="true">→</span><span class="result-value r-after">95</span>
           </div>
           <div class="results-row">
             <b>Hardcoded values left in the code<small>Raw hex, rgba and font stacks sitting where a token already existed.</small></b>
-            <span class="r-before">36</span><span class="r-arrow" aria-hidden="true">→</span><span class="r-after">0</span>
+            <span class="result-value r-before">36</span><span class="r-arrow" aria-hidden="true">→</span><span class="result-value r-after">0</span>
           </div>
           <div class="results-row">
             <b>Components with a manifest entry<small>The old one was maintained by hand, so it fell behind the code. The new one is generated from the code itself.</small></b>
-            <span class="r-before">50</span><span class="r-arrow" aria-hidden="true">→</span><span class="r-after">95</span>
+            <span class="result-value r-before">50</span><span class="r-arrow" aria-hidden="true">→</span><span class="result-value r-after">95</span>
           </div>
           <div class="results-row">
             <b>Components that render under test<small>The one number that didn't need fixing. It was the floor everything else got measured from.</small></b>
-            <span class="r-before">95</span><span class="r-arrow" aria-hidden="true">→</span><span class="r-after">95</span>
+            <span class="result-value r-before">95</span><span class="r-arrow" aria-hidden="true">→</span><span class="result-value r-after">95</span>
           </div>
         </div>
         <figure class="shot">
