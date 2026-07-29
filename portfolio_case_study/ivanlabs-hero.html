@@ -1,0 +1,643 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Ivanlabs Design System — Board</title>
+<script>try{if(new URLSearchParams(location.search).has('embed'))document.documentElement.classList.add('embed');}catch(e){}</script>
+
+<link rel="stylesheet" href="https://unpkg.com/@ivancreatelabs/design-system@0.4.0/dist/tokens.css" />
+<link rel="stylesheet" href="https://unpkg.com/@ivancreatelabs/design-system@0.4.0/dist/typography.css" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&family=Caveat:wght@500;600&display=swap" />
+
+<style>
+  :root { --ink: 24 26 42; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+
+  /* ONE section, full viewport. Spacing tokens scale with the breakpoints. */
+  .stage {
+    --gap: 24px;
+    --pin-pad: 20px;
+    --pin-radius: 18px;
+    --dot: 22px;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh; /* fills the real visible screen on mobile (accounts for the address bar) */
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overflow-x: hidden;
+    background: transparent; /* cards carry their own container; no board bg */
+    padding: var(--gap);
+  }
+  /* embedded in the case study: a clipped, non-scrolling preview */
+  html.embed, html.embed body { height: auto; }
+  html.embed .stage { height: auto; min-height: 100dvh; overflow: hidden; }
+  @media (max-width: 1279px) { .stage { --gap: 16px; --pin-pad: 14px; --pin-radius: 14px; --dot: 20px; } }
+  @media (max-width: 759px)  { .stage { --gap: 10px; --pin-pad: 9px;  --pin-radius: 11px; --dot: 16px; } }
+
+  /* Pinterest-style masonry: variable heights, responsive column count */
+  .board2 { display: flex; gap: var(--gap); align-items: flex-start; max-width: 1900px; margin: 0 auto;
+            animation: boardIn .7s cubic-bezier(.22,1,.36,1) both; }
+  .mcol { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: var(--gap); }
+
+  /* per-card reveal, triggered when it scrolls into the section (IntersectionObserver) */
+  .tile { width: 100%; opacity: 0; transform: translateY(16px);
+          transition: opacity .55s cubic-bezier(.22,1,.36,1), transform .55s cubic-bezier(.22,1,.36,1); }
+  .tile.is-in { opacity: 1; transform: none; }
+
+  @keyframes boardIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) {
+    .board2 { animation: none; }
+    .tile { opacity: 1; transform: none; transition: none; }
+  }
+  .pin {
+    display: inline-block;
+    width: 100%;
+    background: var(--neutral-bg-default);
+    border: 1px solid var(--neutral-border-muted);
+    border-radius: var(--pin-radius);
+    box-shadow: 0 1px 2px rgb(var(--ink) / .05), 0 6px 16px rgb(var(--ink) / .05);
+    padding: var(--pin-pad);
+    overflow: hidden;
+    transition: box-shadow .18s ease, transform .18s ease;
+  }
+  .pin:hover { box-shadow: 0 2px 6px rgb(var(--ink) / .08), 0 16px 36px rgb(var(--ink) / .10); }
+  /* self-contained surfaces (modals) get no extra pin frame */
+  .pin--bare { background: transparent; border: none; box-shadow: none; padding: 0; overflow: visible; }
+  .pin--bare:hover { box-shadow: none; transform: none; }
+
+  /* shared mock primitives */
+  .mock { font-family: var(--font-family-body); color: var(--neutral-text-icon-strong); }
+  .row { display: flex; align-items: center; }
+  .col { display: flex; flex-direction: column; }
+  .muted { color: var(--neutral-text-icon-emphasis); }
+  .lbl { font: var(--text-label); color: var(--neutral-text-icon-semi-strong); }
+
+  /* modal chrome (composed — Modal has no children slot) */
+  .modal { border-radius: 14px; overflow: hidden; background: var(--neutral-bg-default);
+           box-shadow: var(--shadow-dialog); border: 1px solid var(--neutral-border-muted); }
+  .modal__bar { background: var(--brand-bg-default); color: var(--brand-text-icon-on);
+                display: flex; align-items: center; justify-content: space-between; padding: 15px 18px; font: var(--text-h3); }
+  .modal__x { color: var(--brand-text-icon-on); opacity: .9; cursor: pointer; display: grid; place-items: center; }
+  .modal__body { padding: 20px; display: flex; flex-direction: column; gap: 15px;
+                 background: linear-gradient(180deg, var(--purple-10), var(--neutral-bg-default)); }
+  .modal__foot { display: flex; justify-content: flex-end; gap: 11px; padding-top: 2px; }
+
+  .card2 { border: 1px solid var(--neutral-border-default); border-radius: 14px; padding: 20px; background: var(--neutral-bg-default); }
+
+  /* billing */
+  .payrow { display: flex; align-items: center; gap: 15px; background: var(--neutral-bg-subtle); border-radius: 12px; padding: 13px 15px; }
+  .paytile { width: 46px; height: 40px; border-radius: 8px; background: var(--neutral-bg-default);
+             border: 1px solid var(--neutral-border-default); display: grid; place-items: center; box-shadow: var(--shadow-xs); flex: none; }
+  .valuefield { border: 1px solid var(--neutral-border-default); border-radius: 12px; padding: 10px 16px;
+                font: 600 15px/1 var(--font-family-data); color: var(--neutral-text-icon-strong);
+                background: var(--neutral-bg-default); box-shadow: var(--shadow-xs); min-width: 128px; text-align: center; }
+
+  /* stat tiles */
+  .stat { border: 1px solid var(--neutral-border-default); border-radius: 12px; padding: 13px 15px; background: var(--neutral-bg-default); }
+  .stat__k { font: var(--text-body-sm); color: var(--neutral-text-icon-emphasis); white-space: nowrap; }
+  .stat__v { font: 600 28px/1.1 var(--font-family-heading); color: var(--neutral-text-icon-strong); margin-top: 5px; }
+
+  /* tree / edit scope */
+  .treebox { border: 1px solid var(--neutral-border-default); border-radius: 12px; padding: 8px 10px; display: flex; flex-direction: column; }
+  .treerow { display: flex; align-items: center; gap: 9px; padding: 7px 4px; }
+  .errbox { border: 1px solid var(--error-border-default); background: var(--error-bg-subtle); border-radius: 12px; padding: 13px; display: flex; flex-direction: column; gap: 9px; }
+  .errrow { display: flex; align-items: center; gap: 8px; background: var(--neutral-bg-default); border: 1px solid var(--neutral-border-default);
+            border-radius: 8px; padding: 10px 13px; box-shadow: var(--shadow-xs); }
+  .seg { display: flex; align-items: center; gap: 6px; font: var(--text-body); color: var(--neutral-text-icon-strong); }
+  .slash { color: var(--neutral-text-icon-muted); }
+
+  /* connect (hubspot) */
+  /* double-layer neumorphic tile (raised frame + inset inner panel) */
+  /* the exact tile PNG, used as-is */
+  .neu { position: relative; aspect-ratio: 1;
+         background: url("images/neu-tile.png") center / contain no-repeat; }
+  /* logo layer is absolutely centered over the glass tile (exact optical centering) */
+  .neu__in { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+             display: grid; place-items: center; }
+  .neu__in--hub { width: 60%; height: 60%; }   /* bare outline logo: a touch larger to balance */
+  .neu__in--app { width: 50%; height: 50%; }   /* filled app icon: smaller so it reads the same optical size */
+  .neu__in svg { display: block; width: 100%; height: 100%; }
+  /* fields fill their container */
+  .mock .ivdsField { width: 100%; }
+  /* typable OTP */
+  .otp-row { display: flex; gap: 12px; width: 100%; }
+  .otp-box { flex: 1; min-width: 0; height: 74px; border: 2px solid var(--neutral-border-default); border-radius: 12px;
+             text-align: center; font: 600 32px/1 var(--font-family-data); color: var(--neutral-text-icon-strong);
+             background: var(--neutral-bg-default); outline: none; transition: border-color .15s, box-shadow .15s; }
+  .otp-box:focus { border-color: var(--brand-border-very-strong); box-shadow: var(--focus-ring); }
+  /* integration connector */
+  .conn { width: 112px; display: flex; flex-direction: column; gap: 16px; align-items: center; justify-content: center; }
+  .conn-row { display: flex; align-items: center; width: 100%; }
+  .conn .line { flex: 1; height: 3.5px; border-radius: 2px; }
+  .arrow-l { width: 0; height: 0; border-top: 12px solid transparent; border-bottom: 12px solid transparent; border-right: 22px solid var(--brand-bg-default); }
+  .arrow-r { width: 0; height: 0; border-top: 12px solid transparent; border-bottom: 12px solid transparent; border-left: 22px solid var(--brand-bg-muted); }
+  .fieldhead { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .helperlink { font: var(--text-body-sm); color: var(--neutral-text-icon-emphasis); margin-top: 6px; }
+  .helperlink a, .link { color: var(--brand-text-icon-default); text-decoration: underline; }
+
+  /* settings list */
+  .setrow { display: flex; align-items: center; gap: 14px; padding: 12px 4px; font: var(--text-h3);
+            color: var(--neutral-text-icon-strong); cursor: pointer; border-radius: 8px; }
+  .setrow:hover { background: var(--neutral-bg-subtle); }
+
+  /* location search */
+  .resultbox { border: 1px solid var(--neutral-border-muted); border-radius: 12px; box-shadow: var(--shadow-popover); overflow: hidden; }
+  .resrow { display: flex; align-items: center; gap: 12px; padding: 12px 14px; font: var(--text-title); color: var(--neutral-text-icon-strong); }
+  .resrow.sel { background: var(--info-bg-subtle); }
+  .resbadge { margin-left: auto; }
+
+  /* card template */
+  .ct-panel { background: var(--brand-bg-weak); border: 1px solid var(--brand-border-subtle); border-radius: 14px; padding: 16px; }
+  .ct-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .ct-card { background: var(--neutral-bg-default); border-radius: 8px; box-shadow: var(--shadow-sm); overflow: hidden; aspect-ratio: 16 / 9; }
+  .hand { font-family: 'Caveat', cursive; color: #3b5bd0; }
+  .photo { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .previewcard { position: relative; border: 2px solid #ff3ea5; border-radius: 6px; overflow: hidden; }
+  .previewcard__tag { position: absolute; top: 7px; left: 7px; background: #ffd9ec; color: #b1006a; font: var(--text-caption); padding: 2px 7px; border-radius: 5px; }
+
+  .dashbtn { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%;
+             border: 1.5px solid var(--info-bg-default); color: var(--info-bg-default); background: var(--neutral-bg-default);
+             border-radius: 12px; padding: 14px; font: var(--text-button); }
+  .toastprev { background: var(--info-bg-subtle); border: 1px solid var(--info-bg-soft); border-radius: 12px; padding: 15px; display: flex; gap: 13px; }
+  .toastprev__ic { width: 40px; height: 40px; border-radius: 999px; background: var(--brand-bg-weak); color: var(--brand-text-icon-default); display: grid; place-items: center; flex: none; }
+</style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="importmap">
+  { "imports": {
+      "react": "https://esm.sh/react@18.3.1",
+      "react-dom/client": "https://esm.sh/react-dom@18.3.1/client",
+      "react/jsx-runtime": "https://esm.sh/react@18.3.1/jsx-runtime",
+      "htm": "https://esm.sh/htm@3.1.1",
+      "@ivancreatelabs/design-system": "https://esm.sh/@ivancreatelabs/design-system@0.4.0?external=react,react-dom"
+  } }
+  </script>
+
+  <script type="module">
+    import React from 'react';
+    import { createRoot } from 'react-dom/client';
+    import htm from 'htm';
+    import * as DS from '@ivancreatelabs/design-system';
+
+    const html = htm.bind(React.createElement);
+    const {
+      Card, Button, Slider, NumberField, Toggle, BadgeChip, ChartCard, Banner, SearchField,
+      Checkbox, InputOTP, AspectRatio, Toast, Separator, Icon, InputField, PasswordField,
+      UploadField, MapCard, BubbleBox, AddShapeButtons
+    } = DS;
+
+    const I = (name, props = {}) => html`<${Icon} name=${name} ...${props} />`;
+    const cardFlat = { maxWidth: 'none', border: 'none', boxShadow: 'none', padding: 0 };
+    const fullw = { width: '100%', maxWidth: 'none' };  // fields cap at a maxWidth by default — clear it
+    const revealed = new Set();  // tile indices already animated in — survives reflow remounts
+
+    /* ---- brand logos (inline SVG) ---- */
+    const HubspotMark = () => html`<svg viewBox="1.85 1.8 28 28" fill="none">
+      <circle cx="11.5" cy="21" r="6" stroke="#ff5c35" strokeWidth="3"/>
+      <line x1="11.5" y1="15" x2="11.5" y2="7" stroke="#ff5c35" strokeWidth="3"/>
+      <circle cx="11.5" cy="5.5" r="2.4" fill="#ff5c35"/>
+      <line x1="16.4" y1="18.5" x2="23" y2="10.5" stroke="#ff5c35" strokeWidth="3"/>
+      <circle cx="24.5" cy="9" r="3.2" fill="#ff5c35"/></svg>`;
+    const BrandMark = () => html`<svg width="42" height="42" viewBox="0 0 46 46" style=${{ flex: '0 0 auto' }}>
+      <rect width="46" height="46" rx="12" fill="var(--brand-bg-default)"/>
+      <path d="M23 10 C24 18 28 22 36 23 C28 24 24 28 23 36 C22 28 18 24 10 23 C18 22 22 18 23 10 Z" fill="#fff"/></svg>`;
+    const AllstarMark = () => html`<svg width="46" height="46" viewBox="0 0 48 48">
+      <path d="M24 3 L42 11 a3 3 0 0 1 1.7 2.7 V30 a4 4 0 0 1 -1.6 3.2 L26 45 a4 4 0 0 1 -4 0 L5.9 33.2 A4 4 0 0 1 4.3 30 V13.7 A3 3 0 0 1 6 11 Z" fill="#d0322d"/>
+      <text x="24" y="31" textAnchor="middle" fontFamily="var(--font-family-heading)" fontWeight="800" fontSize="22" fill="#fff">N</text></svg>`;
+
+    /* ================= SCREENS ================= */
+
+    /* 1 — Login */
+    function ScreenLogin() {
+      return html`<div class="mock col" style=${{ width: 400, gap: 18 }}>
+        <div class="col" style=${{ gap: 4 }}>
+          <div class="row" style=${{ gap: 10 }}><${BrandMark} /><span style=${{ font: 'var(--text-h1)' }}>Welcome back</span></div>
+          <span class="muted" style=${{ font: 'var(--text-body)' }}>Sign in to your account</span>
+        </div>
+        <${InputField} label="Email" placeholder="you@company.com" style=${fullw} />
+        <${PasswordField} label="Password" placeholder="Enter password" style=${fullw} />
+        <div class="row" style=${{ justifyContent: 'space-between' }}>
+          <${Checkbox} label="Remember me" />
+          <span class="link" style=${{ font: 'var(--text-body-sm)' }}>Forgot password?</span>
+        </div>
+        <${Button} kind="primary" label="Sign in" style=${{ width: '100%' }} />
+        <${Separator} label="or" />
+        <${Button} kind="secondary" label="Continue with Google" icon="login" style=${{ width: '100%' }} />
+        <div class="muted" style=${{ font: 'var(--text-body-sm)', textAlign: 'center' }}>Don't have an account? <span class="link">Sign up</span></div>
+      </div>`;
+    }
+
+    /* 2 — Connect Hubspot to Lettrlabs */
+    function FieldHead({ label }) {
+      return html`<div class="fieldhead"><span class="lbl">${label}</span><${Toggle} /> ${I('help', { color: 'var(--neutral-text-icon-muted)', size: 'small' })}</div>`;
+    }
+    function ScreenHubspot() {
+      return html`<div class="mock col" style=${{ width: 640, gap: 18, alignItems: 'stretch' }}>
+        <div class="row" style=${{ justifyContent: 'center', alignItems: 'center', gap: 6 }}>
+          <div class="neu" style=${{ width: 132 }}><div class="neu__in neu__in--hub"><${HubspotMark} /></div></div>
+          <div class="conn">
+            <div class="conn-row"><span class="arrow-l"></span><span class="line" style=${{ background: 'var(--brand-bg-default)' }}></span></div>
+            <div class="conn-row"><span class="line" style=${{ background: 'var(--brand-bg-muted)' }}></span><span class="arrow-r"></span></div>
+          </div>
+          <div class="neu" style=${{ width: 132 }}><div class="neu__in neu__in--app"><${BrandMark} /></div></div>
+        </div>
+        <div class="col" style=${{ gap: 6, textAlign: 'center' }}>
+          <div style=${{ font: 'var(--text-h2)' }}>Connect Hubspot</div>
+          <div class="muted" style=${{ font: 'var(--text-body)' }}>Connect your Hubspot organization to map your CRM data to the attribution pipeline. We'll discover your objects and fields automatically.</div>
+        </div>
+        <div class="card2 col" style=${{ gap: 14 }}>
+          <div class="col" style=${{ gap: 2 }}>
+            <div style=${{ font: 'var(--text-h3)' }}>Create new connection</div>
+            <div class="muted" style=${{ font: 'var(--text-body-sm)' }}>Add your Client ID and Client Secret to connect your Hubspot account.</div>
+          </div>
+          <div><${FieldHead} label="Connection name" /><${InputField} label="" placeholder="e.g. Brightwave production CRM" style=${fullw} /></div>
+          <div><${FieldHead} label="Client ID" /><${InputField} label="" placeholder="Paste your Hubspot Client ID" style=${fullw} />
+            <div style=${{ color: 'var(--neutral-text-icon-emphasis)', font: 'var(--text-body-sm)', marginTop: 6 }}>Find this in your Hubspot app's Auth tab — <span class="link">Client ID</span></div></div>
+          <div><${FieldHead} label="Client secret" /><${PasswordField} label="" placeholder="Paste your Hubspot Client Secret" style=${fullw} />
+            <div style=${{ color: 'var(--neutral-text-icon-emphasis)', font: 'var(--text-body-sm)', marginTop: 6 }}>Kept encrypted — never shown again after saving — <span class="link">Client secret</span></div></div>
+        </div>
+        <div class="row" style=${{ justifyContent: 'center' }}><${Button} kind="primary" label="Test and continue" icon="hub" /></div>
+      </div>`;
+    }
+
+    /* 3 — Billing */
+    function PayRow({ icon, brand, name, last }) {
+      return html`<div class="payrow">
+        <div class="paytile">${brand
+          ? html`<span style=${{ font: '700 11px/1 var(--font-family-data)', color: '#1a1f71', fontStyle: 'italic' }}>VISA</span>`
+          : I(icon, { color: 'var(--neutral-text-icon-emphasis)', size: 'small' })}</div>
+        <div style=${{ minWidth: 150 }}>
+          <div style=${{ font: 'var(--text-title)' }}>${name}</div>
+          <div class="muted" style=${{ font: 'var(--text-body-sm)' }}>••••${last}</div>
+        </div>
+        <div style=${{ flex: 1, minWidth: 150 }}><${Slider} label="" value=${50} style=${{ margin: 0 }} /></div>
+        <${NumberField} label="" value="50" style=${{ width: 84 }} />
+        <div class="valuefield">$20,000.00</div>
+        <div class="col" style=${{ alignItems: 'center', gap: 6 }}>
+          <span class="muted" style=${{ font: 'var(--text-body-sm)' }}>Full Coverage</span><${Toggle} /></div>
+      </div>`;
+    }
+    function ScreenBilling() {
+      return html`<div class="mock" style=${{ width: 900 }}>
+        <${Card} style=${cardFlat}>
+          <div class="row" style=${{ justifyContent: 'space-between', marginBottom: 16 }}>
+            <div class="row" style=${{ gap: 12 }}>
+              <div style=${{ width: 40, height: 40, borderRadius: 10, background: 'var(--brand-bg-weak)', color: 'var(--brand-text-icon-default)', display: 'grid', placeItems: 'center' }}>${I('account_balance_wallet')}</div>
+              <div style=${{ font: 'var(--text-h2)' }}>Billing Group 1</div>
+            </div>
+            <div class="row" style=${{ gap: 15 }}>
+              <span class="muted" style=${{ font: 'var(--text-title)' }}>40% · $20,000.00</span>
+              <${Separator} orientation="vertical" style=${{ height: 26 }} />
+              <${Button} kind="secondary" label="Split Evenly" icon="splitscreen" />
+            </div>
+          </div>
+          <div class="col" style=${{ gap: 13 }}>
+            <${PayRow} icon="account_balance" name="Regional Account" last="3804" />
+            <${PayRow} brand=${true} name="Default Payment" last="3804" />
+          </div>
+        <//>
+      </div>`;
+    }
+
+    /* 4 — Overview */
+    function Stat({ k, v, tag }) {
+      return html`<div class="stat"><div class="stat__k">${k}${tag ? html` <span style=${{ color: 'var(--brand-text-icon-default)' }}>${tag}</span>` : null}</div><div class="stat__v">${v}</div></div>`;
+    }
+    function Funnel() {
+      const stages = [['In Progress', '25,768', 0.34], ['Mailed', '15,873', 0.22], ['In Transit', '12,115', 0.20], ['Local Facility', '17,098', 0.28], ['Delivered', '53,776', 0.9]];
+      const W = 820, H = 150, seg = W / 5, y = (f) => (H - f * H) / 2;
+      let d = `M0 ${y(stages[0][2])} `;
+      stages.forEach((s, i) => { d += `L${(i + 1) * seg} ${y(stages[i][2])} `; });
+      d += `L${W} ${H - y(stages[4][2])} `;
+      for (let i = stages.length - 1; i >= 0; i--) d += `L${(i + 1) * seg} ${H - y(stages[i][2])} `;
+      d += `L0 ${H - y(stages[0][2])} Z`;
+      return html`<div>
+        <div class="row">${stages.map((s) => html`<div style=${{ width: seg, paddingRight: 8 }}>
+          <div style=${{ font: 'var(--text-title)', color: 'var(--brand-text-icon-default)' }}>${s[0]}</div>
+          <div style=${{ display: 'flex', alignItems: 'baseline', gap: 4 }}><span style=${{ font: '600 24px/1 var(--font-family-heading)' }}>${s[1]}</span><span class="muted" style=${{ font: 'var(--text-body-sm)' }}>Cards</span></div>
+        </div>`)}</div>
+        <svg viewBox=${`0 0 ${W} ${H}`} width="100%" style=${{ marginTop: 8 }}>
+          <defs><linearGradient id="fnl" x1="0" x2="1"><stop offset="0" stopColor="rgb(190,192,255)"/><stop offset="1" stopColor="rgb(85,81,255)"/></linearGradient></defs>
+          <path d=${d} fill="url(#fnl)"/>
+          ${[1, 2, 3, 4].map(i => html`<line x1=${i * seg} x2=${i * seg} y1="0" y2=${H} stroke="white" strokeWidth="3"/>`)}
+        </svg></div>`;
+    }
+    function ScreenOverview() {
+      return html`<div class="mock" style=${{ width: 900 }}>
+        <div class="row" style=${{ gap: 12, marginBottom: 14 }}>
+          <span style=${{ font: 'var(--text-h1)' }}>Your Overview</span><${BadgeChip} label="Last 30 Days" color="brand" /></div>
+        <div style=${{ display: 'grid', gridTemplateColumns: 'repeat(6,1fr)', gap: 11, marginBottom: 20 }}>
+          <${Stat} k="Conversions" v="12,599" /><${Stat} k="No. of Campaign" v="5" /><${Stat} k="Pieces Mailed" v="22,300" />
+          <${Stat} k="Pieces Mailed" tag="(Automations)" v="100,200" /><${Stat} k="Active Automations" v="32" /><${Stat} k="No. of Campaign" v="32" />
+        </div>
+        <div style=${{ font: 'var(--text-h2)', margin: '2px 0 12px' }}>Your Pipeline</div>
+        <${ChartCard} title="Campaign Status" style=${{ maxWidth: 'none', width: '100%' }}><${Funnel} /><//>
+      </div>`;
+    }
+
+    /* 5 — Profile */
+    function PField({ label, ph, helper }) {
+      return html`<div class="col" style=${{ gap: 6 }}>
+        <div class="fieldhead" style=${{ marginBottom: 2 }}><span class="lbl">${label}</span><${Toggle} /></div>
+        <${InputField} label="" placeholder=${ph || ''} helper=${helper} style=${{ width: '100%' }} />
+      </div>`;
+    }
+    function ScreenProfile() {
+      return html`<div class="mock col" style=${{ width: 780, gap: 18 }}>
+        <div><div class="lbl" style=${{ marginBottom: 8 }}>Profile icon</div>
+          <${UploadField} label="" head="Drag and drop or select an image to upload" helper="High-resolution PNG, JPEG, SVG or WEBP" style=${{ ...fullw, display: 'block' }} /></div>
+        <div style=${{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 18 }}>
+          <${PField} label="First name" ph="Elena" helper="As it appears on mail" />
+          <${PField} label="Last name" ph="Ruiz" helper="As it appears on mail" />
+          <${PField} label="Email" ph="elena@brightwave.io" helper="For receipts and alerts" />
+          <${PField} label="Phone number" ph="+1 (415) 555-0142" helper="Used for delivery updates" />
+        </div>
+        <div class="col" style=${{ gap: 6 }}>
+          <div class="lbl">Personal mailing address</div>
+          <div class="muted" style=${{ font: 'var(--text-body-sm)' }}>This is where we send you sample pieces from your campaigns.</div>
+          <${InputField} label="" placeholder="1420 Market St, San Francisco, CA 94103" helper="Street, city, state, ZIP" style=${{ width: '100%' }} />
+        </div>
+        <div class="row" style=${{ justifyContent: 'flex-end' }}><${Button} kind="primary" label="Save changes" /></div>
+      </div>`;
+    }
+
+    /* 6 — Settings */
+    function ScreenSettings() {
+      const items = [['settings', 'General'], ['groups', 'Team'], ['webhook', 'Webhooks'], ['hub', 'Integrations'], ['call', 'Call Tracking'], ['sell', 'Discount Codes'], ['notifications', 'Notifications'], ['branding_watermark', 'Brand Assets']];
+      return html`<div class="mock" style=${{ width: 380 }}>
+        <div class="row" style=${{ gap: 12, paddingBottom: 12, borderBottom: '1px solid var(--neutral-border-muted)', marginBottom: 8 }}>
+          <${AllstarMark} /><span style=${{ font: 'var(--text-h2)' }}>Northwind Services</span></div>
+        <div class="lbl" style=${{ margin: '6px 4px 6px' }}>Settings</div>
+        ${items.map(([ic, lb]) => html`<div class="setrow">${I(ic, { color: 'var(--neutral-text-icon-emphasis)' })} ${lb}</div>`)}
+      </div>`;
+    }
+
+    /* 7 — Map */
+    function ScreenMap() {
+      return html`<div class="mock" style=${{ width: 720 }}>
+        <div style=${{ position: 'relative' }}>
+          <${MapCard} style=${{ maxWidth: 'none', height: 440 }} />
+          <div style=${{ position: 'absolute', left: '50%', top: '48%', transform: 'translate(-42%,-50%)' }}>
+            <${BubbleBox} title="Zip Code · 95415" homes="13,000" area="13,000 structures" />
+          </div>
+        </div>
+      </div>`;
+    }
+
+    /* 8 — Location search */
+    function ScreenLocations() {
+      const res = [['Los Angeles', ' CA', 'City', 'info', true], ['Los Angeles', ' County CA', 'County', 'gray'], ['Los Angeles', ' California', 'State', 'gray'], ['City of ', 'Los Angeles', 'City', 'gray'], ['Downton ', 'Los Angeles, CA', 'County', 'gray']];
+      return html`<div class="mock col" style=${{ width: 460, gap: 14 }}>
+        <div class="row" style=${{ gap: 8 }}><span style=${{ font: 'var(--text-h2)' }}>Select your locations in the map</span>${I('help', { color: 'var(--neutral-text-icon-muted)', size: 'small' })}</div>
+        <${SearchField} defaultValue="Los Ang" placeholder="Search a city, county, or ZIP" style=${fullw} />
+        <div class="resultbox">${res.map(([a, b, badge, color, sel], i) => html`
+          <div class=${'resrow' + (sel ? ' sel' : '')}>${I('location_on', { color: 'var(--neutral-text-icon-emphasis)', size: 'small' })}
+            <span><b>${a}</b>${b}</span><span class="resbadge"><${BadgeChip} label=${badge} color=${color} /></span></div>`)}</div>
+        <div class="col" style=${{ alignItems: 'center', gap: 6, padding: '20px 0 8px' }}>
+          ${I('location_on', { color: 'var(--brand-bg-default)', size: 'large', filled: true })}
+          <div style=${{ font: 'var(--text-h3)', color: 'var(--brand-text-icon-default)' }}>Start selecting your locations</div>
+          <div class="muted" style=${{ font: 'var(--text-body)', textAlign: 'center', maxWidth: 300 }}>Search, draw, upload, click the map, or select a saved map to define where storms should be monitored</div>
+        </div>
+      </div>`;
+    }
+
+    /* 9 — OTP */
+    function TypableOTP() {
+      const [vals, setVals] = React.useState(['3', '3', '', '']);
+      const refs = React.useRef([]);
+      const set = (i, v) => { v = v.replace(/\D/g, '').slice(-1); const nv = [...vals]; nv[i] = v; setVals(nv); if (v && i < 3) refs.current[i + 1] && refs.current[i + 1].focus(); };
+      const key = (i, e) => { if (e.key === 'Backspace' && !vals[i] && i > 0) refs.current[i - 1] && refs.current[i - 1].focus(); };
+      return html`<div class="otp-row">${vals.map((v, i) => html`
+        <input key=${i} ref=${el => refs.current[i] = el} class="otp-box" inputMode="numeric" maxLength="1"
+               value=${v} onChange=${e => set(i, e.target.value)} onKeyDown=${e => key(i, e)} />`)}</div>`;
+    }
+    function ScreenOTP() {
+      return html`<div class="mock" style=${{ width: 430 }}>
+        <${Card} style=${cardFlat}>
+          <div style=${{ font: 'var(--text-h1)', marginBottom: 14 }}>Verify it's you with the one-time passcode we sent to</div>
+          <div style=${{ marginBottom: 20 }}><${BadgeChip} label="elena@brightwave.io" color="brand" /></div>
+          <${TypableOTP} />
+          <div class="row" style=${{ gap: 16, marginTop: 16 }}><span class="muted" style=${{ font: 'var(--text-body)' }}>Code expires in 9:47</span><span class="link" style=${{ font: 'var(--text-body)' }}>Resend</span></div>
+          <div class="row" style=${{ justifyContent: 'flex-end', marginTop: 20 }}><${Button} kind="primary" label="Default" /></div>
+        <//>
+      </div>`;
+    }
+
+    /* 10 — Edit Scope */
+    function ScreenEditScope() {
+      const grp = (indent, name, icon, chev) => html`<div class="treerow" style=${{ paddingLeft: indent }}>
+        ${chev ? I('chevron_right', { color: 'var(--neutral-text-icon-muted)', size: 'small' }) : html`<span style=${{ width: 20 }} />`}
+        ${I(icon, { color: icon === 'folder' ? '#e0a92e' : 'var(--brand-text-icon-default)', size: 'small', filled: icon !== 'folder' })}
+        <span style=${{ font: 'var(--text-body)' }}>${name}</span><div style=${{ marginLeft: 'auto' }}><${Checkbox} /></div></div>`;
+      return html`<div class="modal mock" style=${{ width: 600 }}>
+        <div class="modal__bar"><span>Edit Scope</span><span class="modal__x">${I('close', { color: 'var(--brand-text-icon-on)', size: 'small' })}</span></div>
+        <div class="modal__body">
+          <div class="row" style=${{ gap: 10, font: 'var(--text-title)' }}>${I('arrow_back')} Back to Edit Template</div>
+          <div class="lbl">Share with</div>
+          <${Banner} color="warning" title="" message="Templates without scope will be unusable." />
+          <${SearchField} placeholder="Search for groups, teams" style=${fullw} />
+          <div class="treebox">
+            <div class="treerow">${I('domain', { color: 'var(--brand-text-icon-default)', size: 'small', filled: true })}<span style=${{ font: 'var(--text-body)' }}>Select all accounts under this organization</span><div style=${{ marginLeft: 'auto' }}><${Checkbox} /></div></div>
+            ${grp(8, 'Marketing', 'folder', true)}${grp(28, 'Sales — EMEA', 'folder', true)}${grp(28, 'Field Ops', 'folder', true)}${grp(48, 'Austin Retail Team', 'groups', false)}
+          </div>
+          <div class="errbox">
+            <div style=${{ font: 'var(--text-title)', color: 'var(--error-text-icon-default)' }}>You removed these accounts</div>
+            <div class="muted" style=${{ font: 'var(--text-body-sm)' }}>All of the automations under these accounts will be automatically paused.</div>
+            ${[['Brightwave Group', 'Pacific Region', 'San Diego Office'], ['Meridian Retail', 'Central Region', 'Austin Office'], ['Summit Services', 'East Region', 'Boston Office']].map(([o, r, off]) => html`<div class="errrow">
+              <div class="seg">${I('domain', { color: 'var(--brand-text-icon-default)', size: 'small', filled: true })} ${o}</div><span class="slash">/</span>
+              <div class="seg">${I('folder', { color: '#e0a92e', size: 'small' })} ${r}</div><span class="slash">/</span>
+              <div class="seg">${I('groups', { color: 'var(--brand-text-icon-default)', size: 'small', filled: true })} ${off}</div>
+              <span style=${{ marginLeft: 'auto' }}>${I('expand_more', { color: 'var(--neutral-text-icon-muted)', size: 'small' })}</span></div>`)}
+          </div>
+          <div class="modal__foot"><${Button} kind="secondary" label="Cancel" /><${Button} kind="primary" label="Update" disabled=${true} /></div>
+        </div>
+      </div>`;
+    }
+
+    /* 11 — Preview mail-merge */
+    function Pill({ label, icon, active }) { return html`<${Button} kind=${active ? 'primary' : 'secondary'} label=${label} icon=${icon} />`; }
+    function ScreenPreview() {
+      const fb = (e) => { e.target.style.opacity = 0; };
+      return html`<div class="modal mock" style=${{ width: 720 }}>
+        <div class="modal__bar"><span>Preview Mail-Merge Template</span><span class="modal__x">${I('close', { color: 'var(--brand-text-icon-on)', size: 'small' })}</span></div>
+        <div class="modal__body">
+          <${Banner} color="info" title="" message="We've populated your card with extended sample data to simulate real mailing conditions. Because merge fields vary in length, this step helps you confirm your layout looks great in every scenario." style=${{ background: 'var(--info-bg-subtle)' }} />
+          <div class="row" style=${{ gap: 10, flexWrap: 'wrap' }}>
+            <span class="lbl">Highlight Options</span>
+            <${Pill} label="Mail-Merge Fields" icon="title" /><${Pill} label="Mail-Merge Images" icon="image" active=${true} />
+            <${Pill} label="Overflow Boxes" icon="crop_free" /><${Pill} label="Bleed & Safe Zone" icon="grid_on" active=${true} />
+          </div>
+          <div style=${{ background: 'var(--info-bg-subtle)', border: '1px solid var(--info-bg-weak)', borderRadius: 12, padding: 15, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 18 }}>
+            ${[['Card Front', 'Front-print', 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=520&q=60'], ['Card Back', 'Rear-print', 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=520&q=60']].map(([t, tag, src]) => html`
+              <div><div style=${{ textAlign: 'center', font: 'var(--text-title)', marginBottom: 8 }}>${t}</div>
+                <div class="previewcard"><span class="previewcard__tag">${tag}</span><${AspectRatio} ratio="4 / 3"><img class="photo" onError=${fb} src=${src} alt=""/><//></div></div>`)}
+          </div>
+          <div class="row" style=${{ gap: 36 }}>
+            <div><div style=${{ font: 'var(--text-label)', color: 'var(--brand-text-icon-strong)' }}>Full Bleed (5.5" x 7.7")</div><div class="muted" style=${{ font: 'var(--text-body-sm)' }}>Extend background graphics to this border.</div></div>
+            <div><div style=${{ font: 'var(--text-label)', color: 'var(--success-text-icon-default)' }}>Safe Zone (5.1" x 7.3")</div><div class="muted" style=${{ font: 'var(--text-body-sm)' }}>Keep text & key graphics within this region.</div></div>
+          </div>
+        </div>
+      </div>`;
+    }
+
+    /* 12 — Send Notification */
+    function ScreenNotify() {
+      return html`<div class="modal mock" style=${{ width: 560 }}>
+        <div class="modal__bar"><span>Send Notification</span><span class="modal__x">${I('close', { color: 'var(--brand-text-icon-on)', size: 'small' })}</span></div>
+        <div class="modal__body">
+          <div style=${{ font: 'var(--text-body-lg)' }}>You're about to send a notification to <span style=${{ color: 'var(--info-bg-default)', fontWeight: 600 }}>8 users</span>.</div>
+          <${Separator} /><div class="lbl">Notification Preview:</div>
+          <div class="toastprev"><div class="toastprev__ic">${I('work', { color: 'var(--brand-text-icon-default)', size: 'small', filled: true })}</div>
+            <div><div class="row" style=${{ justifyContent: 'space-between' }}><span style=${{ font: 'var(--text-title)' }}>Your Monthly report is ready</span><span class="muted" style=${{ font: 'var(--text-body-sm)' }}>Now</span></div>
+              <div class="muted" style=${{ font: 'var(--text-body)', marginTop: 4 }}>Your April performance report shows a 22% increase in response rate. Click to view the full breakdown.</div></div></div>
+          <div class="dashbtn">${I('outgoing_mail', { color: 'var(--info-bg-default)', size: 'small' })} Also send an email notification</div>
+          <div class="modal__foot"><${Button} kind="secondary" label="Schedule Send" icon="schedule_send" /><${Button} kind="primary" label="Send Notification" icon="send" /></div>
+        </div>
+      </div>`;
+    }
+
+    /* 13 — Card Template */
+    function ScreenCardTemplate() {
+      const fb = (e) => { e.target.style.opacity = 0; };
+      return html`<div class="mock col" style=${{ width: 640, gap: 16 }}>
+        <div style=${{ font: 'var(--text-h2)' }}>Card Template</div>
+        <div class="row" style=${{ gap: 10, font: 'var(--text-title)' }}><span class="muted">Marisol card design</span><span class="slash">|</span><span class="link">Handwritten card + envelope</span></div>
+        <div class="ct-panel">
+          <div class="ct-grid">
+            <div class="ct-card" style=${{ padding: 12 }}>
+              <div style=${{ fontFamily: 'var(--font-family-heading)', fontSize: 15, textAlign: 'center', marginBottom: 4 }}>Marisol</div>
+              <div class="hand" style=${{ fontSize: 11, lineHeight: 1.35 }}>Dear Elena,<br/>Elegance is in the details. We'd love for you to see our latest collection.<br/>Warm regards,<br/>The Marisol Team</div>
+            </div>
+            <div class="ct-card" style=${{ background: 'linear-gradient(160deg,#eef1ff,#dde3ff)', padding: 14, display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: 5 }}>
+              <div style=${{ font: 'var(--text-title)', color: 'var(--brand-text-icon-strong)', lineHeight: 1.2 }}>Unleash your Marketing ROI</div>
+              <div class="muted" style=${{ font: 'var(--text-caption)' }}>with personalized direct mail</div>
+            </div>
+            <div class="ct-card" style=${{ padding: 14 }}>
+              <div class="hand" style=${{ fontSize: 11, lineHeight: 1.5 }}>Elena Ruiz<br/>Summit Roofing Co<br/>1323 S Broadway<br/>Providence, RI 02914</div>
+            </div>
+          </div>
+          <div class="row" style=${{ gap: 12, marginTop: 14 }}><${Button} kind="secondary" label="Change Template" disabled=${true} /><${Button} kind="text" label="Remove" /></div>
+        </div>
+      </div>`;
+    }
+
+    /* 14 — Success */
+    function ScreenSuccess() {
+      return html`<div class="mock col" style=${{ width: 440, alignItems: 'center', textAlign: 'center', gap: 16, padding: '14px 0' }}>
+        <div style=${{ width: 92, height: 92, borderRadius: 999, background: 'var(--success-bg-default)', display: 'grid', placeItems: 'center' }}>${I('check', { color: '#fff', size: 48 })}</div>
+        <div style=${{ font: 'var(--text-display)', color: 'var(--brand-text-icon-default)' }}>Template successfully created</div>
+        <div class="muted" style=${{ font: 'var(--text-body-lg)', maxWidth: 360 }}>Groups and accounts under your organization can now use this template</div>
+        <${Button} kind="primary" label="Manage templates" />
+      </div>`;
+    }
+
+    /* ================= BOARD ================= */
+    const SCREENS = [
+      { el: ScreenLogin, w: 400 },
+      { el: ScreenEditScope, w: 600, bare: true },
+      { el: ScreenOverview, w: 900 },
+      { el: ScreenCardTemplate, w: 640, mid: true },
+      { el: ScreenMap, w: 720 },
+      { el: ScreenBilling, w: 900 },
+      { el: ScreenHubspot, w: 640 },
+      { el: ScreenSettings, w: 380 },
+      { el: ScreenOTP, w: 430 },
+      { el: ScreenPreview, w: 720, bare: true },
+      { el: ScreenProfile, w: 780 },
+      { el: ScreenSuccess, w: 440 },
+      { el: ScreenLocations, w: 460 },
+      { el: ScreenNotify, w: 560, bare: true },
+    ];
+    // Each pin fills its column exactly: measure content-box width, scale the
+    // screen (authored at its natural width) to fit. Recomputes on resize.
+    function Pin({ el: El, w, bare }) {
+      const ref = React.useRef(null);
+      const [z, setZ] = React.useState(null);
+      React.useLayoutEffect(() => {
+        const pin = ref.current; if (!pin) return;
+        const measure = () => {
+          const cs = getComputedStyle(pin);
+          const avail = pin.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+          if (avail > 0) setZ(avail / w);
+        };
+        measure();
+        // Re-scale whenever the column width actually changes (reflow / n change / window).
+        const ro = new ResizeObserver(measure);
+        ro.observe(pin);
+        return () => ro.disconnect();
+      }, [w]);
+      return html`<div class=${'pin' + (bare ? ' pin--bare' : '')} ref=${ref}>
+        <div style=${{ zoom: z ?? 0.001, visibility: z == null ? 'hidden' : 'visible' }}><${El} /></div>
+      </div>`;
+    }
+
+    // Balanced masonry: measure tile heights, pack into the shortest column.
+    // A screen flagged {mid:true} is pinned to the centre column.
+    function Board({ screens }) {
+      const contRef = React.useRef(null);
+      const [n, setN] = React.useState(3);
+      const [assign, setAssign] = React.useState(() => screens.map((_, i) => i % 3));
+
+      React.useLayoutEffect(() => {
+        const calc = () => { const w = window.innerWidth; setN(w >= 1280 ? 4 : 3); };
+        calc(); window.addEventListener('resize', calc); return () => window.removeEventListener('resize', calc);
+      }, []);
+
+      const relayout = React.useCallback(() => {
+        const cont = contRef.current; if (!cont) return;
+        const h = {}; cont.querySelectorAll('.tile').forEach(nd => { h[+nd.dataset.i] = nd.offsetHeight || 300; });
+        const colH = new Array(n).fill(0), a = new Array(screens.length).fill(0);
+        const mid = Math.floor(n / 2), pinned = screens.findIndex(s => s.mid);
+        if (n >= 3 && pinned >= 0) { a[pinned] = mid; colH[mid] += h[pinned] || 400; }
+        // LPT packing: place tallest cards first into the shortest column → minimal height spread.
+        const order = [];
+        for (let i = 0; i < screens.length; i++) if (!(n >= 3 && i === pinned)) order.push(i);
+        order.sort((x, y) => (h[y] || 300) - (h[x] || 300));
+        for (const i of order) {
+          let c = 0; for (let j = 1; j < n; j++) if (colH[j] < colH[c]) c = j;
+          a[i] = c; colH[c] += h[i] || 300;
+        }
+        setAssign(prev => JSON.stringify(prev) === JSON.stringify(a) ? prev : a);
+      }, [n, screens]);
+
+      React.useLayoutEffect(() => {
+        let id = requestAnimationFrame(relayout);
+        const r = () => { cancelAnimationFrame(id); id = requestAnimationFrame(relayout); };
+        window.addEventListener('resize', r);
+        return () => { cancelAnimationFrame(id); window.removeEventListener('resize', r); };
+      }, [relayout]);
+
+      // Reveal each card as it scrolls into the section; already-seen cards show instantly (no re-animate).
+      React.useEffect(() => {
+        const board = contRef.current; if (!board) return;
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach((e) => { if (e.isIntersecting) { revealed.add(+e.target.dataset.i); e.target.classList.add('is-in'); io.unobserve(e.target); } });
+        }, { root: board.closest('.stage'), rootMargin: '0px 0px -6% 0px', threshold: 0.06 });
+        board.querySelectorAll('.tile').forEach((t) => {
+          if (revealed.has(+t.dataset.i)) { t.style.transition = 'none'; t.classList.add('is-in'); requestAnimationFrame(() => { t.style.transition = ''; }); }
+          else io.observe(t);
+        });
+        return () => io.disconnect();
+      }, [assign, n]);
+
+      const cols = Array.from({ length: n }, () => []);
+      screens.forEach((s, i) => { const c = assign[i] != null ? Math.min(assign[i], n - 1) : i % n; cols[c].push({ s, i }); });
+
+      return html`<div class="board2" ref=${contRef}>
+        ${cols.map((items, ci) => html`<div class="mcol" key=${ci}>
+          ${items.map(({ s, i }, k) => html`<div class="tile" data-i=${i} key=${i} style=${{ transitionDelay: (Math.min(k, 8) * 0.05) + 's' }}><${Pin} el=${s.el} w=${s.w} bare=${s.bare} /></div>`)}
+        </div>`)}
+      </div>`;
+    }
+
+    function App() {
+      return html`<div class="stage"><${Board} screens=${SCREENS} /></div>`;
+    }
+    createRoot(document.getElementById('root')).render(html`<${App} />`);
+  </script>
+</body>
+</html>
