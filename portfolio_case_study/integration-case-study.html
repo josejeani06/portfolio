@@ -3,31 +3,407 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Case Study — Building a Scalable Integration Platform</title>
+  <title>Building a Reusable Integration Flow for Supported API Connections — Ivan Jose</title>
+  <meta name="description" content="Senior Product Designer case study: one reusable integration framework — client credentials, validation states, attribution, and account management — so every new connector ships as configuration, not a redesign. Built cross-functionally with PM and engineering. By Ivan Jose." />
+  <link rel="canonical" href="https://ivanjose.design/integration-case-study.html" />
+  <meta name="author" content="Jean Ivan Jose" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Ivan Jose" />
+  <meta property="og:url" content="https://ivanjose.design/integration-case-study.html" />
+  <meta property="og:title" content="Building a Reusable Integration Flow for Supported API Connections" />
+  <meta property="og:description" content="One reusable integration framework — credentials, validation states, attribution, and account management — so every new connector ships as configuration, not a redesign." />
+  <meta property="og:image" content="https://ivanjose.design/images/integration-manage-connections.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Building a Reusable Integration Flow for Supported API Connections" />
+  <meta name="twitter:description" content="A reusable B2B SaaS integration framework — by Senior Product Designer Ivan Jose." />
+  <meta name="twitter:image" content="https://ivanjose.design/images/integration-manage-connections.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "headline": "Building a reusable integration flow for supported API connections",
+    "about": "B2B SaaS product design case study — a reusable integration framework with validation states and attribution",
+    "keywords": ["product design","B2B SaaS","integrations","design systems","validation states","attribution","UX"],
+    "url": "https://ivanjose.design/integration-case-study.html",
+    "author": { "@type": "Person", "name": "Jean Ivan Jose", "alternateName": "Ivan Jose", "jobTitle": "Senior Product Designer", "url": "https://ivanjose.design/" }
+  }
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ===== Editorial base (palette + scaffolding shared with the map & billing) ===== */
+    body.case-study-page{
+      --bg:#eceadf;--surface:transparent;--surface-2:#e5e2d5;--text:#1c1b16;--muted:#615d52;--ink:#14130d;
+      --line:rgba(28,27,22,.16);--hair:rgba(28,27,22,.12);
+      --blue:#cf3b23;--blue-2:#a92f1b;--blue-soft:rgba(207,59,35,.10);
+      --info:#3c5496;--info-soft:rgba(60,84,150,.10);--good:#3f7a4e;--good-soft:rgba(63,122,78,.10);
+      --surface-border:0;--surface-shadow:none;--shadow:none;
+      background:#eceadf;color:#1c1b16;font-family:Manrope,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+    }
+    body.case-study-page{
+      --h1:clamp(46px,7.6vw,104px);
+      --h2:clamp(29px,3.4vw,44px);
+      --h3:clamp(18px,2.2vw,20px);
+      --h4:18px;
+      --h5:16px;
+      --h6:14px;
+      --text-lg:clamp(16px,1.6vw,18px);
+      --text-md:16px;
+      --text-sm:14px;
+      --text-xs:12px;
+    }
+    .case-study-page::before{background:linear-gradient(180deg,#efede4,#e6e3d7)}
+    .case-study-page .landing-grid{display:none}
+    .nav{background:rgba(236,234,223,.74);border-bottom:1px solid rgba(28,27,22,.16)}
+    .brand-mark{background:#cf3b23;box-shadow:none;border-radius:3px}
+    .nav-indicator{background:#cf3b23}
+    h1,h2,h3{letter-spacing:-.045em}
+    h2{font-size:var(--h2);line-height:1.04;font-weight:700}
+    h3{font-size:var(--h3);font-weight:700}
+    .eyebrow{color:var(--blue-2);letter-spacing:.08em;font-weight:720;font-size:var(--text-xs);text-transform:uppercase}
+    .lead{color:#4a473f}
+    /* .button inherits the pill radius from style.css — no override */
+    .button.secondary{background:rgba(236,234,223,.9);border:1px solid rgba(28,27,22,.16);color:var(--text)}
+    .section{padding:68px 0}
+    .section-dark{background:linear-gradient(180deg,#1f1d16,#141308);color:#f2f0e6}
+    .section-dark-soft{background:linear-gradient(180deg,#2a2820,#201e17)}
+    /* UX audit (id=audit) — override style.css's maroon to the terracotta-dark palette */
+    #audit{background:linear-gradient(180deg,#1f1d16,#141308)}
+    #audit .eyebrow{color:#ff8a6f}
+    #audit .comparison-head div{color:rgba(255,231,219,.72)}
+    /* ---- design evolution as a dark "concept shift" section (matches map's #concept-shift) ---- */
+    #evolution{background:linear-gradient(180deg,#0d0c08,#0a0a06);color:#f2f0e6}
+    #evolution .eyebrow{color:#ff8a6f}
+    #evolution h2,#evolution h3,#evolution .subhead{color:#f7f5ec}
+    #evolution .section-head p,#evolution .subcopy{color:rgba(242,240,230,.82)}
+    #evolution .subcopy strong{color:#f7f5ec}
+    #evolution .callout{background:linear-gradient(180deg,#1f1d16,#141308);border:1px solid rgba(242,240,231,.12)}
+    #evolution .itable{border-color:rgba(242,240,231,.14)}
+    #evolution .itable thead tr{background:rgba(255,255,255,.05)}
+    #evolution .itable th{color:#ff8a6f;border-bottom-color:rgba(242,240,231,.14)}
+    #evolution .itable td{color:rgba(242,240,230,.82);border-top-color:rgba(242,240,231,.1)}
+    #evolution .itable tbody tr:nth-child(odd){background:rgba(255,255,255,.03)}
+    #evolution .itable td.k{color:#f7f5ec}
+    .section-dark h2,.section-dark h3{color:#f7f5ec}
+    .section-dark .eyebrow{color:#ff8a6f}
+    .section-dark p{color:rgba(242,240,230,.84)}
+    .section-dark .section-head p,.section-dark .lede p{color:rgba(242,240,230,.84)}
+    .pattern-head{display:flex;flex-direction:column;align-items:flex-start;gap:14px}
+    .pattern-head h2,.section-head h2{margin:0}
+    .lede{display:grid;gap:16px}
+    .section-head{display:flex;flex-direction:column;align-items:flex-start;gap:14px;max-width:none}
+    .section-head p,.lede p{font-size:var(--text-lg);line-height:1.6;color:#615d52;max-width:none;margin:0}
+    .business-copy p,.dark-copy p,.question-copy p,.lede p{font-size:var(--text-md);line-height:1.7}
+    .callout h3{color:#f7f5ec;margin:0 0 12px;line-height:1.12}
+    .callout p{color:rgba(242,240,230,.82);margin:0;line-height:1.6}
+    .quote{font-size:var(--h2);line-height:1.14;letter-spacing:-.02em;max-width:940px;font-weight:600}
+    .footer{border-top:1px solid var(--line)}
+    .case-hero .case-title,.case-hero .lead{max-width:none}
+    .case-hero .lead{font-size:var(--text-lg)}
+    .case-hero .case-title{line-height:1;font-size:var(--h1)}
+    .case-hero .panel.kv{padding:0}
+    .split{display:grid;grid-template-columns:.86fr 1.14fr;gap:42px;align-items:start}
+    @media(max-width:900px){.split{grid-template-columns:1fr;gap:20px}}
+
+    /* status tag (shared with org/billing hero) */
+    .status-tag{display:inline-flex;align-items:center;min-height:26px;padding:0 12px;border:1px solid var(--blue);border-radius:2px;color:var(--blue-2);font-size:var(--text-xs);font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+
+    /* metric strip (base class shared with map & billing) */
+    .metric-strip{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:30px 26px;margin-top:34px}
+    .metric-tile{padding:0}
+    .metric-tile strong{display:block;font-size:var(--h2);font-weight:800;line-height:1.04;color:var(--blue);letter-spacing:-.02em;margin-bottom:8px}
+    .metric-tile span{display:block;font-size:var(--text-sm);color:var(--muted);line-height:1.45}
+    @media(max-width:760px){.metric-strip{grid-template-columns:1fr 1fr}}
+
+    /* case summary layout (shared with org/billing) */
+    .case-summary{display:grid;grid-template-columns:1.05fr .95fr;gap:26px;align-items:start;margin-top:36px}
+    @media(max-width:900px){.case-summary{grid-template-columns:1fr}}
+    .callout{background:var(--ink);color:#f2f0e6}
+
+    /* screenshot frame (canonical — shared with billing/org) */
+    .shot{margin:28px 0 0}
+    .shot-wide{margin-top:28px}
+    .shot-frame{border-radius:12px;overflow:hidden;border:1px solid rgba(28,27,22,.12);background:#faf9f4;box-shadow:0 34px 80px rgba(20,19,13,.16)}
+    .shot-bar{height:36px;display:flex;align-items:center;gap:8px;padding:0 15px;background:linear-gradient(180deg,#f3f1ea,#e8e5dc);border-bottom:1px solid rgba(28,27,22,.1)}
+    .shot-bar span{width:11px;height:11px;border-radius:50%;background:rgba(28,27,22,.16)}
+    .shot-media{position:relative;min-height:clamp(220px,34vw,460px);display:grid;place-items:center;background:linear-gradient(135deg,#f1efe7,#e6e3d8);overflow:hidden}
+    .shot-media img{position:relative;z-index:1;display:block;width:100%;height:auto}
+    .shot-ph{position:absolute;inset:0;z-index:0;display:grid;place-items:center;align-content:center;gap:9px;text-align:center;padding:26px;color:#8a857a}
+    .shot-ph strong{font-weight:700;color:#5f5b50;font-size:var(--text-sm)}
+    .shot-ph code{font-family:ui-monospace,Menlo,monospace;font-size:var(--text-xs);color:var(--blue-2);background:rgba(207,59,35,.08);padding:3px 8px;border-radius:6px}
+    .shot-ph code.good{color:var(--good);background:var(--good-soft)}
+    .shot-cap{margin:14px 2px 0;color:var(--muted);font-size:var(--text-sm)}
+    .shot-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:28px}
+    .shot-sm .shot-media{min-height:180px}
+    @media(max-width:820px){.shot-grid{grid-template-columns:1fr}}
+
+    /* data table (on-token, used for before/after + validation matrices) */
+    .itable{border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-top:8px}
+    .itable table{width:100%;border-collapse:collapse;font-size:var(--text-sm)}
+    .itable thead tr{background:rgba(207,59,35,.06);text-align:left}
+    .itable th{padding:14px 16px;font-size:var(--text-xs);font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--blue-2);border-bottom:1px solid var(--line)}
+    .itable td{padding:11px 16px;color:#514d45;border-top:1px solid var(--line)}
+    @media(max-width:760px){.itable th,.itable td{padding:10px 12px;font-size:var(--text-sm)}}
+    .itable tbody tr:nth-child(odd){background:#faf9f4}
+    .itable td.k{font-weight:700;color:var(--ink)}
+    /* validation is a successful safeguard, not an error or warning state */
+    .itable.validation-table thead tr{background:#fff}
+    .itable.validation-table th{color:#615d52}
+
+    /* result band (light tinted, houses the metric strip) */
+    .result-band{margin-top:32px;border:1px solid var(--line);border-radius:14px;padding:28px 30px;background:linear-gradient(135deg,rgba(207,59,35,.05),rgba(207,59,35,.02))}
+    .result-band .eyebrow{display:block;margin-bottom:14px}
+    .result-band .metric-strip{grid-template-columns:repeat(3,minmax(0,1fr));gap:30px 26px;margin-top:0;border-top:0}
+    .result-band .metric-tile{padding:0;border-right:0}
+    .result-band .note{margin:18px 0 0;font-size:var(--text-sm);color:var(--muted);line-height:1.55;max-width:none}
+    @media(max-width:760px){.result-band .metric-strip{grid-template-columns:1fr}}
+
+    /* mini cards (editorial surface) */
+    .mini-card{background:#fff;border:1px solid var(--line);box-shadow:none;border-radius:12px}
+    .mini-card h3{font-size:var(--text-lg)}
+    /* mini cards on dark sections — translucent, matching base .section-dark .panel */
+    .section-dark .mini-card{background:rgba(255,255,255,.06);border-color:rgba(242,240,231,.14);box-shadow:none}
+    .section-dark .mini-card h3{color:#f7f5ec}
+    .section-dark .mini-card p{color:rgba(242,240,230,.82)}
+    .section-dark .icon{background:rgba(255,138,111,.16);color:#ff8a6f}
+
+    /* dark inline note paragraph */
+    .note-dark{margin-top:30px;padding:26px 28px;border:1px solid var(--line);border-radius:14px;background:#14130d;color:#f2f0e6}
+    .note-dark p{margin:0;font-size:clamp(17px,2vw,21px);line-height:1.5;font-weight:600;max-width:80ch}
+    /* two-box summary of the exploration: what we cut vs what shipped */
+    .note-grid{margin-top:30px;display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .note-box{padding:24px 26px;border:1px solid var(--line);border-radius:14px;background:#14130d;display:flex;flex-direction:column;gap:10px}
+    .note-box--ship{background:#161a12;border-color:rgba(147,197,114,.28)}
+    .note-box h3{margin:0;font-size:clamp(17px,1.7vw,20px);color:#f7f5ec}
+    .note-box p{margin:0;font-size:var(--text-md);line-height:1.55;color:rgba(242,240,230,.82)}
+    .note-box p strong{color:#f7f5ec}
+    @media (max-width:760px){.note-grid{grid-template-columns:1fr}}
+
+    .subhead{margin:34px 0 4px;font-size:clamp(18px,1.8vw,22px)}
+    .subcopy{margin:0 0 18px;color:var(--muted);font-size:var(--text-md);max-width:820px}
+    .badge.badge-new{background:var(--blue);color:#f8efe7;border-color:var(--blue)}
+    .badge-legend{margin:16px 0 0;color:var(--muted);font-size:var(--text-sm)}
+    .badge-legend b{color:var(--blue-2);font-weight:800}
+    /* At a glance — the 10-second scannable summary under the hero */
+    .at-glance{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:36px 44px;border-top:2px solid var(--ink);padding-top:28px}
+    .at-glance-item{padding:0}
+    .at-glance-item small{display:block;margin-bottom:12px;color:var(--blue-2);font-size:var(--text-xs);font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+    .at-glance-item p{margin:0;font-size:var(--text-md);line-height:1.62;color:#33312a}
+    .at-glance-item b{color:var(--ink);font-weight:800}
+    @media(max-width:820px){.at-glance{grid-template-columns:1fr}.at-glance-item{border-right:0;border-bottom:1px solid var(--hair);padding:20px 0}.at-glance-item:last-child{border-bottom:0}}
+    /* decision-log table — question / trade-off / decision / future (shared style with map) */
+    .decision-log-table{border:var(--surface-border);border-radius:12px;background:var(--surface);box-shadow:var(--surface-shadow);overflow:hidden;margin-top:8px}
+    .decision-log-head,.decision-log-body{display:grid;grid-template-columns:1.1fr 1.1fr 1.3fr 1fr}
+    .decision-log-head{border-bottom:1px solid rgba(28,27,22,.1);background:rgba(255,255,255,.4)}
+    .decision-log-head div{padding:18px 20px;color:var(--blue-2);font-weight:800;text-transform:uppercase;letter-spacing:.08em;font-size:var(--text-sm)}
+    .decision-log-head div + div,.decision-log-cell + .decision-log-cell{border-left:1px solid rgba(28,27,22,.08)}
+    .decision-log-body + .decision-log-body{border-top:1px solid rgba(28,27,22,.1)}
+    .decision-log-cell{padding:18px 20px;font-size:var(--text-sm);line-height:1.55;color:var(--muted)}
+    .decision-log-cell p{margin:0}
+    @media(max-width:900px){.decision-log-table{border:0;border-radius:0;background:transparent;box-shadow:none}.decision-log-head{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;padding:0 0 12px;border-bottom:1px solid rgba(28,27,22,.12);background:transparent}.decision-log-head div{padding:0;color:var(--blue-2);font-size:10px;line-height:1.2}.decision-log-head div + div{border-left:0}.decision-log-body{grid-template-columns:1fr;padding:18px 0}.decision-log-body + .decision-log-body{border-top:1px solid rgba(28,27,22,.12)}.decision-log-cell{padding:0;border-left:0}.decision-log-cell + .decision-log-cell{margin-top:10px;border-left:0}.decision-log-cell::before{display:none}}
+    /* The comparison stays compact through tablet widths: one legend, then clean decision entries. */
+    @media(max-width:1024px){.decision-log-table{border:0;border-radius:0;background:transparent;box-shadow:none}.decision-log-head{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;padding:0 0 12px;border-bottom:1px solid rgba(28,27,22,.12);background:transparent}.decision-log-head div{padding:0;color:var(--blue-2);font-size:10px;line-height:1.2}.decision-log-head div + div{border-left:0}.decision-log-body{grid-template-columns:1fr;padding:18px 0}.decision-log-body + .decision-log-body{border-top:1px solid rgba(28,27,22,.12)}.decision-log-cell{padding:0;border-left:0}.decision-log-cell + .decision-log-cell{margin-top:10px;border-left:0}.decision-log-cell::before{display:none}}
+    /* discovery evidence table (signal → what it told us; shared concept with map's discovery) */
+    .discovery-band{margin-top:8px;padding:32px;border-radius:var(--surface-radius);background:#fff;border:1px solid rgba(28,27,22,.1);box-shadow:var(--surface-shadow)}
+    .discovery-evidence-head,.discovery-evidence-row{display:grid;grid-template-columns:minmax(180px,.4fr) minmax(0,1fr);gap:24px}
+    .discovery-evidence-head{padding:18px 0 16px}
+    .discovery-evidence-head div{color:#14130d;font-size:var(--text-md);font-weight:800;letter-spacing:-.01em}
+    .discovery-evidence-row{padding:20px 0;border-top:1px solid rgba(28,27,22,.1)}
+    .discovery-evidence-head + .discovery-evidence-row{border-top:0}
+    .discovery-evidence-row div:first-child{color:#14130d;font-size:var(--text-md);font-weight:700;line-height:1.35}
+    .discovery-evidence-row div:last-child{color:#615d52;font-size:var(--text-md);line-height:1.55}
+    @media(max-width:760px){.discovery-evidence-head{display:none}.discovery-evidence-row{grid-template-columns:1fr;gap:6px;padding:16px 0}}
+    /* outcome grid (shared style with map's #outcome) */
+    .result-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:2px solid var(--ink);margin-top:8px}
+    .result-item{padding:24px 28px 24px 0;border-bottom:1px solid var(--hair)}
+    .result-item:nth-child(odd){border-right:1px solid var(--hair)}
+    .result-item:nth-child(even){padding-left:28px;padding-right:0}
+    .result-item:nth-last-child(-n+2):nth-child(odd),.result-item:last-child{border-bottom:0}
+    .result-idx{display:block;margin-bottom:8px;color:var(--blue);font-family:ui-monospace,Menlo,monospace;font-size:var(--text-xs);font-weight:700;letter-spacing:.1em}
+    .result-item h3{margin:0 0 8px;color:var(--ink);font-size:var(--h3);line-height:1.12}
+    .result-item p{margin:0;color:#514d45;font-size:var(--text-md);line-height:1.6}
+    @media(max-width:760px){.result-grid{grid-template-columns:1fr}.result-item{border-right:0!important;padding:22px 0!important;border-bottom:1px solid var(--hair)!important}.result-item:last-child{border-bottom:0!important}}
+
+    /* overflow fix so position:sticky works (clip, not hidden) — required for scroll-story sticky images */
+    html{overflow-x:clip}
+    body.case-study-page{overflow-x:clip}
+
+    /* hero meta + shipped-product status pill (shared with map/billing hero) */
+    .hero-meta{display:grid;justify-items:start;gap:10px}
+    .hero-status-tag{display:inline-flex;align-items:center;gap:8px;min-height:30px;padding:0 14px;border-radius:999px;border:0;background:#1f9d57;color:#f1fff8;font-size:var(--text-xs);font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+    .hero-status-tag::before{content:"";width:8px;height:8px;border-radius:50%;background:#eafff3;box-shadow:0 0 0 3px rgba(234,255,243,.3)}
+
+    /* hero "why this mattered" flow strip (dark card, shared pattern with map) */
+    .story-diagram{margin-top:28px;padding:28px;border-radius:12px;background:#0d0c08;color:#f2f0e6}
+    .diagram-title{margin:0 0 18px;font-size:var(--text-sm);letter-spacing:.12em;text-transform:uppercase;color:rgba(207,59,35,.88);font-weight:800}
+    .story-diagram .diagram-title{color:#f7f5ec}
+    .diagram-flow{display:flex;gap:12px 20px;align-items:flex-start;flex-wrap:wrap}
+    .diagram-node{min-width:150px;flex:1}
+    .diagram-node strong{display:block;color:#f7f5ec;font-size:var(--text-md);margin-bottom:4px}
+    .diagram-node span{display:block;font-size:var(--text-sm);line-height:1.45;color:rgba(242,240,230,.72)}
+    .diagram-arrow{color:rgba(242,240,230,.4);font-weight:800;align-self:center;font-size:var(--text-lg)}
+    @media(max-width:760px){.diagram-flow{display:grid;grid-template-columns:1fr}.diagram-arrow{display:none}}
+
+    /* expected vs reality journey timeline (shared with map's "question that changed the project") */
+    .diagram-title-outside{margin:0 0 14px}
+    .question-journey .diagram-title-outside{margin-bottom:22px;color:rgba(240,238,228,.72)}
+    .question-copy{max-width:none;padding-top:8px}
+    .question-copy p{margin:0;font-size:var(--text-md);line-height:1.7}.question-copy p + p{margin-top:18px}
+    .question-journey{margin-top:36px;padding-top:24px;border-top:1px solid rgba(242,240,230,.14)}
+    .journey-groups{display:grid;gap:34px}
+    .journey-group{position:relative;padding-left:82px}
+    .journey-group-head{margin:0 0 18px;color:rgba(240,238,228,.74);font-size:var(--text-xs);font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+    .journey-group-line{position:absolute;left:27px;top:32px;bottom:12px;width:3px;border-radius:999px;background:linear-gradient(180deg,rgba(242,240,230,.58),rgba(242,240,230,.14))}
+    .journey-group-items{display:grid;gap:28px}
+    .journey-timeline-item{position:relative;display:grid;grid-template-columns:auto 1fr;gap:22px;align-items:start}
+    .journey-timeline-marker{position:relative;z-index:1;display:grid;place-items:center;width:56px;height:56px;border-radius:999px;border:3px solid var(--ink);background:#f2f0e6;color:var(--ink);font-size:var(--h3);font-weight:800;line-height:1;box-shadow:0 0 0 8px rgba(20,19,13,.22)}
+    .journey-timeline-copy{padding-top:4px}
+    .journey-timeline-copy h3{margin:0 0 10px;color:#f2f0e6;font-size:var(--h2);line-height:1.05}
+    .journey-timeline-copy p{margin:0;max-width:780px;color:rgba(242,240,230,.88);font-size:var(--text-md);line-height:1.62}
+    .journey-timeline-item.is-risk .journey-timeline-marker{border-color:#e08a70;background:#3a1a16;color:#ffe6dc;box-shadow:0 0 0 8px rgba(224,120,90,.16)}
+    .journey-timeline-item.is-risk .journey-timeline-copy h3{color:#fff0ea}
+    @media(max-width:760px){.journey-group{padding-left:0}.journey-group-line{display:none}.journey-timeline-item{gap:16px}.journey-timeline-marker{width:42px;height:42px;font-size:var(--text-md)}.journey-timeline-copy h3{font-size:var(--h3)}.journey-timeline-copy p{font-size:var(--text-sm)}}
+
+    /* scroll story — text scrolls left, image sticky right (shared with map; used for not-shipped explorations + final output) */
+    .scroll-story{display:grid;grid-template-columns:minmax(0,.82fr) minmax(380px,1.18fr);gap:42px;align-items:start;margin-top:42px}
+    .scroll-story-copy{position:relative;display:grid;padding-left:24px;padding-right:18px}
+    .scroll-story-step{position:relative;min-height:78vh;padding:32px 0;display:grid;align-content:start;opacity:.42;transform:translateY(16px);transition:opacity .32s ease .12s,transform .32s ease .12s}
+    .scroll-story-step + .scroll-story-step{padding-top:48px;border-top:1px solid var(--hair)}
+    .scroll-story-step.is-active{opacity:1;transform:translateY(0)}
+    .scroll-story-label{display:block;margin-bottom:12px;color:var(--blue-2);font-size:var(--text-xs);font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+    .scroll-story-step h3{margin:0 0 12px;color:var(--ink);font-size:var(--h2);line-height:1.05}
+    .scroll-story-step p{margin:0;color:#615d52;font-size:var(--text-md);line-height:1.65;max-width:34ch}
+    .scroll-story-step p + p{margin-top:14px}
+    .scroll-story-sticky{position:sticky;top:clamp(110px,calc(50vh - 300px),320px);align-self:start}
+    .scroll-story-stage{position:relative;height:72vh;min-height:520px;max-height:720px;overflow:visible}
+    .scroll-story-media{position:absolute;inset:0;margin:0;display:grid;place-items:center;opacity:0;pointer-events:none;transform:scale(.985);transition:opacity .32s ease,transform .32s ease}
+    .scroll-story-media.is-active{opacity:1;pointer-events:auto;transform:scale(1)}
+    .scroll-story-media img{display:block;width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain;border-radius:12px;border:1px solid rgba(28,27,22,.12);box-shadow:0 34px 80px rgba(20,19,13,.16);background:#faf9f4}
+    /* Live recreations use fixed artboards that are scaled by the parent. This keeps
+       the HTML alive while avoiding the browser's 150px default iframe height. */
+    .scroll-story-stage .fitframe,.liveframe-stage .fitframe{display:block;border:0;background:transparent;max-width:none;max-height:none;flex:none;width:var(--frame-w,960px);height:var(--frame-h,640px)}
+    .liveframe-stage{display:none}
+    .scroll-story-mobile-media{display:none}
+    .scroll-story-progress{position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(180deg,rgba(207,59,35,.04),rgba(207,59,35,.18))}
+    .scroll-story-progress::after{content:"";position:absolute;left:0;right:0;height:84px;border-radius:999px;background:linear-gradient(180deg,#e07a55,#cf3b23);transform:translateY(var(--story-progress,0px));transition:transform .26s ease}
+    @media(max-width:900px){.scroll-story{grid-template-columns:1fr;gap:18px}.scroll-story-copy{order:2;padding-left:0;padding-right:0}.scroll-story-sticky{position:relative;top:auto;order:1}.scroll-story-stage{height:auto;min-height:auto;aspect-ratio:4/5}.scroll-story-step{min-height:0;opacity:1;transform:none;padding:12px 0 24px}.scroll-story-progress{display:none}}
+    @media(max-width:760px){.scroll-story-sticky{display:none}.scroll-story-mobile-media{display:none;margin:0 0 18px}.scroll-story-mobile-media img{display:block;width:100%;height:auto;border-radius:12px;border:1px solid rgba(28,27,22,.12);background:#f4f2ea}.liveframe-stage{position:relative;display:grid;place-items:center;width:100%;min-width:0;max-width:100%;min-height:0;margin:20px 0 12px;aspect-ratio:var(--frame-ratio,16 / 10);overflow:visible}.liveframe-stage .fitframe{position:absolute;left:50%;top:50%;margin:0}.scroll-story-step + .scroll-story-step{margin-top:22px;padding-top:28px}}
+    @media(max-width:760px) and (prefers-reduced-motion:reduce){.liveframe-stage{display:none}.scroll-story-mobile-media{display:block}}
+    /* connection flow: center the sticky image in the viewport and vertically center each step's text to it (mirrors map's #design-evolution) */
+    #connection .scroll-story{align-items:start}
+    #connection .scroll-story-copy{padding-top:0;padding-bottom:0}
+    #connection .scroll-story-step{min-height:88vh;padding:6vh 0;align-content:center}
+    #connection .scroll-story-step:first-child{padding-top:2vh}
+    #connection .scroll-story-step:last-child{padding-bottom:12vh}
+    #connection .scroll-story-sticky{position:sticky;top:0;height:100vh;display:flex;align-items:center;justify-content:center;align-self:start;transform:none;margin:0}
+    #connection .scroll-story-stage{position:relative;width:100%;height:min(90vh,900px);min-height:0;max-height:none}
+    @media(max-width:760px){#connection .scroll-story-sticky{display:none}#connection .scroll-story-step{min-height:0;padding:0}}
+    /* On phones the final-output sequence becomes a native swipe gallery. Each step keeps
+       its own full-width image and left-aligned explanation instead of becoming a long stack. */
+    @media(max-width:760px){
+      #connection .scroll-story{display:block;margin-top:22px}
+      #connection .scroll-story-copy{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:0;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;padding:0 0 14px;touch-action:pan-x pan-y}
+      #connection .scroll-story-step{flex:0 0 100%;scroll-snap-align:start;scroll-snap-stop:always;display:flex;flex-direction:column;align-items:flex-start;opacity:1;transform:none;padding:0 0 18px}
+      #connection .scroll-story-step + .scroll-story-step{margin:0;padding-top:0;border-top:0}
+      #connection .scroll-story-mobile-media{display:block;order:0;width:100%;max-width:100%;margin:0 0 20px}
+      #connection .scroll-story-mobile-media img{width:100%;max-width:100%;height:auto;object-fit:contain}
+      #connection .scroll-story-label,#connection .scroll-story-step h3,#connection .scroll-story-step p{width:100%;text-align:left}
+      #connection .liveframe-stage{display:none}
+      #connection .scroll-story-progress{display:none}
+    }
+
+    /* concept carousel — big-button slideshow for old / not-approved versions (shared pattern with map; dark band = the discarded path) */
+    .concept-carousel{margin-top:28px;padding:clamp(22px,4vw,40px);border-radius:16px;background:linear-gradient(180deg,#1f1d16,#141308)}
+    .concept-carousel-shell{position:relative;padding:0 68px}
+    .concept-carousel-viewport{overflow:hidden}
+    .concept-carousel-track{display:flex;transition:transform .42s ease}
+    .concept-carousel-slide{min-width:100%;display:grid;grid-template-columns:minmax(0,.82fr) minmax(340px,1.08fr);gap:36px;align-items:center}
+    .concept-carousel-copy{padding-right:12px}
+    .concept-carousel-label{display:block;margin-bottom:12px;color:rgba(255,138,111,.9);font-size:var(--text-xs);font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+    .concept-carousel-copy h3{margin:0 0 12px;color:#f7f5ec;font-size:var(--h2);line-height:1.05}
+    .concept-carousel-copy p{margin:0;color:rgba(242,240,230,.82);font-size:var(--text-md);line-height:1.65;max-width:40ch}
+    .concept-carousel-media{margin:0;display:grid;place-items:center}
+    .concept-carousel-media img{display:block;width:auto;height:auto;max-width:100%;max-height:500px;object-fit:contain;margin:auto;border-radius:12px;border:1px solid rgba(242,240,231,.12);box-shadow:0 24px 60px rgba(0,0,0,.4)}
+    .concept-carousel-btn{position:absolute;top:50%;transform:translateY(-50%);width:52px;height:52px;border-radius:999px;border:1px solid rgba(242,240,231,.16);background:#f4f2ea;color:#cf3b23;display:grid;place-items:center;cursor:pointer;z-index:2;box-shadow:0 14px 30px rgba(0,0,0,.35);transition:background .2s ease,box-shadow .2s ease,opacity .2s ease}
+    .concept-carousel-btn:hover{background:#fff}
+    .concept-carousel-icon{display:grid;place-items:center;width:24px;height:24px}
+    .concept-carousel-icon svg{width:22px;height:22px;display:block}
+    .concept-carousel-btn.prev{left:0}.concept-carousel-btn.next{right:0}
+    .concept-carousel-btn[disabled]{opacity:.4;cursor:default}
+    .concept-carousel-meta{display:flex;justify-content:center;gap:10px;margin-top:20px}
+    .concept-carousel-dot{width:10px;height:10px;border-radius:999px;border:0;padding:0;background:rgba(242,240,230,.3);cursor:pointer;transition:background .2s ease,transform .2s ease}
+    .concept-carousel-dot.is-active{background:#f2f0e6;transform:scale(1.15)}
+    @media(max-width:820px){.concept-carousel{padding-top:16px}.concept-carousel-slide{grid-template-columns:1fr;gap:18px;padding-top:0}.concept-carousel-copy{order:2;padding-right:0}.concept-carousel-media{order:1;margin-top:0}.concept-carousel-shell{padding:0 0 64px}.concept-carousel-btn{top:auto!important;bottom:0;transform:none}.concept-carousel-btn.prev{left:calc(50% - 60px)}.concept-carousel-btn.next{right:calc(50% - 60px)}}
+
+    /* reading progress indicator (shared with map & billing) */
+    .read-progress{position:fixed;right:22px;bottom:22px;z-index:120;display:flex;align-items:center;gap:12px;padding:9px 16px 9px 11px;border-radius:999px;background:rgba(20,19,13,.9);backdrop-filter:blur(8px);box-shadow:0 14px 34px rgba(14,13,8,.32);opacity:0;transform:translateY(10px);transition:opacity .3s ease,transform .3s ease;pointer-events:none}
+    .read-progress.is-visible{opacity:1;transform:translateY(0)}
+    .read-progress-ring{position:relative;width:44px;height:44px;flex:0 0 44px}
+    .read-progress-ring svg{transform:rotate(-90deg);display:block}
+    .read-progress-ring .rp-track{stroke:rgba(242,240,230,.18)}
+    .read-progress-ring .rp-bar{stroke:url(#rpGrad);stroke-linecap:round;transition:stroke-dashoffset .18s linear}
+    .read-progress-pct{position:absolute;inset:0;display:grid;place-items:center;font-size:var(--text-xs);font-weight:800;color:#f4f2ea}
+    .read-progress-copy{display:grid;gap:2px;max-width:210px}
+    .read-progress-title{font-size:var(--text-sm);font-weight:800;letter-spacing:-.01em;line-height:1.1;color:#f7f5ec}
+    .read-progress-sub{font-size:var(--text-xs);line-height:1.28;color:rgba(242,240,230,.72)}
+    @media(max-width:560px){.read-progress-copy{display:none}.read-progress{padding:8px;right:16px;bottom:16px}}
+    @media(prefers-reduced-motion:reduce){.read-progress,.read-progress-ring .rp-bar{transition:none}}
+    /* Canonical tables: dark comparison; white decision and evidence surfaces. */
+    #audit .comparison-table{border:1px solid rgba(242,240,230,.16);border-radius:14px;background:#12110c;box-shadow:none;overflow:hidden}
+    #audit .comparison-head{background:#12110c;border-bottom-color:rgba(242,240,230,.16)}
+    #audit .comparison-head div:first-child{color:#ff8a6f}
+    #audit .comparison-head div:last-child{color:#7dc98d}
+    #audit .comparison-table .row{border-top-color:rgba(242,240,230,.12)}
+    #audit .comparison-table .cell{padding:18px 20px;border-left-color:rgba(242,240,230,.12)}
+    #audit .comparison-table .cell:first-child{background:rgba(207,59,35,.12);color:#ffd0c5}
+    #audit .comparison-table .cell:last-child{background:rgba(81,139,92,.13);color:#d4ead8}
+    .decision-log-table{border:1px solid var(--line);border-radius:14px;background:#fff;box-shadow:none}
+    .decision-log-head{background:#fff}
+    .discovery-band{background:#fff;border:1px solid var(--line);box-shadow:none}
+    .discovery-evidence-head,.discovery-evidence-row{gap:0}
+    .discovery-evidence-head{padding:0;background:#fff;border-bottom:1px solid var(--line)}
+    .discovery-evidence-head div{padding:18px 20px;color:#615d52;font-size:var(--text-xs);letter-spacing:.08em;text-transform:uppercase}
+    .discovery-evidence-head div:first-child,.discovery-evidence-row div:first-child{border-right:1px solid var(--line)}
+    .discovery-evidence-row{padding:0;border-top:1px solid var(--line)}
+    .discovery-evidence-row div{padding:18px 20px}
+    @media(max-width:760px){.discovery-evidence-head{display:none}.discovery-evidence-row{grid-template-columns:1fr;gap:0;padding:0}.discovery-evidence-row div{padding:14px 0}.discovery-evidence-row div:first-child{border-right:0;padding-bottom:4px}.discovery-evidence-row div:last-child{padding-top:4px}}
+    #evolution .itable.comparison-itable{background:#12110c;border-color:rgba(242,240,230,.16);box-shadow:none}
+    #evolution .itable.comparison-itable thead tr{background:#12110c}
+    #evolution .itable.comparison-itable th{color:#f2f0e6;border-bottom-color:rgba(242,240,230,.16)}
+    #evolution .itable.comparison-itable th:nth-child(2){color:#ff8a6f}
+    #evolution .itable.comparison-itable th:last-child{color:#7dc98d}
+    #evolution .itable.comparison-itable td{border-top-color:rgba(242,240,230,.12)}
+    #evolution .itable.comparison-itable td:nth-child(2){background:rgba(207,59,35,.12);color:#ffd0c5}
+    #evolution .itable.comparison-itable td:last-child{background:rgba(81,139,92,.13);color:#d4ead8}
+    #evolution .itable.comparison-itable td.k{color:#f2f0e6}
+    @media(max-width:760px){.itable{overflow-x:auto}.itable table{min-width:640px}}
+  </style>
 </head>
-<body>
+<body class="case-study-page">
+  <div class="landing-grid" aria-hidden="true"></div>
   <nav class="nav">
     <div class="container nav-inner">
-      <a class="brand" href="index.html"><span class="brand-mark"></span><span>Ivan Jose</span></a>
+      <a class="brand" href="index.html">Ivan Jose</a>
       <div class="nav-links">
-        <a href="#problem" data-section-link="problem">Problem</a>
-        <a href="#framework" data-section-link="framework">Framework</a>
-        <a href="#decisions" data-section-link="decisions">Decisions</a>
-        <a href="#reflection" data-section-link="reflection">Reflection</a>
-        <a href="index.html">Home</a>
+        <a href="#overview" data-section-link="summary">Summary</a>
+        <a href="#discovery" data-section-link="discovery">Discovery</a>
+        <a href="#connection" data-section-link="product-design">Product Design</a>
+        <a href="#outcome" data-section-link="result">Result</a>
         <span class="nav-indicator" aria-hidden="true"></span>
       </div>
     </div>
   </nav>
 
   <main>
+    <!-- HERO -->
     <section class="case-hero" id="overview">
       <div class="container">
-        <div class="eyebrow">Case Study 02 · Platform Integrations</div>
+        <div class="hero-meta">
+          <div class="eyebrow">Platform Integrations · LettrLabs</div>
+          <div class="hero-status-tag">Shipped Framework</div>
+        </div>
         <h1 class="case-title">
           <button
             class="hover-preview-trigger title-preview-trigger"
@@ -36,9 +412,9 @@
             aria-label="Preview integration platform"
             data-hover-hint="Click to view card"
           >
-            Building a reusable integration flow for any API connection.
+            Building a reusable integration flow for supported API connections.
           </button>
-          <span class="case-title-mobile">Building a reusable integration flow for any API connection.</span>
+          <span class="case-title-mobile">Building a reusable integration flow for supported API connections.</span>
         </h1>
         <p class="lead">
           Connecting one app is easy. Designing a repeatable system that can support CRMs, ecommerce tools, webhooks,
@@ -46,8 +422,8 @@
           That is where the fun starts.
         </p>
         <div class="case-actions">
-          <a class="button secondary" href="#decisions">View decisions</a>
-          <a class="button secondary" href="#framework">See the framework</a>
+          <a class="button" href="#connection">See the framework</a>
+          <a class="button secondary" href="https://www.lettrlabs.com/" target="_blank" rel="noreferrer">Visit LettrLabs</a>
         </div>
 
         <div class="case-summary">
@@ -58,210 +434,660 @@
               even when the underlying APIs, fields, and business logic are different.
             </p>
           </div>
-          <div class="panel kv">
-            <div class="kv-item"><span>My role</span><strong>UX flow, UI, states, validations, components, QA</strong></div>
-            <div class="kv-item"><span>Team</span><strong>PM, FE/BE engineers, QA, Product Design</strong></div>
+          <div class="kv">
+            <div class="kv-item"><span>My role</span><strong>Led UX strategy &amp; the end-to-end design — flows, states, validations, UI, QA</strong></div>
+            <div class="kv-item"><span>Team</span><strong>Cross-functional — a PM, a developer, and me on design &amp; UX strategy</strong></div>
             <div class="kv-item"><span>Challenge</span><strong>Unify many API setups into one product experience</strong></div>
-            <div class="kv-item"><span>Outcome</span><strong>Reusable flow for faster integration support</strong></div>
+            <div class="kv-item"><span>Outcome</span><strong>Per-connector lead time fell from 3–4 weeks to ~2; the first parallel batch shipped 4 new connectors in 3 weeks</strong></div>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="section">
-      <div class="container screenshot">
-        <img src="images/integration-manage.jpeg" alt="Integration management screen">
-        <div class="caption">Final management screen: connected accounts, status, attribution setup, and next actions.</div>
+    <!-- AT A GLANCE -->
+    <section class="section at-glance-band" style="padding-top:72px;padding-bottom:72px">
+      <div class="container">
+        <div class="section-head" style="margin-bottom:34px">
+          <div class="eyebrow">At a glance</div>
+          <h2>The short version.</h2>
+        </div>
+        <div class="metric-strip" style="margin-top:0;margin-bottom:40px">
+          <div class="metric-tile"><strong>$350K/mo</strong><span>of direct mail already runs on customer-integration data</span></div>
+          <div class="metric-tile"><strong>32%</strong><span>of customers build automations from a connected integration</span></div>
+          <div class="metric-tile"><strong>28/mo</strong><span>support tickets—12 asking for a new connector, 16 stuck setting one up—pulling in CS, Sales, and engineering</span></div>
+          <div class="metric-tile"><strong>3–4 → 2 wks</strong><span>per-connector lead time after the reusable pattern replaced one-off flows</span></div>
+          <div class="metric-tile"><strong>4 in 3 wks</strong><span>new connectors on the first run—Salesforce, ServiceTitan, HubSpot, Housecall Pro</span></div>
+          <div class="metric-tile"><strong>1 pattern</strong><span>one lifecycle new connectors slot into as configuration, not a redesign</span></div>
+        </div>
+        <div class="at-glance">
+          <div class="at-glance-item">
+            <small>The problem</small>
+            <p>Customer data lived across <b>6 separate tools</b> and every connector was a one-off build. <b>32%</b> of customers already automate from an integration and <b>~$350K of mail/month</b> runs on that data—yet <b>12 tickets/month</b> asked for new connectors and <b>16/month</b> came from users stuck setting one up (<b>3 in 10</b> couldn't finish), pulling in CS, Sales, and engineering. <span style="opacity:.65">(Figures from internal product analytics, rounded.)</span></p>
+          </div>
+          <div class="at-glance-item">
+            <small>What I did</small>
+            <p>Led the <b>UX strategy and end-to-end design</b> for one reusable integration framework—systems thinking over a shared <b>connect → test → attribute → manage</b> lifecycle—so a new connector ships as configuration, not a redesign. With a PM and a developer.</p>
+          </div>
+          <div class="at-glance-item">
+            <small>The outcome</small>
+            <p>Per-connector lead time fell from <b>3–4 weeks to ~2</b>. In the first <b>3-week parallel batch</b> we shipped <b>4 new connectors</b>—including <b>Salesforce</b>, requested by a client worth <b>~500K mails</b>.</p>
+          </div>
+        </div>
       </div>
     </section>
 
-    <section class="section" id="problem">
-      <div class="container split">
-        <div>
+    <!-- MAIN UX (white background) -->
+    <section class="section" id="main-ux" style="background:#ffffff">
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">Main UX</div>
+          <h2>The whole integration surface in one view.</h2>
+          <p>One management screen for connected accounts, their status and sync details, attribution setup, and the next action—so every connector lives in the same place.</p>
+        </div>
+        <figure class="shot shot-wide" style="margin-top:0">
+          <div class="shot-frame">
+            <div class="shot-bar"><span></span><span></span><span></span></div>
+            <div class="shot-media">
+              <img src="images/integration-manage-connections.png" alt="Manage Integration screen for Housecall Pro—connected accounts with Pending and Active status, sync details, Add New Account, Create an Automation, and Customize Attribution actions" onerror="this.remove()">
+              <span class="shot-ph"><strong>Manage Integration — connected accounts with status and sync details, plus add-account, automation, and attribution actions</strong></span>
+            </div>
+          </div>
+          <figcaption class="shot-cap">Final management screen: connected accounts, status, attribution setup, and next actions.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- PROBLEM -->
+    <section class="section section-dark-soft" id="problem">
+      <div class="container">
+        <div class="pattern-head">
           <div class="eyebrow">The problem</div>
-          <h2>Every new integration felt like starting over.</h2>
+          <h2>Why did adding one integration take a month—and still trip up the customer who asked for it?</h2>
         </div>
-        <div class="panel">
-          <p>Lettrlabs’ vision is to become a one-stop shop for direct mail. But customers do not keep their data in one place. Their leads, customers, lifecycle events, purchases, jobs, and CRM activity live across different platforms.</p>
-          <p>Before this project, each app could become its own experience. Different fields, auth requirements, setup steps, and implementation patterns made integrations harder to design, build, remember, and maintain.</p>
+        <div class="question-copy">
+          <p>LettrLabs' vision is to be a one-stop shop for direct mail—but customers keep their leads, purchases, jobs, and CRM activity across many platforms. Every new connector had been its own build, so the same slow, expensive path repeated each time.</p>
+          <p>My reframing: this wasn't "add one more app." It was the gap between how a new integration <em>should</em> reach a customer and how it actually did.</p>
+        </div>
+      </div>
+      <div class="container question-journey">
+        <p class="diagram-title diagram-title-outside">Expected vs. actual integration journey</p>
+        <div class="journey-groups" aria-label="Expected vs actual integration journey timeline">
+          <div class="journey-group">
+            <div class="journey-group-line" aria-hidden="true"></div>
+            <p class="journey-group-head">Expected</p>
+            <div class="journey-group-items">
+              <div class="journey-timeline-item">
+                <div class="journey-timeline-marker">1</div>
+                <div class="journey-timeline-copy">
+                  <h3>The business picks what to connect</h3>
+                  <p>Customers, engineering, and business agree on which integrations are worth building, guided by what customers actually request.</p>
+                </div>
+              </div>
+              <div class="journey-timeline-item">
+                <div class="journey-timeline-marker">2</div>
+                <div class="journey-timeline-copy">
+                  <h3>Engineering builds it once, consistently</h3>
+                  <p>Devs focus on a proper data pipeline and reuse one consistent workflow for every integration instead of reinventing the setup.</p>
+                </div>
+              </div>
+              <div class="journey-timeline-item">
+                <div class="journey-timeline-marker">3</div>
+                <div class="journey-timeline-copy">
+                  <h3>The customer uses it within a week</h3>
+                  <p>Once released, the connector is familiar and self-serve—the customer connects and starts automating within a week.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="journey-group">
+            <div class="journey-group-line" aria-hidden="true"></div>
+            <p class="journey-group-head">Reality</p>
+            <div class="journey-group-items">
+              <div class="journey-timeline-item is-risk">
+                <div class="journey-timeline-marker">1</div>
+                <div class="journey-timeline-copy">
+                  <h3>The request waits a month to be heard</h3>
+                  <p>A customer asks for an integration, and it takes at least a month just to reach management and get prioritized—before any design or build begins.</p>
+                </div>
+              </div>
+              <div class="journey-timeline-item is-risk">
+                <div class="journey-timeline-marker">2</div>
+                <div class="journey-timeline-copy">
+                  <h3>Every build is researched from scratch</h3>
+                  <p>Devs research the data pipeline and work with product to design the data model and satisfy each API's quirks—a fresh, custom effort every time.</p>
+                </div>
+              </div>
+              <div class="journey-timeline-item is-risk">
+                <div class="journey-timeline-marker">3</div>
+                <div class="journey-timeline-copy">
+                  <h3>The customer hits a brand-new flow</h3>
+                  <p>They finally use it—but it's another unfamiliar process, so they run into problems or difficulty, and support gets pulled right back in.</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="section">
+    <!-- DISCOVERY -->
+    <section class="section" id="discovery">
       <div class="container">
         <div class="section-head">
-          <h2>Why integrations mattered</h2>
-          <p>The goal was not just “connect an app.” The goal was to make customer data useful across direct mail workflows.</p>
+          <div class="eyebrow">Discovery</div>
+          <h2>The real question wasn't "which app next." It was "why does every connection start over?"</h2>
+          <p>The support queue and the analytics said the same thing: integrations were already core to how customers got value—but the way we built and set them up didn't scale. Before designing a screen, I let the evidence point at the pattern.</p>
         </div>
-
-        <div class="card-grid">
-          <div class="mini-card">
-            <div class="icon">01</div>
-            <h3>Use existing customer data</h3>
-            <p>Customers could bring their own CRM or app data instead of relying only on purchased data.</p>
-          </div>
-          <div class="mini-card">
-            <div class="icon">02</div>
-            <h3>Trigger automations</h3>
-            <p>Customer events and lifecycle data could trigger direct mail automatically.</p>
-          </div>
-          <div class="mini-card">
-            <div class="icon">03</div>
-            <h3>Power attribution and analytics</h3>
-            <p>Connected data could support attribution, reporting, data merge, and audience expansion.</p>
-          </div>
+        <div class="discovery-band">
+          <div class="discovery-evidence-head"><div>What we saw</div><div>What it told us</div></div>
+          <div class="discovery-evidence-row"><div>12 tickets / mo</div><div>Customers were actively asking for connectors we didn't have yet—unmet demand, not a hypothesis. The queue was telling us where to expand.</div></div>
+          <div class="discovery-evidence-row"><div>16 tickets / mo</div><div>The setup itself was the blocker. Every one pulled in Customer Success, Sales, and engineering just to get a customer connected.</div></div>
+          <div class="discovery-evidence-row"><div>3 in 10 users</div><div>Couldn't add their account and trigger an automation on their own—the flow was failing before anyone reached value.</div></div>
+          <div class="discovery-evidence-row"><div>32% · $350K/mo</div><div>A third of customers already automate from an integration, and ~$350K of mail a month rides on that data. Integrations were core infrastructure, not a nice-to-have.</div></div>
+          <div class="discovery-evidence-row"><div>6 one-off builds</div><div>Each connector had been designed and built separately—3–4 weeks each—so the roadmap couldn't add sources fast enough to keep up with demand.</div></div>
+          <div class="discovery-evidence-row"><div>1 key client</div><div>A single client worth ~500K mails asked for Salesforce, which made the cost of <em>not</em> having a scalable pattern concrete and urgent.</div></div>
         </div>
       </div>
     </section>
 
-    <section class="section" id="framework">
-      <div class="container framework-layout">
-        <div class="framework-intro">
-          <div class="framework-sticky">
-            <div class="eyebrow">The shift</div>
-            <h2>From one-off integrations to a reusable platform pattern.</h2>
-            <p>The goal was to make the next integration feel familiar: same structure, same states, same mental model, with only the app-specific inputs changing.</p>
-          </div>
-        </div>
-        <div class="panel flow-panel">
-          <div class="flow">
-            <div class="flow-step hover-preview-trigger" data-preview="integration-framework-1" data-hover-hint="Click to view card" tabindex="0" role="button" aria-label="Preview select integration card"><div class="flow-num">1</div><div><h3>Select integration</h3><p>Use the same shell, logo slot, app name, and description pattern.</p></div></div>
-            <div class="flow-step hover-preview-trigger" data-preview="integration-framework-2" data-hover-hint="Click to view card" tabindex="0" role="button" aria-label="Preview connect account card"><div class="flow-num">2</div><div><h3>Connect account</h3><p>Support OAuth when available, or a simple credential form when needed.</p></div></div>
-            <div class="flow-step hover-preview-trigger" data-preview="integration-framework-3" data-hover-hint="Click to view card" tabindex="0" role="button" aria-label="Preview test and validate card"><div class="flow-num">3</div><div><h3>Test and validate</h3><p>Show loading, progress, success, failure, syncing, and recovery states.</p></div></div>
-            <div class="flow-step hover-preview-trigger" data-preview="integration-framework-4" data-hover-hint="Click to view card" tabindex="0" role="button" aria-label="Preview customize attribution card"><div class="flow-num">4</div><div><h3>Customize attribution</h3><p>Let users finish the setup only when extra business logic is needed.</p></div></div>
-            <div class="flow-step hover-preview-trigger" data-preview="integration-framework-5" data-hover-hint="Click to view card" tabindex="0" role="button" aria-label="Preview manage accounts card"><div class="flow-num">5</div><div><h3>Manage accounts</h3><p>List multiple accounts, statuses, sync details, remove actions, and next steps.</p></div></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section">
+    <!-- FRAMEWORK -->
+    <!-- UX AUDIT -->
+    <section class="section" id="audit">
       <div class="container">
         <div class="section-head">
-          <h2>Before vs. after</h2>
-          <p>The design goal was to make the next integration feel like configuration, not reinvention.</p>
+          <div class="eyebrow">UX audit</div>
+          <h2>I moved the conversation from "add an app" to "unblock the setup."</h2>
+          <p>The strongest signal wasn't that any one screen looked wrong. It was that connecting an app kept stalling—so I audited every blocker and paired it with the fix the reusable pattern shipped.</p>
         </div>
-
         <div class="comparison-table">
-          <div class="row">
-            <div class="cell"><small>Before</small>Each app risked becoming a custom flow with custom screens and custom behavior.</div>
-            <div class="cell"><small>After</small>One reusable lifecycle supported new apps by changing the logo, name, fields, and custom attributes.</div>
-          </div>
-          <div class="row">
-            <div class="cell"><small>Before</small>Early concepts asked users for too much information and exposed unnecessary complexity.</div>
-            <div class="cell"><small>After</small>The flow was reduced to the essential information needed to connect, test, and continue.</div>
-          </div>
-          <div class="row">
-            <div class="cell"><small>Before</small>Integrations were harder to remember, maintain, and extend across product and engineering.</div>
-            <div class="cell"><small>After</small>The pattern became easier for devs to reuse and easier for the product team to scale.</div>
-          </div>
-          <div class="row">
-            <div class="cell"><small>Before</small>Connection success was the end of the flow.</div>
-            <div class="cell"><small>After</small>Connection became the start of attribution, automation, one-off orders, and analytics workflows.</div>
-          </div>
+          <div class="comparison-head"><div>Blocker</div><div>Fix</div></div>
+          <div class="row"><div class="cell" data-label="Blocker">A request waited ~a month just to be prioritized, then every connector was built from scratch—3–4 weeks each.</div><div class="cell" data-label="Fix">One reusable lifecycle turns a new connector into configuration—logo, name, fields, attributes—so it ships as setup, not a project.</div></div>
+          <div class="row"><div class="cell" data-label="Blocker">16 tickets a month came from users stuck in setup, and 3 in 10 couldn't finish connecting on their own.</div><div class="cell" data-label="Fix">A guided connect → test → confirm → manage flow that tests credentials before it saves and explains every wait, so users self-serve.</div></div>
+          <div class="row"><div class="cell" data-label="Blocker">Attribution was buried in a heavyweight, data-engineering setup marketers couldn't complete.</div><div class="cell" data-label="Fix">Attribution became its own short, explicit step—confirm which statuses count as a Lead or Conversion, with a live warning if nothing would attribute.</div></div>
+          <div class="row"><div class="cell" data-label="Blocker">Each API's quirks—custom objects, renamed fields, multiple pipelines—broke one-size-fits-all guesses.</div><div class="cell" data-label="Fix">A checkbox-grid mapping handles multiple pipelines and non-linear stages explicitly, in the marketer's own language.</div></div>
+          <div class="row"><div class="cell" data-label="Blocker">Success and failure states lived on one screen, so users lost track of what was active, syncing, or failed.</div><div class="cell" data-label="Fix">Status surfaces in the account list and in-app notifications—active, sync-in-progress, failed, or ready for the next step.</div></div>
+          <div class="row"><div class="cell" data-label="Blocker">Every connector was designed and maintained separately across product and engineering.</div><div class="cell" data-label="Fix">One pattern devs reuse and the product team scales—new sources slot in as configuration, not a redesign.</div></div>
         </div>
       </div>
     </section>
 
-    <section class="section">
+    <!-- ECOSYSTEM -->
+    <style id="eco-styles">
+      .eco{
+        --eco-info:#2f6bff; --eco-info-bg:#eaf1ff;
+        --eco-card-bg:#ffffff; --eco-card-bd:#e8ebf1; --eco-plate-bg:#ffffff;
+        --eco-ink:#1f2a37; --eco-muted:#5b6675; --eco-new:#16a34a; --eco-new-bg:#e7f6ec;
+        --eco-radius:20px; --eco-gap:12px; --eco-cols:4;
+      }
+      /* ---------- Card component (fluid: 4-up mobile → 6-up desktop) ---------- */
+      /* width is derived from how many cards should be visible across the marquee:
+         card = (marquee width − cols×gap) / cols, via container-query units. */
+      .eco-card{
+        position:relative; box-sizing:border-box; flex:0 0 auto;
+        width:calc((100cqw - var(--eco-cols) * var(--eco-gap)) / var(--eco-cols));
+        height:158px; padding:12px;
+        display:flex; flex-direction:column; gap:10px; text-align:center;
+        background:var(--eco-card-bg); border:1.25px solid var(--eco-card-bd);
+        border-radius:16px;
+        transition:border-color .2s ease, background-color .2s ease, box-shadow .2s ease;
+      }
+      .eco-card__media{
+        position:relative; width:100%; height:74px; box-sizing:border-box;
+        display:grid; place-items:center;
+      }
+      .eco-card__logo{ display:grid; place-items:center; width:100%; height:100%; }
+      .eco-card__logo img{ width:100%; height:100%; object-fit:contain; display:block; }
+      .eco-card__core{
+        position:absolute; top:7px; left:7px; z-index:2; display:inline-flex; align-items:center;
+        height:19px; padding:0 7px; border-radius:999px;
+        font-size:10px; font-weight:800; letter-spacing:.01em;
+        color:var(--eco-info); background:var(--eco-info-bg);
+      }
+      .eco-card__new{
+        position:absolute; top:8px; right:8px; display:inline-flex; align-items:center;
+        height:18px; padding:0 7px; border-radius:999px; font-size:9.5px; font-weight:800;
+        letter-spacing:.02em; text-transform:uppercase; color:var(--eco-new); background:var(--eco-new-bg);
+      }
+      .eco-card__body{ display:flex; flex-direction:column; gap:6px; }
+      .eco-card__title{ margin:0; font-size:12.5px; font-weight:800; letter-spacing:-.02em; color:var(--eco-ink); }
+      .eco-card__desc{
+        margin:0; font-size:12px; line-height:1.45; color:var(--eco-muted);
+        display:none; -webkit-box-orient:vertical; overflow:hidden;
+      }
+      /* hover + featured -> info border & background */
+      .eco-card:hover, .eco-card--featured{ border-color:var(--eco-info); background:var(--eco-info-bg); box-shadow:0 10px 24px -14px rgba(47,107,255,.45); }
+      /* ---------- 3-row marquee ---------- */
+      .eco-marquee{
+        position:relative; container-type:inline-size;
+        display:flex; flex-direction:column; gap:var(--eco-gap);
+        margin-top:36px; padding:8px 0; overflow:hidden;
+        -webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);
+                mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);
+      }
+      .eco-track{ display:flex; gap:var(--eco-gap); width:max-content; will-change:transform; }
+      .eco-row--1 .eco-track{ animation:eco-ltr 64s linear infinite; }
+      .eco-row--2 .eco-track{ animation:eco-rtl 58s linear infinite; }
+      .eco-row--3 .eco-track{ animation:eco-ltr 72s linear infinite; }
+      @keyframes eco-ltr{ from{ transform:translateX(-50%); } to{ transform:translateX(0); } }
+      @keyframes eco-rtl{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
+      .eco-legend{ margin-top:24px; font-size:13.5px; color:var(--eco-muted); text-align:center; }
+      .eco-legend .eco-dot{ display:inline-block; width:9px; height:9px; border-radius:999px; background:var(--eco-new); margin-right:4px; vertical-align:middle; }
+      /* Mobile prioritizes scanning over marquee motion: every unique connector stays visible in a three-column grid. */
+      @media (max-width:639px){
+        .eco{ --eco-cols:3; --eco-gap:12px; }
+        .eco-marquee{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:var(--eco-gap); padding:0; overflow:visible; -webkit-mask-image:none; mask-image:none; }
+        .eco-row,.eco-track{ display:contents; }
+        .eco-track{ animation:none !important; transform:none !important; }
+        .eco-card{ width:auto; height:148px; padding:10px 8px; gap:8px; }
+        .eco-card__media{ height:70px; }
+        .eco-card__title{ font-size:12px; line-height:1.18; }
+        .eco-card[aria-hidden="true"]{ display:none; }
+      }
+      /* ≥640px — still 4-up, but roomier with descriptions restored */
+      @media (min-width:640px){
+        .eco{ --eco-cols:4; --eco-gap:20px; }
+        .eco-card{ height:300px; padding:22px; gap:18px; border-width:1.5px; border-radius:var(--eco-radius); }
+        .eco-card__media{ height:128px; }
+        .eco-card__core{ top:10px; left:10px; height:23px; padding:0 9px; font-size:11px; }
+        .eco-card__new{ top:12px; right:12px; height:22px; padding:0 8px; font-size:11px; }
+        .eco-card__body{ gap:14px; }
+        .eco-card__title{ font-size:17px; }
+        .eco-card__desc{ display:-webkit-box; -webkit-line-clamp:3; font-size:13px; }
+      }
+      /* ≥1024px — 6-up desktop */
+      @media (min-width:1024px){
+        .eco{ --eco-cols:6; --eco-gap:20px; }
+        .eco-card{ height:266px; padding:18px; gap:14px; }
+        .eco-card__media{ height:104px; }
+        .eco-card__body{ gap:12px; }
+        .eco-card__title{ font-size:15.5px; }
+        .eco-card__desc{ -webkit-line-clamp:3; font-size:12.5px; }
+      }
+      /* 1024–2200px: four columns keep the cards readable on common desktop and 4K-scaled views. */
+      @media (min-width:1024px) and (max-width:2200px){
+        .eco{ --eco-cols:4; --eco-gap:20px; }
+        .eco-card{ height:300px; padding:22px; gap:18px; border-width:1.5px; border-radius:var(--eco-radius); }
+        .eco-card__media{ height:128px; }
+        .eco-card__core{ top:10px; left:10px; height:23px; padding:0 9px; font-size:11px; }
+        .eco-card__new{ top:12px; right:12px; height:22px; padding:0 8px; font-size:11px; }
+        .eco-card__body{ gap:14px; }
+        .eco-card__title{ font-size:17px; }
+        .eco-card__desc{ display:-webkit-box; -webkit-line-clamp:3; font-size:13px; }
+      }
+      @media (prefers-reduced-motion:reduce){
+        .eco-marquee{ overflow-x:auto; -webkit-mask-image:none; mask-image:none; }
+        .eco-track{ animation:none !important; }
+      }
+    </style>
+    <section class="section eco">
       <div class="container">
         <div class="section-head">
-          <h2>Supported integration ecosystem</h2>
-          <p>The framework was designed to support different sources of customer data, not just one CRM.</p>
+          <div class="eyebrow">Supported ecosystem</div>
+          <h2>Built for many sources of customer data, not just one CRM.</h2>
+          <p>Six connectors already existed as one-off builds. The reusable pattern let us add four more—including Salesforce, requested by a client worth ~500K mails—in a single three-week run. Each one is the same card, the same flow, a different source.</p>
         </div>
-        <div class="panel">
-          <div class="badge-row">
-            <span class="badge">Salesforce</span>
-            <span class="badge">HubSpot</span>
-            <span class="badge">Housecall Pro</span>
-            <span class="badge">ServiceTitan</span>
-            <span class="badge">Shopify</span>
-            <span class="badge">Klaviyo</span>
-            <span class="badge">AccuLynx</span>
-            <span class="badge">Gorgias</span>
-            <span class="badge">Attentive</span>
-            <span class="badge">Bloomerang</span>
-            <span class="badge">Fundraiser</span>
-            <span class="badge">Zapier</span>
-            <span class="badge">Webhooks</span>
-            <span class="badge">Open API</span>
-          </div>
+
+        <div class="eco-marquee" aria-label="Supported integrations">
+          <!-- Row 1 — left to right -->
+          <div class="eco-row eco-row--1"><div class="eco-track">
+            <article class="eco-card">
+              <div class="eco-card__media"><span class="eco-card__logo"><img src="images/logos/klaviyo.png" alt="" loading="lazy" width="292" height="150"></span></div>
+              <div class="eco-card__body"><div class="eco-card__title">Klaviyo</div><p class="eco-card__desc">Fold direct mail into your SMS and email campaigns by leveraging your Klaviyo segments.</p></div>
+            </article>
+            <article class="eco-card">
+              <div class="eco-card__media"><span class="eco-card__logo"><img src="images/logos/shopify.png" alt="" loading="lazy" width="292" height="150"></span></div>
+              <div class="eco-card__body"><div class="eco-card__title">Shopify</div><p class="eco-card__desc">Retarget Shopify customers—first-time buyers, win-back segments, and more—straight into print.</p></div>
+            </article>
+            <article class="eco-card">
+              <div class="eco-card__media"><span class="eco-card__new">New</span><span class="eco-card__logo"><img src="images/logos/salesforce.png" alt="" loading="lazy" width="292" height="150"></span></div>
+              <div class="eco-card__body"><div class="eco-card__title">Salesforce</div><p class="eco-card__desc">Sync Salesforce contacts and pipeline stages to trigger direct-mail automations.</p></div>
+            </article>
+            <article class="eco-card">
+              <div class="eco-card__media"><span class="eco-card__logo"><img src="images/logos/zapier.png" alt="" loading="lazy" width="292" height="150"></span></div>
+              <div class="eco-card__body"><div class="eco-card__title">Zapier</div><p class="eco-card__desc">Automate your sending through Zapier's workflow-automation platform and 6,000+ apps.</p></div>
+            </article>
+            <article class="eco-card">
+              <div class="eco-card__media"><span class="eco-card__logo"><img src="images/logos/leadreveal.png" alt="" loading="lazy" width="292" height="150"></span></div>
+              <div class="eco-card__body"><div class="eco-card__title">LeadReveal</div><p class="eco-card__desc">Reveal anonymous website traffic and retarget those visitors with LettrLabs LeadReveal.</p></div>
+            </article>
+          </div></div>
+
+          <!-- Row 2 — right to left -->
+          <div class="eco-row eco-row--2"><div class="eco-track">
+            <article class="eco-card eco-card--featured">
+              <div class="eco-card__media"><span class="eco-card__core">Core Tier</span><span class="eco-card__logo"><img src="images/logos/hailtrace.png" alt="" loading="lazy" width="292" height="150"></span></div>
+              <div class="eco-card__body"><div class="eco-card__title">Storm Automation</div><p class="eco-card__desc">Automatically target storm-affected homeowners in your service area the moment a storm hits. Powered by HailTrace.</p></div>
+            </article>
+            <article class="eco-card">
+              <div class="eco-card__media"><span class="eco-card__new">New</span><span class="eco-card__logo"><img src="images/logos/hubspot.png" alt="" loading="lazy" width="292" height="150"></span></div>
+              <div class="eco-card__body"><div class="eco-card__title">HubSpot</div><p class="eco-card__desc">Trigger mailers off HubSpot lifecycle stages, list membership, and deal activity.</p></div>
+            </article>
+            <article class="eco-card">
+              <div class="eco-card__media"><span class="eco-card__logo"><img src="images/logos/movermail.png" alt="" loading="lazy" width="292" height="150"></span></div>
+              <div class="eco-card__body"><div class="eco-card__title">MoverMail</div><p class="eco-card__desc">Automatically reach new movers in your area the week they arrive.</p></div>
+            </article>
+            <article class="eco-card">
+              <div class="eco-card__media"><span class="eco-card__logo"><img src="images/logos/openapi.png" alt="" loading="lazy" width="292" height="150"></span></div>
+              <div class="eco-card__body"><div class="eco-card__title">Open API</div><p class="eco-card__desc">Integrate and automate your sending directly through the LettrLabs Open API.</p></div>
+            </article>
+            <article class="eco-card">
+              <div class="eco-card__media"><span class="eco-card__new">New</span><span class="eco-card__logo"><img src="images/logos/housecall-pro.png" alt="" loading="lazy" width="292" height="150"></span></div>
+              <div class="eco-card__body"><div class="eco-card__title">Housecall Pro</div><p class="eco-card__desc">Target customers automatically based on Housecall Pro jobs and service history.</p></div>
+            </article>
+          </div></div>
+
+          <!-- Row 3 — left to right -->
+          <div class="eco-row eco-row--3"><div class="eco-track">
+            <article class="eco-card">
+              <div class="eco-card__media"><span class="eco-card__new">New</span><span class="eco-card__logo"><img src="images/logos/servicetitan.png" alt="" loading="lazy" width="292" height="150"></span></div>
+              <div class="eco-card__body"><div class="eco-card__title">ServiceTitan</div><p class="eco-card__desc">Sync ServiceTitan jobs and customer records to launch automated field-service campaigns.</p></div>
+            </article>
+            <article class="eco-card">
+              <div class="eco-card__media"><span class="eco-card__logo"><img src="images/logos/webhooks.png" alt="" loading="lazy" width="292" height="150"></span></div>
+              <div class="eco-card__body"><div class="eco-card__title">Webhooks</div><p class="eco-card__desc">Push and pull events in real time and automate your sending through LettrLabs Webhooks.</p></div>
+            </article>
+            <article class="eco-card">
+              <div class="eco-card__media"><span class="eco-card__logo"><img src="images/logos/recipient-search.png" alt="" loading="lazy" width="292" height="150"></span></div>
+              <div class="eco-card__body"><div class="eco-card__title">Recipient Search</div><p class="eco-card__desc">Build a target audience by searching recipients directly—no upstream source required.</p></div>
+            </article>
+            <article class="eco-card">
+              <div class="eco-card__media"><span class="eco-card__logo"><img src="images/logos/csv-upload.png" alt="" loading="lazy" width="292" height="150"></span></div>
+              <div class="eco-card__body"><div class="eco-card__title">CSV Upload</div><p class="eco-card__desc">Automate mail sending to any recipient list with a simple CSV upload.</p></div>
+            </article>
+            <article class="eco-card">
+              <div class="eco-card__media"><span class="eco-card__logo"><img src="images/logos/permits.png" alt="" loading="lazy" width="292" height="150"></span></div>
+              <div class="eco-card__body"><div class="eco-card__title">Permits</div><p class="eco-card__desc">Automatically target properties based on new building-permit activity.</p></div>
+            </article>
+            <article class="eco-card">
+              <div class="eco-card__media"><span class="eco-card__logo"><img src="images/logos/acculynx.png" alt="" loading="lazy" width="292" height="150"></span></div>
+              <div class="eco-card__body"><div class="eco-card__title">AccuLynx</div><p class="eco-card__desc">Sync AccuLynx roofing jobs and customer records to trigger automated direct-mail campaigns.</p></div>
+            </article>
+          </div></div>
         </div>
+
+        <p class="eco-legend"><span class="eco-dot"></span>The <b>four “New”</b> connectors were added in the first 3-week run on the reusable pattern; the rest pre-existed as separate one-off builds.</p>
       </div>
     </section>
+    <script>
+      (function(){
+        var tracks = document.querySelectorAll('.eco-marquee .eco-track');
+        tracks.forEach(function(track){
+          Array.prototype.slice.call(track.children).forEach(function(card){
+            var clone = card.cloneNode(true);
+            clone.setAttribute('aria-hidden','true');
+            track.appendChild(clone);
+          });
+        });
+      })();
+    </script>
 
-    <section class="section">
+    <!-- EVOLUTION -->
+    <section class="section" id="evolution">
       <div class="container">
         <div class="section-head">
-          <h2>Connection lifecycle</h2>
-          <p>This lifecycle made the experience predictable across different integration types.</p>
+          <div class="eyebrow">Design evolution</div>
+          <h2>The version we didn't ship—and why "easier" won.</h2>
+          <p>The first design was far more powerful. To connect a CRM like Salesforce, you'd browse the entire schema, hand-map every object and field to the attribution model, define conversion/lead/exclude rules, then run a full extract-and-load pipeline into SQL. It could model almost anything—and that was exactly the problem.</p>
         </div>
 
-        <div class="card-grid">
-          <div class="mini-card"><div class="icon">↳</div><h3>Disconnected → Connect</h3><p>Users start from a consistent entry point whether the integration uses OAuth, API keys, or simple credential fields.</p></div>
-          <div class="mini-card"><div class="icon">⟳</div><h3>Testing → Syncing</h3><p>Loading and progress states explain that the system is validating credentials and reading the needed data.</p></div>
-          <div class="mini-card"><div class="icon">✓</div><h3>Connected → Configure</h3><p>Success is followed by clear next actions, including attribution setup and automation creation.</p></div>
-          <div class="mini-card"><div class="icon">!</div><h3>Failed → Recover</h3><p>Error and failed states help users understand what happened and how to continue.</p></div>
-          <div class="mini-card"><div class="icon">●</div><h3>Active → Manage</h3><p>Connected accounts appear in a reusable management list with status, sync details, remove, and setup actions.</p></div>
-          <div class="mini-card"><div class="icon">+</div><h3>Add another account</h3><p>The same integration can support multiple accounts, which is important for real business workflows.</p></div>
+        <div class="concept-carousel" id="concept-carousel">
+          <div class="concept-carousel-shell">
+            <button class="concept-carousel-btn prev" type="button" aria-label="Previous V1 step">
+              <span class="concept-carousel-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></span>
+            </button>
+            <div class="concept-carousel-viewport">
+              <div class="concept-carousel-track">
+                <article class="concept-carousel-slide is-active">
+                  <div class="concept-carousel-copy">
+                    <span class="concept-carousel-label">Not shipped · V1 — step 01</span>
+                    <h3>Browse the CRM schema.</h3>
+                    <p>The advanced path started by asking the user to explore the whole Salesforce object model and pick what mattered—Opportunity, Lead, Case, Order, Campaign, Contact, Account.</p>
+                  </div>
+                  <figure class="concept-carousel-media"><img src="images/integration-v1-schema.png" alt="V1: browse the Salesforce schema and pick objects" onerror="this.style.display='none'"></figure>
+                </article>
+                <article class="concept-carousel-slide">
+                  <div class="concept-carousel-copy">
+                    <span class="concept-carousel-label">Not shipped · V1 — step 02</span>
+                    <h3>Hand-map every field.</h3>
+                    <p>Event object, customer object, and every field mapped by hand—plus the relationship between them. Precise, and a lot to ask before any value appears.</p>
+                  </div>
+                  <figure class="concept-carousel-media"><img src="images/integration-v1-mapping.png" alt="V1: hand-map event and customer objects and every field" onerror="this.style.display='none'"></figure>
+                </article>
+                <article class="concept-carousel-slide">
+                  <div class="concept-carousel-copy">
+                    <span class="concept-carousel-label">Not shipped · V1 — step 03</span>
+                    <h3>Build the attribution rules.</h3>
+                    <p>Conversion, lead, and exclude criteria—each a rule builder the user had to reason about up front, before they'd seen a single result.</p>
+                  </div>
+                  <figure class="concept-carousel-media"><img src="images/integration-v1-criteria.png" alt="V1: conversion, lead, and exclude rule builders" onerror="this.style.display='none'"></figure>
+                </article>
+                <article class="concept-carousel-slide">
+                  <div class="concept-carousel-copy">
+                    <span class="concept-carousel-label">Not shipped · V1 — step 04</span>
+                    <h3>Run a data pipeline.</h3>
+                    <p>And then run an extract-and-load pipeline into SQL—with a "skip dbt" toggle. Powerful, and unmistakably a data-engineering task.</p>
+                  </div>
+                  <figure class="concept-carousel-media"><img src="images/integration-v1-pipeline.png" alt="V1: run an extract-and-load pipeline into SQL" onerror="this.style.display='none'"></figure>
+                </article>
+                <article class="concept-carousel-slide">
+                  <div class="concept-carousel-copy">
+                    <span class="concept-carousel-label">Not shipped · explored</span>
+                    <h3>Auto-infer the field mappings.</h3>
+                    <p>Guess every mapping on connect and read it back as a filled-in review. Elegant—until custom objects and renamed fields meant "guess it for them" quietly guessed wrong on real Salesforce orgs.</p>
+                  </div>
+                  <figure class="concept-carousel-media"><img src="images/integration-v2-attribution.png" alt="Explored, not shipped: auto-inferred field mappings shown as a plain-language review" onerror="this.style.display='none'"></figure>
+                </article>
+                <article class="concept-carousel-slide">
+                  <div class="concept-carousel-copy">
+                    <span class="concept-carousel-label">Not shipped · explored</span>
+                    <h3>Attribution as one slider.</h3>
+                    <p>Drag a single handle across your Salesforce stages to declare "a Lead starts here, a Conversion here." Beautiful for one linear pipeline—but real orgs run several, across two objects, so it couldn't generalize.</p>
+                  </div>
+                  <figure class="concept-carousel-media"><img src="images/integration-v2-review.png" alt="Explored, not shipped: a single slider maps Salesforce lead and opportunity stages to Lead and Conversion" onerror="this.style.display='none'"></figure>
+                </article>
+              </div>
+            </div>
+            <button class="concept-carousel-btn next" type="button" aria-label="Next V1 step">
+              <span class="concept-carousel-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></span>
+            </button>
+          </div>
+          <div class="concept-carousel-meta" aria-label="V1 step navigation">
+            <button class="concept-carousel-dot is-active" type="button" aria-label="Show V1 step 1"></button>
+            <button class="concept-carousel-dot" type="button" aria-label="Show V1 step 2"></button>
+            <button class="concept-carousel-dot" type="button" aria-label="Show V1 step 3"></button>
+            <button class="concept-carousel-dot" type="button" aria-label="Show V1 step 4"></button>
+            <button class="concept-carousel-dot" type="button" aria-label="Show explored concept 5"></button>
+            <button class="concept-carousel-dot" type="button" aria-label="Show explored concept 6"></button>
+          </div>
+        </div>
+
+        <div class="note-grid">
+          <div class="note-box">
+            <h3>What we cut, and why</h3>
+            <p>V1 could model anything but assumed every user was a data engineer. Two simpler replacements looked elegant and quietly failed real Salesforce orgs: <strong>auto-inferred mappings</strong> guessed wrong on custom objects and renamed fields, and <strong>a single attribution slider</strong> couldn't represent two objects—Lead and Opportunity—with non-linear stages. Good ideas to kill.</p>
+          </div>
+          <div class="note-box note-box--ship">
+            <h3>What shipped</h3>
+            <p>The least clever version held up. You connect with credentials, then attribution becomes its own explicit step: <strong>confirm which statuses count as a Lead, a Conversion, or Job Complete</strong>, with a live warning if the choice would attribute nothing. A checkbox grid handles the pipelines and non-linear stages the slider couldn't.</p>
+          </div>
+        </div>
+
+        <div class="itable comparison-itable">
+          <table>
+            <thead>
+              <tr><th style="width:26%">The job</th><th>V1 — powerful, complex</th><th>Shipped — simple &amp; explicit</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="k">Find the data</td><td>Browse the full CRM schema and pick objects</td><td>Connect with credentials; the connection exposes what's needed</td></tr>
+              <tr><td class="k">Map it</td><td>Hand-map event/customer objects + every field</td><td>Confirm which statuses count—explicit, a few clicks</td></tr>
+              <tr><td class="k">Attribution</td><td>Define conversion/lead/exclude rules up front</td><td>Confirm Lead / Conversion stages, warned if nothing would attribute</td></tr>
+              <tr><td class="k">Move the data</td><td>Configure &amp; run an extract-load (dbt/SQL) pipeline</td><td>The connection tests and syncs on its own</td></tr>
+              <tr><td class="k">How it felt</td><td>Like data engineering</td><td>Like signing in</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="subcopy" style="margin:18px 0 0">This is the through-line of the whole project: the reusable pattern below is what's left <em>after</em> deciding what the user should never have to care about.</p>
+      </div>
+    </section>
+
+    <!-- CONNECTION FLOW + STATES + VALIDATION -->
+    <section class="section" id="connection">
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">Connection flow</div>
+          <h2>The connection flow, its states, and what it validates.</h2>
+          <p>The reusable pattern shown on a real connector (Housecall Pro): one entry point, a credentialed connect step that tests before it proceeds, explicit connecting/connected states, a management list for multiple accounts, and attribution setup as a separate job.</p>
+        </div>
+
+        <h3 class="subhead">The shipped flow, step by step.</h3>
+        <div class="scroll-story" data-scroll-gallery>
+          <div class="scroll-story-copy">
+            <article class="scroll-story-step is-active" data-scroll-step="cf-connect">
+              <figure class="scroll-story-mobile-media"><img src="images/integration-connect.png" alt="Connect Housecall Pro: connection name, client ID, client secret, test and continue" onerror="this.closest('.scroll-story-mobile-media').remove()"></figure>
+              <span class="scroll-story-label">Final output · step 01</span>
+              <h3>Create a new connection.</h3>
+              <p>Only the essentials—name, Client ID, masked Client Secret—then <em>Test and Continue</em> before anything is saved.</p>
+              <figure class="liveframe-stage" style="--frame-w:760px;--frame-h:880px;--frame-ratio:760 / 880"><iframe class="fitframe" data-w="760" data-h="880" width="760" height="880" src="recreations/integration-connect.html?auto" scrolling="no" title="Live animated connection flow" loading="eager"></iframe></figure>
+            </article>
+            <article class="scroll-story-step" data-scroll-step="cf-connecting">
+              <figure class="scroll-story-mobile-media"><img src="images/integration-connecting.png" alt="Connecting loading state while credentials are validated and objects discovered" onerror="this.closest('.scroll-story-mobile-media').remove()"></figure>
+              <span class="scroll-story-label">Final output · step 02</span>
+              <h3>Connecting…</h3>
+              <p>The wait is explained: credentials are being verified and objects/fields discovered—not a dead spinner.</p>
+            </article>
+            <article class="scroll-story-step" data-scroll-step="cf-connected">
+              <figure class="scroll-story-mobile-media"><img src="images/integration-connected.png" alt="You are connected, now finish setup with a clear next action" onerror="this.closest('.scroll-story-mobile-media').remove()"></figure>
+              <span class="scroll-story-label">Final output · step 03</span>
+              <h3>Connected → finish setup.</h3>
+              <p>Success isn't the end—it routes straight to the next action (Customize Attribution).</p>
+            </article>
+            <article class="scroll-story-step" data-scroll-step="cf-attribution">
+              <figure class="scroll-story-mobile-media"><img src="images/integration-attribution-setup.png" alt="Attribution setup: name the automation and pick a trigger before saving" onerror="this.closest('.scroll-story-mobile-media').remove()"></figure>
+              <span class="scroll-story-label">Final output · step 04</span>
+              <h3>Attribution setup.</h3>
+              <p>Configuration is its own step: name the automation and pick a trigger before Save &amp; Continue.</p>
+              <figure class="liveframe-stage" style="--frame-w:940px;--frame-h:440px;--frame-ratio:940 / 440"><iframe class="fitframe" data-w="940" data-h="440" data-replay="__replayAttribution" width="940" height="440" src="recreations/integration-attribution-setup.html" scrolling="no" title="Live attribution setup" loading="eager"></iframe></figure>
+            </article>
+            <article class="scroll-story-step" data-scroll-step="cf-manage">
+              <figure class="scroll-story-mobile-media"><img src="images/integration-accounts.png" alt="Manage Integration: connected accounts with active status, sync progress, finish setup, and remove" onerror="this.closest('.scroll-story-mobile-media').remove()"></figure>
+              <span class="scroll-story-label">Final output · step 05</span>
+              <h3>Manage your accounts.</h3>
+              <p>Every connected account on one surface—status (Active / Sync in Progress), last sync, Finish Setup, Customize Attribution, Add New Account, and Remove.</p>
+              <figure class="liveframe-stage" style="--frame-w:996px;--frame-h:852px;--frame-ratio:996 / 852"><iframe class="fitframe" data-w="996" data-h="852" data-replay="__replayAccounts" width="996" height="852" src="recreations/integration-accounts.html" scrolling="no" title="Live integration account management" loading="eager"></iframe></figure>
+            </article>
+            <div class="scroll-story-progress" aria-hidden="true"></div>
+          </div>
+          <div class="scroll-story-sticky">
+            <div class="scroll-story-stage">
+              <figure class="scroll-story-media is-active flowmedia" data-scroll-media="cf-connect cf-connecting cf-connected"><iframe class="flowframe fitframe" data-w="760" data-h="880" width="760" height="880" src="recreations/integration-connect.html" scrolling="no" title="Live connection flow that advances with the case-study scroll" loading="eager"></iframe></figure>
+              <figure class="scroll-story-media" data-scroll-media="cf-attribution"><iframe class="fitframe" data-w="940" data-h="440" data-replay="__replayAttribution" width="940" height="440" src="recreations/integration-attribution-setup.html" scrolling="no" title="Live attribution setup that replays when its step is active" loading="eager"></iframe></figure>
+              <figure class="scroll-story-media" data-scroll-media="cf-manage"><iframe class="fitframe" data-w="996" data-h="852" data-replay="__replayAccounts" width="996" height="852" src="recreations/integration-accounts.html" scrolling="no" title="Live integration account management that replays when its step is active" loading="eager"></iframe></figure>
+            </div>
+          </div>
+        </div>
+
+        <h3 class="subhead">Validation we added to the flow</h3>
+        <p class="subcopy">Because the same pattern has to hold across very different APIs, the safety lives in validation—catching problems at entry instead of after a broken sync.</p>
+        <div class="itable validation-table">
+          <table>
+            <thead>
+              <tr><th>Field / step</th><th>Validation added</th><th>Why it matters</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="k">Connection identity &amp; credentials</td><td>Name, format-checked Client ID, and a masked Client Secret are required; the secret is never shown again after save.</td><td>Accounts stay legible and bad or exposed credentials are caught at entry.</td></tr>
+              <tr><td class="k">Test before save</td><td>A live connection test plus object and field discovery must pass before the user can continue.</td><td>No half-connected accounts; failures appear early enough to recover.</td></tr>
+              <tr><td class="k">Account identity &amp; status</td><td>Tenant IDs are unique, duplicates are blocked, and every account shows sync state with a last-updated time.</td><td>People can trust which source is connected and how fresh its data is.</td></tr>
+              <tr><td class="k">Setup completion</td><td>Attribution is required before activation; the automation has to be named and tied to a valid trigger.</td><td>Automations are not launched on undefined, half-configured data.</td></tr>
+              <tr><td class="k">Destructive change</td><td>Removing a connected account requires an explicit confirmation.</td><td>Changes that may affect live automations stay deliberate.</td></tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </section>
 
+    <!-- DECISIONS -->
     <section class="section" id="decisions">
       <div class="container">
         <div class="section-head">
-          <h2>Key design decisions</h2>
-          <p>The product value came from deciding what users should not have to care about.</p>
+          <div class="eyebrow">Decision making</div>
+          <h2>The hard parts weren't the screens. They were the trade-offs.</h2>
+          <p>I made the cost of each call visible so PM, engineering, and I could align faster.</p>
         </div>
-        <div class="panel">
-          <div class="decision hover-preview-trigger decision-hover-zone" data-preview="integration-decision-1" data-hover-hint="Click to view card">
-            <div><div class="decision-label">Decision 01</div><h3><button class="decision-trigger" type="button">Reduce setup to the essentials</button></h3></div>
-            <p>Early concepts exposed too much data and too many fields. The final direction focused on the few required inputs needed to connect, test, and move forward.</p>
-            <div class="mobile-preview-inline"><div class="preview-card-shell mobile-preview-shell"><div class="preview-visual"><div class="visual-scene visual-image-frame"><img src="images/integration-connect-form.jpeg" alt="Integration connect form preview"></div></div><div class="preview-copy"><div class="preview-kicker">Design decision</div><h3 class="preview-title">Reduce setup to the essentials</h3><p class="preview-text">The final direction focused on the few required inputs needed to connect, test, and move forward.</p></div></div></div>
+        <div class="decision-log-table">
+          <div class="decision-log-head">
+            <div>Question</div><div>Trade-off</div><div>Decision</div><div>Future</div>
           </div>
-          <div class="decision hover-preview-trigger decision-hover-zone" data-preview="integration-decision-2" data-hover-hint="Click to view card">
-            <div><div class="decision-label">Decision 02</div><h3><button class="decision-trigger" type="button">Separate connection from configuration</button></h3></div>
-            <p>Connecting the app and customizing attribution are related, but they are not the same job. Separating them kept the first step simple while still supporting deeper setup when business logic required it.</p>
-            <div class="mobile-preview-inline"><div class="preview-card-shell mobile-preview-shell"><div class="preview-visual"><div class="visual-scene visual-image-frame"><img src="images/integration-attribution.jpeg" alt="Integration attribution preview"></div></div><div class="preview-copy"><div class="preview-kicker">Design decision</div><h3 class="preview-title">Separate connection from configuration</h3><p class="preview-text">Separating the first connection step from attribution setup kept the flow simple.</p></div></div></div>
+          <div class="decision-log-body">
+            <div class="decision-log-cell" data-label="Question"><p>How much should the connect step ask for up front?</p></div>
+            <div class="decision-log-cell" data-label="Trade-off"><p>Exposing every object and field was powerful, but it turned setup into a data-engineering task—3 in 10 users stalled before finishing.</p></div>
+            <div class="decision-log-cell" data-label="Decision"><p>Reduced connect to the few required inputs—name, Client ID, masked secret—tested before anything saves; deeper mapping became a separate, optional step.</p></div>
+            <div class="decision-log-cell" data-label="Future"><p>Use AI to pre-suggest field mappings so even the optional step gets faster.</p></div>
           </div>
-          <div class="decision hover-preview-trigger decision-hover-zone" data-preview="integration-decision-3" data-hover-hint="Click to view card">
-            <div><div class="decision-label">Decision 03</div><h3><button class="decision-trigger" type="button">Make the UI reusable by default</button></h3></div>
-            <p>I designed the flow so the logo, app name, fields, and custom attributes could change without forcing a full redesign. This made future integrations feel more like swapping configuration into a stable product pattern.</p>
-            <div class="mobile-preview-inline"><div class="preview-card-shell mobile-preview-shell"><div class="preview-visual"><div class="visual-scene visual-image-frame"><img src="images/integration-manage.jpeg" alt="Integration manage preview"></div></div><div class="preview-copy"><div class="preview-kicker">Design decision</div><h3 class="preview-title">Make the UI reusable by default</h3><p class="preview-text">Future integrations feel more like swapping configuration into a stable product pattern.</p></div></div></div>
+          <div class="decision-log-body">
+            <div class="decision-log-cell" data-label="Question"><p>Connect and attribution—one flow, or two?</p></div>
+            <div class="decision-log-cell" data-label="Trade-off"><p>One flow felt continuous, but attribution carries different business logic and risk than authentication.</p></div>
+            <div class="decision-log-cell" data-label="Decision"><p>Split them: connect stays lightweight and universal; attribution is its own explicit job, shown only to users who need it.</p></div>
+            <div class="decision-log-cell" data-label="Future"><p>Infer attribution defaults per connector, keeping the explicit step as the override.</p></div>
           </div>
-          <div class="decision hover-preview-trigger decision-hover-zone" data-preview="integration-decision-4" data-hover-hint="Click to view card">
-            <div><div class="decision-label">Decision 04</div><h3><button class="decision-trigger" type="button">Show status beyond the detail page</button></h3></div>
-            <p>Success and sync states were not limited to one screen. The account list and in-app notifications helped users understand when their connection was active, syncing, failed, or ready for the next step.</p>
-            <div class="mobile-preview-inline"><div class="preview-card-shell mobile-preview-shell"><div class="preview-visual"><div class="visual-scene visual-image-frame"><img src="images/integration-connected.jpeg" alt="Integration connected preview"></div></div><div class="preview-copy"><div class="preview-kicker">Design decision</div><h3 class="preview-title">Show status beyond the detail page</h3><p class="preview-text">Success and sync states were visible in the account list and follow-up notifications.</p></div></div></div>
+          <div class="decision-log-body">
+            <div class="decision-log-cell" data-label="Question"><p>Build each connector custom, or one reusable shell?</p></div>
+            <div class="decision-log-cell" data-label="Trade-off"><p>Custom screens fit each API perfectly, but every new app restarted design and engineering—6 one-off builds, 3–4 weeks each.</p></div>
+            <div class="decision-log-cell" data-label="Decision"><p>One reusable lifecycle where logo, name, fields, and attributes are configuration—so a connector ships as setup, not a redesign. Four shipped in a three-week parallel batch.</p></div>
+            <div class="decision-log-cell" data-label="Future"><p>A connector "manifest" so a new source can be added with no new design at all.</p></div>
+          </div>
+          <div class="decision-log-body">
+            <div class="decision-log-cell" data-label="Question"><p>Where should connection status live?</p></div>
+            <div class="decision-log-cell" data-label="Trade-off"><p>Keeping status on the detail page was simplest, but users lost track of what was active, syncing, or failed across many accounts.</p></div>
+            <div class="decision-log-cell" data-label="Decision"><p>Surfaced status in the account list and in-app notifications—active, sync-in-progress, failed, or ready—beyond a single screen.</p></div>
+            <div class="decision-log-cell" data-label="Future"><p>Proactive alerts when a sync breaks, before it silently pauses an automation.</p></div>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="section" id="reflection">
+    <!-- OUTCOME -->
+    <section class="section" id="outcome">
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">Outcome</div>
+          <h2>Adding an integration became a routine—not a project.</h2>
+          <p>The win wasn't a prettier connect screen. It was a workflow that matched how the business, engineering, and customers actually add a source.</p>
+        </div>
+        <div class="result-grid">
+          <div class="result-item"><span class="result-idx">01 / CUSTOMER · SHIPPED FLOW</span><h3>A clearer path to connection</h3><p>The shipped connect → test → confirm → manage flow validates credentials before save and makes each next action explicit. Completion and ticket reduction are the measures to validate with live usage.</p></div>
+          <div class="result-item"><span class="result-idx">02 / Business</span><h3>A routine, not a project</h3><p>Per-connector lead time fell from 3–4 weeks to ~2, and the first parallel batch shipped 4 new connectors in three weeks—including the Salesforce one a ~500K-mail client was waiting on.</p></div>
+          <div class="result-item"><span class="result-idx">03 / Engineering</span><h3>One workflow to reuse</h3><p>Instead of researching and building each connector from scratch, engineering slots new sources into a stable lifecycle—logo, name, fields, and attributes as configuration.</p></div>
+          <div class="result-item"><span class="result-idx">04 / Platform</span><h3>A reusable base for the next connectors</h3><p>The reusable pattern shipped across four new connectors—Salesforce, ServiceTitan, HubSpot, and Housecall Pro—and is designed to support future sources as configuration rather than a redesign.</p></div>
+          <div class="result-item"><span class="result-idx">05 / SUPPORT · BASELINE</span><h3>Setup was the next measure</h3><p>The baseline was 16 setup tickets a month and 3 in 10 users unable to finish alone. The new flow gives that work a clear measurement plan: connection completion, setup tickets, and time to first automation.</p></div>
+          <div class="result-item"><span class="result-idx">06 / PLATFORM · NEXT</span><h3>Connection enables the next workflow</h3><p>The framework links account setup to attribution, automation, and analytics. The opportunity is to expand the $350K/month integration-data base through more completed, well-configured connections—not to claim that growth before it is measured.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- REFLECTION -->
+    <section class="section section-dark" id="reflection">
       <div class="container split">
-        <div>
+        <div class="pattern-head">
           <div class="eyebrow">Reflection</div>
           <h2>Technical complexity does not always need a complex interface.</h2>
         </div>
-        <div class="panel">
-          <p>My first assumption was that connecting integrations would require many fields and a lot of visible configuration. But after working through the flow with the team, the better answer was the simpler one: ask for only what is essential, validate it clearly, and let the backend do the heavy lifting.</p>
-          <p>Version 2 would refine syncing status, add stronger search for integrations, expand OAuth support, and use AI to help preselect fields for automation, data merge, and attribution setup.</p>
+        <div class="lede">
+          <p style="color:rgba(242,240,230,.86)">My first assumption was that connecting integrations would require many fields and a lot of visible configuration. But after working through the flow with the team, the better answer was the simpler one: ask for only what is essential, validate it clearly, and let the backend do the heavy lifting.</p>
+          <p style="color:rgba(242,240,230,.86)">Version 2 would refine syncing status, add stronger search for integrations, broaden the supported credential types, and use AI to help preselect fields for automation, data merge, and attribution setup.</p>
         </div>
       </div>
-    </section>
-
-    <section class="section">
-      <div class="container">
-        <p class="quote">“This project taught me that good platform design is not about showing all the data. It is about knowing which data matters, hiding the rest, and making the next integration easier than the last.”</p>
+      <div class="container" style="margin-top:36px">
+        <p class="quote" style="color:#f7f5ec">"This project taught me that good platform design is not about showing all the data. It is about knowing which data matters, hiding the rest, and making the next integration easier than the last."</p>
       </div>
     </section>
   </main>
 
   <footer class="footer">
-    <div class="container">© Ivan Jose · Product Design Portfolio</div>
+    <div class="container footer-nav" style="padding:36px 0">
+      <a class="footer-move prev" href="map-case-study.html"><span class="fm-dir">← Previous</span><span class="fm-name">Audience map redesign</span></a>
+      <a class="button secondary" href="index.html">All work</a>
+      <a class="footer-move next" href="org-management-case-study.html"><span class="fm-dir">Next →</span><span class="fm-name">Org management</span></a>
+    </div>
   </footer>
 
   <div class="preview-card" id="preview-card" hidden aria-live="polite">
@@ -282,22 +1108,22 @@
 
   <script>
     const previewData = {
-      "integration-manage": { kicker: "Platform integrations", title: "Reusable integration platform", text: "A single management surface for connected accounts, statuses, attribution setup, and next actions.", url: "#framework", visual: "integration-manage" },
-      "integration-framework-1": { kicker: "Framework step", title: "Select integration", text: "Use a familiar shell so new apps feel like configuration inside one stable system.", url: "#framework", visual: "integration-manage" },
-      "integration-framework-2": { kicker: "Framework step", title: "Connect account", text: "Credential setup stays lightweight, with OAuth or simple form inputs depending on the source.", url: "#framework", visual: "integration-connect" },
-      "integration-framework-3": { kicker: "Framework step", title: "Test and validate", text: "Loading and syncing states make backend validation visible instead of feeling stuck or opaque.", url: "#framework", visual: "integration-connected" },
-      "integration-framework-4": { kicker: "Framework step", title: "Customize attribution", text: "Connection stays separate from deeper business logic so only the users who need more setup see it.", url: "#framework", visual: "integration-attribution" },
-      "integration-framework-5": { kicker: "Framework step", title: "Manage accounts", text: "The reusable management view supports multiple accounts, status, sync details, and follow-up actions.", url: "#framework", visual: "integration-manage" },
+      "integration-manage": { kicker: "Platform integrations", title: "Reusable integration platform", text: "A single management surface for connected accounts, statuses, attribution setup, and next actions.", url: "#connection", visual: "integration-manage" },
+      "integration-framework-1": { kicker: "Framework step", title: "Select integration", text: "Use a familiar shell so new apps feel like configuration inside one stable system.", url: "#connection", visual: "integration-manage" },
+      "integration-framework-2": { kicker: "Framework step", title: "Connect account", text: "Credential setup stays lightweight—client ID and secret, tested before save.", url: "#connection", visual: "integration-connect" },
+      "integration-framework-3": { kicker: "Framework step", title: "Test and validate", text: "Loading and syncing states make backend validation visible instead of feeling stuck or opaque.", url: "#connection", visual: "integration-connected" },
+      "integration-framework-4": { kicker: "Framework step", title: "Customize attribution", text: "Connection stays separate from deeper business logic so only the users who need more setup see it.", url: "#connection", visual: "integration-attribution" },
+      "integration-framework-5": { kicker: "Framework step", title: "Manage accounts", text: "The reusable management view supports multiple accounts, status, sync details, and follow-up actions.", url: "#connection", visual: "integration-manage" },
       "integration-decision-1": { kicker: "Design decision", title: "Reduce setup to the essentials", text: "The final direction focused on the few required inputs needed to connect, test, and move forward.", url: "#decisions", visual: "integration-connect" },
       "integration-decision-2": { kicker: "Design decision", title: "Separate connection from configuration", text: "Connecting the app and customizing attribution are related, but they are not the same job.", url: "#decisions", visual: "integration-attribution" },
-      "integration-decision-3": { kicker: "Design decision", title: "Make the UI reusable by default", text: "Future integrations feel more like swapping configuration into a stable product pattern.", url: "#framework", visual: "integration-manage" },
+      "integration-decision-3": { kicker: "Design decision", title: "Make the UI reusable by default", text: "Future integrations feel more like swapping configuration into a stable product pattern.", url: "#connection", visual: "integration-manage" },
       "integration-decision-4": { kicker: "Design decision", title: "Show status beyond the detail page", text: "Success and sync states are visible in the account list and in follow-up notifications.", url: "#decisions", visual: "integration-connected" }
     };
 
     const visualMarkup = {
       "integration-manage": `<div class="visual-scene visual-image-frame"><img src="images/integration-manage.jpeg" alt="Integration management preview"></div>`,
-      "integration-connect": `<div class="visual-scene visual-image-frame"><img src="images/integration-connect-form.jpeg" alt="Integration connect form preview"></div>`,
-      "integration-attribution": `<div class="visual-scene visual-image-frame"><img src="images/integration-attribution.jpeg" alt="Integration attribution preview"></div>`,
+      "integration-connect": `<div class="visual-scene visual-image-frame"><img src="images/integration-connect.png" alt="Integration connect form preview"></div>`,
+      "integration-attribution": `<div class="visual-scene visual-image-frame"><img src="images/integration-attribution-setup.png" alt="Integration attribution preview"></div>`,
       "integration-connected": `<div class="visual-scene visual-image-frame"><img src="images/integration-connected.jpeg" alt="Integration connected preview"></div>`
     };
 
@@ -314,10 +1140,10 @@
     const navIndicator = document.querySelector(".nav-indicator");
     const mobileQuery = window.matchMedia("(max-width: 900px)");
     const sectionNodes = {
-      problem: document.getElementById("problem"),
-      framework: document.getElementById("framework"),
-      decisions: document.getElementById("decisions"),
-      reflection: document.getElementById("reflection")
+      summary: document.getElementById("overview"),
+      discovery: document.getElementById("discovery"),
+      "product-design": document.getElementById("connection"),
+      result: document.getElementById("outcome")
     };
 
     let activeTrigger = null;
@@ -383,7 +1209,7 @@
     function updateActiveSection() {
       const navHeight = document.querySelector(".nav")?.offsetHeight || 72;
       const threshold = navHeight + 28;
-      let current = "problem";
+      let current = "summary";
       Object.entries(sectionNodes).forEach(([key, node]) => {
         if (!node) return;
         if (node.getBoundingClientRect().top <= threshold) current = key;
@@ -444,6 +1270,283 @@
     window.addEventListener("scroll", updateActiveSection, { passive: true });
     window.addEventListener("resize", updateActiveSection);
     updateActiveSection();
+  </script>
+
+  <div class="read-progress" id="read-progress" aria-hidden="true">
+    <div class="read-progress-ring">
+      <svg viewBox="0 0 44 44" width="44" height="44" aria-hidden="true">
+        <defs><linearGradient id="rpGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff8a2a"/><stop offset=".5" stop-color="#ff4d8d"/><stop offset="1" stop-color="#2cc8ff"/></linearGradient></defs>
+        <circle class="rp-track" cx="22" cy="22" r="18" fill="none" stroke-width="4"/>
+        <circle class="rp-bar" id="rp-bar" cx="22" cy="22" r="18" fill="none" stroke-width="4" stroke-dasharray="113.097" stroke-dashoffset="113.097"/>
+      </svg>
+      <div class="read-progress-pct" id="rp-pct">0%</div>
+    </div>
+    <div class="read-progress-copy">
+      <div class="read-progress-title" id="rp-title">Overview</div>
+      <div class="read-progress-sub" id="rp-sub">A reusable integration platform</div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var el = document.getElementById("read-progress");
+      if (!el) return;
+      var bar = document.getElementById("rp-bar"), pct = document.getElementById("rp-pct"),
+          title = document.getElementById("rp-title"), sub = document.getElementById("rp-sub");
+      var C = 113.097;
+      var steps = [
+        { p: 0.00, t: "Summary",         s: "A reusable integration platform" },
+        { p: 0.10, t: "Discovery",       s: "What the support queue told us" },
+        { p: 0.26, t: "Product design",  s: "One reusable lifecycle" },
+        { p: 0.42, t: "Design evolution",s: "Why “easier” won" },
+        { p: 0.62, t: "Connection flow", s: "The shipped flow, step by step" },
+        { p: 0.82, t: "Decisions",       s: "The trade-offs behind it" },
+        { p: 0.96, t: "Result",          s: "Thanks for reading" }
+      ];
+      function pick(p) { var r = steps[0]; for (var i = 0; i < steps.length; i++) { if (p >= steps[i].p) r = steps[i]; } return r; }
+      var last = "";
+      function update() {
+        var h = document.documentElement;
+        var max = (h.scrollHeight - h.clientHeight) || 1;
+        var p = Math.min(1, Math.max(0, (window.scrollY || h.scrollTop) / max));
+        bar.style.strokeDashoffset = (C * (1 - p)).toFixed(2);
+        pct.textContent = Math.round(p * 100) + "%";
+        var st = pick(p);
+        if (st.t !== last) { title.textContent = st.t; sub.textContent = st.s; last = st.t; }
+        el.classList.toggle("is-visible", p > 0.02);
+      }
+      window.addEventListener("scroll", update, { passive: true });
+      window.addEventListener("resize", update);
+      update();
+    })();
+  </script>
+
+  <script>
+    (function () {
+      var galleries = Array.prototype.slice.call(document.querySelectorAll("[data-scroll-gallery]"));
+      if (!galleries.length) return;
+      galleries.forEach(function (g) {
+        var steps = Array.prototype.slice.call(g.querySelectorAll("[data-scroll-step]"));
+        var medias = Array.prototype.slice.call(g.querySelectorAll("[data-scroll-media]"));
+        var progress = g.querySelector(".scroll-story-progress");
+        if (!steps.length) return;
+        var current = -1;
+        var flowRun = 0;
+        function flowFrame() { return g.querySelector(".flowframe"); }
+        function setFlowState(frame, state, attempt, run) {
+          if (run != null && run !== flowRun) return;
+          try {
+            frame.contentWindow.postMessage({ type: "portfolio:set-flow", state: state }, "*");
+          } catch (error) {}
+          try {
+            if (frame.contentWindow && typeof frame.contentWindow.__setFlow === "function") {
+              frame.contentWindow.__setFlow(state);
+              return;
+            }
+          } catch (error) {}
+          if ((attempt || 0) < 40) window.setTimeout(function () { setFlowState(frame, state, (attempt || 0) + 1, run); }, 80);
+        }
+        function stopTyping(frame) {
+          flowRun += 1;
+          try { frame.contentWindow.postMessage({ type: "portfolio:stop-flow-typing" }, "*"); } catch (error) {}
+          try {
+            var cursor = frame.contentDocument && frame.contentDocument.getElementById("cursor");
+            if (cursor) cursor.classList.remove("show");
+          } catch (error) {}
+        }
+        function playTyping(frame) {
+          stopTyping(frame);
+          var run = flowRun;
+          try {
+            frame.contentWindow.postMessage({ type: "portfolio:play-flow-typing" }, "*");
+            return;
+          } catch (error) {}
+          setFlowState(frame, 0, 0, run);
+          function startTyping() {
+            if (run !== flowRun) return;
+            var doc, inputs, cursor, wrap;
+            try {
+              doc = frame.contentDocument;
+              inputs = doc && doc.querySelectorAll(".card2 input");
+              cursor = doc && doc.getElementById("cursor");
+              wrap = doc && doc.getElementById("animwrap");
+            } catch (error) { return; }
+            if (!inputs || inputs.length < 3 || !cursor || !wrap) {
+              if (run === flowRun) window.setTimeout(startTyping, 180);
+              return;
+            }
+            var values = ["Housecall Pro — Production", "hcp_9f3a-b21c-4d9e-a077", "sk_live_9f2c7a41d0b8e6a3"];
+            var cursorX = 300, cursorY = 720;
+            cursor.classList.remove("show");
+            cursor.style.transitionDuration = "0ms";
+            cursor.style.transform = "translate(300px,720px)";
+            function typeText(input, text, index, done) {
+              if (run !== flowRun) return;
+              if (index === 0) { input.value = ""; input.dispatchEvent(new frame.contentWindow.Event("input", { bubbles: true })); }
+              if (index >= text.length) { done(); return; }
+              input.value += text[index];
+              input.dispatchEvent(new frame.contentWindow.Event("input", { bubbles: true }));
+              window.setTimeout(function () { typeText(input, text, index + 1, done); }, 34);
+            }
+            function typeField(index) {
+              if (run !== flowRun || index >= inputs.length) return;
+              var rect = inputs[index].getBoundingClientRect(), wrapRect = wrap.getBoundingClientRect();
+              var x = rect.left - wrapRect.left + rect.width / 2, y = rect.top - wrapRect.top + rect.height / 2;
+              var duration = Math.max(240, Math.min(720, 240 + Math.hypot(x - cursorX, y - cursorY) * .8));
+              cursor.classList.add("show");
+              cursor.style.transitionDuration = duration + "ms";
+              cursor.style.transform = "translate(" + x + "px," + y + "px)";
+              cursorX = x; cursorY = y;
+              window.setTimeout(function () {
+                if (run !== flowRun) return;
+                try { inputs[index].focus({ preventScroll: true }); } catch (error) { inputs[index].focus(); }
+                typeText(inputs[index], values[index], 0, function () { window.setTimeout(function () { typeField(index + 1); }, 140); });
+              }, duration + 40);
+            }
+            typeField(0);
+          }
+          window.setTimeout(startTyping, 120);
+        }
+        function syncConnectionFlow(key) {
+          var frame = flowFrame();
+          if (!frame) return;
+          if (key === "cf-connect") { playTyping(frame); return; }
+          if (key === "cf-connecting") { stopTyping(frame); setFlowState(frame, .5, 0, flowRun); return; }
+          if (key === "cf-connected") { stopTyping(frame); setFlowState(frame, 1, 0, flowRun); }
+        }
+        var initialFlow = flowFrame();
+        if (initialFlow) initialFlow.addEventListener("load", function () {
+          if (current >= 0) syncConnectionFlow(steps[current].getAttribute("data-scroll-step"));
+        });
+        function replayLiveFrame(frame) {
+          if (!frame) return;
+          var replayName = frame.getAttribute("data-replay");
+          if (!replayName) return;
+          var replay = function () {
+            try {
+              if (frame.contentWindow && typeof frame.contentWindow[replayName] === "function") {
+                frame.contentWindow[replayName]();
+              }
+              frame.contentWindow.postMessage({ type: replayName === "__replayAttribution" ? "portfolio:replay-attribution" : "portfolio:replay-accounts" }, "*");
+            } catch (error) {}
+          };
+          replay();
+          window.setTimeout(replay, 180);
+        }
+        g.querySelectorAll(".fitframe[data-replay]").forEach(function (frame) {
+          frame.addEventListener("load", function () {
+            var media = frame.closest("[data-scroll-media]");
+            var step = frame.closest("[data-scroll-step]");
+            if ((media && media.classList.contains("is-active")) || (step && step.classList.contains("is-active"))) replayLiveFrame(frame);
+          });
+        });
+        function update() {
+          var mid = window.innerHeight * 0.42, best = 0, bestDist = Infinity;
+          steps.forEach(function (s, i) {
+            var r = s.getBoundingClientRect();
+            var d = Math.abs((r.top + r.height / 2) - mid);
+            if (d < bestDist) { bestDist = d; best = i; }
+          });
+          if (best !== current) {
+            current = best;
+            steps.forEach(function (s, i) { s.classList.toggle("is-active", i === best); });
+            var key = steps[best].getAttribute("data-scroll-step");
+            medias.forEach(function (m) { m.classList.toggle("is-active", (m.getAttribute("data-scroll-media") || "").split(" ").indexOf(key) !== -1); });
+            // Scroll turns the same connection animation into a deterministic story:
+            // type credentials, connect, then confirm success.
+            syncConnectionFlow(key);
+            var activeFrame = g.querySelector('[data-scroll-media="' + key + '"] .fitframe[data-replay], [data-scroll-step="' + key + '"] .liveframe-stage .fitframe[data-replay]');
+            replayLiveFrame(activeFrame);
+          }
+          if (progress) {
+            var frac = steps.length > 1 ? best / (steps.length - 1) : 0;
+            var track = Math.max(0, progress.clientHeight - 84);
+            progress.style.setProperty("--story-progress", (track * frac).toFixed(1) + "px");
+          }
+        }
+        window.addEventListener("scroll", update, { passive: true });
+        window.addEventListener("resize", update);
+        update();
+      });
+    })();
+  </script>
+
+  <script>
+    /* Scale each live recreation from declared artboard dimensions. We deliberately
+       do not read iframe.contentDocument: it can be unavailable while its modules
+       load, which silently left some panels at the browser default of 150px high. */
+    (function () {
+      function fitOne(f) {
+        var stage = f.closest(".scroll-story-stage, .liveframe-stage"); if (!stage) return;
+        var sw = stage.clientWidth, sh = stage.clientHeight;
+        if (!sw || !sh) return;
+        var natW = +(f.getAttribute("data-w") || 960);
+        var natH = +(f.getAttribute("data-h") || 640);
+        f.setAttribute("width", natW);
+        f.setAttribute("height", natH);
+        f.style.width = natW + "px";
+        f.style.height = natH + "px";
+        var scale = Math.min(sw / natW, sh / natH, 1);
+        if (!(scale > 0)) return;
+        /* Anchor at the visual centre before scaling. A grid-centred fixed-width
+           iframe can otherwise retain its unscaled footprint and drift right. */
+        f.style.position = "absolute";
+        f.style.left = "50%";
+        f.style.top = "50%";
+        f.style.transformOrigin = "center center";
+        f.style.transform = "translate(-50%, -50%) scale(" + scale.toFixed(3) + ")";
+      }
+      function fit() {
+        document.querySelectorAll(".fitframe[data-w][data-h]").forEach(fitOne);
+      }
+      window.addEventListener("resize", fit);
+      document.querySelectorAll(".fitframe[data-w][data-h]").forEach(function (f) {
+        f.addEventListener("load", function () {
+          fitOne(f);
+        });
+      });
+      if (window.ResizeObserver) {
+        document.querySelectorAll(".scroll-story-stage, .liveframe-stage").forEach(function (stage) {
+          new ResizeObserver(fit).observe(stage);
+        });
+      }
+      fit();
+    })();
+  </script>
+
+  <script>
+    (function () {
+      var cc = document.getElementById("concept-carousel");
+      if (!cc) return;
+      var track = cc.querySelector(".concept-carousel-track");
+      var slides = Array.prototype.slice.call(cc.querySelectorAll(".concept-carousel-slide"));
+      var prevBtn = cc.querySelector(".concept-carousel-btn.prev");
+      var nextBtn = cc.querySelector(".concept-carousel-btn.next");
+      var dots = Array.prototype.slice.call(cc.querySelectorAll(".concept-carousel-dot"));
+      var shell = cc.querySelector(".concept-carousel-shell");
+      var i = 0;
+      function positionArrows() {
+        var active = slides[i], media = active && active.querySelector(".concept-carousel-media");
+        if (!media || !shell) return;
+        var m = media.getBoundingClientRect(), s = shell.getBoundingClientRect();
+        var cy = (m.top - s.top) + m.height / 2;
+        [prevBtn, nextBtn].forEach(function (b) { if (b) b.style.top = cy + "px"; });
+      }
+      function render() {
+        track.style.transform = "translateX(-" + (i * 100) + "%)";
+        slides.forEach(function (sl, n) { sl.classList.toggle("is-active", n === i); });
+        dots.forEach(function (d, n) { d.classList.toggle("is-active", n === i); });
+        if (prevBtn) prevBtn.disabled = i === 0;
+        if (nextBtn) nextBtn.disabled = i === slides.length - 1;
+        positionArrows();
+      }
+      window.addEventListener("resize", positionArrows, { passive: true });
+      window.addEventListener("load", positionArrows);
+      if (prevBtn) prevBtn.addEventListener("click", function () { if (i > 0) { i -= 1; render(); } });
+      if (nextBtn) nextBtn.addEventListener("click", function () { if (i < slides.length - 1) { i += 1; render(); } });
+      dots.forEach(function (d, n) { d.addEventListener("click", function () { i = n; render(); }); });
+      render();
+    })();
   </script>
 </body>
 </html>

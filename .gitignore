@@ -1,0 +1,25 @@
+# Local macOS and editor artifacts
+.DS_Store
+.~lock.*
+*.tmp
+
+# Generated review/export artifacts
+*.html.txt
+*.pdf
+output/
+
+# Local backup copies
+*.backup-*.html
+*.prewrite-*.html
+*.before-*.html
+*copy*/
+
+# Local dependency installs
+node_modules/
+
+# Scratch or rejected visual artifacts (not used by the live portfolio)
+portfolio_case_study/images/_*.png
+portfolio_case_study/images/verify*_billauto.png
+portfolio_case_study/images/bill-set-admin.png
+portfolio_case_study/images/bill-subscription.png
+portfolio_case_study/images/org-template-editor.png

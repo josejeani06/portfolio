@@ -13,6 +13,9 @@
     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
     crossorigin=""
   />
+  <!-- Ivanlabs Design System — tokens load once, before any app CSS. -->
+  <link rel="stylesheet" href="ds/tokens.css" />
+  <link rel="stylesheet" href="ds/typography.css" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -29,33 +32,17 @@
           </button>
         </header>
 
+        <!-- Hosts. Everything below this line is rendered by the design system
+             (see ds-mount.js); the markup only reserves the position. -->
         <div class="search-wrap">
-          <span class="search-leading-icon icon-wrap icon-wrap--medium" aria-hidden="true"><span class="material-symbols-rounded">search</span></span>
-          <input id="locationSearch" type="search" placeholder="Search for locations" autocomplete="off" />
-          <button id="clearSearch" class="clear-search icon-button-plain" type="button" aria-label="Clear search">
-            <span class="icon-wrap icon-wrap--medium" aria-hidden="true"><span class="material-symbols-rounded">close</span></span>
-          </button>
+          <div id="searchField"></div>
           <div id="searchMenu" class="search-menu" hidden></div>
         </div>
 
-        <div id="emptyState" class="empty-state">
-          <div class="pin-large" aria-hidden="true"></div>
-          <h2>Start selecting your locations</h2>
-          <p>Search, draw, upload, click the map, or select a saved map to define where storms should be monitored</p>
-        </div>
+        <div id="emptyState" class="empty-state"></div>
 
         <div id="selectedState" class="selected-state" hidden>
-          <div class="selected-summary">
-            <span><strong id="locationCount">0</strong> Location(s)</span>
-            <span class="included-count">
-              <span class="icon-wrap icon-wrap--small" aria-hidden="true"><span class="material-symbols-rounded">home</span></span>
-              <strong id="householdsCount">0</strong> Included
-            </span>
-            <div class="summary-actions">
-              <button type="button" aria-label="Delete selected"><span class="icon-wrap icon-wrap--small" aria-hidden="true"><span class="material-symbols-rounded">delete</span></span></button>
-              <button id="expandLocationsButton" type="button" aria-label="Expand panel"><span class="icon-wrap icon-wrap--small" aria-hidden="true"><span class="material-symbols-rounded">fullscreen</span></span></button>
-            </div>
-          </div>
+          <div id="selectedSummary" class="selected-summary"></div>
           <div id="selectedList" class="selected-list"></div>
           <div id="bulkBar" class="bulk-bar" hidden>
             <strong><span id="bulkCount">0</span> / 24 selected.</strong>
@@ -71,82 +58,26 @@
           <button id="locationPanelToggle" class="location-panel-toggle" type="button"><span class="icon-wrap icon-wrap--small" aria-hidden="true"><span class="material-symbols-rounded">menu</span></span>Locations</button>
 
           <div class="top-map-actions">
-            <div class="map-options">
-              <button id="mapOptionsButton" type="button">Map Options <span class="icon-wrap icon-wrap--small" aria-hidden="true"><span class="material-symbols-rounded">keyboard_arrow_down</span></span></button>
-              <div id="mapOptionsMenu" class="options-menu" hidden>
-                <button id="bulkCsvOption" type="button"><span class="icon-wrap icon-wrap--small" aria-hidden="true"><span class="material-symbols-rounded">draft</span></span>Add CSV Bulk Locations</button>
-                <button id="useSavedMapOption" type="button"><span class="icon-wrap icon-wrap--small" aria-hidden="true"><span class="material-symbols-rounded">verified_user</span></span>Use Saved Map</button>
-                <button id="saveMapOption" type="button"><span class="icon-wrap icon-wrap--small" aria-hidden="true"><span class="material-symbols-rounded">save</span></span>Save this Map</button>
-              </div>
-            </div>
+            <div id="mapOptionsHost" class="map-options"></div>
             <button id="addMapButton" class="secondary-map-action" type="button" hidden><span class="icon-wrap icon-wrap--small" aria-hidden="true"><span class="material-symbols-rounded">swap_horiz</span></span><span class="active-map-name">Add Map</span></button>
           </div>
 
-          <div class="draw-actions">
-            <button id="radiusButton" class="primary-map-action" type="button"><span class="icon-wrap icon-wrap--small" aria-hidden="true"><span class="material-symbols-rounded">my_location</span></span>Add Radius</button>
-            <button id="polygonButton" class="primary-map-action" type="button"><span class="icon-wrap icon-wrap--small" aria-hidden="true"><span class="material-symbols-rounded">polyline</span></span>Add Polygon</button>
-          </div>
+          <div id="drawActions" class="draw-actions"></div>
 
-          <div id="drawModeActions" class="draw-mode-actions" hidden>
-            <div class="draw-mode-copy">
-              <strong id="drawModeTitle">Polygon mode is live</strong>
-              <span id="drawModeText">Click on map to create a polygon, minimum of 3 points</span>
-            </div>
-            <div class="draw-mode-buttons">
-              <div class="draw-mode-type" role="group" aria-label="Draw mode type">
-                <button id="drawInclude" class="is-active" type="button">Include</button>
-                <button id="drawExclude" type="button">Exclude</button>
-              </div>
-              <button id="cancelDraw" class="draw-mode-cancel" type="button">Cancel</button>
-              <button id="finishDraw" class="draw-mode-finish" type="button">Finish Polygon</button>
-            </div>
-          </div>
+          <div id="drawModeActions" class="draw-mode-actions" hidden></div>
 
-          <div id="bubbleBox" class="boundary-popover" hidden>
-            <div class="popover-actions" role="group" aria-label="Boundary action">
-              <button id="includeBubble" class="is-selected" type="button">Include</button>
-              <button id="excludeBubble" type="button">Exclude</button>
-            </div>
-            <div class="popover-body">
-              <span id="bubbleType" class="popover-type">ZIP Code</span>
-              <strong id="bubbleTitle">94103</strong>
-              <span id="bubbleMeta">San Francisco ZIP Code</span>
-              <div class="popover-structure">
-                <span>Address structures</span>
-                <strong id="bubbleStructures">15,600</strong>
-              </div>
-              <button id="removeBubble" class="popover-remove" type="button" hidden>Remove from selected</button>
-            </div>
-          </div>
+          <div id="boundaryLoading" class="boundary-loading" hidden role="status" aria-live="polite"></div>
 
-          <div id="boundaryLoading" class="boundary-loading" hidden role="status" aria-live="polite">
-            <span class="boundary-loading__spinner" aria-hidden="true"></span>
-            <span id="boundaryLoadingText">Loading boundaries...</span>
-          </div>
-
-          <div class="zoom-control" aria-label="Zoom controls">
-            <button id="zoomIn" type="button" aria-label="Zoom in"><span class="icon-wrap icon-wrap--medium" aria-hidden="true"><span class="material-symbols-rounded">add</span></span></button>
-            <button id="zoomOut" type="button" aria-label="Zoom out"><span class="icon-wrap icon-wrap--medium" aria-hidden="true"><span class="material-symbols-rounded">remove</span></span></button>
-          </div>
+          <div id="zoomControl" class="zoom-control" aria-label="Zoom controls"></div>
 
           <div class="street-view" aria-hidden="true"></div>
 
           <div class="map-footer">
-            <div class="view-toggle" role="group" aria-label="Map view">
-              <button id="mapView" class="is-active" type="button">Map</button>
-              <button id="satelliteView" type="button">Satellite</button>
-            </div>
+            <div id="viewToggle" class="view-toggle" role="group" aria-label="Map view"></div>
             <div class="footer-actions">
-              <div class="area-select">
-                <button id="boundaryToggle" class="boundary-toggle" type="button">Hide Boundary</button>
-                <button id="areaButton" class="area-value" type="button">State <span class="icon-wrap icon-wrap--small" aria-hidden="true"><span class="material-symbols-rounded">keyboard_arrow_down</span></span></button>
-                <div id="areaMenu" class="area-menu" hidden>
-                  <button type="button">USA</button>
-                  <button class="is-selected" type="button">State</button>
-                  <button type="button">County</button>
-                  <button type="button">City</button>
-                  <button type="button">ZIP Code</button>
-                </div>
+              <div class="area-select-wrap">
+                <div id="areaSelect" class="area-select"></div>
+                <div id="areaMenu" class="area-menu" hidden></div>
               </div>
             </div>
           </div>
@@ -160,6 +91,14 @@
     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
     crossorigin=""
   ></script>
+  <!-- Ivanlabs Design System 0.4.1 — the real components. `_ds_bundle.js` is the
+       package's own IIFE build (React external), so window.IVDS carries every
+       component. Vendored, not CDN, so the prototype never depends on a network. -->
+  <script src="ds/react.js"></script>
+  <script src="ds/react-dom.js"></script>
+  <script src="ds/ivanlabs-design-system.js"></script>
+  <script src="ds-mount.js"></script>
   <script src="script.js?v=boundary-city-zip-7"></script>
+  <script src="demo.js"></script>
 </body>
 </html>

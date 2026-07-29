@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 560" role="img" aria-label="AJL Atelier — a Webflow CMS marketing site with dynamic pages, a podcast, blog and services, web design by Ivan Jose">
+  <rect width="1040" height="560" fill="#efece3"/>
+  <rect x="40" y="40" width="960" height="480" rx="18" fill="#f6f4ec" stroke="rgba(28,27,22,0.10)"/>
+  <rect x="40" y="40" width="960" height="7" rx="3" fill="#2F6BEA"/>
+  <text x="72" y="120" font-family="Georgia, 'Times New Roman', serif" font-size="20" letter-spacing="2.5" fill="#6b6658">WEBFLOW CMS · MARKETING SITE</text>
+  <text x="70" y="250" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="72" font-weight="700" fill="#1c1b16">AJL Atelier</text>
+  <text x="72" y="316" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="34" font-weight="600" fill="#2F6BEA">Consultancy + Podcast</text>
+  <text x="72" y="470" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="24" fill="#6b6658">Dynamic CMS pages, podcast episodes, blog &amp; services</text>
+  <g opacity="0.9"><rect x="720" y="170" width="66" height="150" rx="8" fill="none" stroke="#2F6BEA" stroke-width="2.5"/><line x1="732" y1="190" x2="774" y2="190" stroke="#2F6BEA" stroke-width="2"/><line x1="732" y1="206" x2="774" y2="206" stroke="#2F6BEA" stroke-width="2"/><line x1="732" y1="222" x2="774" y2="222" stroke="#2F6BEA" stroke-width="2"/><rect x="800" y="170" width="66" height="150" rx="8" fill="none" stroke="#2F6BEA" stroke-width="2.5"/><line x1="812" y1="190" x2="854" y2="190" stroke="#2F6BEA" stroke-width="2"/><line x1="812" y1="206" x2="854" y2="206" stroke="#2F6BEA" stroke-width="2"/><line x1="812" y1="222" x2="854" y2="222" stroke="#2F6BEA" stroke-width="2"/><rect x="880" y="170" width="66" height="150" rx="8" fill="none" stroke="#2F6BEA" stroke-width="2.5"/><line x1="892" y1="190" x2="934" y2="190" stroke="#2F6BEA" stroke-width="2"/><line x1="892" y1="206" x2="934" y2="206" stroke="#2F6BEA" stroke-width="2"/><line x1="892" y1="222" x2="934" y2="222" stroke="#2F6BEA" stroke-width="2"/></g>
+</svg>

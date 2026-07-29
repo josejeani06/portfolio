@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 560" role="img" aria-label="Uledger Verify for Outlook — an email verification add-in using blockchain to prove an email is authentic and untampered, product design by Ivan Jose">
+  <rect width="1040" height="560" fill="#efece3"/>
+  <rect x="40" y="40" width="960" height="480" rx="18" fill="#f6f4ec" stroke="rgba(28,27,22,0.10)"/>
+  <rect x="40" y="40" width="960" height="7" rx="3" fill="#2AA37A"/>
+  <text x="72" y="120" font-family="Georgia, 'Times New Roman', serif" font-size="20" letter-spacing="2.5" fill="#6b6658">BLOCKCHAIN · PRODUCT DESIGN</text>
+  <text x="70" y="250" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="72" font-weight="700" fill="#1c1b16">Uledger Verify</text>
+  <text x="72" y="316" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="34" font-weight="600" fill="#2AA37A">for Outlook / Email</text>
+  <text x="72" y="470" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="24" fill="#6b6658">Cryptographic proof an email is authentic &amp; untampered</text>
+  <g opacity="0.9"><rect x="720" y="180" width="230" height="150" rx="12" fill="none" stroke="#2AA37A" stroke-width="2.5"/><path d="M720 195 L835 285 L950 195" fill="none" stroke="#2AA37A" stroke-width="2.5"/><circle cx="900" cy="330" r="34" fill="#2AA37A"/><path d="M884 330 l11 12 l20 -24" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>
+</svg>

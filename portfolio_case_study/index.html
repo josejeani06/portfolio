@@ -3,7 +3,34 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Ivan Jose — Product Design Portfolio</title>
+  <title>Ivan Jose — Senior Product Designer</title>
+  <meta name="description" content="Ivan Jose is a Senior Product Designer with 6 years shipping end-to-end B2B SaaS — platform integrations, enterprise org management, billing, and design systems — with an AI-assisted, cross-functional workflow." />
+  <link rel="canonical" href="https://ivanjose.design/" />
+  <meta name="author" content="Jean Ivan Jose" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Ivan Jose" />
+  <meta property="og:url" content="https://ivanjose.design/" />
+  <meta property="og:title" content="Ivan Jose — Senior Product Designer" />
+  <meta property="og:description" content="Senior Product Designer shipping end-to-end B2B SaaS — integrations, enterprise org management, billing, and design systems — with an AI-assisted, cross-functional workflow." />
+  <meta property="og:image" content="https://ivanjose.design/images/map-audience-builder.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Ivan Jose — Senior Product Designer" />
+  <meta name="twitter:description" content="Senior Product Designer shipping end-to-end B2B SaaS with an AI-assisted, cross-functional workflow." />
+  <meta name="twitter:image" content="https://ivanjose.design/images/map-audience-builder.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Jean Ivan Jose",
+    "alternateName": "Ivan Jose",
+    "jobTitle": "Senior Product Designer",
+    "url": "https://ivanjose.design/",
+    "email": "mailto:hello@ivanjose.design",
+    "sameAs": ["https://www.behance.net/ivancreatives"],
+    "knowsAbout": ["Product Design","B2B SaaS","Design Systems","Interaction Design","UX Design","Accessibility (WCAG 2.1 AA)","AI-assisted design","Prototyping","Figma","Cross-functional collaboration","Enterprise software","Payments & billing UX"],
+    "description": "Senior Product Designer with 6 years shipping end-to-end B2B SaaS — platform integrations, enterprise org management, billing, and design systems — with an AI-assisted, cross-functional workflow."
+  }
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -35,14 +62,14 @@
     .landing-case-meta,
     .landing-text-link,
     .landing-title .scramble-word,
-    .landing-title .scramble-word.is-scrambling{color:var(--blue)}
+    .landing-title .scramble-word.is-scrambling{color:var(--blue-2)}
     .landing-title span{color:var(--ink)}
     .landing-page .brand-mark{background:var(--blue);box-shadow:none;border-radius:8px}
     .behance-mark{background:var(--blue-soft);color:var(--blue)}
     .landing-button{background:var(--blue);border:0;box-shadow:0 18px 44px rgba(20,19,13,.18)}
     .landing-button:hover{background:var(--blue-2)}
-    .landing-case-index{color:rgba(207,59,35,.55)}
-    .landing-case-tags span{background:var(--blue-soft);color:var(--blue)}
+    .landing-case-index{color:var(--blue-2)}
+    .landing-case-tags span{background:var(--blue-soft);color:var(--blue-2)}
     .approach-number{color:rgba(207,59,35,.55)}
     /* dark bands consistent with the case study .section-dark */
     .landing-proof{background:linear-gradient(180deg,#1f1d16,#141308);padding:64px 0}
@@ -61,7 +88,7 @@
     .skills-row{display:grid;grid-template-columns:200px minmax(0,1fr);gap:24px;padding:22px 0;border-bottom:1px solid var(--line);align-items:start}
     .skills-label{color:var(--blue);font-weight:800;font-size:12px;letter-spacing:.14em;text-transform:uppercase;padding-top:7px}
     .skill-chips{display:flex;flex-wrap:wrap;gap:10px}
-    .skill-chips span{display:inline-flex;align-items:center;min-height:34px;padding:0 14px;border-radius:999px;background:var(--blue-soft);color:var(--blue-2);font-weight:650;font-size:14px}
+    .skill-chips span{display:inline-flex;align-items:center;min-height:34px;padding:0 14px;border-radius:999px;background:#ffffff;color:#14130d;border:1px solid rgba(20,19,13,.24);font-weight:650;font-size:14px}
     @media(max-width:760px){.skills-row{grid-template-columns:1fr;gap:12px;padding:18px 0}.skills-label{padding-top:0}}
     /* flush the next-step section against the approach above it */
     /* tighter section rhythm (match the case study), top-aligned heads, white eyebrow badge */
@@ -95,6 +122,23 @@
     .landing-case-body p{margin-top:14px}
     @media(max-width:900px){.landing-case-body{padding:20px 20px 22px}}
 
+    /* ===== Selected other work: secondary, lighter-weight cards ===== */
+    .landing-other{border-top:var(--surface-border)}
+    .other-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:8px}
+    .other-card{border:var(--surface-border);border-radius:14px;overflow:hidden;background:var(--surface);box-shadow:0 1px 2px rgba(20,19,13,.05),0 8px 22px rgba(20,19,13,.05);transition:transform 180ms ease,box-shadow 180ms ease}
+    .other-card:hover{transform:translateY(-3px);box-shadow:0 20px 48px rgba(20,19,13,.10)}
+    .other-card > a{display:flex;flex-direction:column;height:100%;text-decoration:none;color:inherit}
+    .other-cover{width:100%;aspect-ratio:1040/560;overflow:hidden;background:#efece3;border-bottom:var(--surface-border)}
+    .other-cover img{width:100%;height:100%;object-fit:cover;object-position:center center;display:block}
+    .other-body{padding:18px 20px 20px;display:flex;flex-direction:column;gap:8px;flex:1}
+    .other-kicker{font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+    .other-card h3{font-size:clamp(17px,1.5vw,20px);line-height:1.2;margin:0}
+    .other-body p{margin:0;font-size:14px;line-height:1.5;color:var(--muted)}
+    .other-link{margin-top:auto;padding-top:6px;font-size:13px;font-weight:800;letter-spacing:.02em;color:var(--ink)}
+    .other-card:hover .other-link{text-decoration:underline}
+    @media(max-width:960px){.other-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:620px){.other-grid{grid-template-columns:1fr}}
+
     /* ===== Approach section: black (matches case study section-dark) ===== */
     #approach{background:linear-gradient(180deg,#1f1d16,#141308)}
     #approach .landing-approach{background:transparent;border:0;box-shadow:none;padding:0;border-top:0}
@@ -105,6 +149,19 @@
     #approach .landing-approach-list > div{border-top-color:rgba(242,240,230,.14)}
     #approach .landing-approach-list p{color:rgba(242,240,230,.78)}
     #approach .approach-number{color:rgba(255,138,111,.72)}
+    /* align the big number with the first line of its paragraph */
+    .landing-approach-list > div{align-items:baseline}
+    .landing-approach-list .approach-number{line-height:1.1}
+    /* ===== full-width text · plain eyebrows · vertical stacks ===== */
+    .landing-section-head .eyebrow{display:inline-block;padding:0;border:0;border-radius:0;background:transparent;box-shadow:none}
+    .landing-section-head{grid-template-columns:1fr;gap:14px;align-items:start}
+    .landing-section-head > div,.landing-section-head p{max-width:none;width:100%}
+    .landing-approach{grid-template-columns:1fr;gap:24px}
+    .landing-approach-copy,.landing-approach-list,.landing-approach-copy h2,.landing-approach-list p{max-width:none;width:100%}
+    .landing-cta h2,.proof-block p{max-width:none}
+    #skills{background:#ffffff}
+    /* stop the browser from auto-anchoring scroll to shifting/animating content */
+    html{overflow-anchor:none}
   </style>
 </head>
 <body class="landing-page">
@@ -113,7 +170,7 @@
 
   <nav class="nav landing-nav-shell">
     <div class="container nav-inner">
-      <a class="brand" href="index.html"><span class="brand-mark"></span><span>Ivan Jose</span></a>
+      <a class="brand" href="index.html">Ivan Jose</a>
       <div class="nav-links landing-nav">
         <a href="#work">Work</a>
         <a href="#approach">Approach</a>
@@ -125,12 +182,18 @@
   <main>
     <section class="landing-hero glow-zone">
       <div class="container landing-hero-inner">
-        <div class="landing-kicker reveal-up">Hey, I'm Jean Ivan Jose</div>
+        <div class="landing-kicker reveal-up">Hey, I’m Jean Ivan Jose, from the Philippines 🇵🇭</div>
         <h1 class="landing-title reveal-up reveal-delay-1">Your next Senior Product Designer.</h1>
         <p class="landing-copy reveal-up reveal-delay-2">
           I design product experiences that feel clear, thoughtful, and easy to use—taking something complex,
           simplifying it, and turning it into a flow people can actually understand.
         </p>
+        <div class="landing-outcomes skill-chips reveal-up reveal-delay-2" style="justify-content:flex-start;gap:12px;margin:28px 0 34px" role="list" aria-label="Portfolio at a glance">
+          <span role="listitem">4 core B2B SaaS case studies</span>
+          <span role="listitem">Surfaces serving ~75% of revenue</span>
+          <span role="listitem">WCAG 2.1 AA</span>
+          <span role="listitem">AI-in-the-loop prototyping</span>
+        </div>
         <div class="landing-actions reveal-up reveal-delay-3">
           <a class="button landing-button" href="#work">View case studies</a>
           <a class="landing-text-link landing-behance-link" href="https://www.behance.net/ivancreatives" target="_blank" rel="noreferrer">
@@ -147,14 +210,14 @@
           <span class="proof-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M3 12.5h18"/></svg></span>
           <div class="proof-text">
             <span class="proof-label">Experience</span>
-            <p>6 years designing products end-to-end—core workflows, platform integrations, and enterprise surfaces—shipped with CTOs, PMs, and engineers.</p>
+            <p>6 years designing products end-to-end—core workflows, platform integrations, and enterprise surfaces—shipped cross-functionally with CTOs, PMs, and engineers.</p>
           </div>
         </div>
         <div class="proof-block">
           <span class="proof-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 3 8l9 5 9-5-9-5Z"/><path d="M3 12l9 5 9-5"/><path d="M3 16l9 5 9-5"/></svg></span>
           <div class="proof-text">
             <span class="proof-label">Design systems</span>
-            <p>I build and own the system: tokens, documented components, and AI-ready specs wired to code through Figma Code Connect and Storybook.</p>
+            <p>I build and own the system: tokens, documented components, and AI-ready specs backed by Storybook and the Claude Design System.</p>
           </div>
         </div>
         <div class="proof-block">
@@ -179,7 +242,7 @@
         <div class="landing-section-head reveal-up">
           <div>
             <div class="eyebrow">Selected work</div>
-            <h2>Case studies built around shipped product decisions.</h2>
+            <h2>Case studies grounded in product decisions and systems work.</h2>
           </div>
           <p>Each study shows how I approach structure, interaction, systems thinking, and implementation detail in B2B SaaS.</p>
         </div>
@@ -187,7 +250,7 @@
         <div class="landing-case-list">
           <a class="landing-case reveal-up" href="map-case-study.html">
             <div class="landing-case-cover">
-              <img src="images/map-audience-builder.png" alt="Modernized audience-builder map preview" />
+              <iframe class="case-live case-hover" data-w="1280" data-h="720" src="map-animation.html?embed=1" title="Preview: the audience map — search, radius and polygon, county include, ZIP exclude, save. Hover to play." loading="lazy" tabindex="-1"></iframe>
             </div>
             <div class="landing-case-body">
               <div class="landing-case-meta">01 · Core targeting workflow</div>
@@ -197,19 +260,19 @@
                 <span>Workflow redesign</span>
                 <span>Interaction systems</span>
               </div>
-              <p>Redesigned a complex targeting flow so users could start from saved areas, CSVs, map clicks, radius, and exclusions without feeling trapped inside one path.</p>
+              <p>Shipped the map-first core, then defined one audience model for search or region selection, CSV upload, saved areas, radius, and polygon across phased releases.</p>
             </div>
           </a>
 
           <a class="landing-case reveal-up reveal-delay-1" href="integration-case-study.html">
             <div class="landing-case-cover">
-              <img src="images/integration-manage.jpeg" alt="Reusable integration platform preview" />
+              <iframe class="case-live case-hover" data-w="760" data-h="880" data-play-param="auto" data-play-mode="swap" src="recreations/integration-connect.html" title="Preview: the connect flow — type credentials, test, connecting, connected. Hover to play." loading="lazy" tabindex="-1"></iframe>
             </div>
             <div class="landing-case-body">
               <div class="landing-case-meta">02 · Platform integrations</div>
-              <h3>Designing a reusable connection flow for OAuth, credentials, validation, and account management.</h3>
+              <h3>Designing a reusable connection flow for client credentials, validation, and account management.</h3>
               <div class="landing-case-tags">
-                <span>OAuth</span>
+                <span>Client credentials</span>
                 <span>Status design</span>
                 <span>Platform UX</span>
               </div>
@@ -217,19 +280,127 @@
             </div>
           </a>
 
-          <div class="landing-case landing-case-muted reveal-up reveal-delay-2">
-            <div class="landing-case-cover is-placeholder">Case study coming soon</div>
-            <div class="landing-case-body">
-              <div class="landing-case-meta">03 · Coming next</div>
-              <h3>Enterprise organization management for roles, payments, permissions, and multi-tenant administration.</h3>
-              <div class="landing-case-tags">
-                <span>RBAC</span>
-                <span>Billing</span>
-                <span>Analytics</span>
-              </div>
-              <p>The next study will cover admin tooling, access structure, billing visibility, and organization-level controls across a growing SaaS platform.</p>
+          <a class="landing-case reveal-up reveal-delay-2" href="org-management-case-study.html">
+            <div class="landing-case-cover">
+              <img src="images/new%20org/grid%20templates.png" alt="Organization templates with group hierarchy, shared scopes, and centrally governed assets" onerror="this.closest('.landing-case-cover').classList.add('is-placeholder');this.remove()">
             </div>
+            <div class="landing-case-body">
+              <div class="landing-case-meta">03 · Organization management</div>
+              <h3>Enterprise org management: roles, permissions, and shared templates designed to protect live automations.</h3>
+              <div class="landing-case-tags">
+                <span>RBAC &amp; scopes</span>
+                <span>Templates</span>
+                <span>Enterprise</span>
+              </div>
+              <p>An organization layer above groups—permission that follows the hierarchy and centrally governed templates that stay safe to edit—built to win a high-revenue enterprise account that named it a requirement.</p>
+            </div>
+          </a>
+
+          <a class="landing-case reveal-up reveal-delay-3" href="billing-case-study.html">
+            <div class="landing-case-cover">
+              <img src="images/new%20billing/Manage%20Members%20at%20Group%20Level.png" alt="Billing Management overview showing group balances, payment access, monthly caps, and account moves" onerror="this.closest('.landing-case-cover').classList.add('is-placeholder');this.remove()">
+            </div>
+            <div class="landing-case-body">
+              <div class="landing-case-meta">04 · Organization billing &amp; spend</div>
+              <h3>Org-wide billing: pool money at the org, spend it by group, and protect paying campaigns.</h3>
+              <div class="landing-case-tags">
+                <span>Billing &amp; payments</span>
+                <span>Financial UX</span>
+                <span>Enterprise</span>
+              </div>
+              <p>The companion to org management—billing groups, per-account caps, transfers and disbursement, and spend analytics that stay legible from the org down to a single automation.</p>
+            </div>
+          </a>
+
+          <a class="landing-case reveal-up reveal-delay-4" href="design-system-case-study.html">
+            <div class="landing-case-cover">
+              <iframe class="case-live" data-w="1040" data-h="903" src="recreations/ds-tokens.html" title="Live preview: the design system's token layers and swatch table" loading="lazy" tabindex="-1"></iframe>
+            </div>
+            <div class="landing-case-body">
+              <div class="landing-case-meta">05 · Design system · Personal project</div>
+              <h3>Figma to React: a design system a designer, an AI, and a compiler can all build from.</h3>
+              <div class="landing-case-tags">
+                <span>Design systems</span>
+                <span>Design to code</span>
+                <span>Multi-agent QA</span>
+              </div>
+              <p>I owned the Figma system at LettrLabs. On my own time I built the packaged React library, machine-readable specs, and an agent audit against a written standard—then published its open findings.</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="landing-section landing-other" id="other-work" aria-labelledby="other-work-title">
+      <div class="container">
+        <div class="landing-section-head reveal-up">
+          <div>
+            <div class="eyebrow">Selected other work</div>
+            <h2 id="other-work-title">Shipped client &amp; product work, in brief.</h2>
           </div>
+          <p>Supporting work — not full case studies. Two blockchain products from my time with ULedger, plus CMS-driven marketing sites. Each opens in a new tab.</p>
+        </div>
+
+        <div class="other-grid">
+          <article class="other-card reveal-up" data-domain="blockchain">
+            <a href="https://www.behance.net/gallery/202614057/ULedgerNet-Blockchain-Explorer" target="_blank" rel="noopener noreferrer" aria-label="ULedgerNet Blockchain Explorer — blockchain product design (opens Behance in a new tab)">
+              <div class="other-cover"><img src="images/uledger.jpg" alt="ULedgerNet blockchain explorer — the &quot;Maximum data integrity using blockchain&quot; dashboard and web3 product suite" loading="lazy"></div>
+              <div class="other-body">
+                <div class="other-kicker">Blockchain · ULedger</div>
+                <h3>ULedgerNet — Blockchain Explorer</h3>
+                <p>A data-dense explorer for searching blocks, transactions, and hashes on the ULedger network.</p>
+                <span class="other-link">View on Behance ↗</span>
+              </div>
+            </a>
+          </article>
+
+          <article class="other-card reveal-up reveal-delay-1" data-domain="blockchain">
+            <a href="https://www.behance.net/gallery/202614095/Outlook-Uledger-Verify-for-Email" target="_blank" rel="noopener noreferrer" aria-label="Uledger Verify for Outlook — blockchain email verification product design (opens Behance in a new tab)">
+              <div class="other-cover"><img src="images/verifyemail.jpg" alt="Uledger Verify for Email — the &quot;Is your inbox verified?&quot; product screen for blockchain-backed email authentication" loading="lazy"></div>
+              <div class="other-body">
+                <div class="other-kicker">Blockchain · ULedger</div>
+                <h3>Uledger Verify for Outlook</h3>
+                <p>An email add-in using blockchain to prove a message is authentic and untampered — cryptographic verification made legible.</p>
+                <span class="other-link">View on Behance ↗</span>
+              </div>
+            </a>
+          </article>
+
+          <article class="other-card reveal-up reveal-delay-2" data-domain="web">
+            <a href="https://www.ajlatelier.com/" target="_blank" rel="noopener noreferrer" aria-label="AJL Atelier — Webflow CMS marketing site with dynamic pages and podcast (opens in a new tab)">
+              <div class="other-cover"><img src="images/ajl thumbnail new.png" alt="AJL Atelier — Webflow CMS marketing site, podcast, editorial pages, and lead-capture forms" loading="lazy"></div>
+              <div class="other-body">
+                <div class="other-kicker">Webflow CMS · Live site</div>
+                <h3>AJL Atelier — consultancy + podcast</h3>
+                <p>Dynamic CMS pages, podcast episodes, blog, and service pages for a short-term-rental consultancy.</p>
+                <span class="other-link">Visit live site ↗</span>
+              </div>
+            </a>
+          </article>
+
+          <article class="other-card reveal-up reveal-delay-3" data-domain="web">
+            <a href="https://asymmetry.vc/portfolio/" target="_blank" rel="noopener noreferrer" aria-label="Asymmetry VC portfolio — WordPress and Elementor site with a CMS-driven portfolio grid (opens in a new tab)">
+              <div class="other-cover"><img src="images/asymmetry vc.png" alt="Asymmetry Ventures — WordPress and Elementor site with a CMS-driven portfolio grid built from dynamic custom fields" loading="lazy"></div>
+              <div class="other-body">
+                <div class="other-kicker">WordPress · Elementor</div>
+                <h3>Asymmetry VC — portfolio site</h3>
+                <p>A CMS-driven portfolio grid built from dynamic custom fields, so new investments publish without touching the layout.</p>
+                <span class="other-link">Visit live site ↗</span>
+              </div>
+            </a>
+          </article>
+
+          <article class="other-card reveal-up reveal-delay-4" data-domain="web">
+            <a href="https://www.hypervestor.com/" target="_blank" rel="noopener noreferrer" aria-label="Hypervestor — WordPress marketing site for an early-stage investor platform with dynamic deal listings (opens in a new tab)">
+              <div class="other-cover"><img src="images/hypervestor.png" alt="Hypervestor — WordPress marketing site for an early-stage investor platform with dynamic deal listings" loading="lazy"></div>
+              <div class="other-body">
+                <div class="other-kicker">WordPress · Live site</div>
+                <h3>Hypervestor — investor platform</h3>
+                <p>A marketing site for an early-stage investment platform, with dynamic deal listings and domain-driven sections.</p>
+                <span class="other-link">Visit live site ↗</span>
+              </div>
+            </a>
+          </article>
         </div>
       </div>
     </section>
@@ -247,7 +418,7 @@
           <div class="skills-row">
             <span class="skills-label">Product areas</span>
             <div class="skill-chips">
-              <span>B2B SaaS</span><span>B2C</span><span>Dashboards</span><span>Admin &amp; RBAC</span><span>Automations</span><span>Integrations</span><span>Payments &amp; billing</span>
+              <span>B2B SaaS</span><span>B2C</span><span>Dashboards</span><span>Integrations</span><span>Admin &amp; RBAC</span><span>Automations</span><span>Payments &amp; billing</span>
             </div>
           </div>
           <div class="skills-row">
@@ -259,13 +430,19 @@
           <div class="skills-row">
             <span class="skills-label">Design &amp; systems</span>
             <div class="skill-chips">
-              <span>Figma</span><span>Figma Code Connect</span><span>Storybook</span><span>Claude Design System</span><span>Design tokens</span><span>Adobe (Ps, Ai, XD)</span>
+              <span>Figma</span><span>Storybook</span><span>Claude Design System</span><span>Design tokens</span><span>Adobe (Ps, Ai, XD)</span>
+            </div>
+          </div>
+          <div class="skills-row">
+            <span class="skills-label">Accessibility</span>
+            <div class="skill-chips">
+              <span>WCAG 2.1 AA</span><span>Color contrast</span><span>Keyboard navigation</span><span>Screen-reader testing</span><span>Focus states</span><span>axe DevTools</span>
             </div>
           </div>
           <div class="skills-row">
             <span class="skills-label">AI workflow</span>
             <div class="skill-chips">
-              <span>Codex</span><span>Claude</span><span>Google Stitch</span><span>Machine-readable specs</span><span>AI skills / prompts</span>
+              <span>Figma Make</span><span>Codex</span><span>Claude Design tooling</span><span>MCP</span><span>Machine-readable specs</span><span>AI for research &amp; discovery</span>
             </div>
           </div>
           <div class="skills-row">
@@ -311,11 +488,15 @@
           </div>
           <div>
             <span class="approach-number">03</span>
-            <p>I work close to PM, engineering, and stakeholders—explaining the concept behind a screen, not just the screen—so handoff feels like a shared product conversation.</p>
+            <p>I work cross-functionally—close to PM, engineering, and stakeholders—explaining the concept behind a screen, not just the screen—so handoff feels like a shared product conversation.</p>
           </div>
           <div>
             <span class="approach-number">04</span>
             <p>I prototype with engineering in mind—often in code or Codex—so the team can pressure-test states, feasibility, and edge cases before build cost rises.</p>
+          </div>
+          <div>
+            <span class="approach-number">05</span>
+            <p>I treat B2B as consumer-grade underneath. A business may buy the product, but one person still has to build an audience, configure automation, and pay—largely on their own. So I design self-service B2B SaaS: the permissions, complexity, and scale a business needs, delivered with the speed, clarity, and ease of use people expect from consumer apps.</p>
           </div>
         </div>
       </div>
@@ -385,14 +566,14 @@
       "landing-map": {
         kicker: "Case study 01",
         title: "Modernizing a core targeting map",
-        text: "A redesign of a legacy audience builder so users can start from saved areas, CSVs, map clicks, radius, and exclusions without feeling trapped inside one path.",
+        text: "A phased audience-builder redesign: shipped map-first core, with CSV, saved-area, and exclusion paths defined for later delivery.",
         url: "map-case-study.html",
         visual: `<div class="visual-scene visual-start"><div class="choice-card wide"></div><div class="choice-card"></div><div class="choice-card"></div><div class="choice-card"></div></div>`
       },
       "landing-integration": {
         kicker: "Case study 02",
         title: "Reusable integration flow",
-        text: "A scalable connection pattern for OAuth, credentials, validation states, attribution setup, and account management across multiple apps.",
+        text: "A scalable connection pattern for client credentials, validation states, attribution setup, and account management across multiple apps.",
         url: "integration-case-study.html",
         visual: `<div class="visual-scene visual-image-frame"><img src="images/integration-manage.jpeg" alt="Integration platform preview"></div>`
       }
@@ -600,6 +781,59 @@
     } else {
       revealNodes.forEach((node) => node.classList.add("is-visible"));
     }
+  </script>
+  <style>
+    /* live animated case-study thumbnails */
+    .landing-case-cover{position:relative}
+    .landing-case-cover .case-live{position:absolute;top:50%;left:50%;border:0;transform-origin:center center;pointer-events:none;background:transparent}
+  </style>
+  <script>
+    (function () {
+      function fit() {
+        document.querySelectorAll(".case-live").forEach(function (f) {
+          try {
+            var cover = f.closest(".landing-case-cover"); if (!cover) return;
+            var cw = cover.clientWidth, ch = cover.clientHeight;
+            var natW = +(f.dataset.w || 1040), natH = +(f.dataset.h || 698);
+            f.style.width = natW + "px"; f.style.height = natH + "px";
+            var scale = Math.min(cw / natW, ch / natH);   // contain — whole demo visible
+            f.style.transform = "translate(-50%,-50%) scale(" + scale.toFixed(3) + ")";
+          } catch (e) {}
+        });
+      }
+      fit();
+
+      /* hover-to-play previews: the iframe holds a still until the card is
+         hovered or keyboard-focused, then runs one pass */
+      document.querySelectorAll("iframe.case-hover").forEach(function (f) {
+        var card = f.closest(".landing-case");
+        if (!card) return;
+        var base = f.getAttribute("src").split("#")[0];
+        var playParam = f.dataset.playParam || "play";   // some recreations use ?auto instead of ?play
+        var playSrc = base + (base.indexOf("?") >= 0 ? "&" : "?") + playParam + "=1";
+        var swapOnly = f.dataset.playMode === "swap";     // recreation ignores postMessage — reload to play
+        var fileMode = location.protocol === "file:";     // cross-origin frames — postMessage blocked
+        var state = "";
+        /* Served: postMessage swaps state with no reload (smooth). On file://, or for
+           frames that don't listen for messages, we reload the iframe with the play
+           param — the one channel guaranteed to reach a cross-origin frame. */
+        var set = function (msg) {
+          if (state === msg) return;
+          state = msg;
+          if (fileMode || swapOnly) { f.src = (msg === "play" ? playSrc : base); return; }
+          try { f.contentWindow.postMessage(msg === "play" ? "play" : "stop", "*"); }
+          catch (e) { f.src = (msg === "play" ? playSrc : base); }
+        };
+        card.addEventListener("mouseenter", function () { set("play"); });
+        card.addEventListener("mouseleave", function () { set("stop"); });
+        card.addEventListener("focusin",    function () { set("play"); });
+        card.addEventListener("focusout",   function () { set("stop"); });
+      });
+
+      window.addEventListener("resize", fit);
+      window.addEventListener("load", fit);
+      var n = 0, iv = setInterval(function () { fit(); if (++n > 12) clearInterval(iv); }, 300);
+    })();
   </script>
 </body>
 </html>

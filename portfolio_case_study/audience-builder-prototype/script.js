@@ -51,8 +51,7 @@ let currentPopupSelection = null;
 let drawSelectionMode = "include";
 
 const searchWrap = document.querySelector(".search-wrap");
-const searchInput = document.getElementById("locationSearch");
-const clearSearch = document.getElementById("clearSearch");
+// SearchField owns its input and its own clear button.
 const searchMenu = document.getElementById("searchMenu");
 const emptyState = document.getElementById("emptyState");
 const selectedState = document.getElementById("selectedState");
@@ -61,34 +60,24 @@ const bulkBar = document.getElementById("bulkBar");
 const prototypeShell = document.querySelector(".prototype-shell");
 const locationPanelToggle = document.getElementById("locationPanelToggle");
 const closeLocationPanel = document.getElementById("closeLocationPanel");
-const expandLocationsButton = document.getElementById("expandLocationsButton");
 const mapCanvas = document.getElementById("mapCanvas");
-const mapOptionsButton = document.getElementById("mapOptionsButton");
-const mapOptionsMenu = document.getElementById("mapOptionsMenu");
-const bulkCsvOption = document.getElementById("bulkCsvOption");
-const useSavedMapOption = document.getElementById("useSavedMapOption");
-const saveMapOption = document.getElementById("saveMapOption");
 const addMapButton = document.getElementById("addMapButton");
-const areaSelect = document.querySelector(".area-select");
-const areaButton = document.getElementById("areaButton");
 const areaMenu = document.getElementById("areaMenu");
 const boundaryLoading = document.getElementById("boundaryLoading");
-const boundaryLoadingText = document.getElementById("boundaryLoadingText");
-const radiusButton = document.getElementById("radiusButton");
-const polygonButton = document.getElementById("polygonButton");
-const drawActions = document.querySelector(".draw-actions");
+
+// Design-system hosts. These divs hold nothing; ds-mount.js renders the real
+// components into them and the state below stays exactly where it was.
+const searchField = document.getElementById("searchField");
+const selectedSummary = document.getElementById("selectedSummary");
+const mapOptionsHost = document.getElementById("mapOptionsHost");
+const drawActions = document.getElementById("drawActions");
 const drawModeActions = document.getElementById("drawModeActions");
-const drawModeTitle = document.getElementById("drawModeTitle");
-const drawModeText = document.getElementById("drawModeText");
-const cancelDraw = document.getElementById("cancelDraw");
-const finishDraw = document.getElementById("finishDraw");
-const drawInclude = document.getElementById("drawInclude");
-const drawExclude = document.getElementById("drawExclude");
-const mapView = document.getElementById("mapView");
-const satelliteView = document.getElementById("satelliteView");
-const boundaryToggle = document.getElementById("boundaryToggle");
-const zoomIn = document.getElementById("zoomIn");
-const zoomOut = document.getElementById("zoomOut");
+const zoomControl = document.getElementById("zoomControl");
+const viewToggle = document.getElementById("viewToggle");
+const areaSelect = document.getElementById("areaSelect");
+
+let searchQuery = "";
+const AREA_LEVELS = ["USA", "State", "County", "City", "ZIP Code"];
 
 const BULK_UPLOAD_FILES = [
   {
@@ -796,9 +785,7 @@ function setBoundaryLoading(isLoading, mode = areaMode) {
   if (!boundaryLoading) return;
   boundaryLoading.hidden = !isLoading;
   mapCanvas.classList.toggle("is-loading-boundaries", isLoading);
-  if (isLoading && boundaryLoadingText) {
-    boundaryLoadingText.textContent = `Loading ${mode} boundaries...`;
-  }
+  if (isLoading) DS.boundaryLoading(boundaryLoading, `Loading ${mode} boundaries…`);
 }
 
 async function fetchVisibleBoundaries() {
@@ -954,10 +941,24 @@ function metersToLatLng(center, metersEast) {
 
 function syncBoundaryVisibility() {
   const showAreaSelector = !drawMode;
-  areaSelect.classList.toggle("is-single", !showAreaSelector);
-  areaButton.hidden = !showAreaSelector;
   if (!showAreaSelector) areaMenu.hidden = true;
-  boundaryToggle.textContent = boundariesVisible ? "Hide Boundary" : "Show Boundary";
+  DS.areaSelect(areaSelect, {
+    boundaryLabel: boundariesVisible ? "Hide Boundary" : "Show Boundary",
+    areaLabel: areaMode,
+    showArea: showAreaSelector,
+  }, {
+    toggleBoundary: () => {
+      if (drawMode) return;
+      boundariesVisible = !boundariesVisible;
+      syncBoundaryVisibility();
+      if (!boundariesVisible) {
+        activeBoundaryKey = null;
+        hoveredBoundaryKey = null;
+        boundaryLayer.clearLayers();
+      }
+    },
+    openArea: () => { areaMenu.hidden = !areaMenu.hidden; if (!areaMenu.hidden) renderAreaMenu(); },
+  });
   if (!boundariesVisible) {
     activeBoundaryKey = null;
     hoveredBoundaryKey = null;
@@ -975,26 +976,26 @@ function syncDrawModeBar() {
   }
   drawActions.hidden = active;
   drawModeActions.hidden = !active;
-  radiusButton.classList.toggle("is-active", drawMode === "radius");
-  polygonButton.classList.toggle("is-active", drawMode === "polygon");
-  drawInclude.classList.toggle("is-active", drawSelectionMode === "include");
-  drawExclude.classList.toggle("is-active", drawSelectionMode === "exclude");
-  drawExclude.disabled = !allowExclude;
 
   if (!active) return;
 
-  if (drawMode === "radius") {
-    drawModeTitle.textContent = "Radius mode is live";
-    drawModeText.textContent = "Click the map to create one or more radius-based areas.";
-    finishDraw.textContent = "Finish Radius";
-    finishDraw.disabled = !draftRadius;
-    return;
-  }
-
-  drawModeTitle.textContent = "Polygon mode is live";
-  drawModeText.textContent = "Click on map to create a polygon, minimum of 3 points";
-  finishDraw.textContent = "Finish Polygon";
-  finishDraw.disabled = draftPolygonPoints.length < 3;
+  // MapModeBanner picks its own title, message and finish label from `mode` —
+  // those strings live in the design system now, not here.
+  DS.modeBanner(drawModeActions, {
+    mode: drawMode,
+    selectionMode: drawSelectionMode,
+    canFinish: drawMode === "radius" ? Boolean(draftRadius) : draftPolygonPoints.length >= 3,
+  }, {
+    cancel: cancelCurrentDraw,
+    finish: finishCurrentDraw,
+    selectionMode: (mode) => {
+      if (mode === "exclude" && !hasIncludedSelection()) return;
+      drawSelectionMode = mode;
+      if (drawMode === "radius") renderDraftRadius();
+      if (drawMode === "polygon") renderDraftPolygon();
+      syncDrawModeBar();
+    },
+  });
 }
 
 function clearDraftLayers() {
@@ -1230,43 +1231,47 @@ function deleteSelection(rowId) {
   refreshBoundaryFeatureStyles();
 }
 
+// The shape LocationRow wants, from the shape this app keeps.
+function rowType(row) {
+  if (row.kind === "radius") return "radius";
+  if (row.kind === "polygon") return "polygon";
+  return "location";
+}
+
 function renderSelected() {
   const rows = [...selected.values()];
   emptyState.hidden = rows.length > 0;
   selectedState.hidden = rows.length === 0;
-  document.getElementById("locationCount").textContent = rows.length;
-  document.getElementById("householdsCount").textContent = formatNumber(
-    rows.reduce((sum, row) => sum + signedStructureCount(row), 0)
-  );
-  selectedList.textContent = "";
 
-  rows.forEach((row) => {
-    const item = document.createElement("div");
-    item.className = `location-row${row.checked ? " is-selected" : ""}${row.mode === "exclude" ? " is-warning" : ""}`;
-    item.innerHTML = `
-      <input type="checkbox" ${row.checked ? "checked" : ""} aria-label="Select ${escapeHtml(row.name)}" />
-      <div class="location-name">${icon(locationTypeIcon(row), "small", "location-icon")}<span class="location-label">${escapeHtml(row.name)}</span></div>
-      <span class="miles">${escapeHtml(row.radiusLabel || row.areaMode || "")}</span>
-      <span class="home-count">${icon("home", "small")} ${formatSignedStructureCount(row)}</span>
-      <div class="row-actions"><button type="button" aria-label="Center ${escapeHtml(row.name)}">${icon("my_location", "small")}</button><button type="button" aria-label="Delete ${escapeHtml(row.name)}">${icon("delete", "small")}</button></div>
-    `;
+  if (!rows.length) DS.emptyState(emptyState);
 
-    item.querySelector("input").addEventListener("change", (event) => {
-      row.checked = event.target.checked;
-      selected.set(row.id, row);
+  DS.summary(selectedSummary, {
+    total: rows.length,
+    included: rows.filter((row) => row.mode !== "exclude").length,
+    excluded: rows.filter((row) => row.mode === "exclude").length,
+  }, {
+    clear: () => { [...selected.keys()].forEach(deleteSelection); },
+    expand: openLocationsModal,
+  });
+
+  DS.rows(selectedList, rows.map((row) => ({
+    id: row.id,
+    name: row.name,
+    type: rowType(row),
+    meta: row.radiusLabel || row.areaMode || "",
+    structures: formatSignedStructureCount(row),
+    mode: row.mode,
+    checked: row.checked,
+  })), {
+    check: (id, next) => {
+      const row = selected.get(id);
+      if (!row) return;
+      row.checked = next;
+      selected.set(id, row);
       renderSelected();
-    });
-
-    const [centerButton, deleteButton] = item.querySelectorAll(".row-actions button");
-    centerButton.addEventListener("click", () => {
-      centerSelection(row);
-    });
-
-    deleteButton.addEventListener("click", () => {
-      deleteSelection(row.id);
-    });
-
-    selectedList.append(item);
+    },
+    center: (id) => { const row = selected.get(id); if (row) centerSelection(row); },
+    remove: deleteSelection,
   });
 
   const checkedCount = rows.filter((row) => row.checked).length;
@@ -1372,28 +1377,33 @@ function closeSelectionPopup() {
   map.closePopup();
 }
 
-function buildPopupHtml(selection) {
+// BubbleBox. The map's area glyphs come from the component's own `type` enum,
+// so a drawn radius and a clicked boundary can't disagree about what they are.
+function buildPopupContent(selection) {
   const typeLabel = selection.areaMode === "ZIP Code" ? "ZIP Code" : selection.areaMode;
-  const excludeDisabled = !hasIncludedSelection();
-  const activeMode = selection.existingSelectionId ? selection.mode : "";
-  return `
-    <div class="map-selection-popup">
-      <button id="popupClose" class="popup-close" type="button" aria-label="Close selection popup">${icon("close", "small")}</button>
-      <div class="popup-actions">
-        <button id="popupInclude" class="${activeMode === "include" ? "is-selected" : ""}" type="button">Include</button>
-        <button id="popupExclude" class="${activeMode === "exclude" ? "is-selected" : ""}" type="button" ${excludeDisabled ? "disabled" : ""}>Exclude</button>
-      </div>
-      <div class="popup-copy">
-        <span class="popup-type">${escapeHtml(typeLabel)}</span>
-        <strong>${escapeHtml(selection.name)}</strong>
-        <span class="popup-meta">${escapeHtml(selection.meta || "United States")}</span>
-        <div class="popup-structure">
-          <span>Address structures</span>
-          <strong>${formatNumber(selection.count || 0)}</strong>
-        </div>
-      </div>
-    </div>
-  `;
+  const kind = selection.kind === "radius" ? "radius" : selection.kind === "polygon" ? "polygon" : "location";
+  const existing = selection.existingSelectionId && selected.has(selection.existingSelectionId);
+
+  return DS.bubbleBox({
+    id: selection.existingSelectionId || selection.featureKey || selection.name,
+    type: kind,
+    typeLabel: kind === "location" ? typeLabel : undefined,
+    typeIcon: kind === "location" ? "map" : undefined,
+    address: selection.name,
+    meta: selection.meta || "United States",
+    structures: formatNumber(selection.count || 0),
+    selected: selection.existingSelectionId ? selection.mode : null,
+    excludeDisabled: !hasIncludedSelection(),
+    removable: Boolean(existing),
+  }, {
+    include: () => setPopupSelectionMode("include"),
+    exclude: () => { if (hasIncludedSelection()) setPopupSelectionMode("exclude"); },
+    remove: () => {
+      if (!existing) return;
+      deleteSelection(selection.existingSelectionId);
+      closeSelectionPopup();
+    },
+  });
 }
 
 function latLngToTurfPoint(latlng) {
@@ -1497,30 +1507,12 @@ function openSelectionPopup(selection) {
   currentPopupSelection = selection;
   activeBoundaryKey = selection.featureKey || null;
   refreshBoundaryFeatureStyles();
+  // setContent takes the element BubbleBox is mounted into, so the component
+  // wires its own clicks — no re-querying the DOM a tick later.
   popup
     .setLatLng(selection.center)
-    .setContent(buildPopupHtml(selection))
+    .setContent(buildPopupContent(selection))
     .openOn(map);
-
-  setTimeout(() => {
-    const closeButton = document.getElementById("popupClose");
-    const includeButton = document.getElementById("popupInclude");
-    const excludeButton = document.getElementById("popupExclude");
-    if (!closeButton || !includeButton || !excludeButton || !currentPopupSelection) return;
-
-    closeButton.onclick = () => {
-      closeSelectionPopup();
-    };
-
-    includeButton.onclick = () => {
-      setPopupSelectionMode("include");
-    };
-
-    excludeButton.onclick = () => {
-      if (!hasIncludedSelection()) return;
-      setPopupSelectionMode("exclude");
-    };
-  }, 0);
 }
 
 async function reverseLookup(latlng) {
@@ -1596,46 +1588,40 @@ async function searchPlaces(query) {
   }
 }
 
+function renderSearchField() {
+  DS.search(searchField, searchQuery, {
+    change: (value) => {
+      searchQuery = value;
+      renderSearchField();
+      renderSearchMenu();
+      if (!value) jumpLayer.clearLayers();
+    },
+    focus: renderSearchMenu,
+  });
+}
+
 function renderSearchMenuItems(items) {
-  searchMenu.textContent = "";
-
-  if (!items.length) {
-    const empty = document.createElement("div");
-    empty.className = "no-result";
-    empty.innerHTML = "<strong>No locations found</strong><span>Try another city, state, or ZIP code.</span>";
-    searchMenu.append(empty);
-    searchMenu.hidden = false;
-    return;
-  }
-
-  items.forEach((item, index) => {
-    const button = document.createElement("button");
-    button.type = "button";
-    button.className = `search-result${index === 0 ? " is-active" : ""}`;
-    button.innerHTML = `${icon("location_on", "small", "result-pin")}<span>${escapeHtml(item.name)}</span><span class="result-type">${escapeHtml(item.type)}</span>`;
-    button.addEventListener("click", () => {
-      searchInput.value = item.name;
+  DS.searchMenu(searchMenu, items, {
+    pick: (item) => {
+      searchQuery = item.name;
+      renderSearchField();
       searchMenu.hidden = true;
-      searchWrap.classList.add("has-value");
       jumpLayer.clearLayers();
       L.circleMarker([item.lat, item.lng], {
         radius: 7,
-        color: "#3378ff",
-        fillColor: "#3378ff",
+        color: getComputedStyle(document.documentElement).getPropertyValue("--info-bg-default").trim(),
+        fillColor: getComputedStyle(document.documentElement).getPropertyValue("--info-bg-default").trim(),
         fillOpacity: 1,
         weight: 0
       }).addTo(jumpLayer);
       setMapView(item.lat, item.lng, item.zoom || 11);
-    });
-    searchMenu.append(button);
+    },
   });
-
   searchMenu.hidden = false;
 }
 
 async function renderSearchMenu() {
-  const query = searchInput.value.trim();
-  searchWrap.classList.toggle("has-value", query.length > 0);
+  const query = searchQuery.trim();
 
   if (!query) {
     renderSearchMenuItems(popularSuggestions);
@@ -2536,19 +2522,10 @@ function applySavedMap(savedMap) {
   showMapToast("Saved map applied", "success");
 }
 
-searchInput.addEventListener("input", renderSearchMenu);
-searchInput.addEventListener("focus", renderSearchMenu);
-clearSearch.addEventListener("click", () => {
-  searchInput.value = "";
-  searchWrap.classList.remove("has-value");
-  searchMenu.hidden = true;
-  jumpLayer.clearLayers();
-});
-
 document.addEventListener("click", (event) => {
   if (!event.target.closest(".search-wrap")) searchMenu.hidden = true;
-  if (!event.target.closest(".map-options")) mapOptionsMenu.hidden = true;
-  if (!event.target.closest(".area-select")) areaMenu.hidden = true;
+  // MapOptions is a SelectButton — it dismisses itself.
+  if (!event.target.closest(".area-select-wrap")) areaMenu.hidden = true;
 });
 
 document.addEventListener("keydown", (event) => {
@@ -2557,106 +2534,63 @@ document.addEventListener("keydown", (event) => {
   closeSelectionPopup();
 });
 
-mapOptionsButton.addEventListener("click", (event) => {
-  event.stopPropagation();
-  mapOptionsMenu.hidden = !mapOptionsMenu.hidden;
-});
-
-bulkCsvOption.addEventListener("click", (event) => {
-  event.stopPropagation();
-  mapOptionsMenu.hidden = true;
-  openBulkCsvModal();
-});
-
-useSavedMapOption.addEventListener("click", (event) => {
-  event.stopPropagation();
-  mapOptionsMenu.hidden = true;
-  savedMapSearchQuery = "";
-  renderSavedMapListModal();
-});
-
-saveMapOption.addEventListener("click", (event) => {
-  event.stopPropagation();
-  mapOptionsMenu.hidden = true;
-  requestSaveCurrentMap();
-});
-
-areaButton.addEventListener("click", (event) => {
-  event.stopPropagation();
-  areaMenu.hidden = !areaMenu.hidden;
-});
-
-areaMenu.querySelectorAll("button").forEach((button) => {
-  button.addEventListener("click", () => {
-    areaMenu.querySelectorAll("button").forEach((entry) => entry.classList.remove("is-selected"));
-    button.classList.add("is-selected");
-    areaMode = button.textContent === "Zip Code" ? "ZIP Code" : button.textContent;
-    areaButton.innerHTML = `${areaMode} ${icon("keyboard_arrow_down", "small")}`;
-    areaMenu.hidden = true;
-    activeBoundaryKey = null;
-    hoveredBoundaryKey = null;
-    currentPopupSelection = null;
-    boundaryFetchToken += 1;
-    clearBoundaryPreviewForMode(null);
-    fetchVisibleBoundaries();
-  });
-});
-
-boundaryToggle.addEventListener("click", () => {
-  if (drawMode) return;
-  boundariesVisible = !boundariesVisible;
+// Every control below is a design-system component. The handlers are the same
+// functions the old buttons called — only the thing being clicked changed.
+function setAreaMode(level) {
+  areaMode = level === "Zip Code" ? "ZIP Code" : level;
+  areaMenu.hidden = true;
+  activeBoundaryKey = null;
+  hoveredBoundaryKey = null;
+  currentPopupSelection = null;
+  boundaryFetchToken += 1;
   syncBoundaryVisibility();
-  if (!boundariesVisible) {
-    activeBoundaryKey = null;
-    hoveredBoundaryKey = null;
-    boundaryLayer.clearLayers();
-  }
-});
+  clearBoundaryPreviewForMode(null);
+  fetchVisibleBoundaries();
+}
 
-radiusButton.addEventListener("click", () => setDrawMode("radius"));
-polygonButton.addEventListener("click", () => setDrawMode("polygon"));
-drawInclude.addEventListener("click", () => {
-  drawSelectionMode = "include";
-  if (drawMode === "radius") renderDraftRadius();
-  if (drawMode === "polygon") renderDraftPolygon();
-  syncDrawModeBar();
-});
-drawExclude.addEventListener("click", () => {
-  if (!hasIncludedSelection()) return;
-  drawSelectionMode = "exclude";
-  if (drawMode === "radius") renderDraftRadius();
-  if (drawMode === "polygon") renderDraftPolygon();
-  syncDrawModeBar();
-});
-cancelDraw.addEventListener("click", cancelCurrentDraw);
-finishDraw.addEventListener("click", finishCurrentDraw);
+function renderAreaMenu() {
+  DS.areaMenu(areaMenu, AREA_LEVELS, areaMode, { pick: setAreaMode });
+}
 
-mapView.addEventListener("click", () => {
-  if (!map.hasLayer(streetLayer)) {
-    map.removeLayer(satelliteLayer);
-    map.removeLayer(satelliteLabelsLayer);
-    streetLayer.addTo(map);
-    streetLabelsLayer.addTo(map);
-  }
-  mapView.classList.add("is-active");
-  satelliteView.classList.remove("is-active");
-});
-
-satelliteView.addEventListener("click", () => {
-  if (!map.hasLayer(satelliteLayer)) {
+function setBaseLayer(index) {
+  const satellite = index === 1;
+  if (satellite && !map.hasLayer(satelliteLayer)) {
     map.removeLayer(streetLayer);
     map.removeLayer(streetLabelsLayer);
     satelliteLayer.addTo(map);
     satelliteLabelsLayer.addTo(map);
   }
-  satelliteView.classList.add("is-active");
-  mapView.classList.remove("is-active");
-});
+  if (!satellite && !map.hasLayer(streetLayer)) {
+    map.removeLayer(satelliteLayer);
+    map.removeLayer(satelliteLabelsLayer);
+    streetLayer.addTo(map);
+    streetLabelsLayer.addTo(map);
+  }
+}
 
-zoomIn.addEventListener("click", () => map.zoomIn());
-zoomOut.addEventListener("click", () => map.zoomOut());
+function mountDesignSystem() {
+  renderSearchField();
+  renderAreaMenu();
 
-expandLocationsButton.addEventListener("click", openLocationsModal);
+  DS.mapOptions(mapOptionsHost, {
+    pick: (value) => {
+      if (value === "bulk") return openBulkCsvModal();
+      if (value === "saved") { savedMapSearchQuery = ""; return renderSavedMapListModal(); }
+      if (value === "save") return requestSaveCurrentMap();
+    },
+  });
+
+  DS.drawActions(drawActions, {
+    radius: () => setDrawMode("radius"),
+    polygon: () => setDrawMode("polygon"),
+  });
+
+  DS.zoom(zoomControl, { in: () => map.zoomIn(), out: () => map.zoomOut() });
+
+  DS.viewToggle(viewToggle, 0, { change: setBaseLayer });
+}
+
+mountDesignSystem();
 
 locationPanelToggle.addEventListener("click", () => {
   prototypeShell.classList.add("is-location-panel-open");

@@ -1,0 +1,15 @@
+{
+  "name": "audience-builder-prototype",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Audience builder — a real Leaflet map prototype built on the Ivanlabs Design System.",
+  "scripts": {
+    "start": "node server.js",
+    "build:ds": "node scripts/build-ds.mjs"
+  },
+  "dependencies": {
+    "@ivancreatelabs/design-system": "file:../../../ivanlabs-design-system",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  }
+}
