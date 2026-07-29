@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Ivanlabs Design System — Connect Integration Flow</title>
+
+<link rel="stylesheet" href="https://unpkg.com/@ivancreatelabs/design-system@0.4.0/dist/tokens.css" />
+<link rel="stylesheet" href="https://unpkg.com/@ivancreatelabs/design-system@0.4.0/dist/typography.css" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" />
+
+<style>
+  :root { --ink: 24 26 42; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body { background: transparent; font-family: var(--font-family-body); padding: 28px; }
+
+  .frame {
+    width: 100%; max-width: 760px; margin: 0 auto;
+    /* bg-gradient-weak — the DS linear gradient at 10% over white */
+    background: linear-gradient(135deg, rgba(85,81,255,.10) 0%, rgba(165,163,254,.10) 100%), #ffffff;
+    border: 1px solid var(--neutral-border-muted);
+    border-radius: 18px;
+    box-shadow: 0 1px 2px rgb(var(--ink) / .05), 0 8px 24px rgb(var(--ink) / .06);
+    padding: 34px 40px 30px;
+    animation: frameIn .55s ease both;
+  }
+  @keyframes frameIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+
+  /* the animation frame is a positioned wrapper so the scripted cursor can sit
+     absolutely on top of the live components */
+  .animwrap { position: relative; }
+
+  /* 3 states crossfade in place; fixed height keeps the frame stable */
+  .flowstage { position: relative; height: 780px; }
+  .flowlayer { position: absolute; inset: 0; opacity: 0; transform: translateY(8px);
+               transition: opacity .4s ease, transform .4s ease; pointer-events: none;
+               display: flex; flex-direction: column; }
+  .flowlayer.on { opacity: 1; transform: none; pointer-events: auto; }
+  .flowlayer--center { justify-content: center; align-items: center; text-align: center; }
+
+  .mock { font-family: var(--font-family-body); color: var(--neutral-text-icon-strong); width: 100%; }
+  .row { display: flex; align-items: center; }
+  .col { display: flex; flex-direction: column; }
+  .muted { color: var(--neutral-text-icon-emphasis); }
+  .card2 { border: 1px solid var(--neutral-border-default); border-radius: 16px; padding: 22px 24px; background: var(--neutral-bg-default); }
+
+  /* ===== glass tile: a positioned wrapper with the glass SVG and the logo as
+     two ABSOLUTE layers, so the logo sits on the tile's exact centre ===== */
+  .tiles { display: flex; align-items: center; justify-content: center; gap: 0; }
+  .tile { position: relative; z-index: 1; width: 116px; height: 116px; flex: none; }
+  .tile__glass { position: absolute; inset: 0; }
+  .tile__glass svg { width: 100%; height: 100%; display: block; }
+  .tile__logo { position: absolute; inset: 0; display: grid; place-items: center; }
+  .tile__logo svg { width: 46%; height: 46%; display: block; }
+
+  /* scene-1 connector — paired arrows (arrow-wrapper.svg, 93×180) */
+  .arrows { width: 120px; display: flex; align-items: center; justify-content: center; flex: none; }
+  .arrows svg { height: 116px; width: auto; display: block; }
+
+  /* scenes 2 & 3 connector — two dots + line (connector.svg 136×56). Negative
+     margins overlap the tiles so each end dot sits on the glass edge. */
+  .arrows { margin: 0 6px; }
+  .connector { position: relative; z-index: 2; width: 150px; margin: 0 -31px; display: flex; align-items: center; justify-content: center; flex: none; }
+  .connector svg { width: 150px; height: auto; display: block; }
+
+  /* pulsating ellipses behind the tiles while connecting — three sizes, three
+     intervals, so at any moment they read as an expanding pulse */
+  .pulsewrap { position: relative; display: flex; align-items: center; justify-content: center; }
+  /* the pulse sits at the BOTTOM layer — three real 1:1 circles (Ellipse 1.svg),
+     varying size + opacity, gently pulsating on offset timing */
+  .pulsewrap .ring { position: absolute; left: 50%; top: 50%; z-index: 0; pointer-events: none; transform: translate(-50%,-50%); }
+  .pulsewrap .ring svg { width: 100%; height: 100%; display: block; }
+  .pulsewrap .r1 { width: 320px; height: 320px; opacity: 1;   animation: pulseC 2.6s ease-in-out infinite; }
+  .pulsewrap .r2 { width: 440px; height: 440px; opacity: .7;  animation: pulseC 3.3s ease-in-out .5s infinite; }
+  .pulsewrap .r3 { width: 560px; height: 560px; opacity: .45; animation: pulseC 4s ease-in-out 1s infinite; }
+  @keyframes pulseC { 0%, 100% { transform: translate(-50%,-50%) scale(.9); } 50% { transform: translate(-50%,-50%) scale(1.08); } }
+  .pulsewrap .tiles { position: relative; z-index: 1; }
+
+  .connecting-label { margin-top: 26px; font: var(--text-h3); font-weight: 700; color: var(--brand-text-icon-default); }
+
+  .scene-title { font: var(--text-h1); color: var(--neutral-text-icon-strong); }
+  .scene-sub { margin-top: 8px; color: var(--neutral-text-icon-emphasis); font: var(--text-body-lg); max-width: 560px; }
+
+  .lede-title { font: var(--text-h1); text-align: center; }
+  .lede-sub { margin: 10px auto 0; color: var(--neutral-text-icon-emphasis); font: var(--text-body-lg); max-width: 620px; text-align: center; line-height: 1.5; }
+
+  .fieldhead { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .lbl { font: var(--text-subtitle); color: var(--neutral-text-icon-strong); }
+  .helper { margin-top: 6px; font: var(--text-body-sm); color: var(--neutral-text-icon-emphasis); }
+  .helper .link, .link { color: var(--brand-text-icon-default); text-decoration: underline; }
+
+  .mock .ivdsField { width: 100%; }
+  /* typed values read in neutral emphasis, distinct from the gray placeholder */
+  .card2 input { color: var(--neutral-text-icon-emphasis) !important; -webkit-text-fill-color: var(--neutral-text-icon-emphasis); }
+  /* the field being typed into shows the DS brand (focused) border */
+  .card2 .ivdsField:focus-within { border-color: var(--brand-border-strong) !important; box-shadow: var(--focus-ring) !important; }
+
+  .flowdots { display: flex; gap: 8px; justify-content: center; margin-top: 18px; }
+  .flowdot { width: 8px; height: 8px; border-radius: 99px; background: var(--neutral-border-strong); transition: .3s; }
+  .flowdot.on { background: var(--brand-bg-default); width: 22px; }
+
+  /* scripted cursor */
+  .cursor { position: absolute; left: 0; top: 0; z-index: 40; width: 26px; height: 32px;
+    pointer-events: none; transform: translate(300px, 700px); opacity: 0;
+    transition: transform .55s cubic-bezier(.35,.02,.2,1), opacity .3s ease; will-change: transform; }
+  .cursor.show { opacity: 1; }
+  .cursor svg { display: block; filter: drop-shadow(0 3px 6px rgba(20,20,45,.4)); transition: transform .1s ease; }
+  .cursor.down svg { transform: scale(.85); }
+  .cping { position: absolute; z-index: 39; width: 24px; height: 24px; margin: -12px 0 0 -12px;
+    border-radius: 50%; border: 2px solid rgba(85,81,255,.6); pointer-events: none;
+    animation: cping .5s cubic-bezier(.2,.7,.3,1) forwards; }
+  @keyframes cping { from { transform: scale(.3); opacity: .9; } to { transform: scale(1.5); opacity: 0; } }
+
+  @media (prefers-reduced-motion: reduce) { .frame { animation: none; } .flowlayer, .cursor { transition: none; } .pulsewrap .ring { animation: none; } }
+</style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="importmap">
+  { "imports": {
+      "react": "https://esm.sh/react@18.3.1",
+      "react-dom/client": "https://esm.sh/react-dom@18.3.1/client",
+      "react/jsx-runtime": "https://esm.sh/react@18.3.1/jsx-runtime",
+      "htm": "https://esm.sh/htm@3.1.1",
+      "@ivancreatelabs/design-system": "https://esm.sh/@ivancreatelabs/design-system@0.4.0?external=react,react-dom"
+  } }
+  </script>
+
+  <script type="module">
+    import React from 'react';
+    import { createRoot } from 'react-dom/client';
+    import htm from 'htm';
+    import * as DS from '@ivancreatelabs/design-system';
+
+    const html = htm.bind(React.createElement);
+    const { InputField, Button, Icon } = DS;
+    const I = (name, props = {}) => html`<${Icon} name=${name} ...${props} />`;
+    const fullw = { width: '100%', maxWidth: 'none' };
+    const raw = (s) => ({ dangerouslySetInnerHTML: { __html: s } });
+
+    /* ---- provided assets, inlined AS-IS ---- */
+    const GLASS = `<svg width="188" height="188" viewBox="0 0 188 188" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="4" y="3" width="180" height="180" rx="40" fill="#5551FF" fill-opacity="0.05"/>
+<rect x="5" y="4" width="178" height="178" rx="39" stroke="#F2F4F6" stroke-opacity="0.6" stroke-width="2"/>
+<g filter="url(#filter1_d_40000154_151065)">
+<rect x="20" y="19" width="148" height="148" rx="32" fill="black" fill-opacity="0.01" shape-rendering="crispEdges"/>
+</g>
+<defs>
+<filter id="filter1_d_40000154_151065" x="0" y="0" width="188" height="188" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="1"/>
+<feGaussianBlur stdDeviation="10"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.1 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_40000154_151065"/>
+<feBlend mode="normal" in="BackgroundImageFix" in2="effect1_dropShadow_40000154_151065" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+</filter>
+</defs>
+</svg>`;
+
+    const LOGO_HOUSECALL = `<svg viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M24 22.3074V75.0289L49.6929 88.7789V7.22168L24 22.3074Z" fill="#2196F3"/>
+      <path d="M67.8429 81.1574H57.1571V75.0289H61.7143L61.95 22.0717H57.1571V15.9431H68L67.8429 81.1574Z" fill="#2196F3"/></svg>`;
+
+    const LOGO_LETTRLABS = `<svg viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M87.8533 34.3764C90.0302 36.0946 90.6036 38.4162 90.6036 41.3412C90.6137 55.1651 90.6171 68.9872 90.6137 82.8077C90.6137 88.944 87.0668 90.2787 81.6984 90.2736C59.6358 90.2702 37.5733 90.2702 15.5107 90.2736C9.34558 90.2787 6.00677 89.0156 6.00677 82.3679C6 68.3838 5.99831 54.3997 6.00169 40.4156C6.00677 36.9332 7.89944 34.9747 10.7613 32.781C21.3359 24.6639 31.9189 16.5571 42.5104 8.46051C48.3813 3.97074 51.2685 6.29233 56.3021 10.1071C69.7656 20.3003 80.2827 28.3901 87.8533 34.3764ZM54.8306 21.1014C57.3575 20.5389 58.0374 18.1406 56.1701 16.3509C55.8543 16.0487 55.4329 15.8803 54.9929 15.8804C50.893 15.8634 46.7998 15.8634 42.7134 15.8804C38.8164 15.8957 38.4004 20.3446 41.9218 21.0963C41.9894 21.1105 42.0501 21.1477 42.0935 21.2018C42.137 21.2558 42.1606 21.3233 42.1603 21.3929L42.1502 38.5236C42.1502 39.2224 41.9185 39.831 41.455 40.3491L33.1942 49.6151C33.1312 49.6859 33.0842 49.7697 33.0563 49.8606C33.0285 49.9515 33.0206 50.0472 33.0332 50.1412C33.0457 50.2351 33.0785 50.325 33.1291 50.4046C33.1797 50.4842 33.2469 50.5516 33.3262 50.602C37.4532 53.2372 41.592 55.8264 45.7427 58.3696C46.9351 59.1009 48.6299 59.7401 49.7462 59.0651C54.2149 56.3685 58.6666 53.6105 63.1015 50.7912C63.7341 50.3889 63.7983 49.9082 63.2943 49.3491L55.0893 40.1957C54.766 39.8336 54.587 39.3618 54.587 38.8713V21.4031C54.5868 21.3322 54.6109 21.2634 54.6553 21.2084C54.6997 21.1534 54.7616 21.1156 54.8306 21.1014ZM35.6603 57.444C35.6835 57.4205 35.7012 57.392 35.7119 57.3606C35.7227 57.3292 35.7262 57.2958 35.7223 57.2628C35.7184 57.2299 35.7072 57.1982 35.6894 57.1703C35.6716 57.1423 35.6478 57.1188 35.6197 57.1014L10.6496 41.5457C10.6168 41.5248 10.5789 41.513 10.54 41.5118C10.5011 41.5105 10.4626 41.5197 10.4285 41.5385C10.3943 41.5573 10.3657 41.5849 10.3457 41.6185C10.3257 41.6522 10.315 41.6906 10.3147 41.7298V81.9741C10.3155 82.017 10.3288 82.0588 10.3528 82.0942C10.3768 82.1296 10.4106 82.1571 10.45 82.1734C10.4893 82.1898 10.5326 82.1941 10.5744 82.1859C10.6162 82.1778 10.6547 82.1575 10.6852 82.1276L35.6603 57.444ZM66.5874 62.9207C73.0486 69.381 79.4962 75.744 85.9302 82.0099C86.1772 82.252 86.3006 82.1991 86.3006 81.8514V41.7605C86.3006 41.5116 86.1941 41.452 85.981 41.5815L61.0921 57.0861C61.0651 57.1023 61.042 57.1245 61.0247 57.151C61.0073 57.1775 60.996 57.2078 60.9916 57.2396C60.9873 57.2713 60.9899 57.3039 60.9994 57.3348C61.0089 57.3657 61.0249 57.3943 61.0464 57.4185C62.8072 59.3565 65.2022 61.5349 66.5874 62.9207ZM82.769 84.894L57.5097 59.9599C57.3956 59.8476 57.247 59.7774 57.0877 59.7607C56.9285 59.744 56.7679 59.7818 56.6319 59.8679C52.4457 62.5168 48.8075 65.3906 43.9109 62.2866C42.5341 61.4139 41.1895 60.5838 39.8769 59.7963C39.7826 59.7392 39.6722 59.7153 39.5629 59.7283C39.4536 59.7412 39.3517 59.7903 39.2731 59.8679L13.7195 85.0679C13.5741 85.2145 13.6045 85.2878 13.8109 85.2878H82.6117C82.9838 85.2878 83.0363 85.1565 82.769 84.894Z" fill="#253864"/>
+      <path d="M54.5918 21.4047V38.8728C54.5919 39.3634 54.7708 39.8352 55.0942 40.1973L63.2991 49.3507C63.8032 49.9098 63.7389 50.3904 63.1063 50.7927C58.6715 53.612 54.2197 56.37 49.7511 59.0666C48.6347 59.7416 46.94 59.1024 45.7475 58.3711C41.5969 55.8279 37.458 53.2387 33.331 50.6035C33.2518 50.5531 33.1845 50.4857 33.1339 50.4062C33.0833 50.3266 33.0506 50.2367 33.038 50.1427C33.0255 50.0487 33.0334 49.953 33.0612 49.8621C33.089 49.7713 33.1361 49.6875 33.1991 49.6166L41.4599 40.3507C41.9233 39.8325 42.155 39.224 42.155 38.5251L42.1652 21.3944C42.1654 21.3249 42.1418 21.2573 42.0984 21.2033C42.0549 21.1492 41.9943 21.112 41.9267 21.0978C38.4052 20.3461 38.8213 15.8973 42.7182 15.8819C46.8047 15.8649 50.8978 15.8649 54.9978 15.8819C55.4377 15.8818 55.8592 16.0502 56.175 16.3524C58.0423 18.1422 57.3623 20.5404 54.8354 21.1029C54.7665 21.1171 54.7045 21.1549 54.6601 21.2099C54.6157 21.2649 54.5916 21.3337 54.5918 21.4047Z" fill="#5551FF"/></svg>`;
+
+    // scene 1 — the paired arrows (provided asset)
+    const ARROWS = `<svg viewBox="0 0 93 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M16.6423 33.9126C17.6187 32.9366 19.2013 32.9364 20.1775 33.9126C21.1536 34.8889 21.1535 36.4715 20.1775 37.4478L8.53491 49.0904H90.4998C91.8805 49.0904 92.9998 50.2097 92.9998 51.5904C92.9996 52.971 91.8804 54.0904 90.4998 54.0904H8.53491L20.1775 65.733C21.1534 66.7093 21.1537 68.2919 20.1775 69.2681C19.2013 70.2442 17.6186 70.244 16.6423 69.2681L0.732179 53.358C-0.244096 52.3817 -0.244023 50.7991 0.732179 49.8228L16.6423 33.9126Z" fill="url(#aw0)"/>
+      <path d="M72.8223 110.732C73.7985 109.756 75.3811 109.756 76.3574 110.732L92.2676 126.642C93.2438 127.618 93.2438 129.201 92.2676 130.177L76.3574 146.087C75.3811 147.064 73.7985 147.064 72.8223 146.087C71.8462 145.111 71.8463 143.529 72.8223 142.552L84.4648 130.91H2.5C1.11929 130.91 1.20706e-07 129.79 0 128.41C0.000143303 127.029 1.11937 125.91 2.5 125.91H84.4648L72.8223 114.267C71.8463 113.291 71.8461 111.708 72.8223 110.732Z" fill="url(#aw1)"/>
+      <defs><linearGradient id="aw0" x1="0" y1="51.59" x2="95.83" y2="51.59" gradientUnits="userSpaceOnUse"><stop stop-color="#5551FF"/><stop offset="1" stop-color="#A5A3FE"/></linearGradient>
+        <linearGradient id="aw1" x1="0" y1="128.41" x2="95.83" y2="128.41" gradientUnits="userSpaceOnUse"><stop stop-color="#5551FF"/><stop offset="1" stop-color="#A5A3FE"/></linearGradient></defs></svg>`;
+
+    // scene 2 — two dots + BROKEN line (connecting)
+    const CONNECTOR_BROKEN = `<svg viewBox="0 0 136 56" fill="none" xmlns="http://www.w3.org/2000/svg"><g filter="url(#cb_f)">
+      <path d="M20 27C20 31.4183 23.5817 35 28 35C32.4183 35 36 31.4183 36 27C36 22.5817 32.4183 19 28 19C23.5817 19 20 22.5817 20 27ZM100 27C100 31.4183 103.582 35 108 35C112.418 35 116 31.4183 116 27C116 22.5817 112.418 19 108 19C103.582 19 100 22.5817 100 27ZM28 27V28.5H30.8571V27V25.5H28V27ZM36.5714 27V28.5H42.2857V27V25.5H36.5714V27ZM48 27V28.5H53.7143V27V25.5H48V27ZM59.4286 27V28.5H65.1429V27V25.5H59.4286V27ZM70.8571 27V28.5H76.5714V27V25.5H70.8571V27ZM82.2857 27V28.5H88V27V25.5H82.2857V27ZM93.7143 27V28.5H99.4286V27V25.5H93.7143V27ZM105.143 27V28.5H108V27V25.5H105.143V27Z" fill="url(#cb_g)"/></g>
+      <defs><filter id="cb_f" x="0" y="0" width="136" height="56" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-opacity="0" result="bg"/><feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="a"/><feOffset dy="1"/><feGaussianBlur stdDeviation="10"/><feComposite in2="a" operator="out"/><feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.1 0"/><feBlend mode="normal" in2="bg" result="e1"/><feBlend mode="normal" in="SourceGraphic" in2="e1"/></filter>
+        <linearGradient id="cb_g" x1="28" y1="27.5" x2="110.435" y2="27.5" gradientUnits="userSpaceOnUse"><stop stop-color="#5551FF"/><stop offset="1" stop-color="#A5A3FE"/></linearGradient></defs></svg>`;
+
+    // scene 3 — two dots + SOLID line (connected)
+    const CONNECTOR_SOLID = `<svg viewBox="0 0 136 56" fill="none" xmlns="http://www.w3.org/2000/svg"><g filter="url(#cs_f)">
+      <path d="M20 27C20 31.4183 23.5817 35 28 35C32.4183 35 36 31.4183 36 27C36 22.5817 32.4183 19 28 19C23.5817 19 20 22.5817 20 27ZM100 27C100 31.4183 103.582 35 108 35C112.418 35 116 31.4183 116 27C116 22.5817 112.418 19 108 19C103.582 19 100 22.5817 100 27ZM28 27V28.5H108V27V25.5H28V27Z" fill="url(#cs_g)"/></g>
+      <defs><filter id="cs_f" x="0" y="0" width="136" height="56" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-opacity="0" result="bg"/><feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="a"/><feOffset dy="1"/><feGaussianBlur stdDeviation="10"/><feComposite in2="a" operator="out"/><feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.1 0"/><feBlend mode="normal" in2="bg" result="e1"/><feBlend mode="normal" in="SourceGraphic" in2="e1"/></filter>
+        <linearGradient id="cs_g" x1="28" y1="27.5" x2="110.435" y2="27.5" gradientUnits="userSpaceOnUse"><stop stop-color="#5551FF"/><stop offset="1" stop-color="#A5A3FE"/></linearGradient></defs></svg>`;
+
+    // pulse layer — the provided circle (Ellipse 1.svg), used as-is
+    const CIRCLE = `<svg viewBox="0 0 441 441" fill="none" xmlns="http://www.w3.org/2000/svg"><g filter="url(#el_f)">
+      <circle cx="220.5" cy="219.275" r="196" fill="#5551FF" fill-opacity="0.02" shape-rendering="crispEdges"/></g>
+      <defs><filter id="el_f" x="0" y="0" width="441" height="441" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-opacity="0" result="bg"/><feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="a"/><feOffset dy="1.225"/><feGaussianBlur stdDeviation="12.25"/><feComposite in2="a" operator="out"/><feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.1 0"/><feBlend mode="normal" in2="bg" result="e1"/><feBlend mode="normal" in="SourceGraphic" in2="e1"/></filter></defs></svg>`;
+
+    const Tile = ({ logo }) => html`<div class="tile">
+      <span class="tile__glass" ...${raw(GLASS)}></span>
+      <span class="tile__logo" ...${raw(logo)}></span></div>`;
+
+    // mode: 'idle' (arrows) | 'busy' (broken connector + pulse) | 'done' (solid connector)
+    function Tiles({ mode }) {
+      const mid = mode === 'idle'
+        ? html`<div class="arrows" ...${raw(ARROWS)}></div>`
+        : mode === 'busy'
+          ? html`<div class="connector" ...${raw(CONNECTOR_BROKEN)}></div>`
+          : html`<div class="connector" ...${raw(CONNECTOR_SOLID)}></div>`;
+      const tiles = html`<div class="tiles"><${Tile} logo=${LOGO_HOUSECALL} />${mid}<${Tile} logo=${LOGO_LETTRLABS} /></div>`;
+      if (mode !== 'busy') return tiles;
+      return html`<div class="pulsewrap"><span class="ring r1" ...${raw(CIRCLE)}></span><span class="ring r2" ...${raw(CIRCLE)}></span><span class="ring r3" ...${raw(CIRCLE)}></span>${tiles}</div>`;
+    }
+
+    const FieldHead = ({ label }) => html`<div class="fieldhead"><span class="lbl">${label}</span>${I('help', { color: 'var(--neutral-text-icon-muted)', size: 'small' })}</div>`;
+
+    // STATE 1 — connect form
+    function ScreenConnect() {
+      return html`<div class="mock col" style=${{ gap: 20 }}>
+        <${Tiles} mode="idle" />
+        <div class="col" style=${{ gap: 4, alignItems: 'center' }}>
+          <div class="lede-title">Connect Housecall Pro to Lettrlabs</div>
+          <div class="lede-sub">Connect your Housecall Pro to map your CRM data to the Lettrlabs attribution pipeline. We'll discover your objects and fields automatically.</div>
+        </div>
+        <div class="card2 col" style=${{ gap: 16 }}>
+          <div class="col" style=${{ gap: 2 }}>
+            <div style=${{ font: 'var(--text-h3)' }}>Create new Connection</div>
+            <div class="muted" style=${{ font: 'var(--text-body)' }}>Add your Client ID and Client Secret to Connect your Housecall Pro Account</div>
+          </div>
+          <div><${FieldHead} label="Connection Name" /><${InputField} label="" placeholder="e.g. Housecall Pro — Production" style=${fullw} /></div>
+          <div><${FieldHead} label="Client ID" /><${InputField} label="" placeholder="Paste your Housecall Pro Client ID" style=${fullw} />
+            <div class="helper">Enter your Housecall Pro developer application's <span class="link">Client ID</span></div></div>
+          <div><${FieldHead} label="Client Secret" /><${InputField} label="" placeholder="Paste your Housecall Pro Client Secret" style=${fullw} />
+            <div class="helper">Enter your Housecall Pro developer application's <span class="link">Client secret</span></div></div>
+        </div>
+        <div class="row" style=${{ justifyContent: 'center', marginTop: 4 }}>
+          <${Button} kind="primary" label="Test and Continue" icon="login" onClick=${() => window.__advance && window.__advance()} /></div>
+      </div>`;
+    }
+
+    // STATE 2 — connecting (pulse)
+    function ScreenConnecting() {
+      return html`<div class="mock col" style=${{ alignItems: 'center', justifyContent: 'center', height: '100%' }}>
+        <${Tiles} mode="busy" />
+        <div class="connecting-label">Connecting…</div>
+      </div>`;
+    }
+
+    // STATE 3 — connected
+    function ScreenConnected() {
+      return html`<div class="mock col" style=${{ gap: 22, alignItems: 'center', justifyContent: 'center', height: '100%' }}>
+        <${Tiles} mode="done" />
+        <div class="col" style=${{ gap: 8, alignItems: 'center' }}>
+          <div class="scene-title">You're connected — now let's finish setup</div>
+          <div class="scene-sub" style=${{ textAlign: 'center' }}>Your Housecall Pro Integration is ready! You can still customize it further.</div>
+        </div>
+        <div class="row" style=${{ justifyContent: 'center' }}>
+          <${Button} kind="primary" label="Customize Attribution" icon="settings" /></div>
+      </div>`;
+    }
+
+    const stateFor = (p) => (p < 0.34 ? 0 : p < 0.7 ? 1 : 2);
+    const hashP = () => { const h = parseFloat((location.hash || '').replace('#', '')); return isNaN(h) ? 0 : Math.max(0, Math.min(1, h)); };
+
+    function App() {
+      const [p, setP] = React.useState(hashP);
+      React.useEffect(() => {
+        let typingRun = 0;
+        const stopTyping = () => { typingRun += 1; };
+        const playTyping = () => {
+          const run = ++typingRun;
+          setP(0);
+          const values = ['Housecall Pro — Production', 'hcp_9f3a-b21c-4d9e-a077', 'sk_live_9f2c7a41d0b8e6a3'];
+          const begin = () => {
+            if (run !== typingRun) return;
+            const inputs = document.querySelectorAll('.card2 input');
+            if (inputs.length < 3) { window.setTimeout(begin, 80); return; }
+            const typeField = (fieldIndex, charIndex = 0) => {
+              if (run !== typingRun || fieldIndex >= inputs.length) return;
+              const input = inputs[fieldIndex];
+              const value = values[fieldIndex];
+              if (charIndex === 0) {
+                input.value = '';
+                input.dispatchEvent(new Event('input', { bubbles: true }));
+                try { input.focus({ preventScroll: true }); } catch (e) { input.focus(); }
+              }
+              if (charIndex >= value.length) {
+                window.setTimeout(() => typeField(fieldIndex + 1), 130);
+                return;
+              }
+              input.value += value[charIndex];
+              input.dispatchEvent(new Event('input', { bubbles: true }));
+              window.setTimeout(() => typeField(fieldIndex, charIndex + 1), 28);
+            };
+            typeField(0);
+          };
+          window.setTimeout(begin, 120);
+        };
+        window.__setFlow = (v) => setP(Math.max(0, Math.min(1, Number(v) || 0)));
+        window.__playFlowTyping = playTyping;
+        window.__stopFlowTyping = stopTyping;
+        const onHash = () => setP(hashP());
+        const onMessage = (event) => {
+          const message = event.data;
+          if (!message) return;
+          if (message.type === 'portfolio:play-flow-typing') { playTyping(); return; }
+          if (message.type === 'portfolio:stop-flow-typing') { stopTyping(); return; }
+          if (message.type === 'portfolio:set-flow') setP(Math.max(0, Math.min(1, Number(message.state) || 0)));
+        };
+        window.addEventListener('hashchange', onHash);
+        window.addEventListener('message', onMessage);
+        return () => {
+          window.removeEventListener('hashchange', onHash);
+          window.removeEventListener('message', onMessage);
+          try {
+            delete window.__setFlow;
+            delete window.__playFlowTyping;
+            delete window.__stopFlowTyping;
+          } catch (e) {}
+        };
+      }, []);
+      const a = stateFor(p);
+      return html`<div class="animwrap" id="animwrap">
+        <div class="frame">
+          <div class="flowstage">
+            <div class=${'flowlayer' + (a === 0 ? ' on' : '')}><${ScreenConnect} /></div>
+            <div class=${'flowlayer flowlayer--center' + (a === 1 ? ' on' : '')}><${ScreenConnecting} /></div>
+            <div class=${'flowlayer flowlayer--center' + (a === 2 ? ' on' : '')}><${ScreenConnected} /></div>
+          </div>
+          <div class="flowdots">${[0, 1, 2].map(i => html`<span key=${i} class=${'flowdot' + (a === i ? ' on' : '')}></span>`)}</div>
+        </div>
+        <div class="cursor" id="cursor"><svg width="26" height="32" viewBox="0 0 26 32">
+          <path d="M4.5 2.2 4.5 24.4 10.4 18.9 14 27.6 18.4 25.7 14.9 17.2 22.4 16.6Z" fill="#fff" stroke="#14152b" stroke-width="1.7" stroke-linejoin="round"/></svg></div>
+      </div>`;
+    }
+
+    createRoot(document.getElementById('root')).render(html`<${App} />`);
+
+    /* ==========================================================================
+       AUTO-PLAY with a scripted cursor — types each real field, presses the real
+       button, then connecting → connected, looping. Enabled by ?auto.
+       ========================================================================== */
+    const AUTO = new URLSearchParams(location.search).has('auto');
+    if (AUTO) {
+      const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+      const setFlow = (v) => window.__setFlow && window.__setFlow(v);
+      const waitFor = async (fn, t = 4000) => { const t0 = Date.now(); for (;;) { const v = fn(); if (v) return v; if (Date.now() - t0 > t) return null; await sleep(60); } };
+
+      const wrap = () => document.getElementById('animwrap');
+      const cursor = () => document.getElementById('cursor');
+      let CX = 300, CY = 720;
+
+      function moveCursor(x, y, dur) {
+        const dist = Math.hypot(x - CX, y - CY);
+        const d = dur || Math.max(240, Math.min(720, 240 + dist * 0.8));
+        const c = cursor(); c.classList.add('show');
+        c.style.transitionDuration = d + 'ms';
+        c.style.transform = `translate(${x}px,${y}px)`;
+        CX = x; CY = y; return sleep(d + 40);
+      }
+      function centerOf(node) {
+        const r = node.getBoundingClientRect(), w = wrap().getBoundingClientRect();
+        return { x: r.left - w.left + r.width / 2, y: r.top - w.top + r.height / 2 };
+      }
+      function ping(x, y) { const el = document.createElement('i'); el.className = 'cping'; el.style.left = x + 'px'; el.style.top = y + 'px'; wrap().appendChild(el); setTimeout(() => el.remove(), 600); }
+      async function press() { const c = cursor(); c.classList.add('down'); ping(CX + 3, CY + 3); await sleep(120); c.classList.remove('down'); await sleep(90); }
+      async function moveTo(node, dur) { if (!node) return; const c = centerOf(node); await moveCursor(c.x, c.y, dur); }
+      async function typeInto(input, text, per = 26) {
+        try { input.focus({ preventScroll: true }); } catch (e) { input.focus(); }
+        input.value = ''; input.dispatchEvent(new Event('input', { bubbles: true }));
+        for (const ch of text) { input.value += ch; input.dispatchEvent(new Event('input', { bubbles: true })); await sleep(per + Math.random() * 22); }
+      }
+
+      const VALUES = ['Housecall Pro — Production', 'hcp_9f3a-b21c-4d9e-a077', 'sk_live_9f2c7a41d0b8e6a3'];
+
+      async function run() {
+        for (;;) {
+          setFlow(0);
+          cursor().classList.remove('show');
+          CX = 300; CY = 720; cursor().style.transitionDuration = '0ms'; cursor().style.transform = 'translate(300px,720px)';
+          await sleep(450);
+
+          const inputs = await waitFor(() => { const n = document.querySelectorAll('.card2 input'); return n.length >= 3 ? n : null; });
+          if (!inputs) { await sleep(1200); continue; }
+          for (let i = 0; i < 3; i++) {
+            await moveTo(inputs[i], 380); await press();
+            await typeInto(inputs[i], VALUES[i]);
+            await sleep(140);
+          }
+          await sleep(180);
+
+          const btn = await waitFor(() => [...document.querySelectorAll('button')].find(b => (b.textContent || '').trim().startsWith('Test and Continue')));
+          await moveTo(btn, 400); await press();
+          cursor().classList.remove('show');
+          setFlow(0.5);                 // connecting (pulse)
+          await sleep(1700);
+          setFlow(1);                   // connected
+          await sleep(2000);
+        }
+      }
+      setTimeout(run, 500);
+    }
+  </script>
+</body>
+</html>
