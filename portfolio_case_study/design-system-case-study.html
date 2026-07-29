@@ -298,6 +298,7 @@
     .results-row{display:grid;grid-template-columns:minmax(0,1.5fr) 130px 34px 130px;align-items:center;gap:14px;padding:18px 0;border-bottom:1px solid var(--hair)}
     .results-row.head{padding:12px 0;border-bottom:1px solid var(--line)}
     .results-row.head span{font-size:var(--text-xs);font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+    .results-row > :nth-child(2),.results-row > :nth-child(3),.results-row > :nth-child(4){justify-self:stretch;text-align:center}
     .results-row b{font-weight:700;color:var(--ink);font-size:var(--text-md)}
     .results-row b small{display:block;font-weight:500;color:var(--muted);font-size:var(--text-sm);margin-top:4px;line-height:1.5}
     .r-before{font-size:20px;font-weight:800;color:var(--muted);font-variant-numeric:tabular-nums}
@@ -474,7 +475,7 @@
     /* Measured before/after results use the same comparison language. */
     .results-table{border:1px solid rgba(242,240,230,.16);border-radius:14px;background:#12110c;overflow:hidden}
     .results-row{padding:16px 18px;margin:0;border-bottom-color:rgba(242,240,230,.12)}
-    .results-row.head{background:#12110c;border-bottom-color:rgba(242,240,230,.16);color:#f2f0e6;text-transform:uppercase;font-size:var(--text-xs);font-weight:800;letter-spacing:.08em}
+    .results-row.head{padding-top:14px;padding-bottom:14px;background:#12110c;border-bottom-color:rgba(242,240,230,.16);color:#f2f0e6;text-transform:uppercase;font-size:var(--text-xs);font-weight:800;letter-spacing:.08em}
     .results-row.head span:nth-child(2){color:#ff8a6f}.results-row.head span:last-child{color:#7dc98d}
     .results-row b,.results-row b small{color:#f2f0e6}
     .results-row .r-before{padding:8px 10px;border-radius:8px;background:rgba(207,59,35,.12);color:#ffd0c5}
@@ -1168,9 +1169,15 @@
       var fit = function () {
         try {
           var d = f.contentDocument; if (!d) return;
-          var b = d.body, e = d.documentElement;
-          // take the tallest measure so nothing below the body's box gets cropped
-          var h = Math.max(b ? b.scrollHeight : 0, b ? b.offsetHeight : 0, e ? e.scrollHeight : 0);
+          var b = d.body, e = d.documentElement, content = d.querySelector('[data-embed-content]');
+          var h;
+          if (content && b) {
+            var bodyStyle = d.defaultView.getComputedStyle(b);
+            h = Math.ceil(content.getBoundingClientRect().height + parseFloat(bodyStyle.paddingTop) + parseFloat(bodyStyle.paddingBottom));
+          } else {
+            // take the tallest measure so nothing below the body's box gets cropped
+            h = Math.max(b ? b.scrollHeight : 0, b ? b.offsetHeight : 0, e ? e.scrollHeight : 0);
+          }
           if (h) f.style.height = (h + 4) + 'px';
         } catch (err) {}
       };

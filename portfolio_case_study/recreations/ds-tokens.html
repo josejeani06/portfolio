@@ -191,7 +191,7 @@
     }
 
     function App() {
-      return html`<div class="frame">
+      return html`<div class="frame" data-embed-content>
         <!-- ONE VALUE, THREE LAYERS -->
         <div class="eyebrow" style=${{ marginBottom: 4, display: 'block' }}>One value, three layers</div>
         <hr class="hr" style=${{ marginTop: 18 }} />
@@ -254,7 +254,12 @@
     // Report the settled React layout to the parent case study. This is required when the
     // embedding browser isolates iframe documents and the parent cannot read scrollHeight.
     const reportHeight = () => {
-      const height = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+      const content = document.querySelector('[data-embed-content]');
+      const bodyStyle = getComputedStyle(document.body);
+      const verticalInset = parseFloat(bodyStyle.paddingTop) + parseFloat(bodyStyle.paddingBottom);
+      const height = content
+        ? Math.ceil(content.getBoundingClientRect().height + verticalInset)
+        : Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
       window.parent.postMessage({ type: 'ivds-recreation-resize', height }, '*');
     };
     new ResizeObserver(reportHeight).observe(document.body);
