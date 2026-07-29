@@ -679,6 +679,8 @@
               <article class="refine-slide"><img src="images/org-update-automation.png" alt="Removing a scope surfaces the active automations that need attention" onerror="this.closest('.refine-slide').style.display='none'"></article>
               <article class="refine-slide"><img src="images/org-template-variable.png" alt="A locked mail-merge variable image — personalization stays, layout is fixed" onerror="this.closest('.refine-slide').style.display='none'"></article>
               <article class="refine-slide"><img src="images/new%20org/grid%20templates.png" alt="Templates across the organization with scope filtering, shared use, locks, and live-automation counts" onerror="this.closest('.refine-slide').style.display='none'"></article>
+              <article class="refine-slide"><img src="images/org-manage-members.png" alt="Inherited organization members are marked read-only while locally scoped members remain manageable" onerror="this.closest('.refine-slide').style.display='none'"></article>
+              <article class="refine-slide"><img src="images/org-update-automation.png" alt="Updating a template reveals every active automation that needs review before the change is committed" onerror="this.closest('.refine-slide').style.display='none'"></article>
             </div>
           </div>
           <div class="refine-controls" role="tablist" aria-label="Template features">
@@ -971,6 +973,10 @@
       var slides = Array.prototype.slice.call(root.querySelectorAll(".refine-slide"));
       var items = Array.prototype.slice.call(root.querySelectorAll(".refine-item"));
       var badges = Array.prototype.slice.call(root.querySelectorAll(".refine-persona"));
+      if (!track || slides.length !== items.length) {
+        console.warn("Refinement carousel requires one preview per feature.", { slides: slides.length, items: items.length });
+        return;
+      }
       var personaOf = items.map(function (it) { return it.getAttribute("data-persona"); });
       var activePersona = badges.length ? badges[0].getAttribute("data-persona") : null;
       var index = 0;
@@ -984,7 +990,9 @@
         activePersona = personaOf[index] || activePersona;
         track.style.transform = "translateX(-" + (index * 100) + "%)";
         badges.forEach(function (b) {
-          b.classList.toggle("is-active", b.getAttribute("data-persona") === activePersona);
+          var activeBadge = b.getAttribute("data-persona") === activePersona;
+          b.classList.toggle("is-active", activeBadge);
+          b.setAttribute("aria-selected", activeBadge ? "true" : "false");
         });
         items.forEach(function (item, n) {
           item.classList.toggle("is-hidden", personaOf[n] !== activePersona);
@@ -994,6 +1002,7 @@
           var bar = item.querySelector(".refine-item-bar i");
           if (bar) bar.style.width = active ? "100%" : "0";
         });
+        slides.forEach(function (slide, n) { slide.setAttribute("aria-hidden", n === index ? "false" : "true"); });
       }
       function step(dir) {
         var list = listFor(activePersona);

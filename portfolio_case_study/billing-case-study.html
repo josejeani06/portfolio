@@ -1294,6 +1294,7 @@
             <button class="refine-arrow next" type="button" aria-label="Next feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
             <div class="refine-track">
               <article class="refine-slide"><div class="vid-frame" style="aspect-ratio:4/3;background:#edeae1;display:grid;place-items:center;cursor:zoom-in"><img src="images/new%20billing/Modal-container-2.png" alt="Manage Billing Group — grant accounts pooled balance or a card and set monthly caps across Payments, Admins, Budgets, and Settings" style="width:100%;height:100%;object-fit:contain;background:#edeae1;display:block" onerror="this.style.opacity='0'"></div></article>
+              <article class="refine-slide"><div class="vid-frame" style="aspect-ratio:4/3;background:#edeae1;display:grid;place-items:center;cursor:zoom-in"><img src="images/new%20billing/Manage%20Members%20at%20Group%20Level.png" alt="Billing group administration — group admins, payment access, balances, and account-level controls" style="width:100%;height:100%;object-fit:contain;background:#edeae1;display:block" onerror="this.style.opacity='0'"></div></article>
               <article class="refine-slide"><div class="vid-frame" style="aspect-ratio:4/3;background:#edeae1;display:grid;place-items:center;cursor:zoom-in"><img src="images/bill-budgets.png" alt="Per-account budgets — set each account's Monthly Cap or No Limit, shown live against remaining balance" style="width:100%;height:100%;object-fit:contain;background:#edeae1;display:block" onerror="this.style.opacity='0'"></div></article>
               <article class="refine-slide"><div class="vid-frame" style="aspect-ratio:4/3;background:#edeae1;display:grid;place-items:center;cursor:zoom-in"><img src="images/new%20billing/Modal-container-3.png" alt="Manage account — balance, total spent, monthly cap, payment access, and automation-specific payment routing" style="width:100%;height:100%;object-fit:contain;background:#edeae1;display:block" onerror="this.style.opacity='0'"></div></article>
               <article class="refine-slide"><div class="vid-frame" style="aspect-ratio:4/3;background:#edeae1;display:grid;place-items:center;cursor:zoom-in"><img src="images/new%20billing/Modal-container.png" alt="Transfer balance between a billing group and an account, with a preview reconciling both new balances before confirmation" style="width:100%;height:100%;object-fit:contain;background:#edeae1;display:block" onerror="this.style.opacity='0'"></div></article>
@@ -1304,6 +1305,7 @@
               <article class="refine-slide"><div class="vid-frame" style="aspect-ratio:4/3;background:#edeae1;display:grid;place-items:center;cursor:zoom-in"><img src="images/bill-request.png" alt="In-flow access requests — a team with no payment method requests access in-product and an admin approves or rejects, with a clear audit trail" style="width:100%;height:100%;object-fit:contain;background:#edeae1;display:block" onerror="this.style.opacity='0'"></div></article>
               <article class="refine-slide"><div class="vid-frame" style="aspect-ratio:4/3;background:#edeae1;display:grid;place-items:center;cursor:zoom-in"><img src="images/bill-analytics.png" alt="Payment history — spend rolled up by team and by type at org, group, or campaign level, with a filterable ledger of receipts and invoices" style="width:100%;height:100%;object-fit:contain;background:#edeae1;display:block" onerror="this.style.opacity='0'"></div></article>
               <article class="refine-slide"><div class="vid-frame" style="aspect-ratio:4/3;background:#edeae1;display:grid;place-items:center;cursor:zoom-in"><img src="images/bill-receipt.png" alt="Itemized receipt — order, postage, mailing list, credits, and total paid, exportable so finance can reconcile without leaving the product" style="width:100%;height:100%;object-fit:contain;background:#edeae1;display:block" onerror="this.style.opacity='0'"></div></article>
+              <article class="refine-slide"><div class="vid-frame" style="aspect-ratio:4/3;background:#edeae1;display:grid;place-items:center;cursor:zoom-in"><img src="images/bill-management.png" alt="Billing management overview — enterprise balance, billing groups, account access, and payment controls in one surface" style="width:100%;height:100%;object-fit:contain;background:#edeae1;display:block" onerror="this.style.opacity='0'"></div></article>
             </div>
           </div>
           <div class="refine-controls" role="tablist" aria-label="Billing features">
@@ -1381,8 +1383,8 @@
             </button>
             <button class="refine-item is-hidden" type="button" role="tab" data-persona="spend">
               <span class="refine-item-persona">Spend &amp; receipts</span>
-              <span class="refine-item-title">Manage subscriptions</span>
-              <span class="refine-item-desc">Platform subscriptions for the org and each account, billed separately from spend, each account payable by a different method.</span>
+              <span class="refine-item-title">Billing overview</span>
+              <span class="refine-item-desc">See the enterprise commitment, balances, billing groups, and account access together—the operating surface for billing administration.</span>
               <span class="refine-item-bar" aria-hidden="true"><i></i></span>
             </button>
           </div>
@@ -1730,6 +1732,10 @@
       var slides = Array.prototype.slice.call(root.querySelectorAll(".refine-slide"));
       var items = Array.prototype.slice.call(root.querySelectorAll(".refine-item"));
       var badges = Array.prototype.slice.call(root.querySelectorAll(".refine-persona"));
+      if (!track || slides.length !== items.length) {
+        console.warn("Refinement carousel requires one preview per feature.", { slides: slides.length, items: items.length });
+        return;
+      }
       var personaOf = items.map(function (it) { return it.getAttribute("data-persona"); });
       var activePersona = badges.length ? badges[0].getAttribute("data-persona") : null;
       var index = 0;
@@ -1747,7 +1753,9 @@
         activePersona = personaOf[index] || activePersona;
         track.style.transform = "translateX(-" + (index * 100) + "%)";
         badges.forEach(function (b) {
-          b.classList.toggle("is-active", b.getAttribute("data-persona") === activePersona);
+          var activeBadge = b.getAttribute("data-persona") === activePersona;
+          b.classList.toggle("is-active", activeBadge);
+          b.setAttribute("aria-selected", activeBadge ? "true" : "false");
         });
         items.forEach(function (item, n) {
           item.classList.toggle("is-hidden", personaOf[n] !== activePersona);
@@ -1756,6 +1764,7 @@
           item.setAttribute("aria-selected", active ? "true" : "false");
           if (!active) setBar(n, 0); else setBar(n, 100);
         });
+        slides.forEach(function (slide, n) { slide.setAttribute("aria-hidden", n === index ? "false" : "true"); });
         slides.forEach(function (slide, n) {
           var video = slide.querySelector("video");
           if (!video) return;

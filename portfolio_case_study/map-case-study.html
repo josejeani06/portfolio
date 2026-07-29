@@ -2224,6 +2224,10 @@
       var slides = Array.prototype.slice.call(root.querySelectorAll(".refine-slide"));
       var items = Array.prototype.slice.call(root.querySelectorAll(".refine-item"));
       var badges = Array.prototype.slice.call(root.querySelectorAll(".refine-persona"));
+      if (!track || slides.length !== items.length) {
+        console.warn("Refinement carousel requires one preview per feature.", { slides: slides.length, items: items.length });
+        return;
+      }
       var personaOf = items.map(function (it) { return it.getAttribute("data-persona"); });
       var activePersona = badges.length ? badges[0].getAttribute("data-persona") : null;
       var index = 0;
@@ -2241,7 +2245,9 @@
         activePersona = personaOf[index] || activePersona;
         track.style.transform = "translateX(-" + (index * 100) + "%)";
         badges.forEach(function (b) {
-          b.classList.toggle("is-active", b.getAttribute("data-persona") === activePersona);
+          var activeBadge = b.getAttribute("data-persona") === activePersona;
+          b.classList.toggle("is-active", activeBadge);
+          b.setAttribute("aria-selected", activeBadge ? "true" : "false");
         });
         items.forEach(function (item, n) {
           item.classList.toggle("is-hidden", personaOf[n] !== activePersona);
@@ -2250,6 +2256,7 @@
           item.setAttribute("aria-selected", active ? "true" : "false");
           if (!active) setBar(n, 0);
         });
+        slides.forEach(function (slide, n) { slide.setAttribute("aria-hidden", n === index ? "false" : "true"); });
         slides.forEach(function (slide, n) {
           var video = slide.querySelector("video");
           if (!video) return;
