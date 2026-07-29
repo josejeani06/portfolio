@@ -97,6 +97,13 @@
     .brand-mark{background:var(--blue);box-shadow:none;border-radius:3px}
     .nav-links a:hover,.nav-links a.is-active{color:var(--text)}
     .nav-indicator{background:var(--blue)}
+    .nav-right{display:flex;align-items:center;gap:24px}
+    .nav-storybook-cta{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:0 15px;border-radius:999px;background:var(--blue);color:#fff;font-size:var(--text-sm);font-weight:800;line-height:1;text-decoration:none;white-space:nowrap;transition:background .15s,transform .15s,box-shadow .15s}
+    .nav-storybook-cta:hover{background:var(--blue-2);transform:translateY(-2px);box-shadow:0 9px 20px rgba(207,59,35,.24)}
+    .nav-storybook-cta:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+    .nav-storybook-cta svg{width:16px;height:16px;flex:0 0 auto}
+    @media(max-width:1040px){.nav-right{gap:16px}.nav-links{gap:17px}.nav-storybook-cta{padding:0 13px}}
+    @media(max-width:760px){.nav-right{gap:0}.nav-storybook-cta{width:40px;padding:0;justify-content:center}.nav-storybook-cta span{display:none}}
 
     /* buttons — house pill */
     .button{font-weight:700}
@@ -537,14 +544,20 @@
   <nav class="nav">
     <div class="container nav-inner">
       <a class="brand" href="index.html">Ivan Jose</a>
-      <div class="nav-links">
-        <a href="#summary" data-section-link="summary">Summary</a>
-        <a href="#problem" data-section-link="problem">Problem</a>
-        <a href="#architecture" data-section-link="product-design">Architecture</a>
-        <a href="#machine" data-section-link="machine">System</a>
-        <a href="#pipeline" data-section-link="qa">Multi-agent QA</a>
-        <a href="#impact" data-section-link="outcome">Outcome</a>
-        <span class="nav-indicator" aria-hidden="true"></span>
+      <div class="nav-right">
+        <div class="nav-links">
+          <a href="#summary" data-section-link="summary">Summary</a>
+          <a href="#problem" data-section-link="problem">Problem</a>
+          <a href="#architecture" data-section-link="product-design">Architecture</a>
+          <a href="#machine" data-section-link="machine">System</a>
+          <a href="#pipeline" data-section-link="qa">Multi-agent QA</a>
+          <a href="#impact" data-section-link="outcome">Outcome</a>
+          <span class="nav-indicator" aria-hidden="true"></span>
+        </div>
+        <a class="nav-storybook-cta" href="https://josejeani06.github.io/ivanlabs-design-system/" target="_blank" rel="noopener noreferrer" aria-label="Read the design system Storybook">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M.02 2.685C-.038 1.36.978.234 2.303.156L18.415.001c1.328-.078 2.47.934 2.55 2.264l.877 18.792c.05 1.098-.79 2.033-1.888 2.093l-13.29.845c-1.098.07-2.046-.762-2.116-1.86L.02 2.685zM17.6 1.98l-.106 2.29a.11.11 0 00.177.082l.735-.557.869.658a.11.11 0 00.174-.093l-.098-2.223 1.245-.06zm-6.51 6.65c0 .35 2.36.183 2.677-.062 0-2.386-1.28-3.64-3.626-3.64-2.346 0-3.66 1.273-3.66 3.182 0 3.325 4.488 3.388 4.488 5.2 0 .508-.25.81-.81.81-.749 0-1.045-.383-1.01-1.68 0-.28-2.845-.368-2.932 0-.222 3.135 1.734 4.04 3.976 4.04 2.174 0 3.878-1.16 3.878-3.22 0-3.564-4.556-3.47-4.556-5.234 0-.716.531-.81.85-.81.335 0 .934.06.902 1.63z"/></svg>
+          <span>Read Storybook</span>
+        </a>
       </div>
     </div>
   </nav>
