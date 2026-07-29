@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Ivanlabs Design System — Manage Integration</title>
+
+<link rel="stylesheet" href="https://unpkg.com/@ivancreatelabs/design-system@0.4.0/dist/tokens.css" />
+<link rel="stylesheet" href="https://unpkg.com/@ivancreatelabs/design-system@0.4.0/dist/typography.css" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" />
+
+<style>
+  :root { --ink: 24 26 42; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    background: transparent;               /* no page bg */
+    font-family: var(--font-family-body);
+    padding: 28px;                          /* hugs content height */
+  }
+
+  /* ONE container card holds the whole screen */
+  .frame {
+    width: 100%;
+    margin: 0 auto;
+    max-width: 940px;
+    background: var(--neutral-bg-default);
+    border: 1px solid var(--neutral-border-muted);
+    border-radius: 16px;
+    box-shadow: 0 1px 2px rgb(var(--ink) / .05), 0 6px 16px rgb(var(--ink) / .05);
+    padding: 30px 34px 34px;
+    animation: frameIn .6s ease both;
+  }
+  @keyframes frameIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { .frame { animation: none; } }
+
+  .col { display: flex; flex-direction: column; }
+  .row { display: flex; align-items: center; }
+  .muted { color: var(--neutral-text-icon-emphasis); }
+
+  /* centered integration hero */
+  .hero { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 18px; padding: 22px 0 6px; }
+  .brandmark { display: inline-flex; align-items: center; gap: 12px; }
+  .brandmark__tile {
+    width: 40px; height: 40px; border-radius: 10px; display: grid; place-items: center;
+    background: var(--brand-bg-subtle); color: var(--brand-text-icon-default);
+    border: 1px solid var(--brand-border-default);
+  }
+  .brandmark__tile .material-symbols-rounded { font-size: 24px; }
+  .brandmark__name { font: var(--text-h2); color: var(--brand-text-icon-default); }
+  .hero__desc { max-width: 620px; font: var(--text-body); color: var(--neutral-text-icon-emphasis); line-height: 1.5; }
+
+  /* accounts header row */
+  .acct-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin: 30px 0 16px; }
+  .acct-head__title { font: var(--text-h3); color: var(--neutral-text-icon-strong); }
+  .acct-head__actions { display: flex; align-items: center; gap: 12px; }
+
+  /* account card */
+  .acct {
+    display: flex; align-items: flex-start; justify-content: space-between; gap: 20px;
+    border: 1px solid var(--neutral-border-muted); border-radius: 14px;
+    padding: 20px 22px; background: var(--neutral-bg-default);
+  }
+  .acct + .acct { margin-top: 16px; }
+  .acct__meta { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+  .acct__id { font: var(--text-h4); color: var(--brand-text-icon-default); }
+  .acct__updated { font: var(--text-body-sm); color: var(--neutral-text-icon-emphasis); }
+  .acct__actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
+
+  /* how it works */
+  .hiw { margin-top: 30px; }
+  .hiw__title { display: flex; align-items: center; gap: 8px; font: var(--text-h4); color: var(--neutral-text-icon-strong); margin-bottom: 8px; }
+  .hiw__title .material-symbols-rounded { font-size: 20px; color: var(--neutral-text-icon-emphasis); }
+  .hiw__body { font: var(--text-body-sm); color: var(--neutral-text-icon-emphasis); line-height: 1.55; margin-bottom: 14px; }
+
+  .frame .ivdsField { width: 100%; }
+</style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="importmap">
+  { "imports": {
+      "react": "https://esm.sh/react@18.3.1",
+      "react-dom/client": "https://esm.sh/react-dom@18.3.1/client",
+      "react/jsx-runtime": "https://esm.sh/react@18.3.1/jsx-runtime",
+      "htm": "https://esm.sh/htm@3.1.1",
+      "@ivancreatelabs/design-system": "https://esm.sh/@ivancreatelabs/design-system@0.4.0?external=react,react-dom"
+  } }
+  </script>
+
+  <script type="module">
+    import React from 'react';
+    import { createRoot } from 'react-dom/client';
+    import htm from 'htm';
+    import * as DS from '@ivancreatelabs/design-system';
+
+    const html = htm.bind(React.createElement);
+    const { Breadcrumbs, BadgeChip, StatusPill, Button, IconButton, Separator, Toast } = DS;
+
+    const INTEGRATION = 'Brightwave';
+    const APP = 'Meridian';
+
+    /* one connected-account card */
+    function AccountCard({ id, badge, badgeColor, updated, syncing, actions, onAction }) {
+      return html`<div class="acct">
+        <div class="acct__meta">
+          <${BadgeChip} label=${badge} color=${badgeColor} dot=${true} style=${{ alignSelf: 'flex-start' }} />
+          <span class="acct__id">Tenant ID #${id}</span>
+          <span class="acct__updated">Last updated : Jun 6, 2025, 10:50PM</span>
+          ${syncing && html`<${StatusPill} status="processing" label="Sync in Progress"
+            style=${{ marginTop: 2 }} />`}
+        </div>
+        <div class="acct__actions">
+          <${Button} kind="destructive" size="sm" label="Remove"
+            onClick=${() => onAction('Remove account #' + id)} />
+          <${Button} kind="secondary" size="sm" icon="settings" label="Customize Attribution"
+            onClick=${() => onAction('Customize attribution for #' + id)} />
+          ${actions.finish && html`<${Button} kind="primary" size="sm" label="Finish Setup"
+            onClick=${() => onAction('Finish setup for #' + id)} />`}
+        </div>
+      </div>`;
+    }
+
+    function App() {
+      const [toast, setToast] = React.useState(null);
+      const [entryKey, setEntryKey] = React.useState(0);
+      const fire = (msg) => setToast(msg);
+      React.useEffect(() => {
+        const replay = () => setEntryKey(key => key + 1);
+        const onMessage = (event) => {
+          if (event.data && event.data.type === 'portfolio:replay-accounts') replay();
+        };
+        window.__replayAccounts = replay;
+        window.addEventListener('message', onMessage);
+        return () => {
+          window.removeEventListener('message', onMessage);
+          try { delete window.__replayAccounts; } catch (error) {}
+        };
+      }, []);
+      React.useEffect(() => {
+        if (!toast) return;
+        const t = setTimeout(() => setToast(null), 2600);
+        return () => clearTimeout(t);
+      }, [toast]);
+
+      return html`<div class="frame" key=${entryKey} data-entry-cycle=${entryKey}>
+        <${Breadcrumbs} variant="back" root="Manage Integration" current=${INTEGRATION}
+          onNavigate=${() => fire('Back to Manage Integration')} />
+
+        <div class="hero">
+          <div class="brandmark">
+            <span class="brandmark__tile"><span class="material-symbols-rounded">bolt</span></span>
+            <span class="brandmark__name">${INTEGRATION}</span>
+          </div>
+          <p class="hero__desc">
+            Manage your ${INTEGRATION} connection to your ${APP} account efficiently and securely.
+            Add or disable multiple ${INTEGRATION} accounts to let ${APP} sync data for Attribution and Automations.
+          </p>
+        </div>
+
+        <div class="acct-head">
+          <span class="acct-head__title">Accounts</span>
+          <div class="acct-head__actions">
+            <${Button} kind="secondary" icon="add" label="Add New Account"
+              onClick=${() => fire('Add a new ' + INTEGRATION + ' account')} />
+            <${Button} kind="primary" icon="add" label="Create an Automation"
+              onClick=${() => fire('Create an automation')} />
+          </div>
+        </div>
+
+        <${AccountCard} id="2112" badge="Pending" badgeColor="warning" syncing=${true}
+          actions=${{ finish: true }} onAction=${fire} />
+        <${AccountCard} id="1223" badge="Active" badgeColor="success" syncing=${false}
+          actions=${{ finish: false }} onAction=${fire} />
+
+        <div class="hiw">
+          <${Separator} style=${{ margin: '0 0 22px' }} />
+          <div class="hiw__title">
+            How it works
+            <span class="material-symbols-rounded">help</span>
+          </div>
+          <p class="hiw__body">
+            This setup lets you start creating and managing your automations easily and efficiently.<br />
+            Have a problem? Use the button below to chat with us.
+          </p>
+          <${Button} kind="secondary" size="sm" icon="support_agent" label="Contact Support"
+            onClick=${() => fire('Opening support chat…')} />
+        </div>
+
+        ${toast && html`<div style=${{ position: 'fixed', right: 24, bottom: 24, zIndex: 50 }}>
+          <${Toast} color="brand" title=${toast} />
+        </div>`}
+      </div>`;
+    }
+
+    createRoot(document.getElementById('root')).render(html`<${App} />`);
+  </script>
+</body>
+</html>

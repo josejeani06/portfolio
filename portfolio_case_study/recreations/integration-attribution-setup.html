@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Ivanlabs Design System — Attribution Setup</title>
+
+<link rel="stylesheet" href="https://unpkg.com/@ivancreatelabs/design-system@0.4.0/dist/tokens.css" />
+<link rel="stylesheet" href="https://unpkg.com/@ivancreatelabs/design-system@0.4.0/dist/typography.css" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" />
+
+<style>
+  :root { --ink: 24 26 42; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    background: transparent;               /* no page bg */
+    font-family: var(--font-family-body);
+    padding: 28px;                          /* hugs content height */
+  }
+
+  /* ONE container card holds the whole step */
+  .frame {
+    width: 100%;
+    margin: 0 auto;
+    max-width: 884px;
+    background: var(--neutral-bg-default);
+    border: 1px solid var(--neutral-border-muted);
+    border-radius: 16px;
+    box-shadow: 0 1px 2px rgb(var(--ink) / .05), 0 6px 16px rgb(var(--ink) / .05);
+    padding: 30px 34px 28px;
+    animation: frameIn .6s ease both;
+  }
+  @keyframes frameIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { .frame { animation: none; } }
+
+  /* breadcrumb trail across the top, with a leading close affordance */
+  .crumbs { display: flex; align-items: center; gap: 4px; margin-bottom: 26px; }
+  .crumbs__x {
+    display: grid; place-items: center; cursor: pointer;
+    background: none; border: 0; padding: 4px; margin-right: 4px; border-radius: 8px;
+    color: var(--neutral-text-icon-emphasis);
+  }
+  .crumbs__x:hover { background: var(--neutral-bg-subtle); }
+  .crumbs__x .material-symbols-rounded { font-size: 20px; }
+
+  .title { font: var(--text-h2); color: var(--neutral-text-icon-strong); margin: 0 0 18px; }
+
+  /* inner setup card */
+  .setup {
+    border: 1px solid var(--neutral-border-muted);
+    border-radius: 14px;
+    background: var(--neutral-bg-default);
+    box-shadow: 0 1px 2px rgb(var(--ink) / .04);
+    padding: 22px 24px 26px;
+  }
+  .setup__label { font: var(--text-label); color: var(--neutral-text-icon-emphasis); display: block; margin-bottom: 16px; }
+
+  /* trigger picker — mutually exclusive pills */
+  .triggers { display: flex; flex-wrap: wrap; gap: 16px; }
+  .pill {
+    font: var(--text-subtitle);
+    border-radius: 999px;
+    padding: 13px 26px;
+    cursor: pointer;
+    border: 1px solid var(--brand-border-strong);
+    transition: background .15s ease, color .15s ease, box-shadow .15s ease;
+    outline: none;
+  }
+  .pill--off { background: var(--brand-bg-subtle); color: var(--brand-text-icon-default); }
+  .pill--off:hover { background: var(--brand-bg-weak); }
+  .pill--on {
+    background: var(--brand-bg-default);
+    color: var(--brand-text-icon-on);
+    border-color: var(--brand-bg-default);
+    box-shadow: 0 1px 2px rgb(var(--ink) / .12);
+  }
+  .pill:focus-visible { box-shadow: var(--focus-ring); }
+
+  .foot { display: flex; justify-content: flex-end; margin-top: 26px; }
+</style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="importmap">
+  { "imports": {
+      "react": "https://esm.sh/react@18.3.1",
+      "react-dom/client": "https://esm.sh/react-dom@18.3.1/client",
+      "react/jsx-runtime": "https://esm.sh/react@18.3.1/jsx-runtime",
+      "htm": "https://esm.sh/htm@3.1.1",
+      "@ivancreatelabs/design-system": "https://esm.sh/@ivancreatelabs/design-system@0.4.0?external=react,react-dom"
+  } }
+  </script>
+
+  <script type="module">
+    import React from 'react';
+    import { createRoot } from 'react-dom/client';
+    import htm from 'htm';
+    import * as DS from '@ivancreatelabs/design-system';
+
+    const html = htm.bind(React.createElement);
+    const { Breadcrumbs, Button } = DS;
+
+    const TRIGGERS = [
+      { value: 'new-customer',  label: 'When I create a new Customer' },
+      { value: 'associate-lead', label: 'When I associate a Lead with a Customer' },
+    ];
+
+    function TriggerPicker({ value, onChange }) {
+      return html`<div class="triggers" role="radiogroup" aria-label="Trigger">
+        ${TRIGGERS.map(t => {
+          const on = value === t.value;
+          return html`<button
+            key=${t.value}
+            type="button"
+            role="radio"
+            aria-checked=${on}
+            class=${'pill ' + (on ? 'pill--on' : 'pill--off')}
+            onClick=${() => onChange(t.value)}>${t.label}</button>`;
+        })}
+      </div>`;
+    }
+
+    function App() {
+      const [trigger, setTrigger] = React.useState('associate-lead');
+      const [entryKey, setEntryKey] = React.useState(0);
+
+      React.useEffect(() => {
+        const replay = () => {
+          setTrigger('associate-lead');
+          setEntryKey(key => key + 1);
+        };
+        const onMessage = (event) => {
+          if (event.data && event.data.type === 'portfolio:replay-attribution') replay();
+        };
+        window.__replayAttribution = replay;
+        window.addEventListener('message', onMessage);
+        return () => {
+          window.removeEventListener('message', onMessage);
+          try { delete window.__replayAttribution; } catch (error) {}
+        };
+      }, []);
+
+      return html`<div class="frame" key=${entryKey} data-entry-cycle=${entryKey}>
+        <div class="crumbs">
+          <button class="crumbs__x" aria-label="Close">
+            <span class="material-symbols-rounded">close</span>
+          </button>
+          <${Breadcrumbs}
+            root="Manage Integration"
+            parent="Housecall Pro"
+            current="Customize Attribution" />
+        </div>
+
+        <h1 class="title">Attribution Setup</h1>
+
+        <div class="setup">
+          <span class="setup__label">Automation Name</span>
+          <${TriggerPicker} value=${trigger} onChange=${setTrigger} />
+        </div>
+
+        <div class="foot">
+          <${Button} kind="primary" label="Save & Continue"
+            onClick=${() => {}} />
+        </div>
+      </div>`;
+    }
+
+    createRoot(document.getElementById('root')).render(html`<${App} />`);
+  </script>
+</body>
+</html>

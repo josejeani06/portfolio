@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Ivanlabs Design System — Manage Billing Group</title>
+
+<link rel="stylesheet" href="https://unpkg.com/@ivancreatelabs/design-system@0.4.0/dist/tokens.css" />
+<link rel="stylesheet" href="https://unpkg.com/@ivancreatelabs/design-system@0.4.0/dist/typography.css" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" />
+
+<style>
+  :root { --ink: 24 26 42; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    background: transparent;
+    font-family: var(--font-family-body);
+    padding: 28px;
+    color: var(--neutral-text-icon-strong);
+  }
+
+  .frame {
+    width: 100%;
+    margin: 0 auto;
+    max-width: 1040px;
+    background: var(--neutral-bg-default);
+    border: 1px solid var(--neutral-border-muted);
+    border-radius: 16px;
+    box-shadow: 0 1px 2px rgb(var(--ink) / .05), 0 6px 16px rgb(var(--ink) / .05);
+    padding: 26px 30px 28px;
+    animation: frameIn .6s ease both;
+  }
+  @keyframes frameIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { .frame { animation: none; } }
+
+  .row { display: flex; align-items: center; }
+  .col { display: flex; flex-direction: column; }
+  .muted { color: var(--neutral-text-icon-emphasis); }
+
+  /* modal header */
+  .mhead { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+  .mhead__l { display: flex; align-items: center; gap: 12px; }
+  .mhead__tile {
+    width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center;
+    background: var(--brand-bg-weak); color: var(--brand-text-icon-default);
+    border: 1px solid var(--brand-border-default);
+  }
+  .mhead__title { font: var(--text-h2); color: var(--neutral-text-icon-strong); }
+  .iconbtn {
+    width: 34px; height: 34px; border-radius: 9px; display: grid; place-items: center;
+    background: var(--neutral-bg-default); border: 1px solid var(--neutral-border-muted);
+    color: var(--neutral-text-icon-emphasis); cursor: pointer; transition: background .15s, border-color .15s;
+  }
+  .iconbtn:hover { background: var(--neutral-bg-subtle); border-color: var(--neutral-border-default); }
+
+  /* current-managing select */
+  .cm-label { font: var(--text-body-sm); color: var(--neutral-text-icon-emphasis); margin: 20px 0 8px; }
+  .selectbox {
+    display: flex; align-items: center; gap: 10px; width: 100%;
+    border: 1px solid var(--neutral-border-default); border-radius: 12px;
+    padding: 12px 14px; background: var(--neutral-bg-default); cursor: pointer;
+    transition: border-color .15s, box-shadow .15s;
+  }
+  .selectbox:hover { border-color: var(--brand-border-default); }
+  .selectbox__ic { width: 26px; height: 26px; border-radius: 7px; display: grid; place-items: center; background: var(--brand-bg-weak); color: var(--brand-text-icon-default); }
+  .selectbox__name { font: var(--text-title); flex: 1; }
+
+  /* tabs */
+  .tabs { display: flex; gap: 26px; margin: 22px 0 4px; border-bottom: 1px solid var(--neutral-border-subtle); }
+  .tab {
+    appearance: none; background: none; border: none; cursor: pointer;
+    font: var(--text-title); color: var(--neutral-text-icon-emphasis);
+    padding: 6px 2px 12px; margin-bottom: -1px; border-bottom: 2px solid transparent;
+    transition: color .15s;
+  }
+  .tab:hover { color: var(--neutral-text-icon-strong); }
+  .tab--active { color: var(--brand-text-icon-default); border-bottom-color: var(--brand-bg-default); }
+
+  /* section head */
+  .sec-title { font: var(--text-h3); color: var(--neutral-text-icon-strong); margin: 24px 0 6px; }
+  .sec-desc { font: var(--text-body); color: var(--neutral-text-icon-emphasis); line-height: 1.5; max-width: 780px; }
+
+  /* payment-method card */
+  .pmcard { border: 1px solid var(--neutral-border-muted); border-radius: 14px; background: var(--neutral-bg-default); margin-top: 16px; overflow: hidden; }
+  .pmcard__head { display: flex; align-items: center; gap: 14px; padding: 16px 18px; }
+  .pmchev { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 6px; color: var(--neutral-text-icon-emphasis); cursor: pointer; background: none; border: none; }
+  .pmchev:hover { background: var(--neutral-bg-subtle); }
+  .pmtile { width: 44px; height: 34px; border-radius: 8px; display: grid; place-items: center; background: var(--neutral-bg-subtle); border: 1px solid var(--neutral-border-subtle); flex: none; }
+  .pmtile__visa { font: 700 12px/1 var(--font-family-data); color: #1a1f71; font-style: italic; letter-spacing: .5px; }
+  .pmmeta { display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 0; }
+  .pmtitle { font: var(--text-title); color: var(--neutral-text-icon-strong); }
+  .pmsub { font: var(--text-body-sm); color: var(--neutral-text-icon-emphasis); }
+  .pmsummary { font: var(--text-title); color: var(--neutral-text-icon-emphasis); white-space: nowrap; }
+
+  /* grant-access body */
+  .grantwrap { background: var(--neutral-bg-subtle); border-top: 1px solid var(--neutral-border-subtle); padding: 16px 18px 4px; }
+  .grantlabel { font: var(--text-body-sm); color: var(--neutral-text-icon-emphasis); margin-bottom: 8px; }
+  .grow {
+    display: grid;
+    grid-template-columns: 210px minmax(120px, 1fr) 96px 132px auto 40px;
+    align-items: center; gap: 14px;
+    padding: 12px 0 16px;
+  }
+  .grow + .grow { border-top: 1px solid var(--neutral-border-subtle); }
+  .acctbox {
+    display: flex; align-items: center; gap: 8px;
+    border: 1px solid var(--neutral-border-default); border-radius: 10px;
+    padding: 9px 11px; background: var(--neutral-bg-default); min-width: 0;
+  }
+  .acctbox__ic { width: 22px; height: 22px; border-radius: 6px; display: grid; place-items: center; background: var(--brand-bg-weak); color: var(--brand-text-icon-default); flex: none; }
+  .acctbox__name { font: var(--text-body); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1; }
+  .valuefield {
+    border: 1px solid var(--neutral-border-default); border-radius: 10px;
+    padding: 9px 12px; background: var(--neutral-bg-default);
+    font: var(--text-body); color: var(--neutral-text-icon-strong);
+    display: flex; align-items: baseline; gap: 5px; justify-content: flex-end;
+  }
+  .valuefield small { font: var(--text-caption); color: var(--neutral-text-icon-muted); }
+  .fc { display: flex; flex-direction: column; align-items: center; gap: 5px; }
+  .fc span { font: var(--text-caption); color: var(--neutral-text-icon-emphasis); white-space: nowrap; }
+  .trash { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 9px; background: none; border: 1px solid transparent; color: var(--neutral-text-icon-muted); cursor: pointer; transition: background .15s, color .15s, border-color .15s; }
+  .trash:hover { background: var(--error-bg-soft); color: var(--error-text-icon-default); border-color: var(--error-border-default); }
+  .cardfoot { display: flex; justify-content: flex-end; padding: 6px 18px 16px; }
+
+  .footbar { display: flex; align-items: center; justify-content: flex-end; gap: 12px; margin-top: 24px; }
+
+  .frame .ivdsField { width: 100%; }
+</style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="importmap">
+  { "imports": {
+      "react": "https://esm.sh/react@18.3.1",
+      "react-dom/client": "https://esm.sh/react-dom@18.3.1/client",
+      "react/jsx-runtime": "https://esm.sh/react@18.3.1/jsx-runtime",
+      "htm": "https://esm.sh/htm@3.1.1",
+      "@ivancreatelabs/design-system": "https://esm.sh/@ivancreatelabs/design-system@0.4.0?external=react,react-dom"
+  } }
+  </script>
+
+  <script type="module">
+    import React from 'react';
+    import { createRoot } from 'react-dom/client';
+    import htm from 'htm';
+    import * as DS from '@ivancreatelabs/design-system';
+
+    const html = htm.bind(React.createElement);
+    const { Card, Slider, NumberField, Toggle, Button, BadgeChip, Separator, Icon, Toast } = DS;
+
+    const I = (name, props = {}) => html`<${Icon} name=${name} ...${props} />`;
+    const fullw = { width: '100%', maxWidth: 'none' };
+    const money = (n) => '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    const num = (x) => (x && typeof x === 'object' && 'target' in x) ? Number(x.target.value) : Number(x);
+    let SEQ = 100;
+
+    const INITIAL = [
+      { id: 'c1', kind: 'wallet', title: 'Billing Group Balance', sub: '$20,000.00 available', pool: 20000,
+        expanded: true, rows: [
+          { id: 'r1', name: 'Denver Office', pct: 20, full: false },
+          { id: 'r2', name: 'Atlanta Office', pct: 12.5, full: false },
+        ] },
+      { id: 'c2', kind: 'visa', title: 'Regional card', sub: 'Visa ending in 2363 · Expires 05/31', pool: 6000,
+        expanded: false, rows: [] },
+      { id: 'c3', kind: 'visa', title: 'Regional card', sub: 'Visa ending in 4187 · Expires 05/31', pool: 6000,
+        expanded: true, rows: [
+          { id: 'r3', name: 'Boston Office', pct: 50, full: false },
+          { id: 'r4', name: 'Seattle Office', pct: 25, full: false },
+        ] },
+      { id: 'c4', kind: 'bank', title: 'Regional Account', sub: 'Banking Account ending in 3804 · Lineage Bank', pool: 20000,
+        expanded: false, rows: [] },
+    ];
+
+    function PmTile({ kind }) {
+      if (kind === 'visa') return html`<div class="pmtile"><span class="pmtile__visa">VISA</span></div>`;
+      const glyph = kind === 'bank' ? 'account_balance' : 'account_balance_wallet';
+      return html`<div class="pmtile">${I(glyph, { color: 'var(--neutral-text-icon-emphasis)', size: 'small' })}</div>`;
+    }
+
+    function GrantRow({ row, pool, onPct, onFull, onDelete }) {
+      const val = (row.pct / 100) * pool;
+      return html`<div class="grow">
+        <div class="acctbox">
+          <span class="acctbox__ic">${I('groups', { size: 'small' })}</span>
+          <span class="acctbox__name">${row.name}</span>
+          ${I('unfold_more', { color: 'var(--neutral-text-icon-muted)', size: 'small' })}
+        </div>
+        <${Slider} label="" value=${row.pct} min=${0} max=${100} step=${0.5}
+          onChange=${(v) => onFull(false) || onPct(num(v))} style=${{ margin: 0, opacity: row.full ? .5 : 1, pointerEvents: row.full ? 'none' : 'auto' }} />
+        <${NumberField} label="" value=${String(row.pct)} min="0" max="100" step=${0.5}
+          onChange=${(v) => onPct(Math.max(0, Math.min(100, num(v))))} style=${{ width: 96, maxWidth: 'none' }} />
+        <div class="valuefield">${money(val)}<small>/mo</small></div>
+        <div class="fc">
+          <span>Full Coverage</span>
+          <${Toggle} checked=${row.full} onChange=${(e) => onFull(!!(e && e.target ? e.target.checked : e))} />
+        </div>
+        <button class="trash" title="Remove account" onClick=${onDelete}>${I('delete', { size: 'small' })}</button>
+      </div>`;
+    }
+
+    function PmCard({ card, dispatch, fire }) {
+      const total = card.rows.reduce((s, r) => s + r.pct, 0);
+      const totalVal = card.rows.reduce((s, r) => s + (r.pct / 100) * card.pool, 0);
+      return html`<div class="pmcard">
+        <div class="pmcard__head">
+          <button class="pmchev" onClick=${() => dispatch({ t: 'toggle', id: card.id })}
+            aria-label=${card.expanded ? 'Collapse' : 'Expand'}>
+            ${I(card.expanded ? 'expand_more' : 'chevron_right', { size: 'small' })}
+          </button>
+          <${PmTile} kind=${card.kind} />
+          <div class="pmmeta">
+            <span class="pmtitle">${card.title}</span>
+            <span class="pmsub">${card.sub}</span>
+          </div>
+          ${card.expanded && card.rows.length > 0 && html`<span class="pmsummary">${Math.round(total * 10) / 10}% · ${money(totalVal)}</span>`}
+          ${card.expanded && card.rows.length > 0 && html`<${Button} kind="secondary" size="sm" icon="splitscreen" label="Split Evenly"
+            onClick=${() => { dispatch({ t: 'split', id: card.id }); fire('Coverage split evenly across ' + card.rows.length + ' accounts'); }} />`}
+          <button class="iconbtn" title="More options" onClick=${() => fire('More options')}>${I('more_vert', { size: 'small' })}</button>
+        </div>
+
+        ${card.expanded && html`<div class="grantwrap">
+          <div class="grantlabel">Grant access to</div>
+          ${card.rows.map((r) => html`<${GrantRow} key=${r.id} row=${r} pool=${card.pool}
+            onPct=${(p) => dispatch({ t: 'pct', id: card.id, rid: r.id, pct: p })}
+            onFull=${(f) => dispatch({ t: 'full', id: card.id, rid: r.id, full: f })}
+            onDelete=${() => dispatch({ t: 'del', id: card.id, rid: r.id })} />`)}
+        </div>`}
+        ${card.expanded && html`<div class="cardfoot">
+          <${Button} kind="secondary" size="sm" icon="add" label="Add Account"
+            onClick=${() => dispatch({ t: 'add', id: card.id })} />
+        </div>`}
+      </div>`;
+    }
+
+    function reducer(state, a) {
+      const map = (fn) => state.map((c) => (c.id === a.id ? fn(c) : c));
+      const rows = (c, fn) => ({ ...c, rows: c.rows.map((r) => (r.id === a.rid ? fn(r) : r)) });
+      switch (a.t) {
+        case 'toggle': return map((c) => ({ ...c, expanded: !c.expanded }));
+        case 'pct': return map((c) => rows(c, (r) => ({ ...r, pct: a.pct, full: a.pct === 100 ? r.full : false })));
+        case 'full': return map((c) => rows(c, (r) => ({ ...r, full: a.full, pct: a.full ? 100 : r.pct })));
+        case 'del': return map((c) => ({ ...c, rows: c.rows.filter((r) => r.id !== a.rid) }));
+        case 'add': return map((c) => ({ ...c, expanded: true, rows: [...c.rows, { id: 'r' + (++SEQ), name: 'New Office', pct: 0, full: false }] }));
+        case 'split': return map((c) => {
+          const n = c.rows.length || 1;
+          const even = Math.round((100 / n) * 10) / 10;
+          return { ...c, rows: c.rows.map((r) => ({ ...r, pct: even, full: false })) };
+        });
+        case 'addcard': return [...state, { id: 'c' + (++SEQ), kind: 'visa', title: 'New card', sub: 'Not yet configured', pool: 6000, expanded: false, rows: [] }];
+        default: return state;
+      }
+    }
+
+    function App() {
+      const [cards, dispatch] = React.useReducer(reducer, INITIAL);
+      const [tab, setTab] = React.useState('Payments');
+      const [toast, setToast] = React.useState(null);
+      const fire = (m) => setToast(m);
+      React.useEffect(() => {
+        if (!toast) return;
+        const t = setTimeout(() => setToast(null), 2400);
+        return () => clearTimeout(t);
+      }, [toast]);
+
+      const tabs = ['Payments', 'Admins', 'Budgets', 'Settings'];
+
+      return html`<div class="frame">
+        <div class="mhead">
+          <div class="mhead__l">
+            <span class="mhead__tile">${I('receipt_long', { size: 'small' })}</span>
+            <span class="mhead__title">Manage Billing Group</span>
+          </div>
+          <button class="iconbtn" title="Close" onClick=${() => fire('Close billing group')}>${I('close', { size: 'small' })}</button>
+        </div>
+
+        <div class="cm-label">Current Managing</div>
+        <div class="selectbox" onClick=${() => fire('Switch billing group')}>
+          <span class="selectbox__ic">${I('receipt_long', { size: 'small' })}</span>
+          <span class="selectbox__name">Billing Group 1</span>
+          ${I('expand_more', { color: 'var(--neutral-text-icon-muted)' })}
+        </div>
+
+        <div class="tabs">
+          ${tabs.map((t) => html`<button key=${t} class=${'tab' + (t === tab ? ' tab--active' : '')} onClick=${() => setTab(t)}>${t}</button>`)}
+        </div>
+
+        <div class="sec-title">Add payment methods and set account limits</div>
+        <p class="sec-desc">Choose which accounts can draw from the pool balance or charge each payment method, then set how coverage is split. Limits cannot exceed the account's budget.</p>
+
+        ${cards.map((c) => html`<${PmCard} key=${c.id} card=${c} dispatch=${dispatch} fire=${fire} />`)}
+
+        <div class="footbar" style=${{ justifyContent: 'space-between' }}>
+          <${Button} kind="secondary" icon="add" label="Add Payment Method"
+            onClick=${() => { dispatch({ t: 'addcard' }); fire('Payment method added'); }} />
+          <div class="row" style=${{ gap: 12 }}>
+            <${Button} kind="tertiary" label="Cancel" onClick=${() => fire('Changes discarded')} />
+            <${Button} kind="primary" label="Done" onClick=${() => fire('Billing group saved')} />
+          </div>
+        </div>
+
+        ${toast && html`<div style=${{ position: 'fixed', right: 24, bottom: 24, zIndex: 50 }}>
+          <${Toast} color="brand" title=${toast} />
+        </div>`}
+      </div>`;
+    }
+
+    createRoot(document.getElementById('root')).render(html`<${App} />`);
+  </script>
+</body>
+</html>

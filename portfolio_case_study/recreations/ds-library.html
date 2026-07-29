@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Ivanlabs Design System — Component Library</title>
+
+<link rel="stylesheet" href="https://unpkg.com/@ivancreatelabs/design-system@0.4.0/dist/tokens.css" />
+<link rel="stylesheet" href="https://unpkg.com/@ivancreatelabs/design-system@0.4.0/dist/typography.css" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" />
+
+<style>
+  :root { --ink: 24 26 42; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    background: transparent;               /* no page bg */
+    font-family: var(--font-family-body);
+    padding: 28px;                          /* horizontal + vertical breathing room; hugs content height */
+  }
+
+  /* ONE container card holds the whole gallery.
+     Block layout + margin auto gives the responsive auto-fill grid a definite
+     width to lay out against (a flex child would shrink to the grid's tiny min-content). */
+  .frame {
+    width: 100%;
+    margin: 0 auto;
+    max-width: 1040px;
+    background: var(--neutral-bg-default);
+    border: 1px solid var(--neutral-border-muted);
+    border-radius: 16px;
+    box-shadow: 0 1px 2px rgb(var(--ink) / .05), 0 6px 16px rgb(var(--ink) / .05);
+    padding: 30px 32px;
+    animation: frameIn .6s ease both;
+  }
+  @keyframes frameIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { .frame { animation: none; } }
+
+  /* responsive gallery grid of labelled cells */
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(224px, 1fr));
+    grid-auto-flow: dense;
+    gap: 14px;
+  }
+  .cell {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 16px;
+    min-height: 132px;
+    padding: 18px 18px 14px;
+    border: 1px solid var(--neutral-border-muted);
+    border-radius: 12px;
+    background: var(--neutral-bg-default);
+  }
+  .cell.wide { grid-column: span 2; }
+  @media (max-width: 520px) { .cell.wide { grid-column: span 1; } }
+
+  /* the live component sits here */
+  .demo {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    min-width: 0;
+  }
+  .demo.center { justify-content: center; }
+
+  /* small component-name label under each cell */
+  .clabel {
+    font-family: var(--font-family-mono, ui-monospace, monospace);
+    font-size: 12px;
+    letter-spacing: .01em;
+    color: var(--neutral-text-icon-emphasis);
+  }
+
+  /* let DS fields fill their cell */
+  .frame .ivdsField { width: 100%; }
+</style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="importmap">
+  { "imports": {
+      "react": "https://esm.sh/react@18.3.1",
+      "react-dom/client": "https://esm.sh/react-dom@18.3.1/client",
+      "react/jsx-runtime": "https://esm.sh/react@18.3.1/jsx-runtime",
+      "htm": "https://esm.sh/htm@3.1.1",
+      "@ivancreatelabs/design-system": "https://esm.sh/@ivancreatelabs/design-system@0.4.0?external=react,react-dom"
+  } }
+  </script>
+
+  <script type="module">
+    import React from 'react';
+    import { createRoot } from 'react-dom/client';
+    import htm from 'htm';
+    import * as DS from '@ivancreatelabs/design-system';
+
+    const html = htm.bind(React.createElement);
+    const {
+      Button, IconButton, Checkbox, RadioButton, Toggle, Spinner,
+      GroupedButton, SelectButton, BadgeChip, StatusPill, Avatar, Kbd,
+      InputField, SelectField, SearchField, PasswordField, NumberField,
+      DateField, CopyField, Combobox, InputOTP, Slider, ProgressBar,
+      Skeleton, Breadcrumbs, Pagination, Tab, SettingsTab, SidebarItem,
+      Cell, Banner, Toast, Tooltip, HoverCard, Card, Separator,
+      DragHandle, ChartLegend, LocationRow, ServiceAreaRow
+    } = DS;
+
+    // fields cap at a maxWidth by default — clear it so they fill the cell
+    const fullw = { width: '100%', maxWidth: 'none' };
+
+    // a labelled gallery cell: live demo on top, component name below
+    function Slot({ name, wide, center, children }) {
+      return html`<div class=${'cell' + (wide ? ' wide' : '')}>
+        <div class=${'demo' + (center ? ' center' : '')}>${children}</div>
+        <span class="clabel">${name}</span>
+      </div>`;
+    }
+
+    /* interactive wrappers where a component needs local state */
+    function VolumeSlider() {
+      const [v, setV] = React.useState(40);
+      return html`<${Slider} label="Volume" value=${v} min=${0} max=${100}
+        onChange=${e => setV(e && e.target ? Number(e.target.value) : Number(e))} style=${{ width: '100%' }} />`;
+    }
+
+    function TabSet() {
+      const [active, setActive] = React.useState('overview');
+      const items = [['overview', 'Overview'], ['activity', 'Activity'], ['members', 'Members']];
+      return html`<div style=${{ display: 'flex', gap: 4 }}>
+        ${items.map(([id, label]) => html`<${Tab} key=${id} label=${label}
+          active=${active === id} onClick=${() => setActive(id)} />`)}
+      </div>`;
+    }
+
+    const templateOpts = [
+      { value: 'postcard', label: 'Postcard — 6×9' },
+      { value: 'letter', label: 'Letter in envelope' },
+      { value: 'handwritten', label: 'Handwritten note' },
+    ];
+    const textSizeOpts = [
+      { value: 'sm', label: 'Small' },
+      { value: 'md', label: 'Medium' },
+      { value: 'lg', label: 'Large' },
+    ];
+    const regionOpts = [
+      { value: 'dallas', label: 'Dallas, TX' },
+      { value: 'austin', label: 'Austin, TX' },
+      { value: 'denver', label: 'Denver, CO' },
+      { value: 'miami', label: 'Miami, FL' },
+    ];
+
+    function App() {
+      return html`<div class="frame">
+        <div class="gallery">
+
+          <!-- actions -->
+          <${Slot} name="Button">
+            <${Button} kind="primary" label="Send" icon="send" />
+          </${Slot}>
+          <${Slot} name="IconButton">
+            <${IconButton} icon="add" kind="secondary" />
+          </${Slot}>
+
+          <!-- selection controls -->
+          <${Slot} name="Checkbox" center>
+            <${Checkbox} defaultChecked=${true} />
+          </${Slot}>
+          <${Slot} name="RadioButton" center>
+            <${RadioButton} defaultChecked=${true} />
+          </${Slot}>
+          <${Slot} name="Toggle" center>
+            <${Toggle} defaultChecked=${true} />
+          </${Slot}>
+          <${Slot} name="Spinner" center>
+            <${Spinner} size="md" />
+          </${Slot}>
+
+          <!-- grouped / toolbar / status -->
+          <${Slot} name="GroupedButton" wide>
+            <${GroupedButton} options=${['Day', 'Week', 'Month']} active=${0} />
+          </${Slot}>
+          <${Slot} name="SelectButton">
+            <${SelectButton} label="Text size" icon="format_size" options=${textSizeOpts} />
+          </${Slot}>
+          <${Slot} name="BadgeChip">
+            <${BadgeChip} label="Live" color="success" dot=${true} />
+          </${Slot}>
+          <${Slot} name="StatusPill">
+            <${StatusPill} status="success" />
+          </${Slot}>
+
+          <!-- display bits -->
+          <${Slot} name="Avatar">
+            <${Avatar} initials="IJ" color="brand" />
+          </${Slot}>
+          <${Slot} name="Kbd">
+            <${Kbd} keys="Ctrl,K" />
+          </${Slot}>
+
+          <!-- fields -->
+          <${Slot} name="InputField" wide>
+            <${InputField} label="Campaign name" placeholder="Spring roof check-in" style=${fullw} />
+          </${Slot}>
+          <${Slot} name="SelectField" wide>
+            <${SelectField} label="Template" placeholder="Select" options=${templateOpts} style=${fullw} />
+          </${Slot}>
+          <${Slot} name="SearchField" wide>
+            <${SearchField} placeholder="Search locations" style=${fullw} />
+          </${Slot}>
+          <${Slot} name="PasswordField" wide>
+            <${PasswordField} label="Password" placeholder="Enter password" style=${fullw} />
+          </${Slot}>
+          <${Slot} name="NumberField" wide>
+            <${NumberField} label="Budget" defaultValue=${0} min=${0} style=${fullw} />
+          </${Slot}>
+          <${Slot} name="DateField" wide>
+            <${DateField} label="Send date" style=${fullw} />
+          </${Slot}>
+          <${Slot} name="CopyField" wide>
+            <${CopyField} label="API key" value="sk_live_1a2b3c" style=${fullw} />
+          </${Slot}>
+          <${Slot} name="Combobox" wide>
+            <${Combobox} placeholder="Select…" options=${regionOpts} style=${fullw} />
+          </${Slot}>
+
+          <!-- inputs & meters -->
+          <${Slot} name="InputOTP" wide>
+            <${InputOTP} value="12" length=${6} />
+          </${Slot}>
+          <${Slot} name="Slider" wide>
+            <${VolumeSlider} />
+          </${Slot}>
+          <${Slot} name="ProgressBar" wide>
+            <${ProgressBar} value=${62} color="brand" style=${{ width: '100%' }} />
+          </${Slot}>
+
+          <!-- feedback & nav -->
+          <${Slot} name="Skeleton" wide>
+            <${Skeleton} variant="text" lines=${3} style=${{ width: '100%' }} />
+          </${Slot}>
+          <${Slot} name="Breadcrumbs" wide>
+            <${Breadcrumbs} root="Webhooks" current="Create New Inbound Connection" />
+          </${Slot}>
+          <${Slot} name="Pagination" wide>
+            <${Pagination} rows=${100} range="1–100 of 100" />
+          </${Slot}>
+
+          <${Slot} name="Tab" wide>
+            <${TabSet} />
+          </${Slot}>
+          <${Slot} name="SettingsTab" wide>
+            <${SettingsTab} icon="person" label="Customers" state="active" style=${{ width: '100%' }} />
+          </${Slot}>
+          <${Slot} name="SidebarItem" center>
+            <${SidebarItem} icon="home" label="Home" active=${true} />
+          </${Slot}>
+
+          <!-- data / messaging -->
+          <${Slot} name="Cell" wide>
+            <${Cell} value="Cell value" style=${{ width: '100%' }} />
+          </${Slot}>
+          <${Slot} name="Banner" wide>
+            <${Banner} color="info" title="Heads up" message="A short contextual message." style=${{ width: '100%' }} />
+          </${Slot}>
+          <${Slot} name="Toast" wide>
+            <${Toast} color="brand" title="Saved" subtitle="Your changes are live." style=${{ width: '100%' }} />
+          </${Slot}>
+
+          <!-- overlays & misc -->
+          <${Slot} name="Tooltip" center>
+            <${Tooltip} label="Tooltip label" position="top">
+              <${Button} kind="secondary" label="Hover me" size="sm" />
+            </${Tooltip}>
+          </${Slot}>
+          <${Slot} name="HoverCard">
+            <${HoverCard} trigger="@username" name="Ivan Jose"
+              body="Product designer. Building the design system." />
+          </${Slot}>
+          <${Slot} name="Card">
+            <${Card} title="Overview" subtitle="This month">
+              <span style=${{ font: 'var(--text-body-sm)', color: 'var(--neutral-text-icon-emphasis)' }}>
+                1,204 sends · 38% reply rate
+              </span>
+            </${Card}>
+          </${Slot}>
+          <${Slot} name="Separator">
+            <${Separator} label="or" style=${{ width: '100%' }} />
+          </${Slot}>
+          <${Slot} name="DragHandle" center>
+            <${DragHandle} />
+          </${Slot}>
+          <${Slot} name="ChartLegend">
+            <${ChartLegend} series="Direct,Referral,Organic" shape="dot" />
+          </${Slot}>
+
+          <!-- rows -->
+          <${Slot} name="LocationRow" wide>
+            <${LocationRow} name="Example County, ST" count="0" style=${{ width: '100%' }} />
+          </${Slot}>
+          <${Slot} name="ServiceAreaRow" wide>
+            <${ServiceAreaRow} name="Example area" meta="Radius · 0 mi · 0 locations" style=${{ width: '100%' }} />
+          </${Slot}>
+
+        </div>
+      </div>`;
+    }
+
+    createRoot(document.getElementById('root')).render(html`<${App} />`);
+
+    // Report the settled React layout to the parent case study. This is required when the
+    // embedding browser isolates iframe documents and the parent cannot read scrollHeight.
+    const reportHeight = () => {
+      const height = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+      window.parent.postMessage({ type: 'ivds-recreation-resize', height }, '*');
+    };
+    new ResizeObserver(reportHeight).observe(document.body);
+    window.addEventListener('load', reportHeight);
+    if (document.fonts?.ready) document.fonts.ready.then(reportHeight);
+    requestAnimationFrame(reportHeight);
+  </script>
+</body>
+</html>

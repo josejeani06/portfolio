@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Ivanlabs Design System — Review your Setup</title>
+
+<link rel="stylesheet" href="https://unpkg.com/@ivancreatelabs/design-system@0.4.0/dist/tokens.css" />
+<link rel="stylesheet" href="https://unpkg.com/@ivancreatelabs/design-system@0.4.0/dist/typography.css" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" />
+
+<style>
+  :root { --ink: 24 26 42; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    background: transparent;               /* no page bg */
+    font-family: var(--font-family-body);
+    padding: 28px;                          /* hugs content height */
+  }
+
+  /* ONE container card holds the whole review panel */
+  .frame {
+    width: 100%;
+    margin: 0 auto;
+    max-width: 1060px;
+    background: var(--neutral-bg-default);
+    border: 1px solid var(--neutral-border-muted);
+    border-radius: 16px;
+    box-shadow: 0 1px 2px rgb(var(--ink) / .05), 0 6px 16px rgb(var(--ink) / .05);
+    padding: 34px 40px 30px;
+    animation: frameIn .6s ease both;
+  }
+  @keyframes frameIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { .frame { animation: none; } }
+
+  /* ── step progress indicator (composed from tokens) ── */
+  .steps { display: flex; align-items: flex-start; padding: 4px 0 26px; }
+  .step { display: flex; flex-direction: column; align-items: center; gap: 10px; flex: none; width: 96px; }
+  .step__dot {
+    width: 40px; height: 40px; border-radius: 9999px; display: grid; place-items: center;
+    flex: none;
+  }
+  .step__dot--done { background: var(--success-bg-default, #16a34a); color: #fff; }
+  .step__dot--done .material-symbols-rounded { font-size: 24px; font-variation-settings: 'wght' 600; }
+  .step__dot--current {
+    background: var(--brand-bg-subtle); color: var(--brand-text-icon-default);
+    border: 2px solid var(--brand-border-default);
+  }
+  .step__dot--current .material-symbols-rounded { font-size: 22px; }
+  .step__label {
+    font: var(--text-label); color: var(--brand-text-icon-default);
+    text-align: center; line-height: 1.25;
+  }
+  .step__connector { flex: 1 1 auto; height: 2px; background: var(--neutral-border-default); margin-top: 19px; }
+
+  /* ── review body ── */
+  .review-title { font: var(--text-h3); color: var(--neutral-text-icon-strong); margin: 6px 0 22px; }
+
+  .section { margin-bottom: 28px; }
+  .section__head { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+  .section__head .material-symbols-rounded { font-size: 24px; }
+  .section__title { font: var(--text-h4); color: var(--brand-text-icon-default); }
+
+  .section__card {
+    border: 1px solid var(--neutral-border-muted); border-radius: 14px;
+    background: var(--neutral-bg-default); overflow: hidden;
+  }
+
+  .qrow {
+    display: flex; align-items: center; gap: 16px;
+    padding: 14px 18px; min-height: 56px;
+    transition: background .12s ease;
+  }
+  .qrow + .qrow { border-top: 1px solid var(--neutral-border-muted); }
+  .qrow:hover { background: var(--neutral-bg-subtle); }
+  .qrow__q { flex: 1 1 auto; min-width: 0; font: var(--text-body); color: var(--neutral-text-icon-strong); }
+  .qrow__pills { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+
+  /* footer */
+  .foot { display: flex; align-items: center; justify-content: space-between; margin-top: 30px; }
+</style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="importmap">
+  { "imports": {
+      "react": "https://esm.sh/react@18.3.1",
+      "react-dom/client": "https://esm.sh/react-dom@18.3.1/client",
+      "react/jsx-runtime": "https://esm.sh/react@18.3.1/jsx-runtime",
+      "htm": "https://esm.sh/htm@3.1.1",
+      "@ivancreatelabs/design-system": "https://esm.sh/@ivancreatelabs/design-system@0.4.0?external=react,react-dom"
+  } }
+  </script>
+
+  <script type="module">
+    import React from 'react';
+    import { createRoot } from 'react-dom/client';
+    import htm from 'htm';
+    import * as DS from '@ivancreatelabs/design-system';
+
+    const html = htm.bind(React.createElement);
+    const { BadgeChip, StatusPill, IconButton, Button, Icon, Toast } = DS;
+
+    const CRM = 'Salesforce';
+
+    const STEPS = [
+      { label: 'Connect Account', done: true },
+      { label: 'Setup Customers', done: true },
+      { label: 'Setup Leads', done: true },
+      { label: 'Setup Conversions', done: true },
+      { label: 'Setup Automations', done: true },
+      { label: 'Review Setup', done: false },
+    ];
+
+    // pill kinds: 'map' brand field mapping · 'text' brand literal ·
+    // 'yes'/'no' toggleable answer · 'connected' success · 'yesSettings' success
+    const SECTIONS = [
+      {
+        key: 'accounts', title: 'Accounts', icon: 'cloud',
+        rows: [
+          { id: 'acct-name', q: 'Account Name', pills: [{ kind: 'connected' }] },
+        ],
+      },
+      {
+        key: 'customers', title: 'Customers', icon: 'person',
+        rows: [
+          { id: 'c1', q: `Which record do you consider a Contact in your ${CRM}?`, pills: [{ kind: 'map', t: 'Contact.sf' }] },
+          { id: 'c2', q: 'Which Contact field should we use for Email?', pills: [{ kind: 'map', t: 'Contact.email' }] },
+          { id: 'c3', q: 'Which Contact field should we use for Phone?', pills: [{ kind: 'map', t: 'Contact.phone' }] },
+          { id: 'c4', q: 'Which Contact field should we use for Name?', pills: [{ kind: 'map', t: 'Contact.name' }] },
+          { id: 'c5', q: 'Which Contact field should we use for ID?', pills: [{ kind: 'map', t: 'Contact.id' }] },
+          { id: 'c6', q: 'Which Contact fields should we use for Full Address?', pills: [{ kind: 'map', t: 'Contact.address' }] },
+          { id: 'c7', q: 'Which Contact fields should we use for Address?', pills: [
+            { kind: 'map', t: 'Contact.Address 1' }, { kind: 'map', t: 'Address 2' }, { kind: 'map', t: 'City' },
+            { kind: 'map', t: 'State' }, { kind: 'map', t: 'ZIP Code' },
+          ] },
+        ],
+      },
+      {
+        key: 'leads', title: 'Leads', icon: 'verified_user',
+        rows: [
+          { id: 'l1', q: `Which record do you consider a Lead in your ${CRM}?`, pills: [{ kind: 'map', t: 'Lead.sf' }] },
+          { id: 'l2', q: 'Which data field tells us when a Lead first became a lead?', pills: [{ kind: 'map', t: 'Lead.created' }] },
+          { id: 'l3', q: 'Are all Leads considered leads, or does their status change if they are a lead or not?', pills: [{ kind: 'answer', id: 'l3-a', value: true }] },
+          { id: 'l4', q: 'Within your Lead, which field tells us their current status?', pills: [{ kind: 'map', t: 'Lead.status' }] },
+          { id: 'l5', q: 'Select the status that represents a lead stage for a Lead:', pills: [{ kind: 'map', t: 'Lead.status' }] },
+          { id: 'l6', q: 'Would you like to configure Advanced settings for defining a lead?', pills: [{ kind: 'answer', id: 'l6-a', value: false }] },
+        ],
+      },
+      {
+        key: 'conversions', title: 'Conversions', icon: 'filter_alt',
+        rows: [
+          { id: 'v1', q: `Which record represents a Conversion in your ${CRM}?`, pills: [{ kind: 'map', t: 'Conversion.sf' }] },
+          { id: 'v2', q: 'Which date field tells us when a Conversion first became a Conversion?', pills: [{ kind: 'map', t: 'Conversion.date' }] },
+          { id: 'v3', q: 'Which field records the Revenue associated with the Conversion?', pills: [{ kind: 'map', t: 'Revenue.sf' }] },
+          { id: 'v4', q: 'Are all Conversions considered conversions, or does their status change if they are a conversion or not?', pills: [{ kind: 'answer', id: 'v4-a', value: false }] },
+          { id: 'v5', q: 'Within your Conversion, which field tells us their current status?', pills: [{ kind: 'text', t: 'Text' }] },
+          { id: 'v6', q: 'Select the status that represents a Conversion stage for a Conversion:', pills: [{ kind: 'text', t: 'Text' }] },
+          { id: 'v7', q: 'Would you like to configure Advanced settings for defining a conversion?', pills: [{ kind: 'yesSettings', t: 'Yes, see settings' }] },
+        ],
+      },
+      {
+        key: 'automations', title: 'Automations', icon: 'auto_awesome',
+        rows: [
+          { id: 'a1', q: 'Which Salesforce records should we use as potential triggers for your automation?', pills: [
+            { kind: 'map', t: 'Record' }, { kind: 'map', t: 'Record2' }, { kind: 'more', t: '…3 more' },
+          ] },
+        ],
+      },
+    ];
+
+    function ConnectedPill() {
+      return html`<span style=${{ display: 'inline-flex', alignItems: 'center', gap: 6,
+        font: 'var(--text-label)', color: 'var(--success-text-icon-default)' }}>
+        Connected
+        <${Icon} name="check_circle" filled=${true} size="small" color="var(--success-text-icon-default)" />
+      </span>`;
+    }
+
+    function App() {
+      const [toast, setToast] = React.useState(null);
+      // toggleable answer state, seeded from the data
+      const [answers, setAnswers] = React.useState(() => {
+        const a = {};
+        for (const s of SECTIONS) for (const r of s.rows) for (const p of r.pills)
+          if (p.kind === 'answer') a[p.id] = p.value;
+        return a;
+      });
+
+      const fire = (msg) => setToast(msg);
+      React.useEffect(() => {
+        if (!toast) return;
+        const t = setTimeout(() => setToast(null), 2400);
+        return () => clearTimeout(t);
+      }, [toast]);
+
+      const renderPill = (p) => {
+        if (p.kind === 'connected') return html`<${ConnectedPill} key="c" />`;
+        if (p.kind === 'answer') {
+          const yes = answers[p.id];
+          return html`<${BadgeChip} key=${p.id}
+            label=${yes ? 'Yes' : 'No'} color=${yes ? 'success' : 'warning'}
+            style=${{ cursor: 'pointer' }}
+            onClick=${() => setAnswers(a => ({ ...a, [p.id]: !a[p.id] }))} />`;
+        }
+        if (p.kind === 'yesSettings') return html`<${BadgeChip} key="ys"
+          label=${p.t} color="success" style=${{ cursor: 'pointer' }}
+          onClick=${() => fire('Opening advanced conversion settings…')} />`;
+        // map / text / more → brand field-mapping chips
+        return html`<${BadgeChip} key=${p.t} label=${p.t} color="brand" />`;
+      };
+
+      return html`<div class="frame">
+        <!-- step progress indicator -->
+        <div class="steps">
+          ${STEPS.map((s, i) => html`
+            ${React.createElement(React.Fragment, { key: 'f' + i },
+              html`<div class="step">
+                <div class=${'step__dot ' + (s.done ? 'step__dot--done' : 'step__dot--current')}>
+                  <span class="material-symbols-rounded">${s.done ? 'check' : 'workspace_premium'}</span>
+                </div>
+                <span class="step__label">${s.label}</span>
+              </div>`,
+              i < STEPS.length - 1 && html`<div class="step__connector"></div>`
+            )}
+          `)}
+        </div>
+
+        <h1 class="review-title">Review your Setup</h1>
+
+        ${SECTIONS.map(sec => html`<div class="section" key=${sec.key}>
+          <div class="section__head">
+            <${Icon} name=${sec.icon} filled=${true} size="regular" color="var(--brand-text-icon-default)" />
+            <span class="section__title">${sec.title}</span>
+          </div>
+          <div class="section__card">
+            ${sec.rows.map(r => html`<div class="qrow" key=${r.id}>
+              <span class="qrow__q">${r.q}</span>
+              <div class="qrow__pills">
+                ${r.pills.map(renderPill)}
+                <${IconButton} icon="cached" size="small" kind="ghost"
+                  onClick=${() => fire('Re-syncing field mapping…')} />
+              </div>
+            </div>`)}
+          </div>
+        </div>`)}
+
+        <div class="foot">
+          <${Button} kind="secondary" label="Back" onClick=${() => fire('Back to Setup Automations')} />
+          <${Button} kind="primary" label="Finish Setup" onClick=${() => fire('Setup complete — connecting ' + CRM + '…')} />
+        </div>
+
+        ${toast && html`<div style=${{ position: 'fixed', right: 24, bottom: 24, zIndex: 50 }}>
+          <${Toast} color="brand" title=${toast} />
+        </div>`}
+      </div>`;
+    }
+
+    createRoot(document.getElementById('root')).render(html`<${App} />`);
+  </script>
+</body>
+</html>

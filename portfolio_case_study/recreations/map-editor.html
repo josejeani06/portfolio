@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Ivanlabs Design System — Map Targeting Editor</title>
+
+<link rel="stylesheet" href="https://unpkg.com/@ivancreatelabs/design-system@0.4.0/dist/tokens.css" />
+<link rel="stylesheet" href="https://unpkg.com/@ivancreatelabs/design-system@0.4.0/dist/typography.css" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" />
+
+<style>
+  :root { --ink: 24 26 42; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    background: transparent;   /* no page bg */
+    font-family: var(--font-family-body);
+    padding: 28px;             /* block layout — hugs content height */
+  }
+
+  /* ONE container card — the map fills it */
+  .frame {
+    width: 1040px;
+    max-width: 100%;
+    margin: 0 auto;
+    background: var(--neutral-bg-default);
+    border: 1px solid var(--neutral-border-muted);
+    border-radius: 16px;
+    box-shadow: 0 1px 2px rgb(var(--ink) / .05), 0 6px 16px rgb(var(--ink) / .05);
+    padding: 10px;
+    animation: frameIn .6s ease both;
+  }
+  @keyframes frameIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { .frame { animation: none; } }
+
+  /* the editing surface */
+  .map { position: relative; width: 100%; height: 620px; border-radius: 10px; overflow: hidden; }
+
+  /* satellite tint layer (toggled) */
+  .sat { position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .25s ease;
+         background: linear-gradient(135deg, #1f2a3a, #33475f 55%, #46617e); }
+  .sat.on { opacity: .82; }
+
+  /* absolutely-placed overlay clusters */
+  .ov { position: absolute; z-index: 3; }
+  .ov--tl { top: 16px; left: 16px; display: flex; align-items: flex-start; gap: 10px; flex-wrap: wrap; max-width: 520px; }
+  .ov--tr { top: 16px; right: 16px; display: flex; gap: 10px; }
+  .ov--bl { bottom: 16px; left: 16px; }
+  .ov--br { bottom: 16px; right: 16px; display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
+
+  /* Map Options toggle button (styled like a DS secondary control) */
+  .mapbtn {
+    display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 12px;
+    border: 1px solid var(--neutral-border-default); border-radius: calc(var(--control-md-radius) * 1px);
+    background: var(--neutral-bg-default); font: var(--text-subtitle); color: var(--neutral-text-icon-emphasis);
+    cursor: pointer; box-shadow: 0 1px 3px rgb(var(--ink) / .10);
+  }
+  .mapbtn .material-symbols-rounded { font-size: 18px; color: var(--neutral-text-icon-muted); }
+
+  /* purple map-name chip */
+  .namechip {
+    display: inline-flex; align-items: center; gap: 6px; height: 32px; padding: 0 8px 0 12px;
+    margin-top: 4px; border-radius: 999px; background: var(--brand-bg-subtle);
+    border: 1px solid var(--brand-border-default); color: var(--brand-text-icon-default);
+    font: var(--text-subtitle); cursor: pointer;
+  }
+  .namechip .material-symbols-rounded { cursor: pointer; }
+
+  /* zoom control */
+  .zoom { display: flex; flex-direction: column; background: var(--neutral-bg-default);
+          border-radius: 10px; box-shadow: 0 2px 10px rgb(var(--ink) / .16); overflow: hidden; }
+  .zoom button { width: 40px; height: 38px; border: 0; background: transparent; cursor: pointer;
+                 display: grid; place-items: center; color: var(--neutral-text-icon-default); }
+  .zoom button:hover { background: var(--neutral-bg-subtle); }
+  .zoom .zdiv { height: 1px; background: var(--neutral-border-muted); }
+
+  /* Select Area By control */
+  .selarea { display: inline-flex; align-items: center; gap: 10px; height: 40px; padding: 0 8px 0 14px;
+             background: var(--neutral-bg-default); border-radius: 10px; box-shadow: 0 2px 10px rgb(var(--ink) / .16);
+             font: var(--text-subtitle); color: var(--neutral-text-icon-emphasis); }
+  .selchip { display: inline-flex; align-items: center; gap: 4px; height: 28px; padding: 0 8px;
+             border: 1px solid var(--neutral-border-default); border-radius: 8px; background: var(--neutral-bg-default);
+             font: var(--text-subtitle); color: var(--neutral-text-icon-strong); cursor: pointer; }
+  .selchip .material-symbols-rounded { font-size: 18px; color: var(--neutral-text-icon-muted); }
+
+  /* neutral attribution strip (faux terrain — not a real map) */
+  .attr { position: absolute; bottom: 6px; left: 50%; transform: translateX(-50%); z-index: 2;
+          font: var(--text-caption); color: var(--neutral-text-icon-muted); opacity: .8; }
+
+  /* --- auto-play demo --- */
+  .shape { transition: opacity .55s ease, transform .6s cubic-bezier(.22,1,.36,1); transform-box: fill-box; transform-origin: center; }
+  .hlw { position: relative; display: inline-flex; border-radius: 12px; }
+  .hlw.hl::after { content: ''; position: absolute; inset: -5px; border-radius: 14px;
+                   box-shadow: 0 0 0 3px var(--brand-border-focused); animation: pulse 1.3s ease-in-out infinite; pointer-events: none; }
+  @keyframes pulse { 0%,100% { opacity: .3; } 50% { opacity: 1; } }
+  .demo-cap { position: absolute; bottom: 16px; left: 50%; transform: translateX(-50%); z-index: 6;
+              display: flex; align-items: center; gap: 12px; background: rgb(24 26 42 / .9); color: #fff;
+              padding: 9px 12px 9px 16px; border-radius: 999px; font: var(--text-subtitle);
+              box-shadow: 0 6px 20px rgb(var(--ink) / .28); white-space: nowrap; }
+  .demo-dots { display: flex; gap: 6px; margin-left: 2px; }
+  .demo-dot { width: 7px; height: 7px; border-radius: 99px; background: rgb(255 255 255 / .35); transition: .3s; }
+  .demo-dot.on { background: #fff; width: 18px; }
+  @media (prefers-reduced-motion: reduce) { .hlw.hl::after { animation: none; } .shape { transition: none; } }
+</style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="importmap">
+  { "imports": {
+      "react": "https://esm.sh/react@18.3.1",
+      "react-dom/client": "https://esm.sh/react-dom@18.3.1/client",
+      "react/jsx-runtime": "https://esm.sh/react@18.3.1/jsx-runtime",
+      "htm": "https://esm.sh/htm@3.1.1",
+      "@ivancreatelabs/design-system": "https://esm.sh/@ivancreatelabs/design-system@0.4.0?external=react,react-dom"
+  } }
+  </script>
+
+  <script type="module">
+    import React from 'react';
+    import { createRoot } from 'react-dom/client';
+    import htm from 'htm';
+    import * as DS from '@ivancreatelabs/design-system';
+
+    const html = htm.bind(React.createElement);
+    const {
+      MapSurface, ChangeMap, MapOptions, SelectAreaDropdown,
+      GroupedButton, BubbleBox, BadgeChip, Button, Icon
+    } = DS;
+
+    const I = (name, props = {}) => html`<${Icon} name=${name} ...${props} />`;
+
+    const AREAS = ['Zip Code', 'County', 'City', 'State'];
+    const CAPS = [
+      { t: 'Start with a blank map', i: 'map' },
+      { t: 'Draw a radius around any point', i: 'radio_button_checked' },
+      { t: 'Or draw a custom polygon', i: 'pentagon' },
+      { t: 'Select by ZIP, county, city or state', i: 'layers' },
+      { t: 'Your audience builds in real time', i: 'group' },
+    ];
+
+    function App() {
+      const [step, setStep] = React.useState(0);      // 0 blank → 1 radius → 2 polygon → 3 select → 4 audience
+      const [areaIdx, setAreaIdx] = React.useState(0);
+      const [homes, setHomes] = React.useState(0);
+      const [view, setView] = React.useState(0);
+
+      // auto-play loop through every function
+      React.useEffect(() => {
+        const id = setInterval(() => { setStep(s => (s + 1) % 5); setAreaIdx(a => (a + 1) % 4); }, 2200);
+        return () => clearInterval(id);
+      }, []);
+
+      // count the audience up when a selection exists
+      React.useEffect(() => {
+        if (step >= 3) {
+          let raf, start = null; const target = 13204;
+          const tick = (t) => { if (start == null) start = t; const p = Math.min(1, (t - start) / 1100);
+            setHomes(Math.round(target * (1 - Math.pow(1 - p, 3)))); if (p < 1) raf = requestAnimationFrame(tick); };
+          raf = requestAnimationFrame(tick); return () => cancelAnimationFrame(raf);
+        }
+        setHomes(0);
+      }, [step]);
+
+      const radiusOn = step >= 1, polyOn = step >= 2, popOn = step >= 3;
+      const hl = (n) => 'hlw' + (step === n ? ' hl' : '');
+
+      return html`<div class="frame">
+        <div class="map">
+          <${MapSurface}>
+            <div class=${'sat' + (view === 1 ? ' on' : '')}></div>
+
+            <svg aria-hidden="true" viewBox="0 0 1020 620" preserveAspectRatio="none"
+                 style=${{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}>
+              <circle class="shape" cx="420" cy="320" r="165" fill="var(--brand-bg-default)" fillOpacity="0.14"
+                      stroke="var(--brand-bg-default)" strokeWidth="2.5"
+                      style=${{ opacity: radiusOn ? 1 : 0, transform: radiusOn ? 'scale(1)' : 'scale(.25)' }} />
+              <polygon class="shape" points="640,150 810,190 800,360 690,410 615,270"
+                       fill="var(--info-bg-default)" fillOpacity="0.12"
+                       stroke="var(--info-bg-default)" strokeWidth="2.5" strokeDasharray="8 6"
+                       style=${{ opacity: polyOn ? 1 : 0, transform: polyOn ? 'scale(1)' : 'scale(.25)' }} />
+            </svg>
+
+            <span class="shape" style=${{ position: 'absolute', left: 404, top: 250, zIndex: 2,
+                  opacity: radiusOn ? 1 : 0, transform: radiusOn ? 'scale(1)' : 'scale(.4)', transformOrigin: 'bottom center' }}>
+              ${I('location_on', { filled: true, color: 'var(--brand-bg-default)', style: { fontSize: 40 } })}
+            </span>
+
+            <div class="attr">Faux terrain preview · Ivanlabs Maps</div>
+
+            <div class="ov ov--tl">
+              <button class="mapbtn">Map Options<span class="material-symbols-rounded">expand_more</span></button>
+              <${ChangeMap} name="Change Map" />
+              <span class="namechip">Map Name ${I('close', { size: 'small', color: 'var(--brand-text-icon-default)' })}</span>
+            </div>
+
+            <div class="ov ov--tr">
+              <span class=${hl(1)}><${Button} kind="primary" size="sm" icon="radio_button_checked" label="Add Radius" /></span>
+              <span class=${hl(2)}><${Button} kind="primary" size="sm" icon="pentagon" label="Add Polygon" /></span>
+            </div>
+
+            <div class="ov" style=${{ left: 300, top: 130, opacity: popOn ? 1 : 0,
+                 transform: popOn ? 'translateY(0)' : 'translateY(10px)', transition: 'opacity .4s ease, transform .4s ease',
+                 pointerEvents: popOn ? 'auto' : 'none' }}>
+              <${BubbleBox} title=${AREAS[areaIdx] + ' · 951' + (27 + areaIdx)} homes=${homes.toLocaleString()} area="18.4 sq mi" />
+            </div>
+
+            <div class="ov ov--bl">
+              <${GroupedButton} options="Map,Satellite" kind="secondary" active=${view} onSelect=${setView}
+                style=${{ background: 'var(--neutral-bg-default)', boxShadow: '0 2px 10px rgb(var(--ink) / .16)' }} />
+            </div>
+
+            <div class="ov ov--br">
+              <div class="zoom">
+                <button aria-label="Zoom in">${I('add', { color: 'var(--neutral-text-icon-default)' })}</button>
+                <div class="zdiv"></div>
+                <button aria-label="Zoom out">${I('remove', { color: 'var(--neutral-text-icon-default)' })}</button>
+              </div>
+              <span class=${hl(3)}><div class="selarea">
+                <span>Select Area By</span>
+                <button class="selchip">${AREAS[areaIdx]}<span class="material-symbols-rounded">expand_more</span></button>
+              </div></span>
+            </div>
+
+            <div class="demo-cap">
+              ${I(CAPS[step].i, { size: 'small', color: '#fff' })}
+              <span>${CAPS[step].t}</span>
+              <span class="demo-dots">${[0, 1, 2, 3, 4].map(i => html`<span key=${i} class=${'demo-dot' + (i === step ? ' on' : '')}></span>`)}</span>
+            </div>
+          <//>
+        </div>
+      </div>`;
+    }
+
+    createRoot(document.getElementById('root')).render(html`<${App} />`);
+  </script>
+</body>
+</html>
