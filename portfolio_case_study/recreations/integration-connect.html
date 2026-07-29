@@ -31,13 +31,14 @@
      absolutely on top of the live components */
   .animwrap { position: relative; }
 
-  /* 3 states crossfade in place; fixed height keeps the frame stable */
-  .flowstage { position: relative; height: 780px; }
+  /* 3 states crossfade in place. Keep enough room for the full pulse while
+     letting the embedded artboard hug the active connection state. */
+  .flowstage { position: relative; height: 660px; }
   .flowlayer { position: absolute; inset: 0; opacity: 0; transform: translateY(8px);
                transition: opacity .4s ease, transform .4s ease; pointer-events: none;
                display: flex; flex-direction: column; }
   .flowlayer.on { opacity: 1; transform: none; pointer-events: auto; }
-  .flowlayer--center { justify-content: center; align-items: center; text-align: center; }
+  .flowlayer--center { justify-content: center; align-items: center; text-align: center; padding-top: 42px; }
 
   .mock { font-family: var(--font-family-body); color: var(--neutral-text-icon-strong); width: 100%; }
   .row { display: flex; align-items: center; }
