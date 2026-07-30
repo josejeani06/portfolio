@@ -99,6 +99,15 @@
     .landing-outcomes{display:flex;flex-wrap:wrap}
     .landing-outcomes span{min-height:auto;padding:0;border:0;border-radius:0;background:transparent;color:#26251f;font-size:15px;font-weight:650;line-height:1.4}
     .landing-outcomes .outcome-check{width:18px;height:18px;margin-right:8px;flex:0 0 auto;color:#26834a}
+    .landing-actions{align-items:center;gap:12px;margin-top:28px}
+    .landing-actions .landing-email{min-height:44px;padding:0 6px;color:var(--ink);font-size:15px;font-weight:800}
+    .landing-actions .landing-email:hover{color:var(--blue-2)}
+    .landing-icon-link{display:inline-grid;place-items:center;width:44px;height:44px;border:1px solid var(--line);border-radius:50%;background:rgba(255,255,255,.6);color:var(--ink);transition:transform 160ms ease,background 160ms ease,color 160ms ease}
+    .landing-icon-link:hover{transform:translateY(-2px);background:var(--ink);color:#fffaf5}
+    .landing-icon-link:focus-visible{outline:3px solid rgba(207,59,35,.28);outline-offset:3px}
+    .landing-icon-link .behance-mark{min-width:0;height:auto;padding:0;border-radius:0;background:transparent;color:currentColor;font-size:16px}
+    .landing-icon-link .landing-linkedin-mark{display:grid;place-items:center;width:auto;height:auto;border-radius:0;background:transparent;color:currentColor}
+    .landing-icon-link .landing-linkedin-mark svg{width:18px;height:18px}
     @media(max-width:760px){.skills-row{grid-template-columns:1fr;gap:12px;padding:18px 0}.skills-label{padding-top:0}}
     /* flush the next-step section against the approach above it */
     /* tighter section rhythm (match the case study), top-aligned heads, white eyebrow badge */
@@ -286,23 +295,13 @@
         </div>
         <div class="landing-actions reveal-up reveal-delay-3">
           <a class="button landing-button" href="#work">View case studies</a>
-          <a class="landing-text-link landing-behance-link" href="https://www.behance.net/ivancreatives" target="_blank" rel="noreferrer">
+          <a class="landing-email" href="mailto:helloivanjose@gmail.com">helloivanjose@gmail.com</a>
+          <a class="landing-icon-link" href="https://www.behance.net/ivancreatives" target="_blank" rel="noreferrer" aria-label="Open Jean Ivan Jose on Behance" title="Behance">
             <span class="behance-mark" aria-hidden="true">Bē</span>
-            <span>Visit Portfolio</span>
           </a>
-        </div>
-        <div class="landing-contact reveal-up reveal-delay-3" aria-label="Contact Jean Ivan Jose">
-          <div class="landing-email-group">
-            <a class="landing-email" href="mailto:helloivanjose@gmail.com">helloivanjose@gmail.com</a>
-            <button class="landing-copy-email" type="button" data-copy-email="helloivanjose@gmail.com" aria-label="Copy email address" title="Copy email address">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"></rect><path d="M15 9V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h4"></path></svg>
-            </button>
-          </div>
-          <a class="landing-linkedin" href="https://www.linkedin.com/in/ivancreatives/" target="_blank" rel="noreferrer" aria-label="Open Jean Ivan Jose on LinkedIn">
+          <a class="landing-icon-link" href="https://www.linkedin.com/in/ivancreatives/" target="_blank" rel="noreferrer" aria-label="Open Jean Ivan Jose on LinkedIn" title="LinkedIn">
             <span class="landing-linkedin-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5.37 3.1A2.37 2.37 0 1 1 5.4 7.84 2.37 2.37 0 0 1 5.37 3.1ZM3.3 9.7h4.14V21H3.3V9.7ZM10.04 9.7H14v1.54h.06c.55-1.04 1.9-2.14 3.9-2.14 4.18 0 4.95 2.75 4.95 6.32V21h-4.13v-4.96c0-1.18-.02-2.7-1.64-2.7-1.65 0-1.9 1.29-1.9 2.62V21h-4.14V9.7Z"></path></svg></span>
-            <span>LinkedIn</span>
           </a>
-          <span class="copy-feedback" data-copy-feedback aria-live="polite"></span>
         </div>
       </div>
     </section>
