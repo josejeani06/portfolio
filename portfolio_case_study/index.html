@@ -225,6 +225,16 @@
       .landing-email-group{width:100%}
       .landing-email{min-width:0;flex:1;font-size:14px;overflow-wrap:anywhere}
       .landing-linkedin{justify-content:flex-start}
+      /* tight section spacing: 40px on sections that have padding, no dead gap */
+      .landing-section,#approach.landing-section{padding:40px 0}
+      .landing-section-head{padding:0;margin-bottom:18px}
+      .landing-hero{padding:40px 0 32px}
+      .landing-proof{padding:36px 0;margin:0}
+      .landing-cta-section{padding:40px 0}
+      /* case-study preview cards + "other work" cards go edge to edge */
+      .landing-case,.other-card{width:100vw;margin-left:calc(50% - 50vw);border-radius:0;border-left:0;border-right:0;box-shadow:none}
+      .landing-case{border-top:0}
+      .landing-case-cover,.other-cover{border-radius:0}
     }
 
     /* ===== Case list: vertical stack — full-width image, then text ===== */
@@ -414,7 +424,7 @@
 
           <a class="landing-case reveal-up reveal-delay-2" href="org-management-case-study.html">
             <div class="landing-case-cover">
-              <img src="images/new%20org/grid%20templates.png" alt="Organization templates with group hierarchy, shared scopes, and centrally governed assets" onerror="this.closest('.landing-case-cover').classList.add('is-placeholder');this.remove()">
+              <img src="images/new%20org/grid%20templates.webp" alt="Organization templates with group hierarchy, shared scopes, and centrally governed assets" onerror="this.closest('.landing-case-cover').classList.add('is-placeholder');this.remove()">
             </div>
             <div class="landing-case-body">
               <div class="landing-case-meta">03 · Organization management</div>
@@ -430,7 +440,7 @@
 
           <a class="landing-case reveal-up reveal-delay-3" href="billing-case-study.html">
             <div class="landing-case-cover">
-              <img src="images/new%20billing/Manage%20Members%20at%20Group%20Level.png" alt="Billing Management overview showing group balances, payment access, monthly caps, and account moves" onerror="this.closest('.landing-case-cover').classList.add('is-placeholder');this.remove()">
+              <img src="images/new%20billing/Manage%20Members%20at%20Group%20Level.webp" alt="Billing Management overview showing group balances, payment access, monthly caps, and account moves" onerror="this.closest('.landing-case-cover').classList.add('is-placeholder');this.remove()">
             </div>
             <div class="landing-case-body">
               <div class="landing-case-meta">04 · Organization billing &amp; spend</div>
@@ -500,7 +510,7 @@
 
           <article class="other-card reveal-up reveal-delay-2" data-domain="web">
             <a href="https://www.ajlatelier.com/" target="_blank" rel="noopener noreferrer" aria-label="AJL Atelier — Webflow CMS marketing site with dynamic pages and podcast (opens in a new tab)">
-              <div class="other-cover"><img src="images/ajl thumbnail new.png" alt="AJL Atelier — Webflow CMS marketing site, podcast, editorial pages, and lead-capture forms" loading="lazy"></div>
+              <div class="other-cover"><img src="images/ajl thumbnail new.webp" alt="AJL Atelier — Webflow CMS marketing site, podcast, editorial pages, and lead-capture forms" loading="lazy"></div>
               <div class="other-body">
                 <div class="other-kicker">Webflow CMS · Live site</div>
                 <h3>AJL Atelier — consultancy + podcast</h3>
@@ -512,7 +522,7 @@
 
           <article class="other-card reveal-up reveal-delay-3" data-domain="web">
             <a href="https://asymmetry.vc/portfolio/" target="_blank" rel="noopener noreferrer" aria-label="Asymmetry VC portfolio — WordPress and Elementor site with a CMS-driven portfolio grid (opens in a new tab)">
-              <div class="other-cover"><img src="images/asymmetry vc.png" alt="Asymmetry Ventures — WordPress and Elementor site with a CMS-driven portfolio grid built from dynamic custom fields" loading="lazy"></div>
+              <div class="other-cover"><img src="images/asymmetry vc.webp" alt="Asymmetry Ventures — WordPress and Elementor site with a CMS-driven portfolio grid built from dynamic custom fields" loading="lazy"></div>
               <div class="other-body">
                 <div class="other-kicker">WordPress · Elementor</div>
                 <h3>Asymmetry VC — portfolio site</h3>
@@ -524,7 +534,7 @@
 
           <article class="other-card reveal-up reveal-delay-4" data-domain="web">
             <a href="https://www.hypervestor.com/" target="_blank" rel="noopener noreferrer" aria-label="Hypervestor — WordPress marketing site for an early-stage investor platform with dynamic deal listings (opens in a new tab)">
-              <div class="other-cover"><img src="images/hypervestor.png" alt="Hypervestor — WordPress marketing site for an early-stage investor platform with dynamic deal listings" loading="lazy"></div>
+              <div class="other-cover"><img src="images/hypervestor.webp" alt="Hypervestor — WordPress marketing site for an early-stage investor platform with dynamic deal listings" loading="lazy"></div>
               <div class="other-body">
                 <div class="other-kicker">WordPress · Live site</div>
                 <h3>Hypervestor — investor platform</h3>
