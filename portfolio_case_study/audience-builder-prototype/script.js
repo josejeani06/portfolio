@@ -218,9 +218,14 @@ let activeBoundaryKey = null;
 let boundaryFetchToken = 0;
 const boundaryDataCache = new Map();
 
+// autoPan keeps the whole bubble on-screen by panning the map until it fits;
+// the generous padding leaves room for the top controls and bottom bar so the
+// include/exclude bubble is never clipped on a phone.
 const popup = L.popup({
   closeButton: false,
   autoPan: true,
+  autoPanPadding: [22, 28],
+  keepInView: true,
   className: "selection-popup-shell",
   offset: [0, -10]
 });
@@ -2584,6 +2589,15 @@ function mountDesignSystem() {
     radius: () => setDrawMode("radius"),
     polygon: () => setDrawMode("polygon"),
   });
+
+  // Mobile-only dropdown variant of the same two actions (CSS shows one or the other).
+  var drawActionsMobile = document.getElementById("drawActionsMobile");
+  if (drawActionsMobile) {
+    DS.drawActionsMobile(drawActionsMobile, {
+      radius: () => setDrawMode("radius"),
+      polygon: () => setDrawMode("polygon"),
+    });
+  }
 
   DS.zoom(zoomControl, { in: () => map.zoomIn(), out: () => map.zoomOut() });
 

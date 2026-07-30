@@ -147,6 +147,21 @@
     }));
   }
 
+  // Mobile only: the two draw actions collapse into ONE dropdown trigger so they
+  // don't crowd a phone-width map. Reuses MapOptions (a self-dismissing
+  // SelectButton) — same menu affordance as "Map Options".
+  function drawActionsMobile(el, on) {
+    render(el, h(IVDS.MapOptions, {
+      label: "Draw area",
+      icon: "gesture",
+      options: [
+        { value: "radius", label: "Add Radius", icon: "my_location" },
+        { value: "polygon", label: "Add Polygon", icon: "polyline" },
+      ],
+      onSelect: (value) => (value === "radius" ? on.radius() : on.polygon()),
+    }));
+  }
+
   function zoom(el, on) {
     render(el, h(IVDS.GroupedButton, {
       kind: "secondary",
@@ -247,7 +262,7 @@
 
   window.DS = {
     rows, emptyState, summary, search, searchMenu,
-    drawActions, zoom, mapOptions, viewToggle, areaSelect, areaMenu,
+    drawActions, drawActionsMobile, zoom, mapOptions, viewToggle, areaSelect, areaMenu,
     modeBanner, boundaryLoading, bubbleBox,
     _searchInput: null,
   };

@@ -673,16 +673,25 @@
       @keyframes eco-rtl{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
       .eco-legend{ margin-top:24px; font-size:13.5px; color:var(--eco-muted); text-align:center; }
       .eco-legend .eco-dot{ display:inline-block; width:9px; height:9px; border-radius:999px; background:var(--eco-new); margin-right:4px; vertical-align:middle; }
-      /* Mobile prioritizes scanning over marquee motion: every unique connector stays visible in a three-column grid. */
+      /* Mobile keeps the 3-row auto-scroll marquee (same as desktop, just smaller): low padding, low corner, side gradient clip. */
       @media (max-width:639px){
-        .eco{ --eco-cols:3; --eco-gap:12px; }
-        .eco-marquee{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:var(--eco-gap); padding:0; overflow:visible; -webkit-mask-image:none; mask-image:none; }
-        .eco-row,.eco-track{ display:contents; }
-        .eco-track{ animation:none !important; transform:none !important; }
-        .eco-card{ width:auto; height:148px; padding:10px 8px; gap:8px; }
-        .eco-card__media{ height:70px; }
-        .eco-card__title{ font-size:12px; line-height:1.18; }
-        .eco-card[aria-hidden="true"]{ display:none; }
+        .eco{ --eco-cols:3; --eco-gap:8px; }
+        .eco-marquee{
+          display:flex; flex-direction:column; gap:var(--eco-gap); padding:6px 0; overflow:hidden;
+          -webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
+                  mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
+        }
+        .eco-row{ display:block; }
+        .eco-track{ display:flex; gap:var(--eco-gap); width:max-content; }
+        .eco-card{
+          width:calc((100cqw - var(--eco-cols) * var(--eco-gap)) / var(--eco-cols));
+          height:112px; padding:8px; gap:6px; border-radius:10px; border-width:1px;
+        }
+        .eco-card__media{ height:56px; }
+        .eco-card__title{ font-size:11px; line-height:1.15; }
+        .eco-card__desc{ display:none; }
+        .eco-card__core{ top:5px; left:5px; height:16px; padding:0 5px; font-size:8.5px; }
+        .eco-card__new{ top:5px; right:5px; height:15px; padding:0 5px; font-size:8px; }
       }
       /* ≥640px — still 4-up, but roomier with descriptions restored */
       @media (min-width:640px){
@@ -719,7 +728,64 @@
         .eco-marquee{ overflow-x:auto; -webkit-mask-image:none; mask-image:none; }
         .eco-track{ animation:none !important; }
       }
-    </style>
+    
+    /* ===================== MOBILE (≤640px) — see skill: mobile-case-study =====================
+       Placed after the ≤900 restacks so these win. Selectors absent on a page are no-ops. */
+    @media(max-width:640px){
+      .section{padding:40px 0!important}
+      /* compare slider: full-bleed the de-boxed stage */
+      #compare .compare-stage{width:100vw;max-width:none;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw)}
+      #compare .compare-slider,.compare-slider{border-radius:0;border-left:0;border-right:0}
+      /* scroll-story mobile media: full-bleed */
+      .scroll-story-mobile-media{width:100vw;margin-left:calc(50% - 50vw)}
+      .scroll-story-mobile-media img{border-radius:0;border-left:0;border-right:0}
+      /* refinement carousel: video full-bleed, arrows BELOW it */
+      #refine-carousel .refine-viewport,.refine-viewport{width:100vw;max-width:none;margin-left:calc(50% - 50vw);border-radius:0;padding-bottom:56px}
+      #refine-carousel .refine-arrow,.refine-arrow{top:auto;bottom:8px;transform:none}
+      #refine-carousel .refine-arrow.prev,.refine-arrow.prev{left:calc(50% - 54px);right:auto}
+      #refine-carousel .refine-arrow.next,.refine-arrow.next{right:calc(50% - 54px);left:auto}
+      /* decision-log: keep 4 columns, scroll sideways */
+      .decision-log-table{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--line);border-radius:12px;background:#fff}
+      .decision-log-head,.decision-log-body{min-width:680px;grid-template-columns:1.1fr 1.1fr 1.2fr 1fr;gap:0}
+      .decision-log-head{padding:0}
+      .decision-log-head div{padding:12px 14px;font-size:11px;line-height:1.3;border-left:1px solid rgba(28,27,22,.08)}
+      .decision-log-head div:first-child{border-left:0}
+      .decision-log-body{padding:0}
+      .decision-log-body + .decision-log-body{border-top:1px solid rgba(28,27,22,.1)}
+      .decision-log-cell{padding:13px 14px;border-left:1px solid rgba(28,27,22,.08);margin-top:0}
+      .decision-log-cell:first-child{border-left:0}
+      .decision-log-cell + .decision-log-cell{margin-top:0;border-left:1px solid rgba(28,27,22,.08)}
+      .decision-log-cell p{font-size:12.5px;line-height:1.5}
+      .decision-log-cell::before{display:none}
+      /* persona table -> real table that scrolls sideways */
+      .persona-table-shell{overflow-x:auto;-webkit-overflow-scrolling:touch;padding:14px}
+      .persona-table{display:table;min-width:620px;border-collapse:collapse}
+      .persona-table thead{display:table-header-group}
+      .persona-table thead th{display:table-cell;padding:0 12px 8px}
+      .persona-table tbody{display:table-row-group}
+      .persona-table tr{display:table-row}
+      .persona-table tr + tr{border-top:0}
+      .persona-table td{display:table-cell;width:auto;padding:10px 12px;font-size:13px}
+      .persona-table tbody tr + tr td{border-top:1px solid var(--line)}
+      .persona-table td::before{display:none}
+      /* itable: scroll sideways, mobile font */
+      .itable{overflow-x:auto;-webkit-overflow-scrolling:touch}
+      .itable table{min-width:600px}
+      .itable td,.itable th{font-size:12.5px}
+      /* journey lanes: scroll steps sideways */
+      .journey-steps.cols-3,.journey-steps.cols-4{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(210px,72vw);overflow-x:auto;-webkit-overflow-scrolling:touch;gap:16px;padding-bottom:8px}
+      .journey-step{padding-left:16px}
+      /* all image presentations go 100% of the screen */
+      .shot,.shot-wide{width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);margin-top:20px}
+      .shot-frame{border-radius:0;border-left:0;border-right:0;box-shadow:none}
+      .concept-carousel{width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);border-radius:0;padding:16px 0}
+      .concept-carousel-shell{padding:0 0 58px}
+      .concept-carousel-copy{padding:0 16px}
+      .concept-carousel-media img{width:100%;max-height:none;border-radius:0;border-left:0;border-right:0}
+      /* consistent card padding + radius across the page's content boxes */
+      .callout,.result-band,.note-box,.note-dark,.story-diagram,.discovery-band{padding:18px;border-radius:12px}
+    }
+  </style>
     <section class="section eco">
       <div class="container">
         <div class="section-head">
@@ -1549,5 +1615,6 @@
       render();
     })();
   </script>
+  <script defer src="case-study-mobile.js"></script>
 </body>
 </html>

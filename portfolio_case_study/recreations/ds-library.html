@@ -58,6 +58,13 @@
   }
   .cell.wide { grid-column: span 2; }
   @media (max-width: 520px) { .cell.wide { grid-column: span 1; } }
+  /* phone: compact 2-column grid, smaller radius/padding — optimal for mobile */
+  @media (max-width: 560px) {
+    .gallery { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .cell { min-height: 108px; padding: 12px 12px 10px; border-radius: 10px; gap: 10px; }
+    .cell.wide { grid-column: span 2; }
+    .clabel { font-size: 11px; }
+  }
 
   /* the live component sits here */
   .demo {

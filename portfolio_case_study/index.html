@@ -19,10 +19,14 @@
   <meta name="twitter:description" content="Senior Product Designer shipping end-to-end B2B SaaS with an AI-assisted, cross-functional workflow." />
   <meta name="twitter:image" content="https://josejeani06.github.io/portfolio/images/map-audience-builder.png" />
   <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
+    /* Clarity: keep the queue available immediately, but defer loading the tag
+       script until the page is idle/loaded so it never competes with first paint. */
+    (function(c,l,a,r,i){
         c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        var inject=function(){var t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;var y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);};
+        var schedule=function(){(window.requestIdleCallback||window.setTimeout)(inject,1);};
+        if(document.readyState==="complete"){schedule();}
+        else{window.addEventListener("load",schedule,{once:true});}
     })(window, document, "clarity", "script", "xu2es8f588");
   </script>
   <script type="application/ld+json">
@@ -40,7 +44,10 @@
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- below-the-fold live embeds pull React from these CDNs; warm the connections early -->
+  <link rel="preconnect" href="https://unpkg.com" crossorigin>
+  <link rel="preconnect" href="https://esm.sh" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=content_copy" />
   <link rel="stylesheet" href="style.css" />
   <style>
@@ -113,6 +120,15 @@
     .landing-icon-link .behance-mark{min-width:0;height:auto;padding:0;border-radius:0;background:transparent;color:currentColor;font-size:16px}
     .landing-icon-link .landing-linkedin-mark{display:grid;place-items:center;width:auto;height:auto;border-radius:0;background:transparent;color:currentColor}
     .landing-icon-link .landing-linkedin-mark svg{width:18px;height:18px}
+    .landing-icon-link .landing-whatsapp-mark{display:grid;place-items:center;color:currentColor}
+    .landing-icon-link .landing-whatsapp-mark svg{width:19px;height:19px;fill:currentColor}
+    .landing-icon-link--whatsapp:hover{background:#25D366;border-color:#25D366;color:#fff}
+    /* footer CTA social row */
+    .landing-cta-actions{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:16px}
+    .landing-cta-social{display:inline-flex;gap:10px;align-items:center}
+    /* mobile perf: drop the perpetual grid drift + the pointer-driven blur blob (touch has no hover) */
+    @media(max-width:640px){.landing-grid{animation:none}.landing-blob{display:none}}
+    @media(hover:none) and (pointer:coarse){.landing-blob{display:none}}
     @media(max-width:760px){.skills-row{grid-template-columns:1fr;gap:12px;padding:18px 0}.skills-label{padding-top:0}}
     /* flush the next-step section against the approach above it */
     /* tighter section rhythm (match the case study), top-aligned heads, white eyebrow badge */
@@ -312,6 +328,9 @@
           <a class="landing-icon-link" href="https://www.linkedin.com/in/ivancreatives/" target="_blank" rel="noreferrer" aria-label="Open Jean Ivan Jose on LinkedIn" title="LinkedIn">
             <span class="landing-linkedin-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5.37 3.1A2.37 2.37 0 1 1 5.4 7.84 2.37 2.37 0 0 1 5.37 3.1ZM3.3 9.7h4.14V21H3.3V9.7ZM10.04 9.7H14v1.54h.06c.55-1.04 1.9-2.14 3.9-2.14 4.18 0 4.95 2.75 4.95 6.32V21h-4.13v-4.96c0-1.18-.02-2.7-1.64-2.7-1.65 0-1.9 1.29-1.9 2.62V21h-4.14V9.7Z"></path></svg></span>
           </a>
+          <a class="landing-icon-link landing-icon-link--whatsapp" href="https://wa.me/639679223947" target="_blank" rel="noopener" aria-label="Chat with Jean Ivan Jose on WhatsApp" title="WhatsApp">
+            <span class="landing-whatsapp-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-3-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.6-6.1c-.25-.13-1.5-.74-1.7-.82-.23-.08-.4-.13-.56.13-.17.25-.64.82-.79.99-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.02-1.25-.75-.66-1.25-1.48-1.4-1.73-.14-.25-.01-.39.11-.51.11-.11.25-.29.38-.44.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.42h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1s.9 2.44 1.03 2.61c.13.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.43.53.6.19 1.15.16 1.58.1.48-.07 1.5-.61 1.71-1.2.21-.59.21-1.1.15-1.2-.06-.11-.23-.17-.48-.29z"></path></svg></span>
+          </a>
           <span class="copy-feedback" data-copy-feedback aria-live="polite"></span>
         </div>
       </div>
@@ -363,7 +382,7 @@
         <div class="landing-case-list">
           <a class="landing-case reveal-up" href="map-case-study.html">
             <div class="landing-case-cover">
-              <iframe class="case-live case-hover" data-w="1280" data-h="720" src="map-animation.html?embed=1" title="Preview: the audience map — search, radius and polygon, county include, ZIP exclude, save. Hover to play." loading="lazy" tabindex="-1"></iframe>
+              <iframe class="case-live case-hover" data-w="1280" data-h="720" data-src="map-animation.html?embed=1" title="Preview: the audience map — search, radius and polygon, county include, ZIP exclude, save. Hover to play." loading="lazy" tabindex="-1"></iframe>
             </div>
             <div class="landing-case-body">
               <div class="landing-case-meta">01 · Core targeting workflow</div>
@@ -379,7 +398,7 @@
 
           <a class="landing-case reveal-up reveal-delay-1" href="integration-case-study.html">
             <div class="landing-case-cover">
-              <iframe class="case-live case-hover" data-w="760" data-h="880" data-play-param="auto" data-play-mode="swap" src="recreations/integration-connect.html" title="Preview: the connect flow — type credentials, test, connecting, connected. Hover to play." loading="lazy" tabindex="-1"></iframe>
+              <iframe class="case-live case-hover" data-w="760" data-h="880" data-play-param="auto" data-play-mode="swap" data-src="recreations/integration-connect.html" title="Preview: the connect flow — type credentials, test, connecting, connected. Hover to play." loading="lazy" tabindex="-1"></iframe>
             </div>
             <div class="landing-case-body">
               <div class="landing-case-meta">02 · Platform integrations</div>
@@ -427,7 +446,7 @@
 
           <a class="landing-case reveal-up reveal-delay-4" href="design-system-case-study.html">
             <div class="landing-case-cover">
-              <iframe class="case-live" data-w="1040" data-h="903" src="recreations/ds-tokens.html" title="Live preview: the design system's token layers and swatch table" loading="lazy" tabindex="-1"></iframe>
+              <iframe class="case-live" data-w="1040" data-h="903" data-src="recreations/ds-tokens.html" title="Live preview: the design system's token layers and swatch table" loading="lazy" tabindex="-1"></iframe>
             </div>
             <div class="landing-case-body">
               <div class="landing-case-meta">05 · Design system · Personal project</div>
@@ -610,6 +629,31 @@
           <div>
             <span class="approach-number">05</span>
             <p>I treat B2B as consumer-grade underneath. A business may buy the product, but one person still has to build an audience, configure automation, and pay—largely on their own. So I design self-service B2B SaaS: the permissions, complexity, and scale a business needs, delivered with the speed, clarity, and ease of use people expect from consumer apps.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="landing-cta-section" id="contact">
+      <div class="container">
+        <div class="landing-cta reveal-up">
+          <div>
+            <div class="eyebrow">Let's work together</div>
+            <h2>Have a role or project in mind?</h2>
+          </div>
+          <div class="landing-cta-actions">
+            <a class="button landing-button" href="mailto:helloivanjose@gmail.com">Email me</a>
+            <div class="landing-cta-social" aria-label="Social links">
+              <a class="landing-icon-link" href="https://www.behance.net/ivancreatives" target="_blank" rel="noreferrer" aria-label="Open Jean Ivan Jose on Behance" title="Behance">
+                <span class="behance-mark" aria-hidden="true">Bē</span>
+              </a>
+              <a class="landing-icon-link" href="https://www.linkedin.com/in/ivancreatives/" target="_blank" rel="noreferrer" aria-label="Open Jean Ivan Jose on LinkedIn" title="LinkedIn">
+                <span class="landing-linkedin-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5.37 3.1A2.37 2.37 0 1 1 5.4 7.84 2.37 2.37 0 0 1 5.37 3.1ZM3.3 9.7h4.14V21H3.3V9.7ZM10.04 9.7H14v1.54h.06c.55-1.04 1.9-2.14 3.9-2.14 4.18 0 4.95 2.75 4.95 6.32V21h-4.13v-4.96c0-1.18-.02-2.7-1.64-2.7-1.65 0-1.9 1.29-1.9 2.62V21h-4.14V9.7Z"></path></svg></span>
+              </a>
+              <a class="landing-icon-link landing-icon-link--whatsapp" href="https://wa.me/639679223947" target="_blank" rel="noopener" aria-label="Chat with Jean Ivan Jose on WhatsApp" title="WhatsApp">
+                <span class="landing-whatsapp-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-3-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.6-6.1c-.25-.13-1.5-.74-1.7-.82-.23-.08-.4-.13-.56.13-.17.25-.64.82-.79.99-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.02-1.25-.75-.66-1.25-1.48-1.4-1.73-.14-.25-.01-.39.11-.51.11-.11.25-.29.38-.44.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.42h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1s.9 2.44 1.03 2.61c.13.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.43.53.6.19 1.15.16 1.58.1.48-.07 1.5-.61 1.71-1.2.21-.59.21-1.1.15-1.2-.06-.11-.23-.17-.48-.29z"></path></svg></span>
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -921,6 +965,28 @@
   </style>
   <script>
     (function () {
+      /* Lazy-load the live preview iframes: they each pull a React runtime from a
+         CDN, so we only set their src once the card nears the viewport. Keeps the
+         React bundles out of the initial page load (mobile Lighthouse). */
+      (function () {
+        var pending = [].slice.call(document.querySelectorAll(".case-live[data-src]"));
+        if (!pending.length) return;
+        function reveal() {
+          var vh = window.innerHeight || document.documentElement.clientHeight;
+          pending = pending.filter(function (f) {
+            var box = f.closest(".landing-case-cover") || f;
+            var r = box.getBoundingClientRect();
+            if (r.top < vh + 700 && r.bottom > -700) { f.src = f.dataset.src; return false; }
+            return true;
+          });
+          if (!pending.length) { window.removeEventListener("scroll", onScroll); window.removeEventListener("resize", onScroll); }
+        }
+        var t; function onScroll() { if (t) return; t = setTimeout(function () { t = 0; reveal(); }, 120); }
+        window.addEventListener("scroll", onScroll, { passive: true });
+        window.addEventListener("resize", onScroll, { passive: true });
+        reveal();
+      })();
+
       function fit() {
         document.querySelectorAll(".case-live").forEach(function (f) {
           try {
@@ -940,7 +1006,7 @@
       document.querySelectorAll("iframe.case-hover").forEach(function (f) {
         var card = f.closest(".landing-case");
         if (!card) return;
-        var base = f.getAttribute("src").split("#")[0];
+        var base = (f.getAttribute("src") || f.dataset.src || "").split("#")[0];
         var playParam = f.dataset.playParam || "play";   // some recreations use ?auto instead of ?play
         var playSrc = base + (base.indexOf("?") >= 0 ? "&" : "?") + playParam + "=1";
         var swapOnly = f.dataset.playMode === "swap";     // recreation ignores postMessage — reload to play

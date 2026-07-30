@@ -802,6 +802,17 @@ button {
   right: 24px;
 }
 
+/* Mobile-only dropdown variant of the draw actions (shown at ≤640px). Same
+   overlay corner as .draw-actions; hidden on desktop. */
+.draw-actions-mobile {
+  position: absolute;
+  z-index: 20;
+  top: 16px;
+  right: 16px;
+  pointer-events: auto;
+  display: none;
+}
+
 /* MapModeBanner — the map is MODAL while drawing, so the banner names the live
    mode and carries the only two exits. A 2px brand border, not a shadow: it
    sits on map imagery, where a shadow has nothing to fall on. */
@@ -2039,4 +2050,22 @@ button {
     grid-row: 1 / span 3;
     align-self: center;
   }
+}
+
+/* ==========================================================================
+   PHONE (≤640px) — the iframe is phone-width here. Simplify the map controls:
+   drop the Map/Satellite toggle, collapse the two draw buttons into a dropdown,
+   and keep the include/exclude bubble comfortably sized. Desktop is untouched.
+   ========================================================================== */
+@media (max-width: 640px) {
+  /* Map / Satellite toggle is removed on phones */
+  .view-toggle { display: none; }
+  .map-footer { justify-content: flex-end; }
+
+  /* two draw buttons -> one dropdown */
+  .draw-actions { display: none; }
+  .draw-actions-mobile { display: block; }
+
+  /* include/exclude bubble: cap width so it always fits with room for autoPan */
+  .selection-popup-shell .leaflet-popup-content-wrapper { max-width: min(90vw, 300px); }
 }

@@ -526,6 +526,69 @@
       .results-table{--result-gutter:14px;--result-value-width:74px;--result-arrow-width:26px}
       .r-before,.r-after{font-size:17px}
     }
+  
+    /* ===================== MOBILE (≤640px) — see skill: mobile-case-study =====================
+       Placed after the ≤900 restacks so these win. Selectors absent on a page are no-ops. */
+    @media(max-width:640px){
+      .section{padding:40px 0!important}
+      /* component library: a clipped card (real live components), optimal mobile radius/padding */
+      .library-embed{height:54svh;min-height:340px;border-radius:14px}
+      .library-embed::after{height:92px}
+      .library-storybook-action{bottom:14px;width:calc(100% - 24px)}
+      /* 3-layer ladder stays a compact single row on mobile (not stacked) */
+      .ds-ladder{grid-template-columns:1fr 16px 1fr 16px 1fr;margin-top:20px;gap:0}
+      .ds-rung{padding:14px 6px 10px 0;border-bottom:0}
+      .ds-rung small{font-size:8.5px;letter-spacing:.1em;margin-bottom:5px}
+      .ds-rung strong{font-size:13px;margin-bottom:0;line-height:1.1}
+      .ds-rung span{display:none}
+      .ds-arrow{transform:none;font-size:14px;min-height:0;opacity:.4}
+      /* consistent card radius + padding across the page's boxes */
+      .mini-card,.panel,.audit-card,.harness-card,.loop-node,.recwrap{border-radius:12px}
+      /* live screenshot images go 100% of the screen */
+      .versus .shot,.versus .shot img{width:100vw;max-width:none;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);border-radius:0}
+      /* compare slider: full-bleed the de-boxed stage */
+      #compare .compare-stage{width:100vw;max-width:none;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw)}
+      #compare .compare-slider,.compare-slider{border-radius:0;border-left:0;border-right:0}
+      /* scroll-story mobile media: full-bleed */
+      .scroll-story-mobile-media{width:100vw;margin-left:calc(50% - 50vw)}
+      .scroll-story-mobile-media img{border-radius:0;border-left:0;border-right:0}
+      /* refinement carousel: video full-bleed, arrows BELOW it */
+      #refine-carousel .refine-viewport,.refine-viewport{width:100vw;max-width:none;margin-left:calc(50% - 50vw);border-radius:0;padding-bottom:56px}
+      #refine-carousel .refine-arrow,.refine-arrow{top:auto;bottom:8px;transform:none}
+      #refine-carousel .refine-arrow.prev,.refine-arrow.prev{left:calc(50% - 54px);right:auto}
+      #refine-carousel .refine-arrow.next,.refine-arrow.next{right:calc(50% - 54px);left:auto}
+      /* decision-log: keep 4 columns, scroll sideways */
+      .decision-log-table{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--line);border-radius:12px;background:#fff}
+      .decision-log-head,.decision-log-body{min-width:680px;grid-template-columns:1.1fr 1.1fr 1.2fr 1fr;gap:0}
+      .decision-log-head{padding:0}
+      .decision-log-head div{padding:12px 14px;font-size:11px;line-height:1.3;border-left:1px solid rgba(28,27,22,.08)}
+      .decision-log-head div:first-child{border-left:0}
+      .decision-log-body{padding:0}
+      .decision-log-body + .decision-log-body{border-top:1px solid rgba(28,27,22,.1)}
+      .decision-log-cell{padding:13px 14px;border-left:1px solid rgba(28,27,22,.08);margin-top:0}
+      .decision-log-cell:first-child{border-left:0}
+      .decision-log-cell + .decision-log-cell{margin-top:0;border-left:1px solid rgba(28,27,22,.08)}
+      .decision-log-cell p{font-size:12.5px;line-height:1.5}
+      .decision-log-cell::before{display:none}
+      /* persona table -> real table that scrolls sideways */
+      .persona-table-shell{overflow-x:auto;-webkit-overflow-scrolling:touch;padding:14px}
+      .persona-table{display:table;min-width:620px;border-collapse:collapse}
+      .persona-table thead{display:table-header-group}
+      .persona-table thead th{display:table-cell;padding:0 12px 8px}
+      .persona-table tbody{display:table-row-group}
+      .persona-table tr{display:table-row}
+      .persona-table tr + tr{border-top:0}
+      .persona-table td{display:table-cell;width:auto;padding:10px 12px;font-size:13px}
+      .persona-table tbody tr + tr td{border-top:1px solid var(--line)}
+      .persona-table td::before{display:none}
+      /* itable: scroll sideways, mobile font */
+      .itable{overflow-x:auto;-webkit-overflow-scrolling:touch}
+      .itable table{min-width:600px}
+      .itable td,.itable th{font-size:12.5px}
+      /* journey lanes: scroll steps sideways */
+      .journey-steps.cols-3,.journey-steps.cols-4{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(210px,72vw);overflow-x:auto;-webkit-overflow-scrolling:touch;gap:16px;padding-bottom:8px}
+      .journey-step{padding-left:16px}
+    }
   </style>
 </head>
 <body class="case-study-page">
@@ -1202,5 +1265,6 @@
       try { if (f.contentDocument && f.contentDocument.readyState === 'complete') onReady(); } catch (err) {}
     });
   </script>
+  <script defer src="case-study-mobile.js"></script>
 </body>
 </html>

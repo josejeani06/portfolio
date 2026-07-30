@@ -2422,3 +2422,74 @@ body.case-study-page {
     display: none;
   }
 }
+
+/* ==========================================================================
+   SHARED MOBILE (≤640px) — case-study + landing. See skill: mobile-case-study.
+   - Full-bleed helper: break a card out of the container, edge to edge.
+   - [data-hscroll]: horizontal-scroll wrapper + "Swipe to scroll" hint.
+   ========================================================================== */
+
+/* horizontal-scroll wrapper (used for tables, journeys, wide media) */
+[data-hscroll] { position: relative; }
+
+.hscroll-hint {
+  position: absolute;
+  left: 50%;
+  top: 12px;
+  transform: translate(-50%, -8px);
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 13px;
+  border-radius: 999px;
+  background: rgba(24, 23, 18, 0.86);
+  color: #f3f1e8;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 30;
+  opacity: 0;
+  box-shadow: 0 8px 24px rgba(20, 19, 13, 0.28);
+  transition: opacity 0.28s ease, transform 0.28s ease;
+}
+.hscroll-hint.is-in { opacity: 1; transform: translate(-50%, 0); }
+.hscroll-hint.is-gone { opacity: 0; transform: translate(-50%, -8px); }
+.hscroll-hint-ico { display: inline-flex; color: #ffd7c2; animation: hscroll-nudge 1.25s ease-in-out infinite; }
+@keyframes hscroll-nudge {
+  0%, 100% { transform: translateX(-3px); }
+  50% { transform: translateX(3px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hscroll-hint-ico { animation: none; }
+}
+
+@media (max-width: 640px) {
+  /* section spacing cap for pages that inherit style.css .section (map, design-system) */
+  .section { padding: 40px 0 !important; }
+
+  /* inline 2-column cards tagged .split-2 stack vertically; .split-2-wrap
+     (their rounded wrapper) goes full-bleed. !important beats inline styles. */
+  .split-2 { grid-template-columns: 1fr !important; }
+  .split-2-wrap {
+    border: 0 !important;
+    border-radius: 0 !important;
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+  }
+
+  /* full-bleed utility: any element tagged .m-fullbleed goes edge to edge,
+     no radius/border/shadow, ignoring the container gutters */
+  .m-fullbleed {
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    border-radius: 0 !important;
+    border-left: 0 !important;
+    border-right: 0 !important;
+    box-shadow: none !important;
+  }
+}
