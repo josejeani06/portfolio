@@ -409,6 +409,13 @@
        Placed after the ≤900 restacks so these win. Selectors absent on a page are no-ops. */
     @media(max-width:640px){
       .section{padding:40px 0!important}
+      /* at-a-glance stats: 2 columns (2x3 for the six metrics) */
+      .at-glance-band .metric-strip{grid-template-columns:1fr 1fr;gap:26px 20px}
+      .at-glance-band .metric-tile{border-right:0}
+      /* permission-model comparison IS a table: keep the two columns, scroll sideways */
+      .model-comparison-table{overflow-x:auto;-webkit-overflow-scrolling:touch}
+      .model-comparison-table .comparison-head,.model-comparison-table .row{grid-template-columns:minmax(190px,1fr) minmax(260px,1.3fr);min-width:560px}
+      .model-comparison-table .cell::before{display:none}
       /* compare slider: full-bleed the de-boxed stage */
       #compare .compare-stage{width:100vw;max-width:none;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw)}
       #compare .compare-slider,.compare-slider{border-radius:0;border-left:0;border-right:0}

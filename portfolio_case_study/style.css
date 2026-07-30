@@ -2470,16 +2470,27 @@ body.case-study-page {
   /* section spacing cap for pages that inherit style.css .section (map, design-system) */
   .section { padding: 40px 0 !important; }
 
-  /* inline 2-column cards tagged .split-2 stack vertically; .split-2-wrap
-     (their rounded wrapper) goes full-bleed. !important beats inline styles. */
+  /* inline 2-column cards tagged .split-2 stack vertically on mobile; the wrapper
+     stays a CONTAINED rounded card (its inline border/radius), not full-bleed. */
   .split-2 { grid-template-columns: 1fr !important; }
-  .split-2-wrap {
-    border: 0 !important;
-    border-radius: 0 !important;
-    width: 100vw;
-    margin-left: calc(50% - 50vw);
-    margin-right: calc(50% - 50vw);
-  }
+
+  /* ---- general mobile rules applied across every case study ---- */
+  /* remove the fake browser chrome / 3 traffic-light dots on all image frames */
+  .shot-bar,
+  .audience-builder-window-dots { display: none !important; }
+  .audience-builder-frame::before { display: none !important; }
+  /* full-bleed image captions keep side padding (never touch the screen edge) */
+  .shot-cap { padding-left: 16px; padding-right: 16px; }
+  /* footer: drop the middle "All work" button on mobile */
+  .footer-nav .button.secondary { display: none; }
+  /* refinement carousel: full-bleed 1:1 media (cover — no letterbox bands), arrows
+     overlaid on the sides (no reserved padding). Applies to every page that has it. */
+  .refine-slide .vid-frame { aspect-ratio: 1 / 1 !important; height: auto !important; }
+  .refine-slide .vid-media { object-fit: cover !important; background: transparent !important; }
+  #refine-carousel .refine-viewport { padding-bottom: 0 !important; }
+  #refine-carousel .refine-arrow { top: 50% !important; bottom: auto !important; transform: translateY(-50%) !important; }
+  #refine-carousel .refine-arrow.prev { left: 8px !important; right: auto !important; }
+  #refine-carousel .refine-arrow.next { right: 8px !important; left: auto !important; }
 
   /* full-bleed utility: any element tagged .m-fullbleed goes edge to edge,
      no radius/border/shadow, ignoring the container gutters */

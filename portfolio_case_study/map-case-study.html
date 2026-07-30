@@ -898,12 +898,14 @@
       /* scroll-story mobile media: full-bleed */
       .scroll-story-mobile-media{width:100vw;margin-left:calc(50% - 50vw)}
       .scroll-story-mobile-media img{border-radius:0;border-left:0;border-right:0}
-      /* refinement carousel: video full-bleed, arrows BELOW it (in reserved padding).
-         Personas + feature list keep their normal container padding. */
-      #refine-carousel .refine-viewport,.refine-viewport{width:100vw;max-width:none;margin-left:calc(50% - 50vw);border-radius:0;padding-bottom:56px}
-      #refine-carousel .refine-arrow,.refine-arrow{top:auto;bottom:8px;transform:none}
-      #refine-carousel .refine-arrow.prev,.refine-arrow.prev{left:calc(50% - 54px);right:auto}
-      #refine-carousel .refine-arrow.next,.refine-arrow.next{right:calc(50% - 54px);left:auto}
+      /* refinement carousel: full-bleed 1:1 media (cover, no letterbox bands, no
+         reserved padding); arrows overlaid on the sides. */
+      #refine-carousel .refine-viewport,.refine-viewport{width:100vw;max-width:none;margin-left:calc(50% - 50vw);border-radius:0;padding-bottom:0}
+      .refine-slide .vid-frame{aspect-ratio:1/1!important;height:auto!important}
+      .refine-slide .vid-media{object-fit:cover!important;background:transparent!important}
+      #refine-carousel .refine-arrow,.refine-arrow{top:50%;bottom:auto;transform:translateY(-50%)}
+      #refine-carousel .refine-arrow.prev,.refine-arrow.prev{left:8px;right:auto}
+      #refine-carousel .refine-arrow.next,.refine-arrow.next{right:8px;left:auto}
       /* decision-log: keep 4 columns, scroll sideways */
       .decision-log-table{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--line);border-radius:12px;background:#fff}
       .decision-log-head,.decision-log-body{min-width:680px;grid-template-columns:1.1fr 1.1fr 1.2fr 1fr;gap:0}
