@@ -96,6 +96,9 @@
     .skills-label{color:var(--blue);font-weight:800;font-size:12px;letter-spacing:.14em;text-transform:uppercase;padding-top:7px}
     .skill-chips{display:flex;flex-wrap:wrap;gap:10px}
     .skill-chips span{display:inline-flex;align-items:center;min-height:34px;padding:0 14px;border-radius:999px;background:#ffffff;color:#14130d;border:1px solid rgba(20,19,13,.24);font-weight:650;font-size:14px}
+    .landing-outcomes{display:flex;flex-wrap:wrap}
+    .landing-outcomes span{min-height:auto;padding:0;border:0;border-radius:0;background:transparent;color:#26251f;font-size:15px;font-weight:650;line-height:1.4}
+    .landing-outcomes .outcome-check{width:18px;height:18px;margin-right:8px;flex:0 0 auto;color:#26834a}
     @media(max-width:760px){.skills-row{grid-template-columns:1fr;gap:12px;padding:18px 0}.skills-label{padding-top:0}}
     /* flush the next-step section against the approach above it */
     /* tighter section rhythm (match the case study), top-aligned heads, white eyebrow badge */
@@ -276,10 +279,10 @@
           simplifying it, and turning it into a flow people can actually understand.
         </p>
         <div class="landing-outcomes skill-chips reveal-up reveal-delay-2" style="justify-content:flex-start;gap:12px;margin:28px 0 34px" role="list" aria-label="Portfolio at a glance">
-          <span role="listitem">4 core B2B SaaS case studies</span>
-          <span role="listitem">Surfaces serving ~75% of revenue</span>
-          <span role="listitem">WCAG 2.1 AA</span>
-          <span role="listitem">AI-in-the-loop prototyping</span>
+          <span role="listitem"><svg class="outcome-check" viewBox="0 0 20 20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="m4 10 3.5 3.5L16 5.5"/></svg>4 core B2B SaaS case studies</span>
+          <span role="listitem"><svg class="outcome-check" viewBox="0 0 20 20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="m4 10 3.5 3.5L16 5.5"/></svg>Surfaces serving ~75% of revenue</span>
+          <span role="listitem"><svg class="outcome-check" viewBox="0 0 20 20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="m4 10 3.5 3.5L16 5.5"/></svg>WCAG 2.1 AA</span>
+          <span role="listitem"><svg class="outcome-check" viewBox="0 0 20 20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="m4 10 3.5 3.5L16 5.5"/></svg>AI-in-the-loop prototyping</span>
         </div>
         <div class="landing-actions reveal-up reveal-delay-3">
           <a class="button landing-button" href="#work">View case studies</a>
