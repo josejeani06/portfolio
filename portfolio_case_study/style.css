@@ -2487,10 +2487,10 @@ body.case-study-page {
      overlaid on the sides (no reserved padding). Applies to every page that has it. */
   .refine-slide .vid-frame { aspect-ratio: 1 / 1 !important; height: auto !important; }
   .refine-slide .vid-media { object-fit: cover !important; background: transparent !important; }
-  #refine-carousel .refine-viewport { padding-bottom: 0 !important; }
-  #refine-carousel .refine-arrow { top: 50% !important; bottom: auto !important; transform: translateY(-50%) !important; }
-  #refine-carousel .refine-arrow.prev { left: 8px !important; right: auto !important; }
-  #refine-carousel .refine-arrow.next { right: 8px !important; left: auto !important; }
+  #refine-carousel .refine-viewport { padding-bottom: 52px !important; }
+  #refine-carousel .refine-arrow { top: auto !important; bottom: 4px !important; transform: none !important; }
+  #refine-carousel .refine-arrow.prev { left: calc(50% - 52px) !important; right: auto !important; }
+  #refine-carousel .refine-arrow.next { right: calc(50% - 52px) !important; left: auto !important; }
 
   /* full-bleed utility: any element tagged .m-fullbleed goes edge to edge,
      no radius/border/shadow, ignoring the container gutters */
