@@ -144,7 +144,7 @@ img { max-width: 100%; display: block; }
 }
 
 .hero {
-  padding: 92px 0 56px;
+  padding: 80px 0 56px;
 }
 
 .eyebrow {
@@ -226,7 +226,7 @@ h3 {
 }
 
 .section {
-  padding: 68px 0;
+  padding: 80px 0;
 }
 
 .section-dark {
@@ -1859,7 +1859,7 @@ body.case-study-page {
   min-height: calc(100svh - 72px);
   display: flex;
   align-items: center;
-  padding: 88px 100px 60px;
+  padding: 64px 100px 48px;
 }
 
 .landing-hero .container {
@@ -2032,7 +2032,7 @@ body.case-study-page {
 }
 
 .landing-section {
-  padding: 96px 0;
+  padding: 80px 0;
 }
 
 .landing-section-head {
@@ -2262,8 +2262,8 @@ body.case-study-page {
 }
 
 .landing-cta-section {
-  padding-top: 100px;
-  padding-bottom: 100px;
+  padding-top: 80px;
+  padding-bottom: 80px;
   background: linear-gradient(180deg, #6d202d, #5a1823);
   margin-top: 100px;
 }
@@ -2503,4 +2503,27 @@ body.case-study-page {
     border-right: 0 !important;
     box-shadow: none !important;
   }
+}
+
+/* ==========================================================================
+   Site footer — shared across landing + all case studies
+   ========================================================================== */
+.site-footer { background: #141308; color: rgba(242,240,230,.7); border-top: 1px solid rgba(242,240,230,.1); padding: 44px 0; }
+.site-footer-top { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; padding-bottom: 24px; border-bottom: 1px solid rgba(242,240,230,.1); }
+.site-footer-brand { font-weight: 800; font-size: 18px; color: #f7f5ec; letter-spacing: -.02em; }
+.site-footer-links { display: flex; gap: 22px; flex-wrap: wrap; }
+.site-footer-links a { color: rgba(242,240,230,.72); font-size: 14px; font-weight: 600; }
+.site-footer-links a:hover { color: #fff; }
+.site-footer-social { display: inline-flex; gap: 10px; }
+.site-footer-icon { display: inline-grid; place-items: center; width: 40px; height: 40px; border-radius: 999px; border: 1px solid rgba(242,240,230,.16); color: #f2f0e6; transition: background .16s ease, color .16s ease, transform .16s ease; }
+.site-footer-icon:hover { background: #f2f0e6; color: #141308; transform: translateY(-2px); }
+.site-footer-icon--whatsapp:hover { background: #25D366; color: #fff; }
+.site-footer-icon svg { width: 18px; height: 18px; fill: currentColor; }
+.site-footer-bottom { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding-top: 22px; font-size: 13px; }
+.site-footer-bottom a { color: rgba(242,240,230,.72); }
+.site-footer-bottom a:hover { color: #fff; }
+@media (max-width: 640px) {
+  .site-footer { padding: 32px 0; }
+  .site-footer-top { flex-direction: column; align-items: flex-start; gap: 18px; }
+  .site-footer-bottom { flex-direction: column; align-items: flex-start; gap: 8px; }
 }
