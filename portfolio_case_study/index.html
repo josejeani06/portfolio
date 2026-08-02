@@ -133,6 +133,8 @@
     .landing-icon-link--whatsapp:hover{background:#25D366;border-color:#25D366;color:#fff}
     /* footer CTA social row */
     .landing-cta-actions{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:16px}
+    /* match the Email-me button height to the 48px social icons so the row lines up */
+    .landing-cta-actions .landing-button{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 22px}
     .landing-cta-social{display:inline-flex;gap:10px;align-items:center}
     /* mobile perf: drop the perpetual grid drift + the pointer-driven blur blob (touch has no hover) */
     @media(max-width:640px){.landing-grid{animation:none}.landing-blob{display:none}}
@@ -396,8 +398,8 @@
       <div class="container">
         <div class="landing-section-head reveal-up">
           <div>
-            <div class="eyebrow">Selected work</div>
-            <h2>Case studies grounded in product decisions and systems work.</h2>
+            <div class="eyebrow">Case Studies</div>
+            <h2>Grounded in real product decisions and systems work.</h2>
           </div>
           <p>Each study shows how I approach structure, interaction, systems thinking, and implementation detail in B2B SaaS.</p>
         </div>

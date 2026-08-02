@@ -178,7 +178,11 @@
        Each section pins at the top and the next scrolls over it. Each one stops a little
        lower than the last, so a strip of the previous section stays visible — the stack
        reads as layered cards, not flush slabs. Desktop only; below 900px they scroll normally. */
-    @media(min-width:901px){
+    /* The overlapping-card stack pins each section at the top. On short-height
+       screens the tallest section (~1152px) would be cut off, so we only enable
+       the sticky effect when the viewport is BOTH wide enough AND tall enough to
+       show a full section. Below that, sections scroll normally — all content visible. */
+    @media(min-width:901px) and (min-height:1240px){
       .sticky-stack-research > section{position:sticky;border-radius:28px 28px 0 0}
       .sticky-stack-research > section:nth-of-type(1){top:0;z-index:1}
       .sticky-stack-research > section:nth-of-type(2){top:26px;z-index:2}
