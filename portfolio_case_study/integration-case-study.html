@@ -1646,5 +1646,20 @@
     </div>
   </footer>
 
+  <script>
+    /* Home -> case-study funnel: tag this case-study view for Microsoft Clarity so
+       the dashboard can build a funnel (which case study, and whether the visit
+       arrived from the homepage). Top window only — embeds are gated out elsewhere. */
+    (function () {
+      if (window.self !== window.top) return;
+      if (typeof window.clarity !== "function") return;
+      var slug = (location.pathname.split("/").pop() || "").replace(/\.html$/, "") || "case-study";
+      var ref = document.referrer || "";
+      var fromHome = /\/portfolio\/(index\.html)?($|[?#])/.test(ref) || /\/portfolio\/?$/.test(ref);
+      clarity("set", "case_study", slug);
+      clarity("set", "entry_from_home", fromHome ? "yes" : "no");
+      clarity("event", "case_study_view");
+    })();
+  </script>
 </body>
 </html>

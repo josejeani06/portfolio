@@ -1072,5 +1072,21 @@
     </div>
   </footer>
 
+  <script>
+    /* Home -> case-study funnel (step 1): when a Selected Work card is clicked,
+       fire a Clarity event tagged with the target so the home session is marked as
+       a click-through. Fired on pointerdown so it queues before navigation. */
+    (function () {
+      if (window.self !== window.top) return;
+      if (typeof window.clarity !== "function") return;
+      document.querySelectorAll("a.landing-case[href]").forEach(function (card) {
+        card.addEventListener("pointerdown", function () {
+          var slug = (card.getAttribute("href") || "").replace(/\.html.*$/, "").replace(/^.*\//, "");
+          clarity("set", "clicked_case_study", slug || "case-study");
+          clarity("event", "case_study_click");
+        }, { passive: true });
+      });
+    })();
+  </script>
 </body>
 </html>
