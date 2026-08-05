@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Future-state journey — building an audience (new audience builder)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --paper:#eceadf; --panel:#f6f4ed; --ink:#1c1b16; --muted:#615d52;
+      --line:rgba(28,27,22,.14); --hair:rgba(28,27,22,.10);
+      --accent:#cf3b23; --accent-soft:rgba(207,59,35,.10);
+      --good:#3f7a4e; --good-soft:rgba(63,122,78,.12);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--paper);color:var(--ink);
+      font-family:Manrope,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+      -webkit-font-smoothing:antialiased;padding:40px 28px}
+    .wrap{max-width:1240px;margin:0 auto}
+    .kicker{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--good)}
+    .kicker::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--good)}
+    h1{font-size:clamp(24px,3.4vw,34px);line-height:1.08;letter-spacing:-.02em;margin:12px 0 8px;max-width:24ch}
+    .sub{margin:0 0 26px;color:var(--muted);font-size:15px;line-height:1.6;max-width:74ch}
+    .persona{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:22px}
+    .persona span{display:inline-flex;align-items:center;min-height:30px;padding:0 12px;border-radius:999px;background:#fff;border:1px solid var(--line);font-size:12px;font-weight:700;color:var(--ink)}
+    .scroll{overflow-x:auto;border:1px solid var(--line);border-radius:16px;background:var(--panel);box-shadow:0 20px 60px rgba(20,19,13,.06)}
+    .jm{display:grid;grid-template-columns:132px repeat(6,minmax(170px,1fr));min-width:1120px}
+    .cell{padding:14px 14px;border-right:1px solid var(--hair);border-bottom:1px solid var(--hair)}
+    .cell:nth-child(7n+1){border-right:1px solid var(--line);background:rgba(28,27,22,.02)}
+    .cell:nth-child(7n){border-right:0}
+    .lane{font-size:10.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:flex;align-items:flex-start}
+    .stage-h{background:var(--ink)!important;color:#f4f2ea;border-bottom:0}
+    .stage-h .num{display:block;font-size:10px;font-weight:800;letter-spacing:.14em;color:#8fd0a0;margin-bottom:4px}
+    .stage-h strong{font-size:14px;font-weight:700;line-height:1.15}
+    .corner{background:var(--ink)!important;border-bottom:0}
+    .cell p{margin:0;font-size:13px;line-height:1.5;color:#3d3a33}
+    .think{font-style:italic;color:var(--muted)}
+    .better{background:var(--good-soft)}
+    .better p{color:#26502f;font-weight:600}
+    .enable{background:rgba(60,84,150,.10)}
+    .enable p{color:#2f4680;font-weight:600}
+    .emo{display:flex;flex-direction:column;gap:6px;align-items:flex-start}
+    .emo .dot{width:14px;height:14px;border-radius:50%;background:var(--good)}
+    .emo .dot.mid{background:#7fa77f}
+    .emo small{font-size:11.5px;color:var(--muted);font-weight:600}
+    .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:16px;font-size:12px;color:var(--muted)}
+    .legend span{display:inline-flex;align-items:center;gap:7px}
+    .legend i{width:12px;height:12px;border-radius:3px;display:inline-block}
+    .note{margin-top:18px;font-size:12.5px;color:var(--muted);line-height:1.6;max-width:80ch}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="kicker">Redesign · Future-state journey map</div>
+    <h1>Building an audience in the new audience builder</h1>
+    <p class="sub">The redesigned flow. Same customer goal—define who to reach, then launch—but every old pain is replaced by a gain, and the emotion line rises instead of falling. Each improvement names the feature that enables it.</p>
+    <div class="persona">
+      <span>Scope: any customer creating an automation</span>
+      <span>Personas: local marketers · new · repeat · power users</span>
+      <span>Goal: define who to reach, then launch—without CS</span>
+    </div>
+
+    <div class="scroll">
+      <div class="jm">
+        <!-- header row -->
+        <div class="cell corner"></div>
+        <div class="cell stage-h"><span class="num">01</span><strong>Start</strong></div>
+        <div class="cell stage-h"><span class="num">02</span><strong>Choose how to begin</strong></div>
+        <div class="cell stage-h"><span class="num">03</span><strong>Build the audience</strong></div>
+        <div class="cell stage-h"><span class="num">04</span><strong>Refine</strong></div>
+        <div class="cell stage-h"><span class="num">05</span><strong>Review reach &amp; cost</strong></div>
+        <div class="cell stage-h"><span class="num">06</span><strong>Save &amp; launch</strong></div>
+
+        <!-- doing -->
+        <div class="cell lane">Doing</div>
+        <div class="cell"><p>Jump straight into building the audience—no name required first.</p></div>
+        <div class="cell"><p>Pick the entry that fits: search, CSV, saved map, or map tools.</p></div>
+        <div class="cell"><p>Click the map for ZIP/city/county/state, or drag a radius / draw a polygon.</p></div>
+        <div class="cell"><p>Include or exclude parts of an area to shape it exactly.</p></div>
+        <div class="cell"><p>See one consolidated audience—total reach and cost.</p></div>
+        <div class="cell"><p>Save the map to reuse, then launch—on their own.</p></div>
+
+        <!-- thinking -->
+        <div class="cell lane">Thinking</div>
+        <div class="cell"><p class="think">“Good—I can start with who to reach.”</p></div>
+        <div class="cell"><p class="think">“I already have my ZIPs / a list / last month’s areas.”</p></div>
+        <div class="cell"><p class="think">“This is doing what I expect.”</p></div>
+        <div class="cell"><p class="think">“I can carve out exactly what I want.”</p></div>
+        <div class="cell"><p class="think">“I can see my reach and what it costs.”</p></div>
+        <div class="cell"><p class="think">“I’ve got this—I’ll reuse it next month.”</p></div>
+
+        <!-- what's better -->
+        <div class="cell lane">What’s better</div>
+        <div class="cell better"><p>Setup gates removed—explore before committing.</p></div>
+        <div class="cell better"><p>An entry point for every mental model, not just drawing.</p></div>
+        <div class="cell better"><p>The first click is useful; feedback and boundaries are clear.</p></div>
+        <div class="cell better"><p>Include/exclude replaces deleting addresses one by one.</p></div>
+        <div class="cell better"><p>Overlapping inputs converge into one clear audience.</p></div>
+        <div class="cell better"><p>Self-serve path and saved maps → far fewer CS tickets.</p></div>
+
+        <!-- emotion -->
+        <div class="cell lane">Feeling</div>
+        <div class="cell emo"><span class="dot mid"></span><small>At ease</small></div>
+        <div class="cell emo"><span class="dot mid"></span><small>Oriented</small></div>
+        <div class="cell emo"><span class="dot"></span><small>In control</small></div>
+        <div class="cell emo"><span class="dot"></span><small>Precise</small></div>
+        <div class="cell emo"><span class="dot"></span><small>Reassured</small></div>
+        <div class="cell emo"><span class="dot"></span><small>Confident · done</small></div>
+
+        <!-- enabled by -->
+        <div class="cell lane">Enabled by</div>
+        <div class="cell enable"><p>Reordered flow: audience before setup.</p></div>
+        <div class="cell enable"><p>Search · CSV · saved maps · radius · polygon.</p></div>
+        <div class="cell enable"><p>Map-click select; guided radius/polygon; feedback states.</p></div>
+        <div class="cell enable"><p>Include &amp; exclude controls.</p></div>
+        <div class="cell enable"><p>One consolidated audience model.</p></div>
+        <div class="cell enable"><p>Saved maps; self-serve primary path.</p></div>
+      </div>
+    </div>
+
+    <div class="legend">
+      <span><i style="background:#7fa77f"></i>Steady confidence</span>
+      <span><i style="background:var(--good)"></i>In control</span>
+      <span><i style="background:rgba(63,122,78,.14);border:1px solid rgba(63,122,78,.4)"></i>Improvement</span>
+      <span><i style="background:rgba(60,84,150,.12);border:1px solid rgba(60,84,150,.4)"></i>Enabling feature</span>
+    </div>
+    <p class="note">Read against the current-state map, the shape flips: the emotion line climbs from “at ease” to “confident · done,” the hand-off to Customer Success disappears, and each old pain now has a named feature behind its fix—which is what turned a rigid map screen into a multi-entry audience builder.</p>
+  </div>
+</body>
+</html>

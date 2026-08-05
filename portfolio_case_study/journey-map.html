@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Current-state journey — building an audience (old map)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --paper:#eceadf; --panel:#f6f4ed; --ink:#1c1b16; --muted:#615d52;
+      --line:rgba(28,27,22,.14); --hair:rgba(28,27,22,.10);
+      --accent:#cf3b23; --accent-soft:rgba(207,59,35,.10);
+      --ok:#5b7c5a; --meh:#c69a3a; --bad:#cf3b23;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--paper);color:var(--ink);
+      font-family:Manrope,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+      -webkit-font-smoothing:antialiased;padding:40px 28px}
+    .wrap{max-width:1240px;margin:0 auto}
+    .kicker{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+    .kicker::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--accent)}
+    h1{font-size:clamp(24px,3.4vw,34px);line-height:1.08;letter-spacing:-.02em;margin:12px 0 8px;max-width:22ch}
+    .sub{margin:0 0 26px;color:var(--muted);font-size:15px;line-height:1.6;max-width:74ch}
+    .persona{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:22px}
+    .persona span{display:inline-flex;align-items:center;min-height:30px;padding:0 12px;border-radius:999px;background:#fff;border:1px solid var(--line);font-size:12px;font-weight:700;color:var(--ink)}
+    .scroll{overflow-x:auto;border:1px solid var(--line);border-radius:16px;background:var(--panel);box-shadow:0 20px 60px rgba(20,19,13,.06)}
+    .jm{display:grid;grid-template-columns:132px repeat(6,minmax(170px,1fr));min-width:1120px}
+    .cell{padding:14px 14px;border-right:1px solid var(--hair);border-bottom:1px solid var(--hair)}
+    .cell:nth-child(7n+1){border-right:1px solid var(--line);background:rgba(28,27,22,.02)}
+    .cell:nth-child(7n){border-right:0}
+    /* lane label */
+    .lane{font-size:10.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:flex;align-items:flex-start}
+    /* stage header row */
+    .stage-h{background:var(--ink)!important;color:#f4f2ea;border-bottom:0}
+    .stage-h .num{display:block;font-size:10px;font-weight:800;letter-spacing:.14em;color:#ff8a6f;margin-bottom:4px}
+    .stage-h strong{font-size:14px;font-weight:700;line-height:1.15}
+    .corner{background:var(--ink)!important;border-bottom:0}
+    /* content text */
+    .cell p{margin:0;font-size:13px;line-height:1.5;color:#3d3a33}
+    .think{font-style:italic;color:var(--muted)}
+    .pain{background:var(--accent-soft)}
+    .pain p{color:#8f2717;font-weight:600}
+    .fix p{color:#2f4a2e;font-weight:600}
+    .fix{background:rgba(91,124,90,.10)}
+    /* emotion row */
+    .emo{display:flex;flex-direction:column;gap:6px;align-items:flex-start}
+    .emo .dot{width:14px;height:14px;border-radius:50%}
+    .emo small{font-size:11.5px;color:var(--muted);font-weight:600}
+    .d-ok{background:var(--ok)} .d-meh{background:var(--meh)} .d-bad{background:var(--bad)}
+    .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:16px;font-size:12px;color:var(--muted)}
+    .legend span{display:inline-flex;align-items:center;gap:7px}
+    .legend i{width:12px;height:12px;border-radius:3px;display:inline-block}
+    .note{margin-top:18px;font-size:12.5px;color:var(--muted);line-height:1.6;max-width:80ch}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="kicker">Discovery · Current-state journey map</div>
+    <h1>Building an audience in the old map</h1>
+    <p class="sub">Reconstructed from the UX audit of the existing flow and behavioral signals (Hotjar heatmaps, drop-offs, and rage clicks). It plots where the workflow broke down before the redesign—and the fix each pain pointed to.</p>
+    <div class="persona">
+      <span>Scope: any customer creating an automation</span>
+      <span>Personas: local marketers · new · repeat · power users</span>
+      <span>Goal: define who to reach, then launch</span>
+    </div>
+
+    <div class="scroll">
+      <div class="jm">
+        <!-- header row -->
+        <div class="cell corner"></div>
+        <div class="cell stage-h"><span class="num">01</span><strong>Start automation</strong></div>
+        <div class="cell stage-h"><span class="num">02</span><strong>Open the map</strong></div>
+        <div class="cell stage-h"><span class="num">03</span><strong>Add locations</strong></div>
+        <div class="cell stage-h"><span class="num">04</span><strong>Refine the area</strong></div>
+        <div class="cell stage-h"><span class="num">05</span><strong>Review &amp; cost</strong></div>
+        <div class="cell stage-h"><span class="num">06</span><strong>Launch</strong></div>
+
+        <!-- doing -->
+        <div class="cell lane">Doing</div>
+        <div class="cell"><p>Create a new automation to reach customers.</p></div>
+        <div class="cell"><p>Land on a blank map with draw and radius tools.</p></div>
+        <div class="cell"><p>Draw a shape or drop a radius; click around the map.</p></div>
+        <div class="cell"><p>Try to trim part of a selected region.</p></div>
+        <div class="cell"><p>Wait for filtering; check reach and cost.</p></div>
+        <div class="cell"><p>Give up and message Customer Success.</p></div>
+
+        <!-- thinking -->
+        <div class="cell lane">Thinking</div>
+        <div class="cell"><p class="think">“I just want to pick who to reach.”</p></div>
+        <div class="cell"><p class="think">“Where do I start? I already know the ZIPs.”</p></div>
+        <div class="cell"><p class="think">“Did that even work?”</p></div>
+        <div class="cell"><p class="think">“I only want part of this region.”</p></div>
+        <div class="cell"><p class="think">“Is this the right audience and price?”</p></div>
+        <div class="cell"><p class="think">“I’ll just have CS set it up.”</p></div>
+
+        <!-- pain -->
+        <div class="cell lane">Pain points</div>
+        <div class="cell pain"><p>Must name the automation before adding any location—a setup gate.</p></div>
+        <div class="cell pain"><p>Map assumes you’ll draw; no path for ZIP, CSV, or saved areas.</p></div>
+        <div class="cell pain"><p>Dead clicks and weak feedback; past areas can’t be reused.</p></div>
+        <div class="cell pain"><p>No include/exclude—refine by deleting addresses one by one.</p></div>
+        <div class="cell pain"><p>Slow filtering; overlapping selections are hard to read.</p></div>
+        <div class="cell pain"><p>Support becomes part of setup—31 map-related tickets logged.</p></div>
+
+        <!-- emotion -->
+        <div class="cell lane">Feeling</div>
+        <div class="cell emo"><span class="dot d-meh"></span><small>Mild friction</small></div>
+        <div class="cell emo"><span class="dot d-meh"></span><small>Confused</small></div>
+        <div class="cell emo"><span class="dot d-bad"></span><small>Uncertain</small></div>
+        <div class="cell emo"><span class="dot d-bad"></span><small>Tedious</small></div>
+        <div class="cell emo"><span class="dot d-bad"></span><small>Impatient</small></div>
+        <div class="cell emo"><span class="dot d-bad"></span><small>Blocked</small></div>
+
+        <!-- fix -->
+        <div class="cell lane">Fix it pointed to</div>
+        <div class="cell fix"><p>Explore and build the audience before unrelated setup gates.</p></div>
+        <div class="cell fix"><p>Multiple entry points; make the first click useful.</p></div>
+        <div class="cell fix"><p>Click to select ZIP/city/county/state; saved maps; clear states.</p></div>
+        <div class="cell fix"><p>Include and exclude controls.</p></div>
+        <div class="cell fix"><p>One consolidated audience view; faster feedback.</p></div>
+        <div class="cell fix"><p>A self-serve primary path.</p></div>
+      </div>
+    </div>
+
+    <div class="legend">
+      <span><i style="background:var(--meh)"></i>Friction / confusion</span>
+      <span><i style="background:var(--bad)"></i>High friction</span>
+      <span><i style="background:rgba(207,59,35,.12);border:1px solid rgba(207,59,35,.4)"></i>Pain point</span>
+      <span><i style="background:rgba(91,124,90,.14);border:1px solid rgba(91,124,90,.4)"></i>Redesign fix</span>
+    </div>
+    <p class="note">The emotion line falls steadily from “mild friction” to “blocked,” bottoming out where customers hand the task to Customer Success. Every pain in the row maps to a fix in the redesign—which is how the audit turned into the seven blockers and the multi-entry “audience builder.”</p>
+  </div>
+</body>
+</html>

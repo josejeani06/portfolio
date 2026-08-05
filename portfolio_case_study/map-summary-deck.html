@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Map Audience Builder — 60-second summary</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f6f4ec; --paper-2:#efece3; --ink:#1c1b16; --muted:#615d52;
+    --hair:rgba(28,27,22,.14); --accent:#cf3b23; --accent-soft:#f3d9d2;
+    --card:#fbfaf5; --dark:#14130d; --dark-ink:#f2f0e6;
+    --serif:'Instrument Serif',Georgia,serif; --sans:'Manrope',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{font-family:var(--sans);background:var(--paper-2);color:var(--ink);
+       display:grid;place-items:center;min-height:100vh;padding:clamp(12px,3vw,28px);-webkit-font-smoothing:antialiased}
+  .deck{width:min(1000px,100%)}
+  .deck-frame{position:relative;background:var(--paper);border:1px solid var(--hair);border-radius:20px;
+       box-shadow:0 30px 80px rgba(20,19,13,.14);overflow:hidden;aspect-ratio:16/10}
+  @media(max-width:720px){.deck-frame{aspect-ratio:auto;min-height:72vh}}
+
+  .progress{position:absolute;top:0;left:0;height:4px;background:var(--accent);width:16.66%;
+       transition:width .45s cubic-bezier(.4,0,.2,1);z-index:5;border-radius:0 4px 4px 0}
+
+  .slides{position:relative;height:100%;width:100%}
+  .slide{position:absolute;inset:0;padding:clamp(26px,4.4vw,48px);display:flex;flex-direction:column;
+       opacity:0;visibility:hidden;transform:translateY(10px);
+       transition:opacity .5s ease,transform .5s ease,visibility .5s}
+  .slide.active{opacity:1;visibility:visible;transform:none}
+
+  .slide-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .idx{font-weight:800;font-size:12px;letter-spacing:.14em;color:var(--accent)}
+  .eyebrow{font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);text-align:right}
+  .body{margin-top:auto;display:flex;flex-direction:column;gap:clamp(14px,2.4vw,22px)}
+  h1{font-family:var(--serif);font-weight:400;line-height:1.02;letter-spacing:-.01em;
+     font-size:clamp(30px,5.4vw,58px);max-width:15ch}
+  h1 em{font-style:italic;color:var(--accent)}
+  .kw{display:flex;flex-wrap:wrap;gap:7px}
+  .kw span{font-size:11px;font-weight:700;letter-spacing:.02em;color:var(--muted);
+           border:1px solid var(--hair);border-radius:999px;padding:5px 11px;background:var(--card)}
+
+  /* data */
+  .stats{display:flex;flex-wrap:wrap;gap:clamp(10px,2vw,16px)}
+  .stat{flex:1 1 140px;min-width:120px;border-top:2px solid var(--ink);padding:10px 0 0}
+  .stat b{display:block;font-family:var(--serif);font-size:clamp(28px,4vw,44px);line-height:.95;font-weight:400}
+  .stat span{display:block;margin-top:6px;font-size:12px;line-height:1.35;color:var(--muted)}
+
+  /* diagrams */
+  .viz{margin-top:2px}
+  svg{display:block;max-width:100%;height:auto}
+  .fan{display:flex;flex-wrap:wrap;gap:8px}
+  .fan .pill{border:1px solid var(--hair);background:var(--card);border-radius:999px;padding:8px 15px;font-size:13.5px;font-weight:600}
+  .fan .pill.hot{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+
+  .rows{display:grid;gap:8px}
+  .row{display:flex;gap:14px;align-items:baseline;padding:10px 0;border-top:1px solid var(--hair)}
+  .row b{font-family:var(--serif);font-size:clamp(20px,2.6vw,26px);font-weight:400;min-width:78px;color:var(--accent)}
+  .row span{font-size:13.5px;line-height:1.4}
+
+  .slide.final{background:linear-gradient(180deg,#1f1d16,#14130d);color:var(--dark-ink)}
+  .slide.final .eyebrow{color:rgba(242,240,230,.7)}
+  .slide.final .idx{color:#ff8a6f} .slide.final h1 em{color:#ff8a6f}
+  .slide.final .stat{border-top-color:var(--dark-ink)}
+  .slide.final .stat span{color:rgba(242,240,230,.66)}
+  .cta{display:inline-flex;align-items:center;gap:9px;align-self:flex-start;
+       background:#ff6a4d;color:#1a130f;font-weight:800;font-size:15px;text-decoration:none;
+       padding:13px 22px;border-radius:12px;transition:transform .15s}
+  .cta:hover{transform:translateY(-2px)}
+
+  .controls{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:16px;padding:0 4px;flex-wrap:wrap}
+  .dots{display:flex;gap:8px}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--hair);border:0;cursor:pointer;padding:0;transition:.2s}
+  .dot.on{background:var(--accent);transform:scale(1.35)}
+  .arrows{display:flex;gap:8px}
+  .arrow{width:44px;height:44px;border-radius:50%;border:1px solid var(--hair);background:var(--paper);
+         cursor:pointer;font-size:18px;display:grid;place-items:center;transition:.15s;color:var(--ink)}
+  .arrow:hover{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  .arrow:disabled{opacity:.35;cursor:default;background:var(--paper);color:var(--ink)}
+  .hint{font-size:12px;color:var(--muted)}
+  .kbd{font-weight:700;border:1px solid var(--hair);border-radius:5px;padding:1px 6px;font-size:11px}
+  @media(max-width:520px){.hint{display:none}}
+</style>
+</head>
+<body>
+  <div class="deck">
+    <div class="deck-frame">
+      <div class="progress" id="progress"></div>
+      <div class="slides" id="slides">
+
+        <!-- 1 · CONTEXT -->
+        <section class="slide active">
+          <div class="slide-top"><span class="idx">01 / 06</span><span class="eyebrow">Context · B2B SaaS</span></div>
+          <div class="body">
+            <h1>The map <em>is</em> the product.</h1>
+            <div class="stats">
+              <div class="stat"><b>95%</b><span>of automations are built on this one surface</span></div>
+              <div class="stat"><b>75%</b><span>of revenue rides on 3 enterprise accounts here</span></div>
+              <div class="stat"><b>~1,500</b><span>automation users the redesign had to hold up for</span></div>
+            </div>
+            <div class="viz" aria-hidden="true">
+              <svg viewBox="0 0 520 90" width="520">
+                <g fill="none" stroke="#cf3b23" stroke-width="1.4">
+                  <line x1="260" y1="45" x2="70" y2="24"/><line x1="260" y1="45" x2="70" y2="66"/>
+                  <line x1="260" y1="45" x2="450" y2="24"/><line x1="260" y1="45" x2="450" y2="66"/>
+                  <line x1="260" y1="45" x2="160" y2="80"/><line x1="260" y1="45" x2="360" y2="80"/>
+                </g>
+                <g fill="#615d52"><circle cx="70" cy="24" r="5"/><circle cx="70" cy="66" r="5"/><circle cx="450" cy="24" r="5"/><circle cx="450" cy="66" r="5"/><circle cx="160" cy="80" r="5"/><circle cx="360" cy="80" r="5"/></g>
+                <rect x="222" y="30" width="76" height="30" rx="8" fill="#1c1b16"/>
+                <text x="260" y="50" text-anchor="middle" fill="#f6f4ec" font-family="Manrope,sans-serif" font-size="13" font-weight="800">MAP</text>
+                <text x="70" y="14" text-anchor="middle" fill="#615d52" font-family="Manrope" font-size="10">automations</text>
+              </svg>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2 · RESEARCH -->
+        <section class="slide">
+          <div class="slide-top"><span class="idx">02 / 06</span><span class="eyebrow">Research · UX + IA</span></div>
+          <div class="body">
+            <h1>I reframed it: fix the map → <em>build an audience</em>.</h1>
+            <div class="viz" aria-hidden="true">
+              <svg viewBox="0 0 560 120" width="560">
+                <g fill="#cdcabf"><circle cx="20" cy="20" r="4"/><circle cx="40" cy="20" r="4"/><circle cx="60" cy="20" r="4"/><circle cx="80" cy="20" r="4"/><circle cx="100" cy="20" r="4"/><circle cx="20" cy="40" r="4"/><circle cx="40" cy="40" r="4"/><circle cx="60" cy="40" r="4"/><circle cx="80" cy="40" r="4"/><circle cx="100" cy="40" r="4"/><circle cx="30" cy="60" r="4"/><circle cx="50" cy="60" r="4"/><circle cx="70" cy="60" r="4"/><circle cx="90" cy="60" r="4"/></g>
+                <text x="60" y="90" text-anchor="middle" fill="#615d52" font-family="Manrope" font-size="12" font-weight="700">~20 interviews</text>
+                <path d="M130 40 L200 40" stroke="#cf3b23" stroke-width="1.6" marker-end="url(#a)"/>
+                <defs><marker id="a" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0 L6 3 L0 6 z" fill="#cf3b23"/></marker></defs>
+                <g font-family="Manrope" font-size="13" font-weight="700" fill="#1c1b16">
+                  <rect x="220" y="8" width="150" height="26" rx="7" fill="#fbfaf5" stroke="#cdcabf"/><text x="234" y="25">Saved area</text>
+                  <rect x="220" y="40" width="150" height="26" rx="7" fill="#fbfaf5" stroke="#cdcabf"/><text x="234" y="57">CSV upload</text>
+                  <rect x="380" y="8" width="150" height="26" rx="7" fill="#fbfaf5" stroke="#cdcabf"/><text x="394" y="25">Search a place</text>
+                  <rect x="380" y="40" width="150" height="26" rx="7" fill="#fbfaf5" stroke="#cdcabf"/><text x="394" y="57">Draw on map</text>
+                </g>
+                <text x="375" y="92" text-anchor="middle" fill="#615d52" font-family="Manrope" font-size="12" font-weight="700">→ 4 ways people actually start</text>
+              </svg>
+            </div>
+            <div class="kw"><span>User research</span><span>Information architecture</span><span>Systems thinking</span></div>
+          </div>
+        </section>
+
+        <!-- 3 · DECISION -->
+        <section class="slide">
+          <div class="slide-top"><span class="idx">03 / 06</span><span class="eyebrow">Decision · Systems thinking</span></div>
+          <div class="body">
+            <h1>Map-first, <em>not</em> task-first.</h1>
+            <div class="viz" aria-hidden="true">
+              <svg viewBox="0 0 560 130" width="560">
+                <rect x="10" y="52" width="120" height="34" rx="9" fill="#1c1b16"/><text x="70" y="74" text-anchor="middle" fill="#f6f4ec" font-family="Manrope" font-size="13" font-weight="800">The fork</text>
+                <path d="M130 62 C190 40 210 30 270 30" fill="none" stroke="#cf3b23" stroke-width="2.2"/>
+                <path d="M130 76 C190 96 210 106 270 106" fill="none" stroke="#cdcabf" stroke-width="2" stroke-dasharray="5 5"/>
+                <rect x="270" y="14" width="280" height="34" rx="9" fill="#fbeae6" stroke="#cf3b23"/><text x="286" y="36" fill="#1c1b16" font-family="Manrope" font-size="13" font-weight="800">Map-first ✓ shipped to de-risk</text>
+                <rect x="270" y="90" width="280" height="34" rx="9" fill="#fbfaf5" stroke="#cdcabf"/><text x="286" y="112" fill="#615d52" font-family="Manrope" font-size="13" font-weight="700">Task-first · kept as an A/B bet</text>
+              </svg>
+            </div>
+            <p style="font-size:14px;color:var(--muted);line-height:1.5;max-width:56ch">De-risked the surface 95% of automations depend on — without throwing away the more ambitious idea.</p>
+          </div>
+        </section>
+
+        <!-- 4 · SOLUTION -->
+        <section class="slide">
+          <div class="slide-top"><span class="idx">04 / 06</span><span class="eyebrow">Solution · Interaction design</span></div>
+          <div class="body">
+            <h1>1 rigid path → <em>5 entry points</em>.</h1>
+            <div class="fan">
+              <span class="pill hot">Search / region</span><span class="pill hot">Saved area</span><span class="pill hot">CSV upload</span>
+              <span class="pill">Radius</span><span class="pill">Polygon</span>
+            </div>
+            <div class="stats">
+              <div class="stat"><b>Codex</b><span>first interactive AI prototype the team could actually run</span></div>
+              <div class="stat"><b>200–400%</b><span>zoom the interface still holds up at (WCAG 2.1 AA)</span></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 5 · ROLE / METHOD -->
+        <section class="slide">
+          <div class="slide-top"><span class="idx">05 / 06</span><span class="eyebrow">My role · AI design-to-code</span></div>
+          <div class="body">
+            <h1>Led it end-to-end — <em>research to handoff</em>.</h1>
+            <div class="viz" aria-hidden="true">
+              <svg viewBox="0 0 560 60" width="560">
+                <g font-family="Manrope" font-size="12.5" font-weight="700" fill="#1c1b16">
+                  <rect x="0" y="16" width="96" height="30" rx="8" fill="#fbfaf5" stroke="#cdcabf"/><text x="48" y="35" text-anchor="middle">Research</text>
+                  <rect x="116" y="16" width="70" height="30" rx="8" fill="#fbfaf5" stroke="#cdcabf"/><text x="151" y="35" text-anchor="middle">IA</text>
+                  <rect x="206" y="16" width="118" height="30" rx="8" fill="#fbfaf5" stroke="#cdcabf"/><text x="265" y="35" text-anchor="middle">Interaction</text>
+                  <rect x="344" y="16" width="118" height="30" rx="8" fill="#fbeae6" stroke="#cf3b23"/><text x="403" y="35" text-anchor="middle">Codex prototype</text>
+                  <rect x="482" y="16" width="78" height="30" rx="8" fill="#fbfaf5" stroke="#cdcabf"/><text x="521" y="35" text-anchor="middle">Handoff</text>
+                </g>
+                <g stroke="#cf3b23" stroke-width="1.4"><line x1="96" y1="31" x2="116" y2="31"/><line x1="186" y1="31" x2="206" y2="31"/><line x1="324" y1="31" x2="344" y2="31"/><line x1="462" y1="31" x2="482" y2="31"/></g>
+              </svg>
+            </div>
+            <div class="kw"><span>End-to-end UX</span><span>Figma design system</span><span>AI prototype</span><span>Cross-functional w/ PM + eng</span><span>WCAG AA</span></div>
+            <p style="font-size:13.5px;color:var(--muted);line-height:1.5;max-width:60ch">I owned the audience-builder end-to-end; another designer owned the surrounding automation. The prototype drew from a Figma system I made AI-ready — the coded React version came later, on my own.</p>
+          </div>
+        </section>
+
+        <!-- 6 · OUTCOME -->
+        <section class="slide final">
+          <div class="slide-top"><span class="idx">06 / 06</span><span class="eyebrow">Outcome</span></div>
+          <div class="body">
+            <h1>Shipped in <em>6 weeks</em>.</h1>
+            <div class="rows">
+              <div class="row"><b>15/31</b><span>support tickets cleared in phase 1 — phases 2–4 clear 7, 4, 5 (CSV, saved maps, exclusions)</span></div>
+              <div class="row"><b>4</b><span>map providers compared, interaction model locked before a line of production code</span></div>
+              <div class="row"><b>3</b><span>paid directions this sets up: owned data, premium filters, ROI recommendations</span></div>
+            </div>
+            <a class="cta" href="map-case-study.html">Read the full case study →</a>
+          </div>
+        </section>
+
+      </div>
+    </div>
+
+    <div class="controls">
+      <div class="dots" id="dots"></div>
+      <div class="hint">~60s read · <span class="kbd">←</span> <span class="kbd">→</span> or swipe</div>
+      <div class="arrows">
+        <button class="arrow" id="prev" aria-label="Previous slide">←</button>
+        <button class="arrow" id="next" aria-label="Next slide">→</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+(function(){
+  var slides=[].slice.call(document.querySelectorAll('.slide'));
+  var dotsWrap=document.getElementById('dots');
+  var prev=document.getElementById('prev'), next=document.getElementById('next');
+  var progress=document.getElementById('progress');
+  var i=0, n=slides.length;
+  slides.forEach(function(_,k){
+    var b=document.createElement('button'); b.className='dot'+(k===0?' on':'');
+    b.setAttribute('aria-label','Go to slide '+(k+1));
+    b.addEventListener('click',function(){go(k)}); dotsWrap.appendChild(b);
+  });
+  var dots=[].slice.call(dotsWrap.children);
+  function go(k){
+    i=Math.max(0,Math.min(n-1,k));
+    slides.forEach(function(s,x){s.classList.toggle('active',x===i)});
+    dots.forEach(function(d,x){d.classList.toggle('on',x===i)});
+    progress.style.width=((i+1)/n*100)+'%';
+    prev.disabled=(i===0); next.disabled=(i===n-1);
+  }
+  prev.addEventListener('click',function(){go(i-1)});
+  next.addEventListener('click',function(){go(i+1)});
+  document.addEventListener('keydown',function(e){
+    if(e.key==='ArrowRight')go(i+1); if(e.key==='ArrowLeft')go(i-1);
+  });
+  var x0=null; var frame=document.querySelector('.deck-frame');
+  frame.addEventListener('touchstart',function(e){x0=e.touches[0].clientX},{passive:true});
+  frame.addEventListener('touchend',function(e){
+    if(x0===null)return; var dx=e.changedTouches[0].clientX-x0;
+    if(Math.abs(dx)>40){dx<0?go(i+1):go(i-1)} x0=null;
+  },{passive:true});
+  go(0);
+})();
+</script>
+</body>
+</html>
