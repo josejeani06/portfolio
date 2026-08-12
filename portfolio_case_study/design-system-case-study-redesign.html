@@ -13,19 +13,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <title>Design to Code, Both Directions — A Design System an AI Can Build From — Ivan Jose</title>
-  <meta name="description" content="Self-directed design systems project by Senior Product Designer Ivan Jose: taking a Figma design system into a packaged React library, made machine-readable so AI agents build from it, then graded against a written component standard by a multi-agent audit — with the open findings published." />
+  <meta name="description" content="Self-directed design systems project by Senior Product Designer Ivan Jose: taking a Figma design system into a packaged React library, made machine-readable so AI agents build from it, then graded against a written component standard by a multi-agent audit, with the open findings published." />
   <link rel="canonical" href="https://josejeani06.github.io/portfolio/design-system-case-study.html" />
   <meta name="author" content="Jean Ivan Jose" />
   <meta property="og:type" content="article" />
   <meta property="og:site_name" content="Ivan Jose" />
   <meta property="og:url" content="https://josejeani06.github.io/portfolio/design-system-case-study.html" />
   <meta property="og:title" content="Design to Code, Both Directions" />
-  <meta property="og:description" content="A self-directed project: taking a Figma design system into a packaged React library, made machine-readable so AI agents build from it — then graded against a written component standard by a multi-agent audit." />
+  <meta property="og:description" content="A self-directed project: taking a Figma design system into a packaged React library, made machine-readable so AI agents build from it, then graded against a written component standard by a multi-agent audit." />
   <meta property="og:image" content="https://josejeani06.github.io/portfolio/images/ds-main-ux.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://josejeani06.github.io/portfolio/images/ds-main-ux.png" />
   <meta name="twitter:title" content="Design to Code, Both Directions" />
-  <meta name="twitter:description" content="A design system a designer, an AI, and a compiler can all build from — by Senior Product Designer Ivan Jose." />
+  <meta name="twitter:description" content="A design system a designer, an AI, and a compiler can all build from, by Senior Product Designer Ivan Jose." />
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -600,7 +600,7 @@
   </style>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght;500;600;700&family=Inter:wght;500;600;700&display=swap" rel="stylesheet">
   <style id="rd-fonts">body{font-family:"Inter",ui-sans-serif,system-ui,sans-serif}h1,h2,h3,h4,h5,.eyebrow,[class*="title"],[class*="kicker"],[class*="heading"]{font-family:"Space Grotesk","Inter",sans-serif}</style>
-  <link rel="stylesheet" href="redesign-system.css?v=42">
+  <link rel="stylesheet" href="redesign-system.css?v=43">
 </head>
 <body class="case-study-page">
   <div class="landing-grid" aria-hidden="true"></div>
@@ -645,7 +645,7 @@
           <span class="case-title-mobile">Design to code, both directions.</span>
         </h1>
         <p class="lead">
-          I was LettrLabs' first and only Product Designer. There was no design system, so I built one from raw hex in Figma — then, after I was let go, took it all the way into a packaged React library an AI can build from. I had it audited against a written standard; it came back bad, and I published it anyway. That's the part worth reading.
+          I was LettrLabs' first and only Product Designer. There was no design system, so I built one from raw hex in Figma. After I was let go I kept going and took it all the way into a packaged React library an AI can build from. Then I had it audited against a written standard. It came back bad and I published it anyway.
         </p>
         <div class="icon-cta">
           <a class="storybook-cta" href="https://josejeani06.github.io/ivanlabs-design-system/" target="_blank" rel="noopener" aria-label="Visit Storybook">
@@ -662,10 +662,10 @@
 
         <div class="hero-facts">
           <div class="panel kv">
-            <div class="kv-item"><span>Role</span><strong>First and only Product Designer at LettrLabs (14 months). Built 100% of the components, patterns, UX copy and tone — the Figma library and the AI validators for copy, component rules and PR checks — as prototypes, not code</strong></div>
-            <div class="kv-item"><span>Built</span><strong>On my own, took it into a fully-usable React package: machine-readable specs, agent skills, and a multi-agent QA pipeline</strong></div>
-            <div class="kv-item"><span>Status</span><strong>On npm as @ivancreatelabs/design-system (v0.5.0). Engineer-reviewed as fit to build on — a personal project, not yet in production</strong></div>
-            <div class="kv-item"><span>Adopted</span><strong>A Senior PM built three working prototypes straight from it — proven beyond its author</strong></div>
+            <div class="kv-item"><span>Role</span><strong>First and only Product Designer at LettrLabs (14 months). Built 100% of the components, patterns, UX copy and tone. That meant the Figma library plus the AI validators for copy, component rules and PR checks, all built as prototypes rather than code</strong></div>
+            <div class="kv-item"><span>Built</span><strong>On my own, took it into a fully-usable React package with machine-readable specs, agent skills, and a multi-agent QA pipeline</strong></div>
+            <div class="kv-item"><span>Status</span><strong>On npm as @ivancreatelabs/design-system (v0.5.0). An engineer reviewed it and called it fit to build on. Still a personal project, not yet in production</strong></div>
+            <div class="kv-item"><span>Adopted</span><strong>A Senior PM built three working prototypes straight from it, so it works for someone other than its author</strong></div>
           </div>
 
           <div class="hero-install">
@@ -675,7 +675,7 @@
 <span class="m"># load the tokens once, at your app root</span>
 <span class="p">$</span> import "@ivancreatelabs/design-system/tokens.css"
 
-<span class="m"># then build with it — Button, DataTable, MapCard…</span>
+<span class="m"># then build with Button, DataTable, MapCard…</span>
 <span class="p">$</span> import { Button, MapCard } from "@ivancreatelabs/design-system"</code></div>
           </div>
         </div>
@@ -690,26 +690,26 @@
           <h2>95 components, one written standard, and a grade I didn't choose.</h2>
         </div>
         <div class="metric-strip">
-          <div class="metric-tile"><strong style="white-space:nowrap">56<span style="display:inline;color:var(--muted);font-weight:700;font-size:.6em;letter-spacing:0"> + 39</span></strong><span>global primitives plus product-specific components — 95 in all, each documented and under test</span></div>
-          <div class="metric-tile"><strong>439</strong><span>generated design tokens (colour, dimension, type, elevation) — the only place those values are allowed to come from</span></div>
-          <div class="metric-tile"><strong>3</strong><span>review stages — write the standard, audit, repair — with one agent per component per stage</span></div>
+          <div class="metric-tile"><strong style="white-space:nowrap">56<span style="display:inline;color:var(--muted);font-weight:700;font-size:.6em;letter-spacing:0"> + 39</span></strong><span>global primitives plus product-specific components. 95 in all, each documented and under test</span></div>
+          <div class="metric-tile"><strong>439</strong><span>generated design tokens (colour, dimension, type, elevation). Nothing on a screen is allowed to get those values anywhere else</span></div>
+          <div class="metric-tile"><strong>3</strong><span>review stages. Write the standard, audit, then repair, with one agent per component per stage</span></div>
           <div class="metric-tile"><strong>705</strong><span>lines in the component standard all three stages worked against</span></div>
           <div class="metric-tile"><strong>857</strong><span>findings raised by the agent audit, sorted into ten categories</span></div>
-          <div class="metric-tile"><strong>76</strong><span>components graded one by one against the written standard — the other 19 are still ungraded</span></div>
+          <div class="metric-tile"><strong>76</strong><span>components graded one by one against the written standard. The other 19 are still ungraded</span></div>
         </div>
-        <p class="glance-note">The counts come from the repo's own scripts, not from me. This is a personal project — it isn't running in production anywhere.</p>
+        <p class="glance-note">The counts come from the repo's own scripts, not from me. It's a personal project and it isn't running in production anywhere.</p>
         <div class="at-glance">
           <div class="at-glance-item">
             <small>The question</small>
-            <p>A Figma library and a codebase drift apart from day one. I'd built the Figma half and written the rules, but never had to defend either against a compiler — so I wanted a straight answer: is the system actually consistent, or does it just look that way in Figma?</p>
+            <p>A Figma library and a codebase drift apart from day one. I'd built the Figma half and written the rules, but I'd never had to defend either against a compiler. So I wanted a straight answer. Is the system actually consistent, or does it only look that way in Figma?</p>
           </div>
           <div class="at-glance-item">
             <small>What I did</small>
-            <p>Rebuilt the library in React on three-tier tokens, wrote the rules in a format an AI can read, and packaged it with versions and releases. Then a three-stage agent pipeline graded 76 of 95 components against the written standard; 19 remain explicitly ungraded.</p>
+            <p>Rebuilt the library in React on three-tier tokens, wrote the rules in a format an AI can read, and packaged it with versions and releases. Then a three-stage agent pipeline graded 76 of 95 components against the written standard. 19 remain explicitly ungraded.</p>
           </div>
           <div class="at-glance-item">
             <small>The outcome</small>
-            <p>Blunt: not one component got an A, and the worst category was the rule I was most sure of. I fixed everything a script could catch and published the rest as open findings — rather than quietly closing them.</p>
+            <p>Not one component got an A, and the worst category was the rule I was most sure of. I fixed everything a script could catch, then published the rest as open findings instead of quietly closing them.</p>
           </div>
         </div>
       </div>
@@ -720,14 +720,14 @@
       <div class="container">
         <div class="section-head section-head-stack">
           <div class="eyebrow">Main UX</div>
-          <h2>It's real — not screenshots.</h2>
-          <p>The installed library running live in your browser. Real product surfaces — sign-in, billing, a pipeline dashboard, an org-scope editor, a map, a mail-merge print preview and more — each built from the same components and tokens — the fields type, the toggles flip, the layout reflows.</p>
+          <h2>It's real, not screenshots.</h2>
+          <p>This is the installed library running live in your browser. Sign-in, billing, a pipeline dashboard, an org-scope editor, a map, a mail-merge print preview and more, all built from the same components and tokens. The fields type, the toggles flip, the layout reflows.</p>
         </div>
 
         <div class="board-embed">
-          <iframe src="https://josejeani06.github.io/portfolio/ivanlabs-hero.html?embed=1&v=20260729" scrolling="no" title="Ivanlabs design system — live board of product surfaces built from the library" loading="lazy"></iframe>
+          <iframe src="https://josejeani06.github.io/portfolio/ivanlabs-hero.html?embed=1&v=20260729" scrolling="no" title="Ivanlabs design system, live board of product surfaces built from the library" loading="lazy"></iframe>
         </div>
-        <p class="shot-cap" style="margin-top:16px">Every surface is a live instance from the installed package — nothing here is a picture.</p>
+        <p class="shot-cap" style="margin-top:16px">Every surface is a live instance from the installed package. Nothing here is a picture.</p>
       </div>
     </section>
 
@@ -739,18 +739,18 @@
         </div>
         <div class="lede">
           <p>
-            When I joined, LettrLabs had no design system at all. In Figma there was nothing — raw hex colours, no text or type styles, no components, and no designer had ever owned it. In the product it showed as 10 button styles, 4 table patterns, up to 5 "primary" buttons competing on a single screen, no documented UX process and no voice. On the screens that drove revenue, buttons fought for the same click.
+            When I joined, LettrLabs had no design system at all. Figma was empty. Raw hex colours, no text or type styles, no components, and no designer had ever owned it. In the product it showed as 10 button styles, 4 table patterns, up to 5 "primary" buttons competing on a single screen, no documented UX process and no voice. On the screens that drove revenue, buttons fought for the same click.
           </p>
           <p>
-            So I built the system, and I built it with the people who'd live in it. I worked directly with the CTO, the CEO and the engineers to pin down the primary action on each screen, the core flows and the feel. From raw colours up, I built the Figma foundation — type styles, tokens, components — and held it to one rule: <b>same job, same pattern</b>. An orders table behaves like every other table. One primary action, one CTA. A mental model you learn once and reuse everywhere.
+            So I built the system, and I built it with the people who'd live in it. I worked directly with the CTO, the CEO and the engineers to pin down the primary action on each screen, the core flows and the feel. From raw colours up I built the Figma foundation, meaning type styles, tokens and components, and held all of it to one rule. <b>Same job, same pattern</b>. An orders table behaves like every other table. One primary action, one CTA. A mental model you learn once and reuse everywhere.
           </p>
           <p>
-            Here's the honest part: even as the sole designer, the system still drifted and regressed — we rebuilt the library and workspace twice in fourteen months. Rules that live in one person's head, even mine, don't hold — so they had to become machine-checkable. That's the bridge from the Figma work to the AI validators, and later to the lint-enforced package. After I was let go, I finished the job: I rewrote the whole system as a packaged React library with rules a script — or a model — can enforce. The rest of this page is that system.
+            Here's the honest part. Even with one designer holding it, the system still drifted and regressed. We rebuilt the library and workspace twice in fourteen months. Rules that live in one person's head, even mine, don't hold, so they had to become machine-checkable. That's the bridge from the Figma work to the AI validators, and later to the lint-enforced package. After I was let go I finished the job and rewrote the whole system as a packaged React library, with rules a script or a model can enforce. The rest of this page is that system.
           </p>
         </div>
       </div>
       <div class="container" style="margin-top:38px">
-        <p class="quote" style="color:#f1ecfb">"We spent a week arguing about one button. It sounds inefficient — but that decision became the criteria every component after it was measured against, and the rest went fast. Working with engineers who think in systems, my job wasn't to control the outcome — it was to find the decision they already wanted, and make it consistent."</p>
+        <p class="quote" style="color:#f1ecfb">"We spent a week arguing about one button. That sounds inefficient, but the decision became the criteria every component after it was measured against, and the rest went fast. Working with engineers who think in systems, my job wasn't to control the outcome. It was to find the decision they already wanted, and make it consistent."</p>
       </div>
     </section>
 
@@ -772,7 +772,7 @@
           <div class="ds-rung">
             <small>Layer 02</small>
             <strong>Semantic</strong>
-            <span>Roles point at primitives — <code>brand/bg/default</code>, <code>neutral/text-icon/strong</code> — so what you meant stays the same even when the value under it changes.</span>
+            <span>Roles point at primitives like <code>brand/bg/default</code> and <code>neutral/text-icon/strong</code>, so what you meant stays the same even when the value under it changes.</span>
           </div>
           <div class="ds-arrow" aria-hidden="true">→</div>
           <div class="ds-rung">
@@ -785,7 +785,7 @@
         <div class="families-grid">
           <div class="family"><div class="swatch" aria-hidden="true" style="background:#5551FF"></div><strong>Brand</strong><span>Reserved for the user's positive action</span></div>
           <div class="family"><div class="swatch" aria-hidden="true" style="background:#6c757d"></div><strong>Neutral</strong><span>Text, icons, surfaces, borders</span></div>
-          <div class="family"><div class="swatch" aria-hidden="true" style="background:#2f6fed"></div><strong>Info</strong><span>Selection and information — blue, not brand</span></div>
+          <div class="family"><div class="swatch" aria-hidden="true" style="background:#2f6fed"></div><strong>Info</strong><span>Selection and information. Blue, not brand</span></div>
           <div class="family"><div class="swatch" aria-hidden="true" style="background:#22c55e"></div><strong>Success</strong><span>Confirmed and completed states</span></div>
           <div class="family"><div class="swatch" aria-hidden="true" style="background:#f59e0b"></div><strong>Warning</strong><span>Caution without failure</span></div>
           <div class="family"><div class="swatch" aria-hidden="true" style="background:#ef4444"></div><strong>Error</strong><span>Blocking failures only</span></div>
@@ -796,14 +796,14 @@
           <div class="recwrap" data-pane="live">
             <iframe class="recframe" src="https://josejeani06.github.io/portfolio/recreations/ds-tokens.html?v=20260730b" title="Live recreation: the three token layers and the families-by-roles swatch table, rendered from the real stylesheet" loading="lazy"></iframe>
           </div>
-          <p class="shot-cap">Rendered straight from <code class="inline-code">tokens.css</code> — the swatches are the live values, not a diagram of them.</p>
+          <p class="shot-cap">Rendered straight from <code class="inline-code">tokens.css</code>, so the swatches are the live values and not a diagram of them.</p>
         </div>
 
         <div class="rule-list">
-          <div class="rule"><strong>Brand is reserved.</strong> It marks the thing you want people to do — primary button, active tab, current step, focus ring. Never body text, never decoration. That one rule does most of the work in keeping a screen calm.</div>
+          <div class="rule"><strong>Brand is reserved.</strong> It marks the thing you want people to do. Primary button, active tab, current step, focus ring. Never body text, never decoration. That one rule does most of the work in keeping a screen calm.</div>
           <div class="rule"><strong>Dimension scales aren't interchangeable.</strong> Spacing, padding, gap, radius, border, height, icon size and opacity are separate scales, each used only where it belongs. Merging them is how a system rots.</div>
           <div class="rule"><strong>Focus is a 4px halo, no exceptions.</strong> The same focus ring on every control, so the whole thing reads as one product instead of a pile of widgets.</div>
-          <div class="rule"><strong>Disabled uses lighter tokens, never opacity.</strong> And selection on small controls is info-blue, not brand — brand stays reserved for the action you want people to take.</div>
+          <div class="rule"><strong>Disabled uses lighter tokens, never opacity.</strong> And selection on small controls is info-blue, not brand, because brand stays reserved for the action you want people to take.</div>
         </div>
 
         <div class="recblock">
@@ -815,10 +815,10 @@
               </a>
             </div>
           </div>
-          <p class="shot-cap">Forty of the ninety-five, each a real interactive instance from the installed package — flip the toggles, type the fields.</p>
+          <p class="shot-cap">Forty of the ninety-five, each a real interactive instance from the installed package. Flip the toggles, type in the fields.</p>
         </div>
 
-        <p class="tier-note">Worth saying plainly, because the count hides it: 56 of the 95 are <b>global primitives</b> built as a system (Button, InputField, DataTable); the other 39 are <b>product one-offs</b> — map tools, charts, org and campaign screens — I pulled into one place. Both are real components; only one set was ever built to a standard. The audit felt that difference.</p>
+        <p class="tier-note">The count hides something I should say plainly. 56 of the 95 are <b>global primitives</b> built as a system (Button, InputField, DataTable). The other 39 are <b>product one-offs</b> I pulled into one place, things like map tools, charts, org and campaign screens. Both are real components. Only one set was ever built to a standard, and the audit felt that difference.</p>
       </div>
     </section>
 
@@ -827,7 +827,7 @@
         <div class="section-head section-head-stack">
           <div class="eyebrow">Act II · The machine-readable layer</div>
           <h2>If a model can't follow the rule, it wasn't written well enough.</h2>
-          <p>Writing the docs for an AI made them better for people too — you can't tell a model to "use appropriate spacing," so every rule had to become something checkable, or it got cut. Four things carry the system to whoever, or whatever, builds next.</p>
+          <p>Writing the docs for an AI made them better for people too. You can't tell a model to "use appropriate spacing," so every rule had to turn into something checkable or it got cut. Four things carry the system to whoever, or whatever, builds next.</p>
         </div>
 
         <div class="harness-grid">
@@ -839,12 +839,12 @@
           <article class="harness-card">
             <div class="harness-file">docs/SKILL.md</div>
             <h3>The agent contract, five rules</h3>
-            <p>The core rule first: <em>search for what already exists and reuse it</em> before making anything new — and never hard-code a colour, size or radius where a token exists. Flag what's missing; don't paper over it.</p>
+            <p>The core rule comes first. <em>Search for what already exists and reuse it</em> before making anything new, and never hard-code a colour, size or radius where a token exists. Flag what's missing instead of papering over it.</p>
           </article>
           <article class="harness-card">
             <div class="harness-file">UX copy · tone</div>
             <h3>Copy became a formula, not a guess</h3>
-            <p>Every message follows a pattern — what happened, what it means, what to do next. Give a model the state; it fills the blanks.</p>
+            <p>Every message follows the same pattern. What happened, what it means, what to do next. Give a model the state and it fills in the blanks.</p>
             <ul>
               <li><code>System failure</code> → "We couldn't [action]. [Next step]. If it continues, [fallback]."</li>
               <li><code>Validation</code> → "[Item] is required. [Action] to continue."</li>
@@ -853,11 +853,11 @@
           <article class="harness-card">
             <div class="harness-file">docs/QA-FINDINGS.md</div>
             <h3>Every finding is one of three things</h3>
-            <p>Not every difference is a mistake, but each gets a decision — how a one-person system survives a growing team.</p>
+            <p>Not every difference is a mistake, but every one of them gets a decision. That's how a one-person system survives a growing team.</p>
             <ul>
-              <li><code>Violation</code> — breaks a rule → fix the design</li>
-              <li><code>Deviation</code> — right value, no token → fix the binding</li>
-              <li><code>New pattern</code> — undocumented → name it, or replace it</li>
+              <li><code>Violation</code> breaks a rule → fix the design</li>
+              <li><code>Deviation</code> has the right value but no token → fix the binding</li>
+              <li><code>New pattern</code> is undocumented → name it, or replace it</li>
             </ul>
           </article>
         </div>
@@ -868,8 +868,8 @@
       <div class="container">
         <div class="section-head section-head-stack">
           <div class="eyebrow">Act III · Multi-agent QA</div>
-          <h2>I'm the worst judge of my own work — so I wrote a testable standard and ran an agent audit.</h2>
-          <p>I couldn't audit 95 components by hand, and I didn't trust myself to. So I ran a three-stage agent audit—write the standard, grade 76 components against it, then fix—and let the written rules, not my taste, decide. Nineteen components remain explicitly ungraded.</p>
+          <h2>I'm the worst judge of my own work, so I wrote a testable standard and ran an agent audit.</h2>
+          <p>I couldn't audit 95 components by hand, and I didn't trust myself to. So I ran a three-stage agent audit. Write the standard, grade 76 components against it, then fix. The written rules decided, not my taste. Nineteen components remain explicitly ungraded.</p>
         </div>
 
         <div class="grade-bars">
@@ -877,13 +877,13 @@
           <div class="grade-row"><b>B</b><span class="grade-track" aria-hidden="true"><i class="grade-fill" style="width:4%;background:#8fb6ff"></i></span><span>3 components</span></div>
           <div class="grade-row"><b>C</b><span class="grade-track" aria-hidden="true"><i class="grade-fill" style="width:42%;background:#ffcf7a"></i></span><span>32 components</span></div>
           <div class="grade-row"><b>D</b><span class="grade-track" aria-hidden="true"><i class="grade-fill" style="width:54%"></i></span><span>41 components</span></div>
-          <p class="grade-note">Not one A. The biggest failure was the rule I was surest of — raw values where a token already existed. I'd have called this system consistent; measured, it mostly wasn't.</p>
+          <p class="grade-note">Not one A. The biggest failure was the rule I was surest of, raw values sitting where a token already existed. I'd have called this system consistent. Measured, it mostly wasn't.</p>
         </div>
 
         <div class="section-head section-head-stack" style="margin-top:52px">
           <div class="eyebrow">What changed</div>
-          <h2>Four checks the build now enforces — before, and after.</h2>
-          <p>Every row is a script that fails the build, so it can't quietly regress — numbers anyone with the code can reproduce.</p>
+          <h2>Four checks the build now enforces, before and after.</h2>
+          <p>Every row is a script that fails the build, so it can't quietly regress. Anyone with the code can run these numbers again.</p>
         </div>
 
         <div class="results-table">
@@ -899,7 +899,7 @@
             <span class="result-value r-before">36</span><span class="r-arrow" aria-hidden="true">→</span><span class="result-value r-after">0</span>
           </div>
           <div class="results-row">
-            <b>Components with a manifest entry<small>The old one was maintained by hand, so it fell behind the code. The new one is generated from the code itself.</small></b>
+            <b>Components with a manifest entry<small>The old one was kept by hand, so it fell behind the code. The new one is generated from the code itself.</small></b>
             <span class="result-value r-before">50</span><span class="r-arrow" aria-hidden="true">→</span><span class="result-value r-after">95</span>
           </div>
           <div class="results-row">
@@ -920,7 +920,7 @@
         <div class="section-head section-head-stack">
           <div class="eyebrow">The limits</div>
           <h2>What the audit found that I haven't fixed yet.</h2>
-          <p>The audit ships with the system, unfixed findings and all — what it actually looks like beats what its owner says. Two categories are closed and enforced by the build; the other eight are open or partly open, and I'm naming each rather than call the audit complete. Anything without a check behind it drifts back, whatever I claim today.</p>
+          <p>The audit ships with the system, unfixed findings and all. What a system actually looks like beats what its owner says about it. Two categories are closed and enforced by the build. The other eight are open or partly open, and I'd rather name each one than call the audit complete. Anything without a check behind it drifts back, whatever I claim today.</p>
         </div>
 
         <div class="itable">
@@ -929,16 +929,16 @@
               <tr><th>Category</th><th>What the audit found</th><th>Status</th></tr>
             </thead>
             <tbody>
-              <tr><td class="k">semantic-token</td><td>Raw values where a token exists. The biggest category in the audit, and now the most strictly enforced — the lint fails the build.</td><td><span class="st done">Closed · enforced</span></td></tr>
+              <tr><td class="k">semantic-token</td><td>Raw values where a token exists. The biggest category in the audit, and now the most strictly enforced, because the lint fails the build.</td><td><span class="st done">Closed · enforced</span></td></tr>
               <tr><td class="k">ref</td><td>Refs not forwarded, or forwarded then dropped before they reach an element. Every component now gets rendered and checked.</td><td><span class="st done">Closed · enforced</span></td></tr>
-              <tr><td class="k">a11y</td><td>Labels, error announcements and icon labelling are fixed and checked. Keyboard navigation, focus trapping and expanded/selected state aren't — several menus and overlays still can't be used properly from a keyboard.</td><td><span class="st open">Partly open</span></td></tr>
-              <tr><td class="k">dynamic-data</td><td>Components shipping hardcoded sample data as a default, or missing their loading, empty and error states. The data table is fixed; the rest aren't.</td><td><span class="st open">Open</span></td></tr>
+              <tr><td class="k">a11y</td><td>Labels, error announcements and icon labelling are fixed and checked. Keyboard navigation, focus trapping and expanded/selected state aren't. Several menus and overlays still can't be used properly from a keyboard.</td><td><span class="st open">Partly open</span></td></tr>
+              <tr><td class="k">dynamic-data</td><td>Components shipping hardcoded sample data as a default, or missing their loading, empty and error states. The data table is fixed. The rest aren't.</td><td><span class="st open">Open</span></td></tr>
               <tr><td class="k">props-api</td><td>Names that don't match sibling components, missing passthrough, and props leaking onto DOM nodes.</td><td><span class="st open">Open</span></td></tr>
-              <tr><td class="k">controlled</td><td>Components that handle controlled or uncontrolled use, but not both properly — a parent sets a value after mount and nothing happens.</td><td><span class="st open">Open</span></td></tr>
+              <tr><td class="k">controlled</td><td>Components that handle controlled or uncontrolled use, but not both properly. A parent sets a value after mount and nothing happens.</td><td><span class="st open">Open</span></td></tr>
               <tr><td class="k">state · consistency</td><td>States you can't reach or can't tell apart, and components solving the same problem differently from their siblings.</td><td><span class="st open">Open</span></td></tr>
               <tr><td class="k">ssr</td><td>A few components touch window or document outside an effect, which crashes server-side rendering.</td><td><span class="st open">Open</span></td></tr>
-              <tr><td class="k">no tiering</td><td>The manifest lists all 95 flat — nothing in the data tells an agent a map control isn't a reusable primitive, so it invites reuse of one-off product components everywhere.</td><td><span class="st open">Open</span></td></tr>
-              <tr><td class="k">never audited</td><td>Nineteen components never got graded. They pass the automated checks, but nobody has actually read them yet — and I'd rather say that than call the audit complete.</td><td><span class="st open">Open</span></td></tr>
+              <tr><td class="k">no tiering</td><td>The manifest lists all 95 flat. Nothing in the data tells an agent that a map control isn't a reusable primitive, so it invites reuse of one-off product components everywhere.</td><td><span class="st open">Open</span></td></tr>
+              <tr><td class="k">never audited</td><td>Nineteen components never got graded. They pass the automated checks, but nobody has actually read them yet, and I'd rather say so than call the audit complete.</td><td><span class="st open">Open</span></td></tr>
             </tbody>
           </table>
         </div>
@@ -950,15 +950,15 @@
         <div class="section-head section-head-stack">
           <div class="eyebrow">What this is evidence of</div>
           <h2>What I'd bring to a team that has this problem.</h2>
-          <p>This never shipped to customers, so I'm not going to claim a business result. What it is: a worked example of how I'd run a design system with engineers involved, and proof I can take one past the Figma file.</p>
+          <p>This never shipped to customers, so I'm not going to claim a business result. It's a worked example of how I'd run a design system with engineers involved, and proof I can take one past the Figma file.</p>
         </div>
         <div class="result-grid">
-          <div class="result-item"><span class="result-idx">01 / PACKAGED</span><h3>Past the Figma file, into a package</h3><p>Most design-system work dies at the Figma file. Mine is an installed, versioned npm package — tokens plus 95 components — that a team could build on today. That's the half I'd never taken a system through before.</p></div>
-          <div class="result-item"><span class="result-idx">02 / Proven beyond me</span><h3>Holds up in someone else's hands</h3><p>A Senior PM built three working prototypes straight from the same system, so it's not just consistent for its author — someone who didn't design it could build with it.</p></div>
-          <div class="result-item"><span class="result-idx">03 / RIGOR</span><h3>Willing to be graded</h3><p>I ran an agent audit against a written standard and published what it returned—open findings and all—instead of the version that flatters me.</p></div>
-          <div class="result-item"><span class="result-idx">04 / Design that survives code</span><h3>Compiles, not just looks right</h3><p>I can hand an engineer tokens and components that forward refs and pass a lint — not a Figma link and a conversation about what I meant.</p></div>
-          <div class="result-item"><span class="result-idx">05 / Rules that enforce themselves</span><h3>Write the check first</h3><p>The rules that survived the audit were the ones a script could check; the ones I'd written as good taste got broken everywhere, by me as much as any model. So the check comes first now, or the rule doesn't count.</p></div>
-          <div class="result-item"><span class="result-idx">06 / AI, constrained not trusted</span><h3>Build from what exists</h3><p>Give an agent a readable spec and a reuse-first rule and it builds from what's there. Give it neither and it invents — a design problem before it's a tooling one.</p></div>
+          <div class="result-item"><span class="result-idx">01 / PACKAGED</span><h3>Past the Figma file, into a package</h3><p>Most design-system work dies at the Figma file. Mine is an installed, versioned npm package with tokens plus 95 components, and a team could build on it today. That's the half I'd never taken a system through before.</p></div>
+          <div class="result-item"><span class="result-idx">02 / Proven beyond me</span><h3>Holds up in someone else's hands</h3><p>A Senior PM built three working prototypes straight from the same system. It isn't only consistent for its author. Someone who didn't design it could build with it.</p></div>
+          <div class="result-item"><span class="result-idx">03 / RIGOR</span><h3>Willing to be graded</h3><p>I ran an agent audit against a written standard and published what it returned, open findings and all, instead of the version that flatters me.</p></div>
+          <div class="result-item"><span class="result-idx">04 / Design that survives code</span><h3>Compiles, not just looks right</h3><p>I can hand an engineer tokens and components that forward refs and pass a lint, instead of a Figma link and a conversation about what I meant.</p></div>
+          <div class="result-item"><span class="result-idx">05 / Rules that enforce themselves</span><h3>Write the check first</h3><p>The rules that survived the audit were the ones a script could check. The ones I'd written as good taste got broken everywhere, by me as much as by any model. So the check comes first now, or the rule doesn't count.</p></div>
+          <div class="result-item"><span class="result-idx">06 / AI, constrained not trusted</span><h3>Build from what exists</h3><p>Give an agent a readable spec and a reuse-first rule and it builds from what's there. Give it neither and it invents. That's a design problem before it's a tooling one.</p></div>
         </div>
       </div>
     </section>
@@ -974,16 +974,16 @@
             The open list is the roadmap. Keyboard and focus first, because that's the one where a gap actually locks people out instead of just looking messy. Then the props API, so components stop surprising the people building with them.
           </p>
           <p>
-            The package is why any of this holds: one versioned source of truth a fast prototype can pull from and a team can build on — so a fix travels both ways instead of dying in a single screen, and a demo and production stop drifting apart. That's the part an HTML mockup can never be.
+            The package is why any of this holds. There's one versioned source of truth that a fast prototype can pull from and a team can build on, so a fix travels both ways instead of dying in a single screen, and the demo and production stop drifting apart. That's the part an HTML mockup can never be.
           </p>
           <p>
-            So the work now is narrow: turn more of the open list into checks, and drop any rule I can't enforce. A claim I can't hand someone as a command they run for themselves isn't a finished rule — it's a hope with good intentions.
+            So the work now is narrow. Turn more of the open list into checks, and drop any rule I can't enforce. If I can't hand someone a command they run for themselves, it isn't a finished rule yet. It's a hope with good intentions.
           </p>
         </div>
       </div>
       <div class="container">
         <p class="quote">
-          "A design system earns its keep when the same rules produce the same answer — whether a designer or a model is doing the work."
+          "A design system earns its keep when the same rules produce the same answer, whether a designer or a model is doing the work."
         </p>
       </div>
     </section>

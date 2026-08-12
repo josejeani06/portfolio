@@ -786,3 +786,13 @@ img,svg,video,iframe,canvas{max-width:100%}
   .case-study-page #refine-carousel .refine-arrow.prev{left:14px!important;right:auto!important}
   .case-study-page #refine-carousel .refine-arrow.next{left:62px!important;right:auto!important}
 }
+
+/* connector logo sits at 80% of the card width at every breakpoint */
+.case-study-page .eco-card__logo{
+  width:80%!important;height:auto!important;margin:0 auto!important;
+  display:grid!important;place-items:center!important;
+}
+.case-study-page .eco-card__logo img{
+  width:100%!important;height:auto!important;max-height:none!important;
+  object-fit:contain!important;
+}
