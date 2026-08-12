@@ -212,7 +212,9 @@
     .approach-list>div:first-child{border-top:0;padding-top:0}
     .approach-num{font-family:"Space Grotesk";font-weight:600;font-size:28px;letter-spacing:-.03em;color:var(--purple-bright)}
     .approach-list p{color:rgba(255,255,255,.9);font-size:16.5px;line-height:1.6;margin:0}
-    @media(max-width:840px){.approach{grid-template-columns:1fr;gap:36px}}
+    @media(max-width:840px){.approach{grid-template-columns:1fr;gap:36px}
+      /* the sticky head scrolled over the numbered list on phones */
+      .approach-head{position:static;top:auto}}
 
     /* other work */
     .other-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
@@ -296,10 +298,6 @@
     <!-- ============================ WORK — BENTO ============================ -->
     <section class="section" id="work" style="padding-top:clamp(28px,4vw,52px)">
       <div class="container">
-        <div class="section-head reveal">
-          <span class="kicker">Selected work</span>
-          <h2>Grounded in real product decisions and systems work.</h2>
-        </div>
 
         <div class="bento">
           <a class="tile t-map reveal" href="map-case-study-redesign.html" target="_blank" rel="noopener">
