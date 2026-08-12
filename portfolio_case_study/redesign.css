@@ -416,8 +416,8 @@ img,svg,video,iframe,canvas{max-width:100%}
 /* clipped image + Show full */
 .show-full-btn{
   position:absolute;left:50%;bottom:12px;transform:translateX(-50%);z-index:4;
-  border:0;cursor:pointer;
-  padding:9px 16px;border-radius:999px;
+  border:0;cursor:pointer;padding:0 18px;border-radius:999px;
+  min-height:44px;display:inline-flex;align-items:center;/* WCAG 2.5.5 tap target */
   background:rgba(34,24,54,.92);color:#fff;
   font-family:"Space Grotesk",sans-serif;font-size:12.5px;font-weight:600;
   box-shadow:0 8px 22px rgba(17,17,16,.3);

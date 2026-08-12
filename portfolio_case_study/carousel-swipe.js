@@ -107,30 +107,73 @@
     document.addEventListener('keydown', onKey);
   }
 
+  /* Every slide in a concept carousel gets clipped to the SAME height on a
+     phone, so the carousel does not jump as you page through it, and each one
+     carries a "Show full" button that opens the image in the lightbox.
+     A one-off tall image outside a carousel is clipped only if it overruns. */
+  var UNIFORM_H = 0.46;   // fraction of viewport height for carousel slides
+
+  function addShowFull(host, img) {
+    if (host.querySelector(':scope > .show-full-btn')) return;
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'show-full-btn';
+    btn.textContent = 'Show full';
+    btn.addEventListener('click', function (e) {
+      e.preventDefault(); e.stopPropagation();
+      lightbox(img.currentSrc || img.src, img.alt);
+    });
+    host.appendChild(btn);
+  }
+
+  function unclip(el) {
+    el.classList.remove('is-clipped');
+    el.style.maxHeight = ''; el.style.height = ''; el.style.overflow = ''; el.style.position = '';
+    delete el.dataset.clipped;
+    var b = el.querySelector(':scope > .show-full-btn');
+    if (b) b.remove();
+  }
+
   function clipTall() {
-    if (window.innerWidth > 900) return;
-    var limit = Math.round(window.innerHeight * MAX_H);
-    document.querySelectorAll('.refine-slide, .concept-carousel-media').forEach(function (slide) {
+    var mobile = window.innerWidth <= 900;
+    var vh = window.innerHeight;
+
+    // 1. concept carousels: uniform height across every slide
+    document.querySelectorAll('.concept-carousel').forEach(function (cc) {
+      var medias = cc.querySelectorAll('.concept-carousel-media');
+      medias.forEach(function (m) {
+        var img = m.querySelector('img');
+        if (!img) return;
+        if (!mobile) { unclip(m); return; }
+        m.classList.add('is-clipped');
+        m.dataset.clipped = '1';
+        m.style.position = 'relative';
+        // a fixed height (not max-height) is what actually equalises them;
+        // max-height only caps the tall ones and leaves short ones short.
+        m.style.height = Math.round(vh * UNIFORM_H) + 'px';
+        m.style.maxHeight = 'none';
+        m.style.overflow = 'hidden';
+        addShowFull(m, img);
+      });
+    });
+
+    // 2. anything else only gets clipped when it genuinely overruns
+    if (!mobile) {
+      document.querySelectorAll('.refine-slide.is-clipped').forEach(unclip);
+      return;
+    }
+    var limit = Math.round(vh * MAX_H);
+    document.querySelectorAll('.refine-slide').forEach(function (slide) {
       var img = slide.querySelector('img');
       if (!img || !img.naturalHeight) return;
-      var shown = img.getBoundingClientRect().height;
-      if (shown <= limit + 8) return;
       if (slide.dataset.clipped === '1') return;
+      if (img.getBoundingClientRect().height <= limit + 8) return;
       slide.dataset.clipped = '1';
       slide.classList.add('is-clipped');
+      slide.style.position = 'relative';
       slide.style.maxHeight = limit + 'px';
       slide.style.overflow = 'hidden';
-      slide.style.position = 'relative';
-
-      var btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = 'show-full-btn';
-      btn.textContent = 'Show full';
-      btn.addEventListener('click', function (e) {
-        e.stopPropagation();
-        lightbox(img.currentSrc || img.src, img.alt);
-      });
-      slide.appendChild(btn);
+      addShowFull(slide, img);
     });
   }
 
@@ -173,6 +216,9 @@
     window.addEventListener('resize', function () { setTimeout(conceptArrows, 160); }, { passive: true });
     watchHeights();
     [400, 1000, 1800].forEach(function (d) { setTimeout(clipTall, d); });
+    document.querySelectorAll('.concept-carousel img, .refine-slide img').forEach(function (im) {
+      if (!im.complete) im.addEventListener('load', function () { setTimeout(clipTall, 60); }, { once: true });
+    });
     window.addEventListener('resize', function () { setTimeout(clipTall, 200); }, { passive: true });
   }
 
