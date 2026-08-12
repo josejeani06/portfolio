@@ -21,7 +21,7 @@
   <link rel="preconnect" href="https://unpkg.com" crossorigin>
   <link rel="preconnect" href="https://esm.sh" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="redesign.css?v=28" />
+  <link rel="stylesheet" href="redesign.css?v=33" />
   <style>
     /* map-specific: Uber bento + tabs + play-prototype + outcome grid */
     .out-grid{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:var(--paper)}
@@ -246,8 +246,8 @@
           <p class="rd-p">My first proposal gave clear entry points before any map interaction — search a place, define an area, reuse a saved area, or upload a CSV — because not everyone arrived ready to draw; the entry point had to match how they already thought about the task.</p>
         </div>
         <div class="rd-grid-2 rd-reveal" style="margin-bottom:18px">
-          <div class="rd-card"><span class="rd-card-label">Product view</span><p style="margin-top:14px">Start with the customer's job. Let CSV, saved areas, search, and map tools become equal entry points, and reduce support dependency by matching how different personas already think.</p></div>
-          <div class="rd-card"><span class="rd-card-label" style="color:var(--teal)">Business view</span><p style="margin-top:14px">Keep the map visible because it's central to the product experience. Make the map feel more capable before users move into targeting details, preserving visual trust while reducing steps.</p></div>
+          <div class="rd-card"><span class="rd-card-label rd-label--bad">Product view<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></span><p style="margin-top:14px">Start with the customer's job. Let CSV, saved areas, search, and map tools become equal entry points, and reduce support dependency by matching how different personas already think.</p></div>
+          <div class="rd-card"><span class="rd-card-label rd-label--good">Business view<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><p style="margin-top:14px">Keep the map visible because it's central to the product experience. Make the map feel more capable before users move into targeting details, preserving visual trust while reducing steps.</p></div>
         </div>
         <div class="rd-head rd-reveal" style="margin-bottom:18px"><span class="rd-kicker">Why the concept changed</span></div>
         <div class="rd-grid-3 rd-reveal">
@@ -317,7 +317,8 @@
         </div>
         <p class="rd-p rd-reveal" style="color:rgba(255,255,255,.9)">It also taught me to design with the constraints, not around them — the prototype reframed the map-provider call, moving engineering from Google Maps to MapTiler with the edge cases and interaction model settled before any production code.</p>
         <div class="rd-hero-actions rd-reveal" style="margin:clamp(28px,3.5vw,44px) 0 16px"><a class="rd-btn rd-btn--outline" href="https://josejeani06.github.io/lettrlabs-service-area-map-builder/" target="_blank" rel="noreferrer">Open initial prototype ↗</a></div>
-        <div class="rd-frame rd-reveal play-wrap init-frame" id="initWrap">
+        <div class="rd-frame rd-reveal play-wrap init-frame has-poster" id="initWrap">
+          <img class="proto-poster" src="images/map-audience-builder.webp" alt="Preview of the initial service-area map prototype" loading="lazy">
           <button class="play-btn" id="initPlayBtn" type="button" aria-label="Play the initial prototype"><span>▶ Play initial prototype</span></button>
           <iframe id="initFrame" title="Initial AI-assisted service-area map prototype" tabindex="-1" loading="lazy"></iframe>
         </div>
@@ -341,7 +342,8 @@
       <div class="rd-container">
         <div class="rd-head rd-reveal"><span class="rd-kicker">Map audience builder</span><h2 class="rd-h2">The final direction turned targeting into a workspace, not a one-path map tool.</h2><p class="rd-lead">The interaction model brings search or region selection, CSV upload, saved areas, radius, and polygon into one audience-building context. Phase one shipped the map-first path; the remaining entry points are designed for the later phases.</p></div>
         <div class="rd-hero-actions rd-reveal" style="margin:0 0 18px"><a class="rd-btn rd-btn--outline" href="https://josejeani06.github.io/portfolio/audience-builder-prototype/index.html" target="_blank" rel="noreferrer">Open in new window ↗</a></div>
-        <div class="rd-frame rd-reveal play-wrap init-frame" id="playWrap">
+        <div class="rd-frame rd-reveal play-wrap init-frame has-poster" id="playWrap">
+          <img class="proto-poster" src="images/map-audience-builder.webp" alt="Preview of the shipped audience-builder prototype" loading="lazy">
           <button class="play-btn" id="playBtn" type="button" aria-label="Play the interactive prototype"><span>▶ Play prototype</span></button>
           <iframe id="builderFrame" title="Interactive audience-builder prototype" tabindex="-1" loading="lazy"></iframe>
         </div>
@@ -415,8 +417,8 @@
     if(!reduced){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target);}});},{threshold:.12});document.querySelectorAll(".rd-reveal:not(.in)").forEach(function(n){io.observe(n);});}
     else{document.querySelectorAll(".rd-reveal").forEach(function(n){n.classList.add("in");});}
     document.querySelectorAll(".ps-tab").forEach(function(t){t.addEventListener("click",function(){document.querySelectorAll(".ps-tab").forEach(function(x){x.classList.remove("on");});document.querySelectorAll(".ps-pane").forEach(function(x){x.classList.remove("on");});t.classList.add("on");var p=document.getElementById(t.dataset.pane);if(p)p.classList.add("on");});});
-    var pb=document.getElementById("playBtn");if(pb){pb.addEventListener("click",function(){var f=document.getElementById("builderFrame");f.src="https://josejeani06.github.io/portfolio/audience-builder-prototype/index.html";pb.style.display="none";});}
-    var ipb=document.getElementById("initPlayBtn");if(ipb){ipb.addEventListener("click",function(){var f=document.getElementById("initFrame");f.src="https://josejeani06.github.io/lettrlabs-service-area-map-builder/";ipb.style.display="none";f.addEventListener("load",function(){window.dispatchEvent(new Event("resize"));});setTimeout(function(){window.dispatchEvent(new Event("resize"));},400);});}
+    var pb=document.getElementById("playBtn");if(pb){pb.addEventListener("click",function(){var f=document.getElementById("builderFrame");f.src="https://josejeani06.github.io/portfolio/audience-builder-prototype/index.html";pb.style.display="none";f.closest(".rd-frame").classList.add("is-playing");});}
+    var ipb=document.getElementById("initPlayBtn");if(ipb){ipb.addEventListener("click",function(){var f=document.getElementById("initFrame");f.src="https://josejeani06.github.io/lettrlabs-service-area-map-builder/";ipb.style.display="none";f.closest(".rd-frame").classList.add("is-playing");f.addEventListener("load",function(){window.dispatchEvent(new Event("resize"));});setTimeout(function(){window.dispatchEvent(new Event("resize"));},400);});}
     var ba=document.getElementById("mapBA");if(ba){var drag=false;function setPos(x){var r=ba.getBoundingClientRect();var p=Math.max(0,Math.min(1,(x-r.left)/r.width));ba.style.setProperty("--pos",(p*100)+"%");}ba.addEventListener("pointerdown",function(e){drag=true;setPos(e.clientX);try{ba.setPointerCapture(e.pointerId);}catch(err){}});ba.addEventListener("pointermove",function(e){if(drag)setPos(e.clientX);});window.addEventListener("pointerup",function(){drag=false;});
       /* Scroll-in hint: the divider travels right -> left from 3/4 to 1/4, so the
          "after" state ends up mostly revealed. Driven by a CSS
@@ -463,5 +465,7 @@
       window.addEventListener("resize",fit);window.addEventListener("load",fit);var n=0,iv=setInterval(function(){fit();if(++n>14)clearInterval(iv);},300);
     })();
   </script>
+  <script defer src="carousel-swipe.js?v=1"></script>
+  <script defer src="scroll-hint.js?v=1"></script>
 </body>
 </html>

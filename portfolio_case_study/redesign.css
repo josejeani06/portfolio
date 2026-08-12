@@ -227,6 +227,18 @@ img{max-width:100%;display:block}
 .rd-icon{width:50px;height:50px;border-radius:14px;display:grid;place-items:center;background:var(--lavender-bg);border:1px solid var(--lavender);color:var(--purple)}
 .rd-icon svg{width:24px;height:24px}
 .rd-card-label{font-family:var(--font-display);font-size:12.5px;font-weight:600;letter-spacing:.03em;color:var(--purple);text-transform:uppercase}
+/* label with a status icon pinned right: green check = kept, red x = rejected */
+.rd-card-label:has(svg){display:flex;align-items:center;justify-content:space-between;gap:10px}
+.rd-card-label svg{width:17px;height:17px;flex:0 0 auto}
+.rd-label--good{color:#15703c}
+.rd-label--bad{color:#c0392b}
+
+/* click-to-play prototype frames show a still until you press play */
+.rd-frame.has-poster{position:relative}
+.rd-frame .proto-poster{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top center;z-index:1}
+.rd-frame .play-btn{z-index:3}
+.rd-frame .proto-poster + .play-btn{background:rgba(34,24,54,.42)}
+.rd-frame.is-playing .proto-poster{display:none}
 .rd-card--dark .rd-card-label{color:var(--bright-text)}
 
 /* ---------- definition rows (evidence / blocker→fix tables) ---------- */
@@ -383,3 +395,12 @@ img,svg,video,iframe,canvas{max-width:100%}
 .rd-ba-tag{position:absolute;top:16px;padding:6px 13px;border-radius:999px;font-family:var(--font-display);font-size:12.5px;font-weight:600;color:#fff;pointer-events:none}
 .rd-ba-tag.old{left:16px;background:#c0392b}
 .rd-ba-tag.new{right:16px;background:#15703c}
+
+/* mobile carousel (map reference): the cards under the media are information
+   only — the arrows and the swipe gesture drive it, so they are not tappable */
+@media(max-width:900px){
+  .refine-item{pointer-events:none;cursor:default}
+  .refine-controls{gap:10px;margin-top:14px}
+  .refine-carousel{gap:14px}
+  .refine-viewport{touch-action:pan-y}
+}

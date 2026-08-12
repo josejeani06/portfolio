@@ -55,7 +55,10 @@
   function load(src, width) {
     return new Promise(res => {
       const f = document.createElement('iframe');
-      f.style.cssText = `width:${width}px;height:900px;position:fixed;left:-99999px;top:0;border:0`;
+      // max-width:none is required — redesign.css sets iframe{max-width:100%}, which
+      // would otherwise clamp the test frame to the host viewport and silently
+      // measure the wrong breakpoint.
+      f.style.cssText = `width:${width}px;max-width:none;height:900px;position:fixed;left:-99999px;top:0;border:0`;
       f.src = src + (src.includes('?') ? '&' : '?') + 'qa=' + Date.now() + width;
       f.onload = () => setTimeout(() => res(f), 1300);
       document.body.appendChild(f);

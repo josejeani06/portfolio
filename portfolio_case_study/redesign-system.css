@@ -107,7 +107,7 @@ body.case-study-page{font-size:17px!important}
 .case-study-page :is(.section-dark,.section-dark-soft) .kv-item span{color:rgba(255,255,255,.66)!important}
 .case-study-page :is(.section-dark,.section-dark-soft) .kv-item strong{color:#fff!important}
 @media(max-width:900px){.case-study-page .case-summary{grid-template-columns:1fr!important;gap:28px!important}}
-@media(max-width:600px){
+@media(max-width:900px){
   .case-study-page .kv-item{flex-direction:column!important;gap:5px!important;padding:16px 0!important}
   .case-study-page .kv-item strong{text-align:left!important}
 }
@@ -383,6 +383,87 @@ body.case-study-page{font-size:17px!important}
 .case-study-page :is(.shot-cap,.figure-cap,figcaption,.caption,.note,.glance-note){color:var(--muted)!important}
 .case-study-page :is(.section-dark,.section-dark-soft) :is(.shot-cap,figcaption,.caption,.note){color:rgba(255,255,255,.78)!important}
 
+/* Light chips/markers that live INSIDE a dark section keep dark text. The
+   force-light rule above matches `div`, which otherwise whitens these numbers
+   into invisibility on their pale circles. */
+.case-study-page .journey-timeline-marker{color:var(--rd-ink)!important;background:#f7f5f2!important}
+.case-study-page .journey-timeline-item.is-risk .journey-timeline-marker{color:#ffe6dc!important;background:#3a1a16!important}
+
+/* Carousel on phones must look identical to the map's. The case studies
+   collapsed to a single centred, borderless item; the map keeps every item in
+   the active persona as a bordered, left-aligned card. Match the map. */
+@media(max-width:900px){
+  /* Match the map exactly: every card for the ACTIVE PERSONA is listed under
+     the media, left-aligned, with the current one highlighted. The cards are
+     information only — the arrows and the swipe drive the carousel, so nothing
+     here is a tap target. */
+  .case-study-page .refine-item:not(.is-hidden){display:flex!important}
+  .case-study-page .refine-item{
+    text-align:left!important;align-items:flex-start!important;
+    pointer-events:none!important;cursor:default!important;
+    transform:none!important;box-shadow:none!important;
+    padding:16px 18px 18px!important;
+    border-radius:14px!important;
+  }
+  .case-study-page :is(.refine-item-persona,.refine-item-title,.refine-item-desc){text-align:left!important;width:100%}
+  .case-study-page .refine-controls{gap:10px!important;margin-top:14px!important}
+  .case-study-page .refine-carousel{gap:14px!important}
+  .case-study-page .refine-viewport{touch-action:pan-y}
+}
+
+/* Decision log on phones: STACK with labels rather than horizontal-scroll.
+   The page shipped a `min-width:680px` scroll mode with `::before{display:none}`,
+   so the header squeezed off-screen and the cells lost their column identity.
+   The markup already carries data-label — we just surface it. */
+@media(max-width:760px){
+  .case-study-page .decision-log-table{
+    overflow-x:visible!important;
+    border:1px solid var(--line)!important;border-radius:14px!important;background:#fff!important;
+  }
+  .case-study-page .decision-log-head{display:none!important}
+  .case-study-page .decision-log-body{
+    grid-template-columns:1fr!important;min-width:0!important;gap:0!important;padding:0!important;
+  }
+  .case-study-page .decision-log-body + .decision-log-body{border-top:1px solid var(--line)!important}
+  .case-study-page .decision-log-cell{
+    border-left:0!important;min-width:0!important;padding:16px 18px!important;margin-top:0!important;
+  }
+  .case-study-page .decision-log-cell + .decision-log-cell{
+    border-left:0!important;border-top:1px dashed var(--line)!important;
+  }
+  .case-study-page .decision-log-cell::before{
+    display:block!important;content:attr(data-label);
+    font-family:"Space Grotesk",sans-serif;font-size:11.5px;font-weight:600;
+    letter-spacing:.07em;text-transform:uppercase;color:var(--rd-purple);margin-bottom:5px;
+  }
+  /* the first cell is the question — read it as the row heading */
+  .case-study-page .decision-log-cell:first-child p{color:var(--rd-ink)!important;font-weight:600}
+}
+
+/* scroll-story copy: full-width text (was capped at 34ch) and tighter rhythm —
+   the steps were 78-88vh tall, which left large empty gaps between them. */
+.case-study-page .scroll-story-step p,
+.case-study-page .scroll-story-copy p{max-width:none!important}
+.case-study-page .scroll-story-step{min-height:56vh!important;padding:24px 0!important}
+.case-study-page .scroll-story-step + .scroll-story-step{padding-top:32px!important}
+.case-study-page #connection .scroll-story-step{min-height:60vh!important;padding:4vh 0!important}
+.case-study-page #connection .scroll-story-step:first-child{padding-top:1vh!important}
+.case-study-page #connection .scroll-story-step:last-child{padding-bottom:6vh!important}
+@media(max-width:900px){
+  .case-study-page .scroll-story-step{min-height:0!important;padding:16px 0!important}
+  .case-study-page .scroll-story-step + .scroll-story-step{padding-top:24px!important}
+}
+
+/* connector ecosystem: cards hug their content instead of a fixed tall box */
+.case-study-page .eco-card{height:auto!important;min-height:0!important}
+.case-study-page .eco-card__media{height:auto!important;min-height:44px}
+.case-study-page .eco-card__logo img{max-height:34px;width:auto}
+@media(max-width:600px){
+  .case-study-page .eco-card{padding:14px!important;gap:10px!important}
+  .case-study-page .eco-card__media{min-height:38px}
+  .case-study-page .eco-card__desc{-webkit-line-clamp:2}
+}
+
 /* status colours — red/green parity, readable on dark */
 .case-study-page .good,.case-study-page [class*="--good"],
 .case-study-page .itable .st.done{color:#4ade80!important}
@@ -492,6 +573,59 @@ img,svg,video,iframe,canvas{max-width:100%}
   .case-study-page .persona-card:hover,.case-study-page .choice-card:hover,
   .case-study-page .refine-item:hover,.case-study-page .roadmap-phase:hover{transform:none;box-shadow:none!important}
 }
+/* ============================================ MOBILE: ONE COLUMN, FULL WIDTH
+   Every multi-column grid across the four case studies collapses to a single
+   full-width column on a phone. No 2x2. Enumerated from the pages' own CSS so
+   nothing is missed; `.journey-timeline-item` and `.chain-step` keep their
+   marker column since that is a leading icon, not a content column. */
+@media(max-width:760px){
+  .case-study-page :is(
+    .alignment-grid,.at-glance,.audience-builder-layout,.audience-builder-points,
+    .audit-grid,.breakage,.case-summary,.cols-3,.cols-4,.compare-stage-head,
+    .comparison-head,.concept-carousel-slide,.converge,.converge-inputs,
+    .diagram-flow,.diagram-split,.discovery-evidence-row,.ds-ladder,.evidence-grid,
+    .families-grid,.flist,.formula-row,.harness-grid,.hero-facts,.image-grid,
+    .impact,.install,.limit,.loop,.mainux-top,.note-grid,.om-grid,.ot-orgrow,
+    .refine-carousel,.result-grid,.results-row,.roadmap-flow,.roles,.rule-list,
+    .scroll-story,.shot-grid,.skill-grid,.split,.stage-flow,.strategy-entry-grid,
+    .strategy-flow,.strategy-flow-list,.three,.versus,.video-grid,.vs-row,
+    .md-grid,.approach
+  ){
+    grid-template-columns:1fr!important;
+    gap:16px!important;
+  }
+  /* full-bleed within the container — no leftover half-width cards */
+  .case-study-page :is(.harness-grid,.md-grid,.shot-grid,.evidence-grid) > *{
+    width:100%!important;max-width:100%!important;min-width:0!important;
+  }
+}
+
+/* Design-system before/after: keep it HORIZONTAL on mobile (before beside
+   after, so the comparison still reads as a comparison) and drop to a single
+   text colour — the two-tone treatment only muddies it at this size.
+   Must sit after the one-column block above, which also matches .vs-row. */
+@media(max-width:760px){
+  .case-study-page .vs-row{
+    display:grid!important;
+    grid-template-columns:1fr 1fr!important;
+    gap:8px 14px!important;
+    padding:16px 0!important;
+  }
+  .case-study-page .vs-row > :first-child{grid-column:1 / -1}
+  .case-study-page .vs-row.head{display:none!important}
+  /* one colour for both sides */
+  .case-study-page .vs-row p,
+  .case-study-page .vs-row p.weak{color:var(--muted)!important}
+  .case-study-page .vs-row b{font-size:15px}
+  /* the hidden header row would have named these columns — restore the labels */
+  .case-study-page .vs-row:not(.head) > :nth-child(2)::before{content:"Before"}
+  .case-study-page .vs-row:not(.head) > :nth-child(3)::before{content:"After"}
+  .case-study-page .vs-row:not(.head) > :nth-child(n+2)::before{
+    display:block;font-family:"Space Grotesk",sans-serif;font-size:10.5px;font-weight:600;
+    letter-spacing:.1em;text-transform:uppercase;color:var(--rd-purple);margin-bottom:4px;
+  }
+}
+
 /* WCAG 2.5.5: 44px minimum touch target for every control */
 @media(max-width:600px){
   .case-study-page :is(.refine-persona,.ps-tab,.tab,.filter-chip){
@@ -504,4 +638,49 @@ img,svg,video,iframe,canvas{max-width:100%}
     content:"";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
     width:44px;height:44px;border-radius:50%;
   }
+}
+
+/* ---------------------------------------------- "swipe to see more" hint ----
+   Injected by scroll-hint.js only onto tables that genuinely overflow on a
+   phone; it fades out on first scroll. */
+.scroll-hint{
+  position:absolute;right:10px;bottom:10px;z-index:5;pointer-events:none;
+  display:inline-flex;align-items:center;gap:7px;
+  padding:8px 13px;border-radius:999px;
+  background:rgba(34,24,54,.92);color:#fff;
+  font-family:"Space Grotesk",sans-serif;font-size:12px;font-weight:600;letter-spacing:.01em;
+  box-shadow:0 8px 22px rgba(17,17,16,.28);
+  opacity:0;transform:translateY(6px);
+  animation:scrollHintIn .45s var(--rd-ease) .35s forwards;
+}
+.scroll-hint svg{width:14px;height:14px;animation:scrollHintNudge 1.4s ease-in-out infinite}
+.scroll-hint.is-gone{animation:none;opacity:0;transform:translateY(6px);transition:opacity .3s ease,transform .3s ease}
+@keyframes scrollHintIn{to{opacity:1;transform:translateY(0)}}
+@keyframes scrollHintNudge{0%,100%{transform:translateX(0)}50%{transform:translateX(4px)}}
+@media(prefers-reduced-motion:reduce){
+  .scroll-hint{animation:none;opacity:1;transform:none}
+  .scroll-hint svg{animation:none}
+}
+@media(min-width:761px){.scroll-hint{display:none!important}}
+
+/* ------------------------------------------- connector marquee on mobile ----
+   3 cards in view (was 4), logo ~80% of the card width, and the "NEW" badge
+   pinned hard right with room above the logo so the two never collide. */
+@media(max-width:640px){
+  .case-study-page .eco-row{--eco-cols:3!important;--eco-gap:10px!important}
+  .case-study-page .eco-card{
+    height:auto!important;min-height:0!important;
+    padding:22px 8px 12px!important;gap:8px!important;
+  }
+  .case-study-page .eco-card__media{
+    height:auto!important;min-height:46px!important;
+    display:grid!important;place-items:center!important;
+  }
+  .case-study-page .eco-card__logo{width:80%!important;height:auto!important;margin:0 auto!important}
+  .case-study-page .eco-card__logo img{
+    width:100%!important;height:auto!important;max-height:none!important;object-fit:contain!important;
+  }
+  .case-study-page .eco-card__new{top:4px!important;right:4px!important;left:auto!important}
+  .case-study-page .eco-card__core{top:4px!important;left:4px!important}
+  .case-study-page .eco-card__title{font-size:11.5px!important}
 }
