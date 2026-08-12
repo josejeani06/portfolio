@@ -1,999 +1,533 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){if(window.self!==window.top)return;
+      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "xu2es8f588");
+  </script>
+
+
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-  <title>Ivan Jose — Senior Product Designer</title>
-  <meta name="description" content="Ivan Jose is a Senior Product Designer with 6 years shipping end-to-end B2B SaaS — platform integrations, enterprise org management, billing, and design systems — with an AI-assisted, cross-functional workflow." />
-  <link rel="canonical" href="https://josejeani06.github.io/portfolio/" />
-  <meta name="author" content="Jean Ivan Jose" />
-  <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="Ivan Jose" />
-  <meta property="og:url" content="https://josejeani06.github.io/portfolio/" />
-  <meta property="og:title" content="Ivan Jose — Senior Product Designer" />
-  <meta property="og:description" content="Senior Product Designer shipping end-to-end B2B SaaS — integrations, enterprise org management, billing, and design systems — with an AI-assisted, cross-functional workflow." />
-  <meta property="og:image" content="https://josejeani06.github.io/portfolio/images/map-audience-builder.png" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Ivan Jose — Senior Product Designer" />
-  <meta name="twitter:description" content="Senior Product Designer shipping end-to-end B2B SaaS with an AI-assisted, cross-functional workflow." />
-  <meta name="twitter:image" content="https://josejeani06.github.io/portfolio/images/map-audience-builder.png" />
-  <script type="text/javascript">
-    /* Clarity: keep the queue available immediately, but defer loading the tag
-       script until the page is idle/loaded so it never competes with first paint. */
-    (function(c,l,a,r,i){if(window.self!==window.top)return;
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        var inject=function(){var t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;var y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);};
-        var schedule=function(){(window.requestIdleCallback||window.setTimeout)(inject,1);};
-        if(document.readyState==="complete"){schedule();}
-        else{window.addEventListener("load",schedule,{once:true});}
-    })(window, document, "clarity", "script", "xu2es8f588");
-  </script>
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Jean Ivan Jose",
-    "alternateName": "Ivan Jose",
-    "jobTitle": "Senior Product Designer",
-    "url": "https://josejeani06.github.io/portfolio/",
-    "sameAs": ["https://www.behance.net/ivancreatives", "https://www.linkedin.com/in/ivancreatives/"],
-    "knowsAbout": ["Product Design","B2B SaaS","Design Systems","Interaction Design","UX Design","Accessibility (WCAG 2.1 AA)","AI-assisted design","Prototyping","Figma","Cross-functional collaboration","Enterprise software","Payments & billing UX"],
-    "description": "Senior Product Designer with 6 years shipping end-to-end B2B SaaS — platform integrations, enterprise org management, billing, and design systems — with an AI-assisted, cross-functional workflow."
-  }
-  </script>
+  <title>Ivan Jose | Senior Product Designer</title>
+  <meta name="description" content="Ivan Jose is a Senior Product Designer with 6 years shipping end-to-end B2B SaaS. Platform integrations, enterprise org management, billing, and design systems." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <!-- below-the-fold live embeds pull React from these CDNs; warm the connections early -->
   <link rel="preconnect" href="https://unpkg.com" crossorigin>
   <link rel="preconnect" href="https://esm.sh" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;450;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=content_copy" />
-  <link rel="stylesheet" href="style.css" />
   <style>
-    /* ===== Homepage aligned to the map case study (source of truth) ===== */
-    body.landing-page{
-      --bg:#eceadf;
-      --surface:#fbf9f4;
-      --surface-2:#e4e0d2;
-      --text:#1c1b16;
-      --muted:#615d52;
-      --ink:#14130d;
-      --line:rgba(28,27,22,0.16);
-      --blue:#cf3b23;
-      --blue-2:#a92f1b;
-      --blue-soft:rgba(207,59,35,0.10);
-      --shadow:0 24px 70px rgba(20,19,13,0.10);
-      --surface-border:1px solid rgba(28,27,22,0.12);
-      --surface-shadow:0 20px 64px rgba(20,19,13,0.06);
-      background:
-        radial-gradient(circle at 12% 0%, rgba(207,59,35,0.06), transparent 34%),
-        radial-gradient(circle at 90% 10%, rgba(207,59,35,0.05), transparent 28%),
-        var(--bg);
+    /* =========================================================================
+       Palette taken as-is from superhuman.com · Layout language from uber.com
+       (Uber Move → Space Grotesk fallback; bento grids, whitespace, flat cards)
+       ========================================================================= */
+    :root{
+      --paper:#ffffff;
+      --paper-2:#f7f5f2;      /* superhuman warm off-white */
+      --paper-3:#f2f0eb;      /* deeper warm tint          */
+      --ink:#292827;          /* superhuman warm near-black text */
+      --ink-strong:#111110;   /* uber near-black */
+      --muted:#6b675f;
+      --faint:#767169;
+      --line:rgba(41,40,39,.12);
+      --line-2:rgba(41,40,39,.20);
+      --purple:#714cb6;       /* superhuman primary accent */
+      --purple-bright:#9e6ee5;/* the alternate accent      */
+      --lavender:#d4c7ff;     /* tint */
+      --lavender-bg:#f1ecfb;  /* pale lavender surface */
+      --teal:#027e6f;         /* superhuman secondary accent */
+      --radius:20px;
+      --radius-sm:14px;
+      --ease:cubic-bezier(.22,.61,.24,1);
+      --maxw:1240px;
     }
-    /* accents unified to the terracotta token */
-    .landing-page .eyebrow,
-    .landing-kicker,
-    .landing-case-meta,
-    .landing-text-link,
-    .landing-title .scramble-word,
-    .landing-title .scramble-word.is-scrambling{color:var(--blue-2)}
-    .landing-title span{color:var(--ink)}
-    .landing-page .brand-mark{background:var(--blue);box-shadow:none;border-radius:8px}
-    .behance-mark{background:var(--blue-soft);color:var(--blue)}
-    .landing-button{background:var(--blue);border:0;box-shadow:0 18px 44px rgba(20,19,13,.18)}
-    .landing-button:hover{background:var(--blue-2)}
-    .landing-case-index{color:var(--blue-2)}
-    .landing-case-tags span{background:var(--blue-soft);color:var(--blue-2)}
-    .approach-number{color:rgba(207,59,35,.55)}
-    /* dark bands consistent with the case study .section-dark */
-    .landing-proof{background:linear-gradient(180deg,#1f1d16,#141308);padding:64px 0}
-    .landing-proof-grid{grid-template-columns:1fr;gap:0;padding:6px 0;border-top:0}
-    .proof-block{display:grid;grid-template-columns:56px minmax(0,1fr);gap:22px;align-items:start;padding:28px 0;border-top:1px solid rgba(242,240,230,.14)}
-    .proof-block:first-child{border-top:0}
-    .proof-icon{width:52px;height:52px;border-radius:14px;display:grid;place-items:center;background:rgba(255,138,111,.14);border:1px solid rgba(255,138,111,.26);color:#ff8a6f}
-    .proof-icon svg{width:26px;height:26px}
-    .proof-block .proof-label{color:#ff8a6f;font-size:13px;letter-spacing:.14em;text-transform:uppercase;font-weight:800}
-    .proof-block p{margin:10px 0 0;color:rgba(242,240,230,.86);font-size:clamp(17px,1.5vw,21px);line-height:1.5;max-width:72ch}
-    @media(max-width:640px){.proof-block{grid-template-columns:1fr;gap:14px}.proof-icon{width:46px;height:46px}}
-    /* bigger hero title */
-    .landing-title{font-size:clamp(62px,11.5vw,156px);line-height:.96;font-weight:800;letter-spacing:-.05em}
-    /* skills / tech stack */
-    .skills-list{border-top:1px solid var(--line);margin-top:8px}
-    .skills-row{display:grid;grid-template-columns:200px minmax(0,1fr);gap:24px;padding:22px 0;border-bottom:1px solid var(--line);align-items:start}
-    .skills-label{color:var(--blue);font-weight:800;font-size:12px;letter-spacing:.14em;text-transform:uppercase;padding-top:7px}
-    .skill-chips{display:flex;flex-wrap:wrap;gap:10px}
-    .skill-chips span{display:inline-flex;align-items:center;min-height:34px;padding:0 14px;border-radius:999px;background:#ffffff;color:#14130d;border:1px solid rgba(20,19,13,.24);font-weight:650;font-size:14px}
-    .landing-outcomes{display:flex;flex-wrap:wrap}
-    .landing-outcomes span{min-height:auto;padding:0;border:0;border-radius:0;background:transparent;color:#26251f;font-size:15px;font-weight:650;line-height:1.4}
-    .landing-outcomes .outcome-check{width:18px;height:18px;margin-right:8px;flex:0 0 auto;color:#26834a}
-    .landing-actions{align-items:center;gap:12px;margin-top:28px}
-    .landing-actions .landing-button{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 18px;font-size:15px;font-weight:800}
-    .landing-actions .landing-email-group{min-height:48px;margin:0}
-    .landing-actions .landing-email{display:inline-flex;align-items:center;min-height:48px;padding:0 18px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.74);box-shadow:0 10px 26px rgba(20,19,13,.06);color:var(--ink);font-size:15px;font-weight:800}
-    .landing-actions .landing-email:hover{color:var(--blue-2)}
-    .landing-actions .landing-email-group .landing-email{border:0;border-radius:0;background:transparent;box-shadow:none;padding:0 16px 0 18px}
-    .landing-actions .landing-copy-email{min-width:48px;min-height:48px}
-    .landing-icon-link{display:inline-grid;place-items:center;width:48px;height:48px;border:1px solid var(--line);border-radius:50%;background:rgba(255,255,255,.74);color:var(--ink);box-shadow:0 10px 26px rgba(20,19,13,.06);transition:transform 160ms ease,background 160ms ease,color 160ms ease}
-    .landing-icon-link:hover{transform:translateY(-2px);background:var(--ink);color:#fffaf5}
-    .landing-icon-link:focus-visible{outline:3px solid rgba(207,59,35,.28);outline-offset:3px}
-    .landing-icon-link .behance-mark{min-width:0;height:auto;padding:0;border-radius:0;background:transparent;color:currentColor;font-size:16px}
-    .landing-icon-link .landing-linkedin-mark{display:grid;place-items:center;width:auto;height:auto;border-radius:0;background:transparent;color:currentColor}
-    .landing-icon-link .landing-linkedin-mark svg{width:18px;height:18px}
-    .landing-icon-link .landing-whatsapp-mark{display:grid;place-items:center;color:currentColor}
-    .landing-icon-link .landing-whatsapp-mark svg{width:19px;height:19px;fill:currentColor}
-    .landing-icon-link--whatsapp:hover{background:#25D366;border-color:#25D366;color:#fff}
-    /* footer CTA social row */
-    .landing-cta-actions{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:16px}
-    /* match the Email-me button height to the 48px social icons so the row lines up */
-    .landing-cta-actions .landing-button{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 22px}
-    .landing-cta-social{display:inline-flex;gap:10px;align-items:center}
-    /* mobile perf: drop the perpetual grid drift + the pointer-driven blur blob (touch has no hover) */
-    @media(max-width:640px){.landing-grid{animation:none}.landing-blob{display:none}}
-    @media(hover:none) and (pointer:coarse){.landing-blob{display:none}}
-    @media(max-width:760px){.skills-row{grid-template-columns:1fr;gap:12px;padding:18px 0}.skills-label{padding-top:0}}
-    /* flush the next-step section against the approach above it */
-    /* consistent 80px section rhythm on desktop, tight title->content gap */
-    .landing-section{padding:80px 0}
-    #approach.landing-section{padding:80px 0}
-    .landing-proof{padding:80px 0;margin:0}
-    .landing-proof-grid,.landing-case-list,.landing-approach,.landing-cta{padding:0}
-    .landing-section-head{align-items:start;padding:0;margin-bottom:32px}
-    .landing-section-head .eyebrow{display:inline-flex;align-items:center;padding:6px 12px;border-radius:999px;background:#fff;border:1px solid var(--line);color:var(--blue);box-shadow:0 6px 18px rgba(20,19,13,.05)}
-    .landing-cta-section{background:linear-gradient(158deg,#d0431f,#a92f1b);padding:80px 0;margin-top:0}
-    .landing-footer{background:linear-gradient(180deg,#141308,#141308)}
-    .landing-page .landing-nav{color:var(--muted)}
-    .landing-page .landing-nav a::after{background:var(--blue)}
-    .landing-cta{border-top-color:rgba(255,239,230,.28)}
-    .landing-cta .eyebrow{color:#ffe0d6}
-    .landing-cta h2{color:#fff6f0}
-    .landing-cta .landing-button{background:#fff6ef;color:#a92f1b;border-color:rgba(255,239,230,.35)}
-    .landing-cta .landing-button:hover{background:#fff;color:#8f2717}
+    *,*::before,*::after{box-sizing:border-box}
+    html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+    body{
+      margin:0;background:var(--paper);color:var(--ink);
+      font-family:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+      font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+      overflow-x:hidden;
+    }
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+    ::selection{background:var(--lavender);color:var(--ink-strong)}
+    .container{width:min(100% - 48px,var(--maxw));margin-inline:auto}
+    @media(max-width:640px){.container{width:min(100% - 32px,var(--maxw))}}
 
-    /* ===== Hero contact ===== */
-    .landing-kicker{
-      max-width:42ch;
-      font-size:clamp(22px,2.15vw,28px);
-      font-weight:800;
-      letter-spacing:-.025em;
-      line-height:1.15;
-      text-transform:none;
-    }
-    .landing-contact{
-      display:flex;
-      flex-wrap:wrap;
-      align-items:center;
-      gap:12px 16px;
-      margin-top:24px;
-    }
-    .landing-email-group{
-      display:inline-flex;
-      align-items:center;
-      min-height:48px;
-      overflow:hidden;
-      border:1px solid var(--line);
-      border-radius:999px;
-      background:rgba(255,255,255,.74);
-      box-shadow:0 10px 26px rgba(20,19,13,.06);
-    }
-    .landing-email{
-      display:inline-flex;
-      align-items:center;
-      min-height:48px;
-      padding:0 16px 0 18px;
-      color:var(--ink);
-      font-size:15px;
-      font-weight:800;
-      letter-spacing:-.015em;
-    }
-    .landing-email:hover,.landing-email:focus-visible{color:var(--blue-2)}
-    .landing-copy-email{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      min-width:48px;
-      min-height:48px;
-      border:0;
-      border-left:1px solid var(--line);
-      background:transparent;
-      color:var(--blue-2);
-      cursor:pointer;
-      transition:background 160ms ease,color 160ms ease;
-    }
-    .landing-copy-email:hover,.landing-copy-email:focus-visible{background:var(--blue-soft);color:var(--blue-2)}
-    .landing-copy-email:focus-visible,.landing-linkedin:focus-visible,.landing-email:focus-visible{outline:3px solid rgba(207,59,35,.28);outline-offset:3px}
-    .material-symbols-rounded{font-family:'Material Symbols Rounded';font-variation-settings:'FILL' 0,'wght' 300,'GRAD' -25,'opsz' 24;font-size:24px;line-height:1}
-    .landing-linkedin{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
-      min-height:48px;
-      padding:0 18px 0 13px;
-      border:1px solid var(--line);
-      border-radius:999px;
-      background:var(--ink);
-      color:#fffaf5;
-      font-size:15px;
-      font-weight:800;
-      box-shadow:0 10px 26px rgba(20,19,13,.12);
-      transition:transform 160ms ease,background 160ms ease,box-shadow 160ms ease;
-    }
-    .landing-linkedin:hover{transform:translateY(-2px);background:var(--blue-2);box-shadow:0 14px 30px rgba(20,19,13,.18)}
-    .landing-linkedin-mark{display:grid;place-items:center;width:22px;height:22px;border-radius:5px;background:#fffaf5;color:var(--ink)}
-    .landing-linkedin-mark svg{width:15px;height:15px;fill:currentColor}
-    .copy-feedback{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
-    @media(max-width:640px){
-      .landing-kicker{font-size:clamp(22px,7vw,28px)}
-      .landing-contact{align-items:stretch}
-      .landing-email-group{width:100%}
-      .landing-email{min-width:0;flex:1;font-size:14px;overflow-wrap:anywhere}
-      .landing-linkedin{justify-content:flex-start}
-      /* tight section spacing: 40px on sections that have padding, no dead gap */
-      .landing-section,#approach.landing-section{padding:40px 0}
-      .landing-section-head{padding:0;margin-bottom:18px}
-      .landing-hero{padding:40px 0 32px}
-      .landing-proof{padding:36px 0;margin:0}
-      .landing-cta-section{padding:40px 0}
-      /* case-study preview cards + "other work" cards go edge to edge */
-      .landing-case,.other-card{width:100vw;margin-left:calc(50% - 50vw);border-radius:0;border-left:0;border-right:0;box-shadow:none}
-      .landing-case{border-top:0}
-      .landing-case-cover,.other-cover{border-radius:0}
-    }
+    /* display type — Uber Move stand-in */
+    .display{font-family:"Space Grotesk","Inter",sans-serif;font-weight:600;letter-spacing:-.03em;line-height:1;margin:0}
+    h1,h2,h3{font-family:"Space Grotesk","Inter",sans-serif;font-weight:600;letter-spacing:-.03em;margin:0}
 
-    /* ===== Case list: vertical stack — full-width image, then text ===== */
-    /* Selected work: 3-column grid (3x2 for the five cards), same layout as Other work */
-    .landing-case-list{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;padding:0;background:none;border:0;box-shadow:none;overflow:visible}
-    .landing-case-list::before{display:none}
-    .landing-case{display:flex;flex-direction:column;grid-template-columns:none;gap:0;padding:0;border:var(--surface-border);border-radius:14px;overflow:hidden;background:var(--surface);box-shadow:0 1px 2px rgba(20,19,13,.05),0 8px 22px rgba(20,19,13,.05);transition:transform 180ms ease,box-shadow 180ms ease}
-    .landing-case:last-child{border:var(--surface-border)}
-    .landing-case:hover{transform:translateY(-3px);box-shadow:0 20px 48px rgba(20,19,13,.10)}
-    .landing-case-cover{width:100%;aspect-ratio:16/9;overflow:hidden;background:#f4f2ea;border-bottom:var(--surface-border)}
-    .landing-case-cover img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
-    .landing-case-cover.is-placeholder{display:grid;place-items:center;color:var(--muted);font-size:13px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;background:linear-gradient(135deg,#e7e3d6,#ded9ca)}
-    .landing-case-body{padding:18px 20px 20px;display:block}
-    .landing-case-meta{margin-bottom:10px}
-    .landing-case-body h3{font-size:clamp(17px,1.6vw,21px);line-height:1.2}
-    .landing-case-tags{justify-content:flex-start;max-width:none;padding-top:12px}
-    .landing-case-body p{margin-top:10px;font-size:14px;line-height:1.5;color:var(--muted)}
-    @media(max-width:960px){.landing-case-list{grid-template-columns:repeat(2,1fr)}}
-    @media(max-width:620px){.landing-case-list{grid-template-columns:1fr}}
+    .kicker{display:inline-flex;align-items:center;gap:9px;font-family:"Space Grotesk";font-size:13px;font-weight:500;letter-spacing:.02em;color:var(--purple);text-transform:none}
+    .kicker::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--purple-bright)}
 
-    /* ===== Selected other work: secondary, lighter-weight cards ===== */
-    .landing-other{border-top:var(--surface-border)}
-    .other-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:8px}
-    .other-card{border:var(--surface-border);border-radius:14px;overflow:hidden;background:var(--surface);box-shadow:0 1px 2px rgba(20,19,13,.05),0 8px 22px rgba(20,19,13,.05);transition:transform 180ms ease,box-shadow 180ms ease}
-    .other-card:hover{transform:translateY(-3px);box-shadow:0 20px 48px rgba(20,19,13,.10)}
-    .other-card > a{display:flex;flex-direction:column;height:100%;text-decoration:none;color:inherit}
-    .other-cover{width:100%;aspect-ratio:1040/560;overflow:hidden;background:#efece3;border-bottom:var(--surface-border)}
-    .other-cover img{width:100%;height:100%;object-fit:cover;object-position:center center;display:block}
-    .other-body{padding:18px 20px 20px;display:flex;flex-direction:column;gap:8px;flex:1}
-    .other-kicker{font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
-    .other-card h3{font-size:clamp(17px,1.5vw,20px);line-height:1.2;margin:0}
-    .other-body p{margin:0;font-size:14px;line-height:1.5;color:var(--muted)}
-    .other-link{margin-top:auto;padding-top:6px;font-size:13px;font-weight:800;letter-spacing:.02em;color:var(--ink)}
-    .other-card:hover .other-link{text-decoration:underline}
-    @media(max-width:960px){.other-grid{grid-template-columns:repeat(2,1fr)}}
-    @media(max-width:620px){.other-grid{grid-template-columns:1fr}}
+    .section{padding:clamp(72px,9vw,132px) 0}
+    .section-head{max-width:none;margin-bottom:clamp(24px,3vw,40px)}
+    .section-head h2{font-size:clamp(30px,4vw,48px);line-height:1.02;letter-spacing:-.035em;margin:20px 0 0}
+    .section-head p{color:var(--muted);font-size:clamp(17px,1.5vw,20px);margin:20px 0 0;max-width:none}
 
-    /* ===== Approach section: black (matches case study section-dark) ===== */
-    #approach{background:linear-gradient(180deg,#1f1d16,#141308)}
-    #approach .landing-approach{background:transparent;border:0;box-shadow:none;padding:0;border-top:0}
-    #approach .landing-approach::before{display:none}
-    #approach .eyebrow{color:#ff8a6f}
-    #approach .landing-approach-copy h2{color:#f7f5ec}
-    #approach .landing-approach-copy h2 span{color:#f7f5ec}
-    #approach .landing-approach-list > div{border-top-color:rgba(242,240,230,.14)}
-    #approach .landing-approach-list p{color:rgba(242,240,230,.78)}
-    #approach .approach-number{color:rgba(255,138,111,.72)}
-    /* align the big number with the first line of its paragraph */
-    .landing-approach-list > div{align-items:baseline}
-    .landing-approach-list .approach-number{line-height:1.1}
-    /* ===== full-width text · plain eyebrows · vertical stacks ===== */
-    .landing-section-head .eyebrow{display:inline-block;padding:0;border:0;border-radius:0;background:transparent;box-shadow:none}
-    .landing-section-head{grid-template-columns:1fr;gap:14px;align-items:start}
-    .landing-section-head > div,.landing-section-head p{max-width:none;width:100%}
-    .landing-approach{grid-template-columns:1fr;gap:24px}
-    .landing-approach-copy,.landing-approach-list,.landing-approach-copy h2,.landing-approach-list p{max-width:none;width:100%}
-    .landing-cta h2,.proof-block p{max-width:none}
-    #skills{background:#ffffff}
-    /* stop the browser from auto-anchoring scroll to shifting/animating content */
-    html{overflow-anchor:none}
+    /* progress + nav */
+    .progress{position:fixed;top:0;left:0;height:2px;width:0;z-index:60;background:var(--purple)}
+    .nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,0);transition:background .3s var(--ease),border-color .3s var(--ease)}
+    .nav.scrolled{background:rgba(255,255,255,.82);backdrop-filter:saturate(160%) blur(16px);border-bottom:1px solid var(--line)}
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;height:76px}
+    .brand{font-family:"Space Grotesk";font-weight:700;font-size:20px;letter-spacing:-.02em;color:var(--ink-strong)}
+    .nav-links{display:flex;gap:34px}
+    .nav-links a{font-size:15px;font-weight:500;color:var(--muted);transition:color .2s var(--ease)}
+    .nav-links a:hover{color:var(--ink-strong)}
+    .nav-cta{font-size:15px;font-weight:600;color:#fff;background:var(--purple);padding:11px 20px;border-radius:999px;transition:transform .2s var(--ease),background .2s var(--ease)}
+    .nav-cta:hover{background:#5f3da0;transform:translateY(-1px)}
+    @media(max-width:860px){.nav-links{display:none}}
+
+    /* buttons */
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;height:54px;padding:0 26px;border-radius:999px;font-family:"Inter";font-weight:600;font-size:16px;border:1.5px solid transparent;cursor:pointer;transition:transform .2s var(--ease),background .2s var(--ease),border-color .2s var(--ease),color .2s var(--ease);white-space:nowrap}
+    .btn .arw{transition:transform .25s var(--ease)}
+    .btn:hover .arw{transform:translateX(4px)}
+    .btn-primary{background:var(--purple);color:#fff}
+    .btn-primary:hover{background:#5f3da0;transform:translateY(-2px)}
+    .btn-dark{background:var(--ink-strong);color:#fff}
+    .btn-dark:hover{background:#000;transform:translateY(-2px)}
+    .btn-outline{background:transparent;color:var(--ink-strong);border-color:var(--line-2)}
+    .btn-outline:hover{border-color:var(--ink-strong);transform:translateY(-2px)}
+
+    /* hero */
+    .hero{padding-top:clamp(40px,6vw,72px);padding-bottom:clamp(28px,4vw,48px)}
+    .hero-status{display:inline-flex;align-items:center;gap:10px;white-space:nowrap;font-size:14px;font-weight:500;color:var(--muted);background:var(--paper-2);border:1px solid var(--line);padding:8px 16px;border-radius:999px}
+    .hero-status .dot{width:8px;height:8px;border-radius:50%;background:var(--teal)}
+    .hero h1{font-size:clamp(52px,8.4vw,116px);line-height:.94;letter-spacing:-.045em;margin:28px 0 0;color:var(--ink-strong)}
+    .hero h1 .alt{color:var(--purple)}
+    .hero-sub{color:var(--muted);font-size:clamp(18px,1.7vw,23px);max-width:62ch;margin:30px 0 0;line-height:1.5}
+    .hero-sub b{color:var(--ink);font-weight:600}
+    .hero-actions{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin-top:38px}
+    .email-group{display:inline-flex;align-items:center;height:54px;border:1.5px solid var(--line-2);border-radius:999px;overflow:hidden}
+    .email-group a{display:inline-flex;align-items:center;height:100%;padding:0 6px 0 20px;font-weight:600;font-size:15px;color:var(--ink)}
+    .email-group a:hover{color:var(--purple)}
+    .copy-btn{display:inline-flex;align-items:center;justify-content:center;width:50px;height:100%;border:0;border-left:1px solid var(--line);background:transparent;color:var(--purple);cursor:pointer;transition:background .2s var(--ease)}
+    .copy-btn:hover{background:var(--lavender-bg)}
+    .material-symbols-rounded{font-family:'Material Symbols Rounded';font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;font-size:20px;line-height:1}
+    .icon-link{display:inline-grid;place-items:center;width:54px;height:54px;border:1.5px solid var(--line-2);border-radius:50%;color:var(--ink);transition:transform .2s var(--ease),background .2s var(--ease),border-color .2s var(--ease),color .2s var(--ease)}
+    .icon-link:hover{transform:translateY(-2px);border-color:var(--ink-strong);background:var(--ink-strong);color:#fff}
+    .icon-link svg{width:18px;height:18px;fill:currentColor}
+    .icon-link .be{font-family:"Space Grotesk";font-weight:700;font-size:15px}
+    .icon-link--wa:hover{background:#25D366;border-color:#25D366;color:#fff}
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+    /* hero product frame (uber-style clean card) */
+    .hero-frame{margin-top:clamp(44px,6vw,72px);border-radius:var(--radius);overflow:hidden;background:var(--paper-2);border:1px solid var(--line);display:block;transition:transform .35s var(--ease),box-shadow .35s var(--ease)}
+    .hero-frame:hover{transform:translateY(-4px);box-shadow:0 30px 70px rgba(41,40,39,.10)}
+    .frame-bar{display:none}
+    .frame-bar .lights{display:flex;gap:7px}
+    .frame-bar .lights i{width:11px;height:11px;border-radius:50%;background:rgba(41,40,39,.16)}
+    .frame-bar .url{margin-left:12px;font-family:"Space Grotesk";font-size:13px;color:var(--faint)}
+    .frame-stage{position:relative;width:100%;aspect-ratio:1600/700;overflow:hidden;background:var(--paper-2)}
+    .frame-stage img{width:100%;height:100%;object-fit:cover;object-position:top center;transition:transform .5s var(--ease)}
+    .hero-frame:hover .frame-stage img{transform:scale(1.012)}
+
+    /* uber-style bold stat band */
+    .band{border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+    .band-grid{display:grid;grid-template-columns:repeat(4,1fr)}
+    .band-cell{padding:clamp(28px,3.4vw,44px) clamp(20px,2.4vw,32px);border-left:1px solid var(--line)}
+    .band-cell:first-child{border-left:0}
+    .band-cell .n{font-family:"Space Grotesk";font-weight:600;font-size:clamp(40px,5.4vw,66px);letter-spacing:-.04em;line-height:1;color:var(--ink-strong)}
+    .band-cell .l{color:var(--muted);font-size:15px;margin-top:14px;line-height:1.4}
+    @media(max-width:820px){.band-grid{grid-template-columns:repeat(2,1fr)}.band-cell:nth-child(3){border-left:0}.band-cell:nth-child(n+3){border-top:1px solid var(--line)}}
+    @media(max-width:460px){.band-grid{grid-template-columns:1fr}.band-cell{border-left:0;border-top:1px solid var(--line)}.band-cell:first-child{border-top:0}}
+
+    /* ===================== BENTO — selected work ===================== */
+    .bento{display:grid;grid-template-columns:repeat(2,1fr);gap:26px 22px}
+    .tile{position:relative;background:transparent;display:flex;flex-direction:column;transition:transform .3s var(--ease)}
+    .tile:hover{transform:translateY(-4px)}
+    .tile-media{position:relative;aspect-ratio:16/9;overflow:hidden;border-radius:var(--radius);border:1px solid var(--line);transition:border-color .3s var(--ease),box-shadow .3s var(--ease);
+      background:#ece6f8}
+    .tile:hover .tile-media{border-color:var(--line-2);box-shadow:0 26px 60px rgba(113,76,182,.16)}
+    .tile-media img{width:100%;height:100%;object-fit:cover;object-position:top center}
+    .tile-media .case-live{position:absolute;top:50%;left:50%;border:0;transform-origin:center;background:transparent;pointer-events:none}
+    .tile-media.ph{display:grid;place-items:center;color:var(--faint);font-family:"Space Grotesk";font-size:12px;letter-spacing:.1em;text-transform:uppercase}
+    /* click-to-view affordance on hover; the whole tile is a link to the case study */
+    .tile-media::before{content:"";position:absolute;inset:0;z-index:1;background:rgba(17,17,16,0);transition:background .3s var(--ease);pointer-events:none}
+    .tile:hover .tile-media::before{background:rgba(17,17,16,.24)}
+    .tile-media::after{content:"View \2192";position:absolute;z-index:2;top:50%;left:50%;transform:translate(-50%,-50%) scale(.7);width:58px;height:58px;border-radius:50%;background:var(--purple);color:#fff;display:grid;place-items:center;text-align:center;font-family:"Space Grotesk";font-weight:600;font-size:12px;line-height:1;letter-spacing:.01em;box-shadow:0 10px 24px rgba(113,76,182,.42);opacity:0;transition:opacity .25s var(--ease),transform .3s var(--ease);pointer-events:none}
+    .tile:hover .tile-media::after{opacity:1;transform:translate(-50%,-50%) scale(1)}
+    .tile-body{padding:18px 2px 0}
+    .tile-ix{font-family:"Space Grotesk";font-weight:600;font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--purple)}
+    .tile-body h3{font-size:clamp(19px,1.7vw,23px);line-height:1.14;margin:11px 0 0;letter-spacing:-.02em;color:var(--ink-strong)}
+    .tile-body p{color:var(--muted);font-size:15px;line-height:1.5;margin:11px 0 0}
+    .tile-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+    .tile-tags span{font-size:12.5px;font-weight:500;color:var(--purple);background:var(--lavender-bg);border:1px solid var(--lavender);padding:4px 11px;border-radius:999px}
+    .tile-cta{margin-top:18px;display:inline-flex;align-items:center;gap:7px;font-weight:600;font-size:15px;color:var(--ink-strong)}
+    .tile-cta .arw{transition:transform .25s var(--ease)}
+    .tile:hover .tile-cta .arw{transform:translateX(4px)}
+    /* spans */
+    .t-map{grid-column:span 2}
+    .t-int,.t-ds,.t-org,.t-bill{grid-column:span 1}
+    /* featured map: full-width, 16:9, fills the container edge-to-edge */
+    .t-map .tile-media{aspect-ratio:16/9}
+    @media(max-width:640px){.bento{grid-template-columns:1fr}.t-map{grid-column:span 1}}
+
+    /* ===================== BENTO — why me ===================== */
+    .why{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+    .why-card{padding:0;background:transparent;transition:transform .3s var(--ease)}
+    .why-card:hover{transform:translateY(-3px)}
+    /* Why-me = high-contrast green band (Superhuman-style), no card containers */
+    .section--green{background:#0e3b30;color:#fff}
+    .section--green .section-head h2{color:#fff}
+    .section--green .section-head p{color:rgba(255,255,255,.88)}
+    .section--green .kicker{color:#7cf0a6}
+    .section--green .kicker::before{background:#7cf0a6}
+    .section--green .why-icon{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.26);color:#fff}
+    .section--green .why-card .l{color:#7cf0a6}
+    .section--green .why-card p{color:rgba(255,255,255,.80)}
+    .why-icon{width:52px;height:52px;border-radius:14px;display:grid;place-items:center;background:var(--lavender-bg);border:1px solid var(--lavender);color:var(--purple)}
+    .why-icon svg{width:24px;height:24px}
+    .why-card .l{font-family:"Space Grotesk";font-size:13px;font-weight:600;letter-spacing:.04em;color:var(--purple);margin-top:22px;display:block}
+    .why-card p{color:var(--muted);font-size:16.5px;line-height:1.55;margin:12px 0 0}
+    @media(max-width:720px){.why{grid-template-columns:1fr}}
+
+    /* capabilities */
+    .skills-row{display:grid;grid-template-columns:210px 1fr;gap:28px;padding:28px 0;border-top:1px solid var(--line);align-items:start}
+    .skills-row:last-child{border-bottom:1px solid var(--line)}
+    .skills-label{font-family:"Space Grotesk";font-weight:600;font-size:13px;letter-spacing:.03em;color:var(--ink-strong);padding-top:7px}
+    .chips{display:flex;flex-wrap:wrap;gap:10px}
+    .chips span{display:inline-flex;align-items:center;height:38px;padding:0 16px;border-radius:999px;background:var(--paper-2);border:1px solid var(--line);color:var(--ink);font-weight:500;font-size:14.5px;transition:border-color .2s var(--ease),background .2s var(--ease),color .2s var(--ease);cursor:default}
+    
+    @media(max-width:680px){.skills-row{grid-template-columns:1fr;gap:14px}.skills-label{padding-top:0}}
+
+    /* approach — dark plum section (superhuman alternate surface) */
+    .approach-sec{background:#221836;color:#fff}
+    .approach{display:grid;grid-template-columns:1fr 1.15fr;gap:clamp(36px,6vw,84px);align-items:start}
+    .approach .kicker{color:var(--purple-bright)}
+    .approach .kicker::before{background:var(--purple-bright)}
+    .approach-head{position:sticky;top:92px;align-self:start}.approach-head h2{font-size:clamp(30px,4vw,48px);line-height:1.04;letter-spacing:-.035em;margin:20px 0 0;color:#fff}
+    .approach-head h2 span{display:block}
+    .approach-head h2 .alt{color:var(--purple-bright)}
+    .approach-list>div{display:grid;grid-template-columns:56px 1fr;gap:20px;padding:26px 0;border-top:1px solid rgba(255,255,255,.14);align-items:baseline}
+    .approach-list>div:first-child{border-top:0;padding-top:0}
+    .approach-num{font-family:"Space Grotesk";font-weight:600;font-size:28px;letter-spacing:-.03em;color:var(--purple-bright)}
+    .approach-list p{color:rgba(255,255,255,.9);font-size:16.5px;line-height:1.6;margin:0}
+    @media(max-width:840px){.approach{grid-template-columns:1fr;gap:36px}}
+
+    /* other work */
+    .other-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .other{background:transparent;transition:transform .3s var(--ease)}
+    .other:hover{transform:translateY(-4px)}
+    .other a{display:flex;flex-direction:column;height:100%}
+    .other-cover{aspect-ratio:16/9;overflow:hidden;border-radius:var(--radius);border:1px solid var(--line);transition:border-color .3s var(--ease),box-shadow .3s var(--ease);background:#ece6f8}
+    .other:hover .other-cover{border-color:var(--line-2);box-shadow:0 22px 50px rgba(41,40,39,.1)}
+    .other-cover img{width:100%;height:100%;object-fit:cover}
+    .other-body{padding:16px 2px 0;display:flex;flex-direction:column;gap:8px;flex:1}
+    .other-kicker{font-family:"Space Grotesk";font-size:12px;font-weight:600;letter-spacing:.03em;color:var(--faint)}
+    .other-body h3{font-size:19px;letter-spacing:-.02em;color:var(--ink-strong)}
+    .other-body p{color:var(--muted);font-size:14.5px;line-height:1.5;margin:0}
+    .other-link{margin-top:auto;padding-top:6px;font-weight:600;font-size:14px;color:var(--purple)}
+    @media(max-width:900px){.other-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:560px){.other-grid{grid-template-columns:1fr}}
+
+    /* CTA — full purple block */
+    .cta{border-radius:28px;overflow:hidden;padding:clamp(52px,8vw,104px) clamp(28px,5vw,72px);background:var(--purple);color:#fff;text-align:center;position:relative}
+    .cta .kicker{color:#e6dbff}
+    .cta .kicker::before{background:#e6dbff}
+    .cta h2{font-size:clamp(30px,4vw,48px);letter-spacing:-.035em;line-height:1.02;margin:18px 0 0;color:#fff}
+    .cta p{color:rgba(255,255,255,.86);font-size:19px;margin:20px auto 0;max-width:54ch}
+    .cta-actions{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:36px}
+    .cta .btn-light{background:#fff;color:var(--purple)}
+    .cta .btn-light:hover{background:var(--paper-2);transform:translateY(-2px)}
+    .cta .btn-ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.5)}
+    .cta .btn-ghost:hover{background:rgba(255,255,255,.12);border-color:#fff;transform:translateY(-2px)}
+
+    /* footer */
+    .footer{border-top:1px solid var(--line);padding:60px 0 44px}
+    .footer-top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:22px}
+    .footer-links{display:flex;gap:26px}
+    .footer-links a{font-size:15px;font-weight:500;color:var(--muted)}
+    .footer-links a:hover{color:var(--ink-strong)}
+    .footer-social{display:flex;gap:10px}
+    .footer-bottom{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;margin-top:30px;padding-top:26px;border-top:1px solid var(--line);color:var(--faint);font-size:14px}
+    .footer-bottom a:hover{color:var(--purple)}
+
+    /* reveal */
+    .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+    .reveal.in{opacity:1;transform:none}
+    .reveal.d1{transition-delay:.07s}.reveal.d2{transition-delay:.14s}.reveal.d3{transition-delay:.21s}
+    @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
   </style>
 </head>
-<body class="landing-page">
-  <div class="landing-grid" aria-hidden="true"></div>
-  <div class="landing-blob" aria-hidden="true"></div>
+<body>
+  <div class="progress" id="progress" aria-hidden="true"></div>
 
-  <nav class="nav landing-nav-shell">
+  <nav class="nav" id="nav">
     <div class="container nav-inner">
       <a class="brand" href="index.html">Ivan Jose</a>
-      <div class="nav-links landing-nav">
-        <a href="#work">Case Studies</a>
-        <a href="#other-work">Other Works</a>
+      <div class="nav-links">
+        <a href="#work">Work</a>
+        <a href="#why">Why me</a>
+        <a href="#capabilities">Capabilities</a>
         <a href="#approach">Approach</a>
       </div>
+      <a class="nav-cta" href="#contact">Let's talk</a>
     </div>
   </nav>
 
   <main>
-    <section class="landing-hero glow-zone">
-      <div class="container landing-hero-inner">
-        <div class="landing-kicker reveal-up">Hey, I’m Jean Ivan Jose, from the Philippines 🇵🇭</div>
-        <h1 class="landing-title reveal-up reveal-delay-1">Your next Senior Product Designer.</h1>
-        <p class="landing-copy reveal-up reveal-delay-2">
-          I design product experiences that feel clear, thoughtful, and easy to use—taking something complex,
-          simplifying it, and turning it into a flow people can actually understand.
-        </p>
-        <div class="landing-outcomes skill-chips reveal-up reveal-delay-2" style="justify-content:flex-start;gap:12px;margin:28px 0 34px" role="list" aria-label="Portfolio at a glance">
-          <span role="listitem"><svg class="outcome-check" viewBox="0 0 20 20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="m4 10 3.5 3.5L16 5.5"/></svg>4 core B2B SaaS case studies</span>
-          <span role="listitem"><svg class="outcome-check" viewBox="0 0 20 20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="m4 10 3.5 3.5L16 5.5"/></svg>Surfaces serving ~75% of revenue</span>
-          <span role="listitem"><svg class="outcome-check" viewBox="0 0 20 20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="m4 10 3.5 3.5L16 5.5"/></svg>WCAG 2.1 AA</span>
-          <span role="listitem"><svg class="outcome-check" viewBox="0 0 20 20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="m4 10 3.5 3.5L16 5.5"/></svg>AI-in-the-loop prototyping</span>
-        </div>
-        <div class="landing-actions reveal-up reveal-delay-3">
-          <a class="button landing-button" href="#work">View case studies</a>
-          <div class="landing-email-group">
-            <a class="landing-email" href="mailto:helloivanjose@gmail.com">helloivanjose@gmail.com</a>
-            <button class="landing-copy-email" type="button" data-copy-email="helloivanjose@gmail.com" aria-label="Copy email address" title="Copy email address">
-              <span class="material-symbols-rounded" aria-hidden="true">content_copy</span>
-            </button>
-          </div>
-          <a class="landing-icon-link" href="https://www.behance.net/ivancreatives" target="_blank" rel="noreferrer" aria-label="Open Jean Ivan Jose on Behance" title="Behance">
-            <span class="behance-mark" aria-hidden="true">Bē</span>
-          </a>
-          <a class="landing-icon-link" href="https://www.linkedin.com/in/ivancreatives/" target="_blank" rel="noreferrer" aria-label="Open Jean Ivan Jose on LinkedIn" title="LinkedIn">
-            <span class="landing-linkedin-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5.37 3.1A2.37 2.37 0 1 1 5.4 7.84 2.37 2.37 0 0 1 5.37 3.1ZM3.3 9.7h4.14V21H3.3V9.7ZM10.04 9.7H14v1.54h.06c.55-1.04 1.9-2.14 3.9-2.14 4.18 0 4.95 2.75 4.95 6.32V21h-4.13v-4.96c0-1.18-.02-2.7-1.64-2.7-1.65 0-1.9 1.29-1.9 2.62V21h-4.14V9.7Z"></path></svg></span>
-          </a>
-          <a class="landing-icon-link landing-icon-link--whatsapp" href="https://wa.me/639679223947" target="_blank" rel="noopener" aria-label="Chat with Jean Ivan Jose on WhatsApp" title="WhatsApp">
-            <span class="landing-whatsapp-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-3-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.6-6.1c-.25-.13-1.5-.74-1.7-.82-.23-.08-.4-.13-.56.13-.17.25-.64.82-.79.99-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.02-1.25-.75-.66-1.25-1.48-1.4-1.73-.14-.25-.01-.39.11-.51.11-.11.25-.29.38-.44.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.42h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1s.9 2.44 1.03 2.61c.13.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.43.53.6.19 1.15.16 1.58.1.48-.07 1.5-.61 1.71-1.2.21-.59.21-1.1.15-1.2-.06-.11-.23-.17-.48-.29z"></path></svg></span>
-          </a>
-          <span class="copy-feedback" data-copy-feedback aria-live="polite"></span>
+    <!-- ============================ HERO ============================ -->
+    <section class="hero">
+      <div class="container">
+        <span class="hero-status reveal in"><span class="dot"></span>Open to Remote | Relocation</span>
+        <h1 class="reveal in d1">Your next<br><span class="alt">Senior Product Designer.</span></h1>
+        <p class="hero-sub reveal in d2">I take something complex, simplify it, and turn it into a flow people can actually understand. <b>6 years shipping end-to-end B2B SaaS.</b> Integrations, enterprise org management, billing, and design systems.</p>
+        <div class="hero-actions reveal in d3">
+          <a class="btn btn-primary" href="mailto:helloivanjose@gmail.com">Email me <svg class="arw" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <a class="btn btn-outline" href="#other">View web designs</a>
+          <a class="icon-link" href="https://www.behance.net/ivancreatives" target="_blank" rel="noreferrer" aria-label="Behance" title="Behance"><span class="be" aria-hidden="true">Bē</span></a>
+          <a class="icon-link" href="https://www.linkedin.com/in/ivancreatives/" target="_blank" rel="noreferrer" aria-label="LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.37 3.1A2.37 2.37 0 1 1 5.4 7.84 2.37 2.37 0 0 1 5.37 3.1ZM3.3 9.7h4.14V21H3.3V9.7ZM10.04 9.7H14v1.54h.06c.55-1.04 1.9-2.14 3.9-2.14 4.18 0 4.95 2.75 4.95 6.32V21h-4.13v-4.96c0-1.18-.02-2.7-1.64-2.7-1.65 0-1.9 1.29-1.9 2.62V21h-4.14V9.7Z"/></svg></a>
+          <a class="icon-link icon-link--wa" href="https://wa.me/639679223947" target="_blank" rel="noopener" aria-label="WhatsApp" title="WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-3-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.6-6.1c-.25-.13-1.5-.74-1.7-.82-.23-.08-.4-.13-.56.13-.17.25-.64.82-.79.99-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.02-1.25-.75-.66-1.25-1.48-1.4-1.73-.14-.25-.01-.39.11-.51.11-.11.25-.29.38-.44.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.42h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1s.9 2.44 1.03 2.61c.13.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.43.53.6.19 1.15.16 1.58.1.48-.07 1.5-.61 1.71-1.2.21-.59.21-1.1.15-1.2-.06-.11-.23-.17-.48-.29z"/></svg></a>
+          <span class="sr-only" data-copy-feedback aria-live="polite"></span>
         </div>
       </div>
     </section>
 
-    <section class="landing-proof glow-zone">
-      <div class="container landing-proof-grid reveal-up">
-        <div class="proof-block">
-          <span class="proof-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M3 12.5h18"/></svg></span>
-          <div class="proof-text">
-            <span class="proof-label">Experience</span>
-            <p>6 years designing products end-to-end—core workflows, platform integrations, and enterprise surfaces—shipped cross-functionally with CTOs, PMs, and engineers.</p>
-          </div>
+    <!-- ============================ WORK — BENTO ============================ -->
+    <section class="section" id="work" style="padding-top:clamp(28px,4vw,52px)">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="kicker">Selected work</span>
+          <h2>Grounded in real product decisions and systems work.</h2>
         </div>
-        <div class="proof-block">
-          <span class="proof-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 3 8l9 5 9-5-9-5Z"/><path d="M3 12l9 5 9-5"/><path d="M3 16l9 5 9-5"/></svg></span>
-          <div class="proof-text">
-            <span class="proof-label">Design systems</span>
+
+        <div class="bento">
+          <a class="tile t-map reveal" href="map-case-study.html" target="_blank" rel="noopener">
+            <div class="tile-media">
+              <iframe class="case-live case-hover" data-w="1280" data-h="720" data-play-param="auto" data-play-mode="swap" data-src="map-animation.html?embed=1&v=redesign" title="Preview: the audience map, search, radius and polygon, county include, ZIP exclude, save. Hover to play." loading="lazy" tabindex="-1"></iframe>
+            </div>
+            <div class="tile-body">
+              <span class="tile-ix">01 · Core targeting workflow</span>
+              <h3>Modernizing a legacy audience map for faster, more flexible geographic targeting.</h3>
+              <p>Shipped the map-first core, then defined one audience model for search or region selection, CSV upload, saved areas, radius, and polygon across phased releases.</p>
+              <div class="tile-tags"><span>AI Prototype</span><span>Workflow redesign</span><span>Interaction systems</span></div>
+              <span class="tile-cta">Read case study <span class="arw">→</span></span>
+            </div>
+          </a>
+
+          <a class="tile t-int reveal d1" href="integration-case-study.html" target="_blank" rel="noopener">
+            <div class="tile-media">
+              <iframe class="case-live case-hover" data-w="760" data-h="880" data-play-param="auto" data-play-mode="swap" data-src="recreations/integration-connect.html" title="Preview: the connect flow, type credentials, test, connecting, connected. Hover to play." loading="lazy" tabindex="-1"></iframe>
+            </div>
+            <div class="tile-body">
+              <span class="tile-ix">02 · Platform integrations</span>
+              <h3>A reusable connection flow for credentials, validation &amp; account management.</h3>
+              <p>A scalable pattern so each new app inherits the same product logic, states, and UI structure instead of starting from zero.</p>
+            </div>
+          </a>
+
+          <a class="tile t-org reveal d1" href="org-management-case-study.html" target="_blank" rel="noopener">
+            <div class="tile-media">
+              <img src="images/new%20org/grid%20templates.webp" alt="Organization templates with group hierarchy, shared scopes, and centrally governed assets" onerror="this.closest('.tile-media').classList.add('ph');this.innerHTML='Org management'">
+            </div>
+            <div class="tile-body">
+              <span class="tile-ix">03 · Organization management</span>
+              <h3>Enterprise org management: roles, permissions &amp; shared templates that protect live automations.</h3>
+              <p>An organization layer above groups, with permission that follows the hierarchy. Built to win a high-revenue enterprise account that named it a requirement.</p>
+              <div class="tile-tags"><span>RBAC &amp; scopes</span><span>Enterprise</span></div>
+            </div>
+          </a>
+
+          <a class="tile t-bill reveal d1" href="billing-case-study.html" target="_blank" rel="noopener">
+            <div class="tile-media">
+              <img src="images/new%20billing/Manage%20Members%20at%20Group%20Level.webp" alt="Billing Management overview showing group balances, payment access, monthly caps, and account moves" onerror="this.closest('.tile-media').classList.add('ph');this.innerHTML='Org billing'">
+            </div>
+            <div class="tile-body">
+              <span class="tile-ix">04 · Org billing &amp; spend</span>
+              <h3>Org-wide billing: pool money at the org, spend it by group, protect paying campaigns.</h3>
+              <p>The companion to org management. Billing groups, per-account caps, transfers and disbursement, and spend analytics legible from org down to a single automation.</p>
+              <div class="tile-tags"><span>Financial UX</span><span>Enterprise</span></div>
+            </div>
+          </a>
+
+          <a class="tile t-ds reveal" href="design-system-case-study.html" target="_blank" rel="noopener">
+            <div class="tile-media">
+              <iframe class="case-live" data-w="1040" data-h="903" data-src="recreations/ds-tokens.html" title="Live preview: the design system's token layers and swatch table" loading="lazy" tabindex="-1"></iframe>
+            </div>
+            <div class="tile-body">
+              <span class="tile-ix">05 · Design system · Personal project</span>
+              <h3>Figma to React: a system a designer, an AI, and a compiler can all build from.</h3>
+              <p>I owned the Figma system at LettrLabs, then built the packaged React library, machine-readable specs, and an agent audit against a written standard.</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ STAT BAND ============================ -->
+    <div class="band reveal">
+      <div class="container">
+        <div class="band-grid">
+          <div class="band-cell"><div class="n">06</div><div class="l">Years shipping<br>end-to-end B2B SaaS</div></div>
+          <div class="band-cell"><div class="n">05</div><div class="l">In-depth case studies<br>of real product work</div></div>
+          <div class="band-cell"><div class="n">~75%</div><div class="l">Of revenue served by<br>surfaces I designed</div></div>
+          <div class="band-cell"><div class="n">AA</div><div class="l">WCAG 2.1 held across<br>every surface</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================ WHY ME — BENTO ============================ -->
+    <section class="section section--green" id="why">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="kicker">Why me</span>
+          <h2>The range behind the case studies.</h2>
+        </div>
+        <div class="why">
+          <div class="why-card reveal">
+            <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M3 12.5h18"/></svg></div>
+            <span class="l">Experience</span>
+            <p>6 years designing products end-to-end. Core workflows, platform integrations, and enterprise surfaces, shipped cross-functionally with CTOs, PMs, and engineers.</p>
+          </div>
+          <div class="why-card reveal d1">
+            <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 3 8l9 5 9-5-9-5Z"/><path d="M3 12l9 5 9-5"/><path d="M3 16l9 5 9-5"/></svg></div>
+            <span class="l">Design systems</span>
             <p>I build and own the system: tokens, documented components, and AI-ready specs backed by Storybook and the Claude Design System.</p>
           </div>
-        </div>
-        <div class="proof-block">
-          <span class="proof-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="1.5"/><path d="M9 8h.01M15 8h.01M9 12h.01M15 12h.01M9 16h6"/></svg></span>
-          <div class="proof-text">
-            <span class="proof-label">Industries</span>
+          <div class="why-card reveal">
+            <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="1.5"/><path d="M9 8h.01M15 8h.01M9 12h.01M15 12h.01M9 16h6"/></svg></div>
+            <span class="l">Industries</span>
             <p>Health SaaS, a blockchain email-security platform, e-commerce, plus executive, investor, and podcast sites.</p>
           </div>
-        </div>
-        <div class="proof-block">
-          <span class="proof-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.7 5.1L19 10l-5.3 1.9L12 17l-1.7-5.1L5 10l5.3-1.9L12 3Z"/><path d="M19 14.5l.6 1.9 1.9.6-1.9.6-.6 1.9-.6-1.9-1.9-.6 1.9-.6.6-1.9Z"/></svg></span>
-          <div class="proof-text">
-            <span class="proof-label">AI-assisted</span>
+          <div class="why-card reveal d1">
+            <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.7 5.1L19 10l-5.3 1.9L12 17l-1.7-5.1L5 10l5.3-1.9L12 3Z"/></svg></div>
+            <span class="l">AI-assisted</span>
             <p>I build AI skills and machine-readable specs so Codex, Claude, and Google Stitch produce on-brand work inside my design workflow.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="landing-section" id="work">
+    <!-- ============================ CAPABILITIES ============================ -->
+    <section class="section" id="capabilities">
       <div class="container">
-        <div class="landing-section-head reveal-up">
-          <div>
-            <div class="eyebrow">Case Studies</div>
-            <h2>Grounded in real product decisions and systems work.</h2>
-          </div>
-          <p>Each study shows how I approach structure, interaction, systems thinking, and implementation detail in B2B SaaS.</p>
+        <div class="section-head reveal">
+          <span class="kicker">Capabilities</span>
+          <h2>What I bring, and what I build with.</h2>
         </div>
-
-        <div class="landing-case-list">
-          <a class="landing-case reveal-up" href="map-case-study.html">
-            <div class="landing-case-cover">
-              <iframe class="case-live case-hover" data-w="1280" data-h="720" data-src="map-animation.html?embed=1&v=20260730b" title="Preview: the audience map — search, radius and polygon, county include, ZIP exclude, save. Hover to play." loading="lazy" tabindex="-1"></iframe>
-            </div>
-            <div class="landing-case-body">
-              <div class="landing-case-meta">01 · Core targeting workflow</div>
-              <h3>Modernizing a legacy audience map for faster, more flexible geographic targeting.</h3>
-              <div class="landing-case-tags">
-                <span>AI Prototype</span>
-                <span>Workflow redesign</span>
-                <span>Interaction systems</span>
-              </div>
-              <p>Shipped the map-first core, then defined one audience model for search or region selection, CSV upload, saved areas, radius, and polygon across phased releases.</p>
-            </div>
-          </a>
-
-          <a class="landing-case reveal-up reveal-delay-1" href="integration-case-study.html">
-            <div class="landing-case-cover">
-              <iframe class="case-live case-hover" data-w="760" data-h="880" data-play-param="auto" data-play-mode="swap" data-src="recreations/integration-connect.html" title="Preview: the connect flow — type credentials, test, connecting, connected. Hover to play." loading="lazy" tabindex="-1"></iframe>
-            </div>
-            <div class="landing-case-body">
-              <div class="landing-case-meta">02 · Platform integrations</div>
-              <h3>Designing a reusable connection flow for client credentials, validation, and account management.</h3>
-              <div class="landing-case-tags">
-                <span>Client credentials</span>
-                <span>Status design</span>
-                <span>Platform UX</span>
-              </div>
-              <p>Created a scalable pattern for integrations so each new app could inherit the same product logic, states, and UI structure instead of starting from zero.</p>
-            </div>
-          </a>
-
-          <a class="landing-case reveal-up reveal-delay-2" href="org-management-case-study.html">
-            <div class="landing-case-cover">
-              <img src="images/new%20org/grid%20templates.webp" alt="Organization templates with group hierarchy, shared scopes, and centrally governed assets" onerror="this.closest('.landing-case-cover').classList.add('is-placeholder');this.remove()">
-            </div>
-            <div class="landing-case-body">
-              <div class="landing-case-meta">03 · Organization management</div>
-              <h3>Enterprise org management: roles, permissions, and shared templates designed to protect live automations.</h3>
-              <div class="landing-case-tags">
-                <span>RBAC &amp; scopes</span>
-                <span>Templates</span>
-                <span>Enterprise</span>
-              </div>
-              <p>An organization layer above groups—permission that follows the hierarchy and centrally governed templates that stay safe to edit—built to win a high-revenue enterprise account that named it a requirement.</p>
-            </div>
-          </a>
-
-          <a class="landing-case reveal-up reveal-delay-3" href="billing-case-study.html">
-            <div class="landing-case-cover">
-              <img src="images/new%20billing/Manage%20Members%20at%20Group%20Level.webp" alt="Billing Management overview showing group balances, payment access, monthly caps, and account moves" onerror="this.closest('.landing-case-cover').classList.add('is-placeholder');this.remove()">
-            </div>
-            <div class="landing-case-body">
-              <div class="landing-case-meta">04 · Organization billing &amp; spend</div>
-              <h3>Org-wide billing: pool money at the org, spend it by group, and protect paying campaigns.</h3>
-              <div class="landing-case-tags">
-                <span>Billing &amp; payments</span>
-                <span>Financial UX</span>
-                <span>Enterprise</span>
-              </div>
-              <p>The companion to org management—billing groups, per-account caps, transfers and disbursement, and spend analytics that stay legible from the org down to a single automation.</p>
-            </div>
-          </a>
-
-          <a class="landing-case reveal-up reveal-delay-4" href="design-system-case-study.html">
-            <div class="landing-case-cover">
-              <iframe class="case-live" data-w="1040" data-h="903" data-src="recreations/ds-tokens.html" title="Live preview: the design system's token layers and swatch table" loading="lazy" tabindex="-1"></iframe>
-            </div>
-            <div class="landing-case-body">
-              <div class="landing-case-meta">05 · Design system · Personal project</div>
-              <h3>Figma to React: a design system a designer, an AI, and a compiler can all build from.</h3>
-              <div class="landing-case-tags">
-                <span>Design systems</span>
-                <span>Design to code</span>
-                <span>Multi-agent QA</span>
-              </div>
-              <p>I owned the Figma system at LettrLabs. On my own time I built the packaged React library, machine-readable specs, and an agent audit against a written standard—then published its open findings.</p>
-            </div>
-          </a>
+        <div class="reveal">
+          <div class="skills-row"><span class="skills-label">Product areas</span><div class="chips"><span>B2B SaaS</span><span>B2C</span><span>Dashboards</span><span>Integrations</span><span>Admin &amp; RBAC</span><span>Automations</span><span>Payments &amp; billing</span></div></div>
+          <div class="skills-row"><span class="skills-label">Industries</span><div class="chips"><span>Direct mail ads</span><span>Health SaaS</span><span>Blockchain email security</span><span>E-commerce</span><span>Executive &amp; investor sites</span><span>Podcasts</span></div></div>
+          <div class="skills-row"><span class="skills-label">Design &amp; systems</span><div class="chips"><span>Figma</span><span>Storybook</span><span>Claude Design System</span><span>Design tokens</span><span>Adobe (Ps, Ai, XD)</span></div></div>
+          <div class="skills-row"><span class="skills-label">Accessibility</span><div class="chips"><span>WCAG 2.1 AA</span><span>Color contrast</span><span>Keyboard navigation</span><span>Screen-reader testing</span><span>Focus states</span><span>axe DevTools</span></div></div>
+          <div class="skills-row"><span class="skills-label">AI workflow</span><div class="chips"><span>Figma Make</span><span>Codex</span><span>Claude Design tooling</span><span>MCP</span><span>Machine-readable specs</span><span>AI for research &amp; discovery</span></div></div>
+          <div class="skills-row"><span class="skills-label">Web &amp; CMS</span><div class="chips"><span>WordPress</span><span>WP ACF</span><span>WooCommerce</span><span>Shopify</span><span>Webflow</span><span>Elementor Pro</span><span>HTML / CSS</span></div></div>
         </div>
       </div>
     </section>
 
-    <section class="landing-section landing-other" id="other-work" aria-labelledby="other-work-title">
-      <div class="container">
-        <div class="landing-section-head reveal-up">
-          <div>
-            <div class="eyebrow">Selected other work</div>
-            <h2 id="other-work-title">Shipped client &amp; product work, in brief.</h2>
-          </div>
-          <p>Supporting work — not full case studies. Two blockchain products from my time with ULedger, plus CMS-driven marketing sites. Each opens in a new tab.</p>
+    <!-- ============================ APPROACH (dark) ============================ -->
+    <section class="section approach-sec" id="approach">
+      <div class="container approach">
+        <div class="approach-head reveal">
+          <span class="kicker">Approach</span>
+          <h2><span>Reuse what works.</span><span>Reduce what distracts.</span><span class="alt">Make the interaction carry the clarity.</span></h2>
         </div>
+        <div class="approach-list reveal d1">
+          <div><span class="approach-num">01</span><p>I start from product logic and mental models, not decoration. The interface should explain how the system behaves, especially in complex, ambiguous problems.</p></div>
+          <div><span class="approach-num">02</span><p>I extend and advocate the design system before inventing new components, and keep it consistent enough that people and AI can both build from it.</p></div>
+          <div><span class="approach-num">03</span><p>I work cross-functionally, close to PM, engineering, and stakeholders, explaining the concept behind a screen, not just the screen, so handoff feels like a shared product conversation.</p></div>
+          <div><span class="approach-num">04</span><p>I prototype with engineering in mind, often in code or Codex, so the team can pressure-test states, feasibility, and edge cases before build cost rises.</p></div>
+          <div><span class="approach-num">05</span><p>I treat B2B as consumer-grade underneath. A business buys the product, but one person still has to build an audience, configure automation, and pay, largely on their own. So I design the permissions, complexity, and scale a business needs with the speed, clarity, and ease people expect from consumer apps.</p></div>
+        </div>
+      </div>
+    </section>
 
+    <!-- ============================ OTHER WORK ============================ -->
+    <section class="section" id="other">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="kicker">Selected other work</span>
+          <h2>Shipped client &amp; product work, in brief.</h2>
+          <p>Supporting work, not full case studies. Two blockchain products from my time with ULedger, plus CMS-driven marketing sites. Each opens in a new tab.</p>
+        </div>
         <div class="other-grid">
-          <article class="other-card reveal-up" data-domain="blockchain">
-            <a href="https://www.behance.net/gallery/202614057/ULedgerNet-Blockchain-Explorer" target="_blank" rel="noopener noreferrer" aria-label="ULedgerNet Blockchain Explorer — blockchain product design (opens Behance in a new tab)">
-              <div class="other-cover"><img src="images/uledger.jpg" alt="ULedgerNet blockchain explorer — the &quot;Maximum data integrity using blockchain&quot; dashboard and web3 product suite" loading="lazy"></div>
-              <div class="other-body">
-                <div class="other-kicker">Blockchain · ULedger</div>
-                <h3>ULedgerNet — Blockchain Explorer</h3>
-                <p>A data-dense explorer for searching blocks, transactions, and hashes on the ULedger network.</p>
-                <span class="other-link">View on Behance ↗</span>
-              </div>
-            </a>
-          </article>
-
-          <article class="other-card reveal-up reveal-delay-1" data-domain="blockchain">
-            <a href="https://www.behance.net/gallery/202614095/Outlook-Uledger-Verify-for-Email" target="_blank" rel="noopener noreferrer" aria-label="Uledger Verify for Outlook — blockchain email verification product design (opens Behance in a new tab)">
-              <div class="other-cover"><img src="images/verifyemail.jpg" alt="Uledger Verify for Email — the &quot;Is your inbox verified?&quot; product screen for blockchain-backed email authentication" loading="lazy"></div>
-              <div class="other-body">
-                <div class="other-kicker">Blockchain · ULedger</div>
-                <h3>Uledger Verify for Outlook</h3>
-                <p>An email add-in using blockchain to prove a message is authentic and untampered — cryptographic verification made legible.</p>
-                <span class="other-link">View on Behance ↗</span>
-              </div>
-            </a>
-          </article>
-
-          <article class="other-card reveal-up reveal-delay-2" data-domain="web">
-            <a href="https://www.ajlatelier.com/" target="_blank" rel="noopener noreferrer" aria-label="AJL Atelier — Webflow CMS marketing site with dynamic pages and podcast (opens in a new tab)">
-              <div class="other-cover"><img src="images/ajl thumbnail new.webp" alt="AJL Atelier — Webflow CMS marketing site, podcast, editorial pages, and lead-capture forms" loading="lazy"></div>
-              <div class="other-body">
-                <div class="other-kicker">Webflow CMS · Live site</div>
-                <h3>AJL Atelier — consultancy + podcast</h3>
-                <p>Dynamic CMS pages, podcast episodes, blog, and service pages for a short-term-rental consultancy.</p>
-                <span class="other-link">Visit live site ↗</span>
-              </div>
-            </a>
-          </article>
-
-          <article class="other-card reveal-up reveal-delay-3" data-domain="web">
-            <a href="https://asymmetry.vc/portfolio/" target="_blank" rel="noopener noreferrer" aria-label="Asymmetry VC portfolio — WordPress and Elementor site with a CMS-driven portfolio grid (opens in a new tab)">
-              <div class="other-cover"><img src="images/asymmetry vc.webp" alt="Asymmetry Ventures — WordPress and Elementor site with a CMS-driven portfolio grid built from dynamic custom fields" loading="lazy"></div>
-              <div class="other-body">
-                <div class="other-kicker">WordPress · Elementor</div>
-                <h3>Asymmetry VC — portfolio site</h3>
-                <p>A CMS-driven portfolio grid built from dynamic custom fields, so new investments publish without touching the layout.</p>
-                <span class="other-link">Visit live site ↗</span>
-              </div>
-            </a>
-          </article>
-
-          <article class="other-card reveal-up reveal-delay-4" data-domain="web">
-            <a href="https://www.hypervestor.com/" target="_blank" rel="noopener noreferrer" aria-label="Hypervestor — WordPress marketing site for an early-stage investor platform with dynamic deal listings (opens in a new tab)">
-              <div class="other-cover"><img src="images/hypervestor.webp" alt="Hypervestor — WordPress marketing site for an early-stage investor platform with dynamic deal listings" loading="lazy"></div>
-              <div class="other-body">
-                <div class="other-kicker">WordPress · Live site</div>
-                <h3>Hypervestor — investor platform</h3>
-                <p>A marketing site for an early-stage investment platform, with dynamic deal listings and domain-driven sections.</p>
-                <span class="other-link">Visit live site ↗</span>
-              </div>
-            </a>
-          </article>
+          <div class="other reveal"><a href="https://www.behance.net/gallery/202614057/ULedgerNet-Blockchain-Explorer" target="_blank" rel="noopener noreferrer"><div class="other-cover"><img src="images/uledger.jpg" alt="ULedgerNet blockchain explorer" loading="lazy"></div><div class="other-body"><span class="other-kicker">Blockchain · ULedger</span><h3>ULedgerNet, Blockchain Explorer</h3><p>A data-dense explorer for searching blocks, transactions, and hashes on the ULedger network.</p><span class="other-link">View on Behance ↗</span></div></a></div>
+          <div class="other reveal d1"><a href="https://www.behance.net/gallery/202614095/Outlook-Uledger-Verify-for-Email" target="_blank" rel="noopener noreferrer"><div class="other-cover"><img src="images/verifyemail.jpg" alt="Uledger Verify for Email" loading="lazy"></div><div class="other-body"><span class="other-kicker">Blockchain · ULedger</span><h3>Uledger Verify for Outlook</h3><p>An email add-in using blockchain to prove a message is authentic and untampered.</p><span class="other-link">View on Behance ↗</span></div></a></div>
+          <div class="other reveal d2"><a href="https://www.ajlatelier.com/" target="_blank" rel="noopener noreferrer"><div class="other-cover"><img src="images/ajl thumbnail new.webp" alt="AJL Atelier Webflow CMS site" loading="lazy"></div><div class="other-body"><span class="other-kicker">Webflow CMS · Live site</span><h3>AJL Atelier, consultancy + podcast</h3><p>Dynamic CMS pages, podcast episodes, blog, and service pages for a short-term-rental consultancy.</p><span class="other-link">Visit live site ↗</span></div></a></div>
+          <div class="other reveal"><a href="https://asymmetry.vc/portfolio/" target="_blank" rel="noopener noreferrer"><div class="other-cover"><img src="images/asymmetry vc.webp" alt="Asymmetry Ventures site" loading="lazy"></div><div class="other-body"><span class="other-kicker">WordPress · Elementor</span><h3>Asymmetry VC, portfolio site</h3><p>A CMS-driven portfolio grid built from dynamic custom fields, so new investments publish without touching the layout.</p><span class="other-link">Visit live site ↗</span></div></a></div>
+          <div class="other reveal d1"><a href="https://www.hypervestor.com/" target="_blank" rel="noopener noreferrer"><div class="other-cover"><img src="images/hypervestor.webp" alt="Hypervestor investor platform site" loading="lazy"></div><div class="other-body"><span class="other-kicker">WordPress · Live site</span><h3>Hypervestor, investor platform</h3><p>A marketing site for an early-stage investment platform, with dynamic deal listings and domain-driven sections.</p><span class="other-link">Visit live site ↗</span></div></a></div>
         </div>
       </div>
     </section>
 
-    <section class="landing-section" id="skills">
+    <!-- ============================ CTA ============================ -->
+    <section class="section" id="contact">
       <div class="container">
-        <div class="landing-section-head reveal-up">
-          <div>
-            <div class="eyebrow">Capabilities</div>
-            <h2>What I bring, and what I build with.</h2>
-          </div>
-          <p>Product areas and industries I've shipped in, plus the design-system, AI, and CMS/commerce stack behind them.</p>
-        </div>
-        <div class="skills-list reveal-up">
-          <div class="skills-row">
-            <span class="skills-label">Product areas</span>
-            <div class="skill-chips">
-              <span>B2B SaaS</span><span>B2C</span><span>Dashboards</span><span>Integrations</span><span>Admin &amp; RBAC</span><span>Automations</span><span>Payments &amp; billing</span>
-            </div>
-          </div>
-          <div class="skills-row">
-            <span class="skills-label">Industries</span>
-            <div class="skill-chips">
-              <span>Direct mail ads</span><span>Health SaaS</span><span>Blockchain email security</span><span>E-commerce</span><span>Executive &amp; investor sites</span><span>Podcasts</span>
-            </div>
-          </div>
-          <div class="skills-row">
-            <span class="skills-label">Design &amp; systems</span>
-            <div class="skill-chips">
-              <span>Figma</span><span>Storybook</span><span>Claude Design System</span><span>Design tokens</span><span>Adobe (Ps, Ai, XD)</span>
-            </div>
-          </div>
-          <div class="skills-row">
-            <span class="skills-label">Accessibility</span>
-            <div class="skill-chips">
-              <span>WCAG 2.1 AA</span><span>Color contrast</span><span>Keyboard navigation</span><span>Screen-reader testing</span><span>Focus states</span><span>axe DevTools</span>
-            </div>
-          </div>
-          <div class="skills-row">
-            <span class="skills-label">AI workflow</span>
-            <div class="skill-chips">
-              <span>Figma Make</span><span>Codex</span><span>Claude Design tooling</span><span>MCP</span><span>Machine-readable specs</span><span>AI for research &amp; discovery</span>
-            </div>
-          </div>
-          <div class="skills-row">
-            <span class="skills-label">User research</span>
-            <div class="skill-chips">
-              <span>Hotjar</span><span>Microsoft Clarity</span><span>Google Analytics</span><span>FigJam (journey maps)</span>
-            </div>
-          </div>
-          <div class="skills-row">
-            <span class="skills-label">Web &amp; CMS</span>
-            <div class="skill-chips">
-              <span>WordPress</span><span>WP ACF</span><span>WooCommerce</span><span>Shopify</span><span>Webflow</span><span>Elementor Pro</span><span>HTML / CSS</span>
-            </div>
-          </div>
-          <div class="skills-row">
-            <span class="skills-label">Collaboration</span>
-            <div class="skill-chips">
-              <span>Asana</span><span>ClickUp</span><span>Confluence</span>
-            </div>
+        <div class="cta reveal">
+          <span class="kicker">Let's work together</span>
+          <h2>Have a role or project in mind?</h2>
+          <p>I'm looking for a Senior Product Designer role where systems thinking, craft, and an AI-native workflow all matter.</p>
+          <div class="cta-actions">
+            <a class="btn btn-light" href="mailto:helloivanjose@gmail.com">Email me</a>
+            <a class="btn btn-ghost" href="https://www.linkedin.com/in/ivancreatives/" target="_blank" rel="noreferrer">Connect on LinkedIn</a>
           </div>
         </div>
       </div>
     </section>
-
-    <section class="landing-section glow-zone" id="approach">
-      <div class="container landing-approach reveal-up">
-        <div class="landing-approach-copy">
-          <div class="eyebrow">Approach</div>
-          <h2>
-            <span>Reuse what works.</span>
-            <span>Reduce what distracts.</span>
-            <span class="approach-third-line">Make the interaction carry the clarity.</span>
-          </h2>
-        </div>
-        <div class="landing-approach-list">
-          <div>
-            <span class="approach-number">01</span>
-            <p>I start from product logic and mental models, not decoration—the interface should explain how the system behaves, especially in complex, ambiguous problems.</p>
-          </div>
-          <div>
-            <span class="approach-number">02</span>
-            <p>I extend and advocate the design system before inventing new components, and I keep it consistent enough that people and AI can both build from it.</p>
-          </div>
-          <div>
-            <span class="approach-number">03</span>
-            <p>I work cross-functionally—close to PM, engineering, and stakeholders—explaining the concept behind a screen, not just the screen—so handoff feels like a shared product conversation.</p>
-          </div>
-          <div>
-            <span class="approach-number">04</span>
-            <p>I prototype with engineering in mind—often in code or Codex—so the team can pressure-test states, feasibility, and edge cases before build cost rises.</p>
-          </div>
-          <div>
-            <span class="approach-number">05</span>
-            <p>I treat B2B as consumer-grade underneath. A business may buy the product, but one person still has to build an audience, configure automation, and pay—largely on their own. So I design self-service B2B SaaS: the permissions, complexity, and scale a business needs, delivered with the speed, clarity, and ease of use people expect from consumer apps.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="landing-cta-section" id="contact">
-      <div class="container">
-        <div class="landing-cta reveal-up">
-          <div>
-            <div class="eyebrow">Let's work together</div>
-            <h2>Have a role or project in mind?</h2>
-          </div>
-          <div class="landing-cta-actions">
-            <a class="button landing-button" href="mailto:helloivanjose@gmail.com">Email me</a>
-            <div class="landing-cta-social" aria-label="Social links">
-              <a class="landing-icon-link" href="https://www.behance.net/ivancreatives" target="_blank" rel="noreferrer" aria-label="Open Jean Ivan Jose on Behance" title="Behance">
-                <span class="behance-mark" aria-hidden="true">Bē</span>
-              </a>
-              <a class="landing-icon-link" href="https://www.linkedin.com/in/ivancreatives/" target="_blank" rel="noreferrer" aria-label="Open Jean Ivan Jose on LinkedIn" title="LinkedIn">
-                <span class="landing-linkedin-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5.37 3.1A2.37 2.37 0 1 1 5.4 7.84 2.37 2.37 0 0 1 5.37 3.1ZM3.3 9.7h4.14V21H3.3V9.7ZM10.04 9.7H14v1.54h.06c.55-1.04 1.9-2.14 3.9-2.14 4.18 0 4.95 2.75 4.95 6.32V21h-4.13v-4.96c0-1.18-.02-2.7-1.64-2.7-1.65 0-1.9 1.29-1.9 2.62V21h-4.14V9.7Z"></path></svg></span>
-              </a>
-              <a class="landing-icon-link landing-icon-link--whatsapp" href="https://wa.me/639679223947" target="_blank" rel="noopener" aria-label="Chat with Jean Ivan Jose on WhatsApp" title="WhatsApp">
-                <span class="landing-whatsapp-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-3-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.6-6.1c-.25-.13-1.5-.74-1.7-.82-.23-.08-.4-.13-.56.13-.17.25-.64.82-.79.99-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.02-1.25-.75-.66-1.25-1.48-1.4-1.73-.14-.25-.01-.39.11-.51.11-.11.25-.29.38-.44.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.42h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1s.9 2.44 1.03 2.61c.13.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.43.53.6.19 1.15.16 1.58.1.48-.07 1.5-.61 1.71-1.2.21-.59.21-1.1.15-1.2-.06-.11-.23-.17-.48-.29z"></path></svg></span>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
   </main>
 
-  <div class="preview-card" id="preview-card" hidden aria-live="polite">
-    <div class="preview-card-shell">
-      <button class="preview-close" id="preview-close" type="button" aria-label="Close preview">×</button>
-      <div class="preview-visual" id="preview-visual"></div>
-      <div class="preview-copy">
-        <div class="preview-kicker" id="preview-kicker"></div>
-        <h3 class="preview-title" id="preview-title"></h3>
-        <p class="preview-text" id="preview-text"></p>
-        <div class="preview-actions">
-          <a class="button" id="preview-visit" href="#" target="_blank" rel="noreferrer">Visit</a>
-          <button class="button secondary" id="preview-dismiss" type="button">Close</button>
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <a class="brand" href="index.html">Ivan Jose</a>
+        <nav class="footer-links" aria-label="Footer"><a href="#work">Work</a><a href="#why">Why me</a><a href="#capabilities">Capabilities</a><a href="#approach">Approach</a></nav>
+        <div class="footer-social">
+          <a class="icon-link" href="https://www.behance.net/ivancreatives" target="_blank" rel="noreferrer" aria-label="Behance" style="width:46px;height:46px"><span class="be" aria-hidden="true">Bē</span></a>
+          <a class="icon-link" href="https://www.linkedin.com/in/ivancreatives/" target="_blank" rel="noreferrer" aria-label="LinkedIn" style="width:46px;height:46px"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.37 3.1A2.37 2.37 0 1 1 5.4 7.84 2.37 2.37 0 0 1 5.37 3.1ZM3.3 9.7h4.14V21H3.3V9.7ZM10.04 9.7H14v1.54h.06c.55-1.04 1.9-2.14 3.9-2.14 4.18 0 4.95 2.75 4.95 6.32V21h-4.13v-4.96c0-1.18-.02-2.7-1.64-2.7-1.65 0-1.9 1.29-1.9 2.62V21h-4.14V9.7Z"/></svg></a>
+          <a class="icon-link icon-link--wa" href="https://wa.me/639679223947" target="_blank" rel="noopener" aria-label="WhatsApp" style="width:46px;height:46px"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-3-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.6-6.1c-.25-.13-1.5-.74-1.7-.82-.23-.08-.4-.13-.56.13-.17.25-.64.82-.79.99-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.02-1.25-.75-.66-1.25-1.48-1.4-1.73-.14-.25-.01-.39.11-.51.11-.11.25-.29.38-.44.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.42h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1s.9 2.44 1.03 2.61c.13.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.43.53.6.19 1.15.16 1.58.1.48-.07 1.5-.61 1.71-1.2.21-.59.21-1.1.15-1.2-.06-.11-.23-.17-.48-.29z"/></svg></a>
         </div>
       </div>
+      <div class="footer-bottom">
+        <span>© 2026 Ivan Jose · Senior Product Designer</span>
+        <a href="mailto:helloivanjose@gmail.com">helloivanjose@gmail.com</a>
+      </div>
     </div>
-  </div>
+  </footer>
 
   <script>
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const root = document.documentElement;
-    const blob = document.querySelector(".landing-blob");
-    const revealNodes = document.querySelectorAll(".reveal-up");
-    const scrambleWord = document.querySelector(".scramble-word");
-    const glowZones = document.querySelectorAll(".glow-zone");
-    const previewCard = document.getElementById("preview-card");
-    const previewVisual = document.getElementById("preview-visual");
-    const previewKicker = document.getElementById("preview-kicker");
-    const previewTitle = document.getElementById("preview-title");
-    const previewText = document.getElementById("preview-text");
-    const previewVisit = document.getElementById("preview-visit");
-    const previewClose = document.getElementById("preview-close");
-    const previewDismiss = document.getElementById("preview-dismiss");
-    const previewTriggers = document.querySelectorAll(".landing-case.hover-preview-trigger");
-    const previewMobileQuery = window.matchMedia("(max-width: 900px)");
-    let targetX = window.innerWidth * 0.5;
-    let targetY = window.innerHeight * 0.28;
-    let currentX = targetX;
-    let currentY = targetY;
-    let blobActive = false;
-    let blobFrame = null;
-    let scrambleFrame = null;
-    let scrambleHovering = false;
-    let scrambleLastTick = 0;
-    let activePreviewTrigger = null;
-    let previewPinned = false;
-    const scrambleWords = ["clean", "clear", "smart", "solid", "sharp", "human", "craft", "flows", "focus"];
-    const previewData = {
-      "landing-map": {
-        kicker: "Case study 01",
-        title: "Modernizing a core targeting map",
-        text: "A phased audience-builder redesign: shipped map-first core, with CSV, saved-area, and exclusion paths defined for later delivery.",
-        url: "map-case-study.html",
-        visual: `<div class="visual-scene visual-start"><div class="choice-card wide"></div><div class="choice-card"></div><div class="choice-card"></div><div class="choice-card"></div></div>`
-      },
-      "landing-integration": {
-        kicker: "Case study 02",
-        title: "Reusable integration flow",
-        text: "A scalable connection pattern for client credentials, validation states, attribution setup, and account management across multiple apps.",
-        url: "integration-case-study.html",
-        visual: `<div class="visual-scene visual-image-frame"><img src="images/integration-manage.jpeg" alt="Integration platform preview"></div>`
-      }
-    };
+    var progress=document.getElementById("progress"), nav=document.getElementById("nav");
+    function onScrollUI(){var h=document.documentElement,sc=h.scrollTop||document.body.scrollTop,max=(h.scrollHeight-h.clientHeight)||1;progress.style.width=(sc/max*100)+"%";nav.classList.toggle("scrolled",sc>20);}
+    window.addEventListener("scroll",onScrollUI,{passive:true});onScrollUI();
 
-    function isPreviewMobile() {
-      return previewMobileQuery.matches;
-    }
+    var prefersReduced=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if(!prefersReduced){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target);}});},{threshold:0.1});document.querySelectorAll(".reveal:not(.in)").forEach(function(n){io.observe(n);});}
+    else{document.querySelectorAll(".reveal").forEach(function(n){n.classList.add("in");});}
 
-    function populatePreview(key) {
-      const entry = previewData[key];
-      if (!entry) return;
-      previewKicker.textContent = entry.kicker;
-      previewTitle.textContent = entry.title;
-      previewText.textContent = entry.text;
-      previewVisit.href = entry.url;
-      previewVisual.innerHTML = entry.visual;
-    }
-
-    function placePreview(x, y) {
-      const width = 420;
-      const height = 430;
-      const offset = 24;
-      const left = Math.min(Math.max(16, x + offset), window.innerWidth - width - 16);
-      const top = Math.min(Math.max(16, y - 26), window.innerHeight - height - 16);
-      previewCard.style.left = left + "px";
-      previewCard.style.top = top + "px";
-    }
-
-    function showPreview(trigger, shouldPin) {
-      if (!previewCard || isPreviewMobile()) return;
-      const key = trigger.dataset.preview;
-      if (!previewData[key]) return;
-      activePreviewTrigger = trigger;
-      previewPinned = shouldPin;
-      populatePreview(key);
-      previewCard.hidden = false;
-      previewCard.classList.add("is-visible");
-      previewCard.dataset.pinned = previewPinned ? "true" : "false";
-      placePreview(targetX, targetY);
-    }
-
-    function hidePreview(force) {
-      if (!previewCard) return;
-      if (!force && previewPinned) return;
-      previewCard.hidden = true;
-      previewCard.classList.remove("is-visible");
-      previewCard.dataset.pinned = "false";
-      activePreviewTrigger = null;
-      previewPinned = false;
-    }
-
-    function stopScramble(node) {
-      if (!node) return;
-      scrambleHovering = false;
-      if (scrambleFrame) {
-        window.cancelAnimationFrame(scrambleFrame);
-        scrambleFrame = null;
-      }
-      node.textContent = node.dataset.word || "messy";
-      node.classList.remove("is-scrambling");
-    }
-
-    function startScramble(node) {
-      if (!node) return;
-      const finalWord = node.dataset.word || node.textContent || "";
-
-      if (scrambleFrame) window.cancelAnimationFrame(scrambleFrame);
-
-      scrambleHovering = true;
-      scrambleLastTick = 0;
-      node.classList.add("is-scrambling");
-
-      function tick(timestamp) {
-        if (!scrambleHovering) return;
-
-        if (!scrambleLastTick || timestamp - scrambleLastTick >= 220) {
-          const candidates = scrambleWords.filter((word) => word !== node.textContent && word.length >= finalWord.length);
-          const nextWord = candidates[Math.floor(Math.random() * candidates.length)] || finalWord;
-          node.textContent = nextWord;
-          scrambleLastTick = timestamp;
-        }
-
-        scrambleFrame = window.requestAnimationFrame(tick);
-      }
-
-      tick();
-    }
-
-    function renderBlob() {
-      currentX += (targetX - currentX) * 0.14;
-      currentY += (targetY - currentY) * 0.14;
-      if (blob) {
-        const offset = blob.offsetWidth / 2;
-        blob.style.transform = "translate3d(" + (currentX - offset) + "px," + (currentY - offset) + "px,0)";
-      }
-
-      if (Math.abs(targetX - currentX) > 0.1 || Math.abs(targetY - currentY) > 0.1 || blobActive) {
-        blobFrame = window.requestAnimationFrame(renderBlob);
-      } else {
-        blobFrame = null;
-      }
-    }
-
-    function updateBlobPosition(event) {
-      if (!blob) return;
-      const zone = event.target.closest(".glow-zone");
-      if (!zone) {
-        blobActive = false;
-        blob.classList.remove("is-active");
-        return;
-      }
-      targetX = event.clientX;
-      targetY = event.clientY;
-      blobActive = true;
-      blob.classList.add("is-active");
-      if (!blobFrame) blobFrame = window.requestAnimationFrame(renderBlob);
-    }
-
-    window.addEventListener("pointermove", updateBlobPosition, { passive: true });
-    glowZones.forEach((zone) => {
-      zone.addEventListener("pointerleave", () => {
-        if (!blob) return;
-        blobActive = false;
-        blob.classList.remove("is-active");
+    document.querySelectorAll("[data-copy-email]").forEach(function(button){
+      button.addEventListener("click",async function(){
+        var email=button.dataset.copyEmail,feedback=document.querySelector("[data-copy-feedback]"),prev=button.getAttribute("aria-label");
+        try{
+          if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(email);}
+          else{var ta=document.createElement("textarea");ta.value=email;ta.style.position="fixed";ta.style.opacity="0";document.body.appendChild(ta);ta.select();document.execCommand("copy");ta.remove();}
+          button.setAttribute("aria-label","Email copied");button.title="Email copied";if(feedback)feedback.textContent="Email copied to clipboard";
+          setTimeout(function(){button.setAttribute("aria-label",prev||"Copy email address");button.title="Copy email address";},1800);
+        }catch(err){if(feedback)feedback.textContent="Copy failed. Select the email to copy it.";}
       });
     });
-    document.addEventListener("pointerleave", () => {
-      if (!blob) return;
-      blobActive = false;
-      blob.classList.remove("is-active");
-    });
-
-    if (scrambleWord && !prefersReducedMotion) {
-      scrambleWord.addEventListener("mouseenter", () => startScramble(scrambleWord));
-      scrambleWord.addEventListener("mouseleave", () => stopScramble(scrambleWord));
-      scrambleWord.addEventListener("focus", () => startScramble(scrambleWord));
-      scrambleWord.addEventListener("blur", () => stopScramble(scrambleWord));
-    }
-
-    previewTriggers.forEach((trigger) => {
-      trigger.addEventListener("mouseenter", (event) => {
-        if (isPreviewMobile()) return;
-        targetX = event.clientX;
-        targetY = event.clientY;
-        showPreview(trigger, false);
-      });
-      trigger.addEventListener("mousemove", (event) => {
-        if (isPreviewMobile()) return;
-        targetX = event.clientX;
-        targetY = event.clientY;
-        if (!previewPinned) placePreview(targetX, targetY);
-      });
-      trigger.addEventListener("mouseleave", () => {
-        if (isPreviewMobile()) return;
-        if (!previewPinned) hidePreview(true);
-      });
-      trigger.addEventListener("focus", () => {
-        if (isPreviewMobile()) return;
-        const rect = trigger.getBoundingClientRect();
-        targetX = rect.left + rect.width / 2;
-        targetY = rect.top + rect.height / 2;
-        showPreview(trigger, true);
-      });
-      trigger.addEventListener("blur", () => {
-        if (isPreviewMobile()) return;
-        hidePreview(true);
-      });
-    });
-
-    document.addEventListener("mousemove", (event) => {
-      if (isPreviewMobile() || !previewCard || previewCard.hidden) return;
-      targetX = event.clientX;
-      targetY = event.clientY;
-      if (!previewPinned) placePreview(targetX, targetY);
-    });
-    previewCard?.addEventListener("mouseenter", () => {
-      if (activePreviewTrigger) previewPinned = true;
-    });
-    previewClose?.addEventListener("click", () => hidePreview(true));
-    previewDismiss?.addEventListener("click", () => hidePreview(true));
-    document.addEventListener("click", (event) => {
-      if (!previewCard || previewCard.hidden || !previewPinned) return;
-      const clickedTrigger = event.target.closest(".landing-case.hover-preview-trigger");
-      if (previewCard.contains(event.target) || clickedTrigger) return;
-      hidePreview(true);
-    });
-    document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape") hidePreview(true);
-    });
-    previewMobileQuery.addEventListener("change", () => {
-      if (isPreviewMobile()) hidePreview(true);
-    });
-
-    document.querySelectorAll("[data-copy-email]").forEach((button) => {
-      button.addEventListener("click", async () => {
-        const email = button.dataset.copyEmail;
-        const feedback = document.querySelector("[data-copy-feedback]");
-        const previousLabel = button.getAttribute("aria-label");
-        try {
-          if (navigator.clipboard && window.isSecureContext) {
-            await navigator.clipboard.writeText(email);
-          } else {
-            const textarea = document.createElement("textarea");
-            textarea.value = email;
-            textarea.setAttribute("readonly", "");
-            textarea.style.position = "fixed";
-            textarea.style.opacity = "0";
-            document.body.appendChild(textarea);
-            textarea.select();
-            document.execCommand("copy");
-            textarea.remove();
-          }
-          button.setAttribute("aria-label", "Email copied");
-          button.title = "Email copied";
-          if (feedback) feedback.textContent = "Email copied to clipboard";
-          window.setTimeout(() => {
-            button.setAttribute("aria-label", previousLabel || "Copy email address");
-            button.title = "Copy email address";
-          }, 1800);
-        } catch (error) {
-          if (feedback) feedback.textContent = "Copy failed. Select the email address to copy it.";
-        }
-      });
-    });
-
-    if (!prefersReducedMotion) {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          entry.target.classList.add("is-visible");
-          observer.unobserve(entry.target);
-        });
-      }, { threshold: 0.14 });
-
-      revealNodes.forEach((node) => observer.observe(node));
-    } else {
-      revealNodes.forEach((node) => node.classList.add("is-visible"));
-    }
   </script>
-  <style>
-    /* live animated case-study thumbnails */
-    .landing-case-cover{position:relative}
-    .landing-case-cover .case-live{position:absolute;top:50%;left:50%;border:0;transform-origin:center center;pointer-events:none;background:transparent}
-  </style>
+
   <script>
+    /* Live case-study previews: lazy-load CDN-backed iframes, contain-fit them,
+       and play one pass on hover / keyboard focus. */
     (function () {
-      /* Lazy-load the live preview iframes: they each pull a React runtime from a
-         CDN, so we only set their src once the card nears the viewport. Keeps the
-         React bundles out of the initial page load (mobile Lighthouse). */
       (function () {
         var pending = [].slice.call(document.querySelectorAll(".case-live[data-src]"));
         if (!pending.length) return;
         function reveal() {
           var vh = window.innerHeight || document.documentElement.clientHeight;
           pending = pending.filter(function (f) {
-            var box = f.closest(".landing-case-cover") || f;
-            var r = box.getBoundingClientRect();
-            if (r.top < vh + 700 && r.bottom > -700) { f.src = f.dataset.src; return false; }
+            var box = f.parentElement || f, r = box.getBoundingClientRect();
+            if (r.top < vh + 800 && r.bottom > -800) { f.src = f.dataset.src; return false; }
             return true;
           });
           if (!pending.length) { window.removeEventListener("scroll", onScroll); window.removeEventListener("resize", onScroll); }
@@ -1007,34 +541,29 @@
       function fit() {
         document.querySelectorAll(".case-live").forEach(function (f) {
           try {
-            var cover = f.closest(".landing-case-cover"); if (!cover) return;
+            var cover = f.parentElement; if (!cover) return;
             var cw = cover.clientWidth, ch = cover.clientHeight;
-            var natW = +(f.dataset.w || 1040), natH = +(f.dataset.h || 698);
+            var natW = +(f.dataset.w || 1280), natH = +(f.dataset.h || 720);
             f.style.width = natW + "px"; f.style.height = natH + "px";
-            var scale = Math.min(cw / natW, ch / natH);   // contain — whole demo visible
+            /* contain: whole live demo visible, centered on the gradient */
+            var scale = Math.min(cw / natW, ch / natH);
             f.style.transform = "translate(-50%,-50%) scale(" + scale.toFixed(3) + ")";
           } catch (e) {}
         });
       }
       fit();
 
-      /* hover-to-play previews: the iframe holds a still until the card is
-         hovered or keyboard-focused, then runs one pass */
       document.querySelectorAll("iframe.case-hover").forEach(function (f) {
-        var card = f.closest(".landing-case");
+        var card = f.closest(".tile") || f.parentElement;
         if (!card) return;
         var base = (f.getAttribute("src") || f.dataset.src || "").split("#")[0];
-        var playParam = f.dataset.playParam || "play";   // some recreations use ?auto instead of ?play
+        var playParam = f.dataset.playParam || "play";
         var playSrc = base + (base.indexOf("?") >= 0 ? "&" : "?") + playParam + "=1";
-        var swapOnly = f.dataset.playMode === "swap";     // recreation ignores postMessage — reload to play
-        var fileMode = location.protocol === "file:";     // cross-origin frames — postMessage blocked
+        var swapOnly = f.dataset.playMode === "swap";
+        var fileMode = location.protocol === "file:";
         var state = "";
-        /* Served: postMessage swaps state with no reload (smooth). On file://, or for
-           frames that don't listen for messages, we reload the iframe with the play
-           param — the one channel guaranteed to reach a cross-origin frame. */
         var set = function (msg) {
-          if (state === msg) return;
-          state = msg;
+          if (state === msg) return; state = msg;
           if (fileMode || swapOnly) { f.src = (msg === "play" ? playSrc : base); return; }
           try { f.contentWindow.postMessage(msg === "play" ? "play" : "stop", "*"); }
           catch (e) { f.src = (msg === "play" ? playSrc : base); }
@@ -1047,45 +576,7 @@
 
       window.addEventListener("resize", fit);
       window.addEventListener("load", fit);
-      var n = 0, iv = setInterval(function () { fit(); if (++n > 12) clearInterval(iv); }, 300);
-    })();
-  </script>
-  <footer class="site-footer">
-    <div class="container">
-      <div class="site-footer-top">
-        <a class="site-footer-brand" href="index.html">Ivan Jose</a>
-        <nav class="site-footer-links" aria-label="Footer">
-          <a href="index.html#work">Case Studies</a>
-          <a href="index.html#other-work">Other Works</a>
-          <a href="index.html#approach">Approach</a>
-        </nav>
-        <div class="site-footer-social" aria-label="Social links">
-          <a class="site-footer-icon" href="https://www.behance.net/ivancreatives" target="_blank" rel="noreferrer" aria-label="Behance" title="Behance"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.7 12c.9-.4 1.4-1.1 1.4-2.2 0-2-1.5-2.8-3.3-2.8H1v11h6c2 0 3.6-.9 3.6-3 0-1.3-.7-2.4-1.9-3zM3.6 8.9h2.7c.8 0 1.4.3 1.4 1.2s-.5 1.3-1.4 1.3H3.6V8.9zm2.9 7.2H3.6v-2.9h3c1 0 1.7.4 1.7 1.5 0 1-.8 1.4-1.8 1.4zM23 13.7c0-2.6-1.5-4.7-4.2-4.7-2.6 0-4.4 2-4.4 4.5 0 2.7 1.7 4.5 4.4 4.5 2 0 3.4-.9 4-2.8h-2.3c-.2.6-.9 1-1.6 1-1.2 0-1.9-.7-1.9-1.9H23c0-.1 0-.3 0-.6zm-6-1c.1-1 .7-1.6 1.7-1.6 1 0 1.5.6 1.6 1.6H17zM16 7h6v1.5h-6V7z"></path></svg></a>
-          <a class="site-footer-icon" href="https://www.linkedin.com/in/ivancreatives/" target="_blank" rel="noreferrer" aria-label="LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.37 3.1A2.37 2.37 0 1 1 5.4 7.84 2.37 2.37 0 0 1 5.37 3.1ZM3.3 9.7h4.14V21H3.3V9.7ZM10.04 9.7H14v1.54h.06c.55-1.04 1.9-2.14 3.9-2.14 4.18 0 4.95 2.75 4.95 6.32V21h-4.13v-4.96c0-1.18-.02-2.7-1.64-2.7-1.65 0-1.9 1.29-1.9 2.62V21h-4.14V9.7Z"></path></svg></a>
-          <a class="site-footer-icon site-footer-icon--whatsapp" href="https://wa.me/639679223947" target="_blank" rel="noopener" aria-label="WhatsApp" title="WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-3-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.6-6.1c-.25-.13-1.5-.74-1.7-.82-.23-.08-.4-.13-.56.13-.17.25-.64.82-.79.99-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.02-1.25-.75-.66-1.25-1.48-1.4-1.73-.14-.25-.01-.39.11-.51.11-.11.25-.29.38-.44.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.42h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1s.9 2.44 1.03 2.61c.13.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.43.53.6.19 1.15.16 1.58.1.48-.07 1.5-.61 1.71-1.2.21-.59.21-1.1.15-1.2-.06-.11-.23-.17-.48-.29z"></path></svg></a>
-        </div>
-      </div>
-      <div class="site-footer-bottom">
-        <span>© 2026 Ivan Jose · Senior Product Designer</span>
-        <a href="mailto:helloivanjose@gmail.com">helloivanjose@gmail.com</a>
-      </div>
-    </div>
-  </footer>
-
-  <script>
-    /* Home -> case-study funnel (step 1): when a Selected Work card is clicked,
-       fire a Clarity event tagged with the target so the home session is marked as
-       a click-through. Fired on pointerdown so it queues before navigation. */
-    (function () {
-      if (window.self !== window.top) return;
-      if (typeof window.clarity !== "function") return;
-      document.querySelectorAll("a.landing-case[href]").forEach(function (card) {
-        card.addEventListener("pointerdown", function () {
-          var slug = (card.getAttribute("href") || "").replace(/\.html.*$/, "").replace(/^.*\//, "");
-          clarity("set", "clicked_case_study", slug || "case-study");
-          clarity("event", "case_study_click");
-        }, { passive: true });
-      });
+      var n = 0, iv = setInterval(function () { fit(); if (++n > 14) clearInterval(iv); }, 300);
     })();
   </script>
 </body>

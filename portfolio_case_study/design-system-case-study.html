@@ -12,20 +12,20 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-  <title>Design to Code, Both Directions — A Design System an AI Can Build From — Ivan Jose</title>
-  <meta name="description" content="Self-directed design systems project by Senior Product Designer Ivan Jose: taking a Figma design system into a packaged React library, made machine-readable so AI agents build from it, then graded against a written component standard by a multi-agent audit — with the open findings published." />
+  <title>Design to Code, Both Directions | A Design System an AI Can Build From | Ivan Jose</title>
+  <meta name="description" content="Self-directed design systems project by Senior Product Designer Ivan Jose: taking a Figma design system into a packaged React library, made machine-readable so AI agents build from it, then graded against a written component standard by a multi-agent audit, with the open findings published." />
   <link rel="canonical" href="https://josejeani06.github.io/portfolio/design-system-case-study.html" />
   <meta name="author" content="Jean Ivan Jose" />
   <meta property="og:type" content="article" />
   <meta property="og:site_name" content="Ivan Jose" />
   <meta property="og:url" content="https://josejeani06.github.io/portfolio/design-system-case-study.html" />
   <meta property="og:title" content="Design to Code, Both Directions" />
-  <meta property="og:description" content="A self-directed project: taking a Figma design system into a packaged React library, made machine-readable so AI agents build from it — then graded against a written component standard by a multi-agent audit." />
+  <meta property="og:description" content="A self-directed project: taking a Figma design system into a packaged React library, made machine-readable so AI agents build from it, then graded against a written component standard by a multi-agent audit." />
   <meta property="og:image" content="https://josejeani06.github.io/portfolio/images/ds-main-ux.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://josejeani06.github.io/portfolio/images/ds-main-ux.png" />
   <meta name="twitter:title" content="Design to Code, Both Directions" />
-  <meta name="twitter:description" content="A design system a designer, an AI, and a compiler can all build from — by Senior Product Designer Ivan Jose." />
+  <meta name="twitter:description" content="A design system a designer, an AI, and a compiler can all build from, by Senior Product Designer Ivan Jose." />
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -45,20 +45,20 @@
   <style>
     /* ============ Editorial palette — matches map / billing / integration / org ============ */
     body.case-study-page{
-      --bg:#eceadf;
-      --paper:#eceadf;
-      --paper-2:#e5e2d5;
-      --text:#1c1b16;
-      --muted:#615d52;
-      --ink:#14130d;
-      --line:rgba(28,27,22,.16);
-      --hair:rgba(28,27,22,.12);
-      --blue:#cf3b23;
-      --blue-2:#a92f1b;
-      --blue-soft:rgba(207,59,35,.10);
+      --bg:#f7f5f2;
+      --paper:#f7f5f2;
+      --paper-2:#ece9e2;
+      --text:#292827;
+      --muted:#6b675f;
+      --ink:#111110;
+      --line:rgba(41, 40, 39,.16);
+      --hair:rgba(41, 40, 39,.12);
+      --blue:#714cb6;
+      --blue-2:#5f3da0;
+      --blue-soft:rgba(113, 76, 182,.10);
       --good:#3f7a4e;
       --surface:transparent;
-      --surface-2:#e5e2d5;
+      --surface-2:#ece9e2;
       --surface-border:0;
       --surface-shadow:none;
       --shadow:none;
@@ -67,11 +67,11 @@
       font-family:Manrope,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
       overflow-x:clip;
     }
-    body.case-study-page::before{background:linear-gradient(180deg,#efede4,#e6e3d7)}
+    body.case-study-page::before{background:linear-gradient(180deg,#f2f0eb,#ece9e2)}
     .case-study-page .landing-grid{
       background-image:
-        linear-gradient(rgba(28,27,22,.10) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(28,27,22,.10) 1px,transparent 1px);
+        linear-gradient(rgba(41, 40, 39,.10) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(41, 40, 39,.10) 1px,transparent 1px);
       background-size:66px 66px,66px 66px;
       opacity:.5;
       mask-image:radial-gradient(circle at 50% 22%, black 66%, transparent 100%);
@@ -94,11 +94,11 @@
     h2,.section-head h2,.pattern-head h2{font-size:var(--h2);line-height:1.04;font-weight:800;letter-spacing:-.02em}
     h3,.panel h3,.mini-card h3,.audit-card h3{font-size:var(--h3);line-height:1.12;font-weight:700;letter-spacing:-.01em}
     h4{font-size:var(--h4)}h5{font-size:var(--h5)}h6{font-size:var(--h6)}
-    /* --blue (#cf3b23) on paper is ~4.04:1 — below AA for small bold text.
-       Small labels use --blue-2 (#a92f1b, ~5.6:1). Large figures keep --blue. */
+    /* --blue (#714cb6) on paper is ~4.04:1 — below AA for small bold text.
+       Small labels use --blue-2 (#5f3da0, ~5.6:1). Large figures keep --blue. */
     .eyebrow{font-size:var(--text-xs);color:var(--blue-2);letter-spacing:.2em;font-weight:800;text-transform:uppercase}
     .lead,.section-head p,.section-head-stack p{font-size:var(--text-lg);line-height:1.6;color:#4a473f}
-    .lede p{font-size:var(--text-md);line-height:1.7;color:#514d45}
+    .lede p{font-size:var(--text-md);line-height:1.7;color:#565049}
 
     /* nav */
     .nav{background:rgba(236,234,223,.74);border-bottom:1px solid var(--line);backdrop-filter:blur(14px)}
@@ -108,7 +108,7 @@
     .nav-indicator{background:var(--blue)}
     .nav-right{display:flex;align-items:center;gap:24px}
     .nav-storybook-cta{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:0 15px;border-radius:999px;background:var(--blue);color:#fff;font-size:var(--text-sm);font-weight:800;line-height:1;text-decoration:none;white-space:nowrap;transition:background .15s,transform .15s,box-shadow .15s}
-    .nav-storybook-cta:hover{background:var(--blue-2);transform:translateY(-2px);box-shadow:0 9px 20px rgba(207,59,35,.24)}
+    .nav-storybook-cta:hover{background:var(--blue-2);transform:translateY(-2px);box-shadow:0 9px 20px rgba(113, 76, 182,.24)}
     .nav-storybook-cta:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
     .nav-storybook-cta svg{width:16px;height:16px;flex:0 0 auto}
     @media(max-width:1040px){.nav-right{gap:16px}.nav-links{gap:17px}.nav-storybook-cta{padding:0 13px}}
@@ -116,7 +116,7 @@
 
     /* buttons — house pill */
     .button{font-weight:700}
-    .button.secondary{background:rgba(236,234,223,.9);border:1px solid var(--line);color:var(--text)}
+    .button.secondary{background:transparent;border:1px solid var(--line);color:var(--text)}
     .prototype-note{color:var(--muted);font-size:var(--text-sm)}
 
     /* ============ De-box: hairline-ruled open blocks ============ */
@@ -124,11 +124,11 @@
     .hero-status-tag{display:inline-flex;align-items:center;min-height:28px;padding:0 13px;border:1px solid var(--blue);border-radius:999px;background:transparent;color:var(--blue-2);font-size:var(--text-xs);font-weight:800;letter-spacing:.12em;text-transform:uppercase}
 
     /* hero "why this mattered" flow strip (dark card — same pattern as map/integration) */
-    .story-diagram{margin-top:28px;padding:28px;border-radius:12px;background:#0d0c08;color:#f2f0e6}
-    .diagram-title{margin:0 0 18px;font-size:var(--text-sm);letter-spacing:.12em;text-transform:uppercase;color:#f7f5ec;font-weight:800}
+    .story-diagram{margin-top:28px;padding:28px;border-radius:12px;background:#0a0a0a;color:#f7f5f2}
+    .diagram-title{margin:0 0 18px;font-size:var(--text-sm);letter-spacing:.12em;text-transform:uppercase;color:#f1ecfb;font-weight:800}
     .diagram-flow{display:flex;gap:12px 20px;align-items:flex-start;flex-wrap:wrap}
     .diagram-node{min-width:150px;flex:1}
-    .diagram-node strong{display:block;color:#f7f5ec;font-size:var(--text-md);margin-bottom:4px}
+    .diagram-node strong{display:block;color:#f1ecfb;font-size:var(--text-md);margin-bottom:4px}
     .diagram-node span{display:block;font-size:var(--text-sm);line-height:1.45;color:rgba(242,240,230,.72)}
     .diagram-arrow{color:rgba(242,240,230,.4);align-self:center;flex:0 0 34px;min-width:0}
     .diagram-arrow svg{width:34px;height:auto;display:block}
@@ -162,7 +162,7 @@
     /* at-a-glance band — same pattern as the other four */
     .at-glance{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:30px;border-top:2px solid var(--ink);padding-top:26px;margin-top:40px}
     .at-glance-item small{display:block;font-size:var(--text-xs);font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--blue-2);margin-bottom:12px}
-    .at-glance-item p{margin:0;font-size:var(--text-md);line-height:1.7;color:#514d45}
+    .at-glance-item p{margin:0;font-size:var(--text-md);line-height:1.7;color:#565049}
     .glance-note{margin:0;font-size:var(--text-xs);color:var(--muted)}
 
     /* token ladder */
@@ -183,17 +183,17 @@
 
     /* rules list */
     .rule-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;margin-top:30px}
-    .rule{position:relative;padding:20px 28px 20px 22px;border-top:1px solid var(--hair);color:#514d45;font-size:15.5px;line-height:1.6}
+    .rule{position:relative;padding:20px 28px 20px 22px;border-top:1px solid var(--hair);color:#565049;font-size:15.5px;line-height:1.6}
     .rule::before{content:"";position:absolute;left:0;top:26px;width:9px;height:2px;background:var(--blue)}
     .rule:nth-child(odd){padding-right:34px}
     .rule strong{color:var(--ink);font-weight:700}
 
-    .tier-note{margin:34px 0 0;padding-top:24px;border-top:2px solid var(--ink);font-size:var(--text-md);line-height:1.7;color:#514d45;max-width:900px}
+    .tier-note{margin:34px 0 0;padding-top:24px;border-top:2px solid var(--ink);font-size:var(--text-md);line-height:1.7;color:#565049;max-width:900px}
     .tier-note b{color:var(--ink);font-weight:700}
 
     /* screenshots — same frame as the other four case studies */
     .shot{width:100%;margin:34px 0 0}
-    .shot-frame{border-radius:12px;overflow:hidden;background:#faf9f4;border:1px solid rgba(28,27,22,.12);box-shadow:0 42px 90px rgba(20,19,13,.22)}
+    .shot-frame{border-radius:12px;overflow:hidden;background:#ffffff;border:1px solid rgba(41, 40, 39,.12);box-shadow:0 42px 90px rgba(17, 17, 16,.22)}
     /* full-bleed, frameless live board — just the exact HTML, no wrapper */
     /* full-bleed live board — ~100vh preview, clipped with a short fade to the white section (no hard cut) */
     .board-embed{position:relative;width:100vw;margin-left:calc(50% - 50vw);margin-top:28px;height:100vh;overflow:hidden}
@@ -203,24 +203,24 @@
     .board-embed[hidden]{display:none}
     @media(max-width:760px){.board-embed{height:80vh}.board-embed::after{height:84px}}
     /* temporary PNG-vs-recreation compare toggle */
-    .ux-compare{display:inline-flex;gap:4px;margin-top:22px;padding:4px;border-radius:999px;background:#efece3;border:1px solid rgba(28,27,22,.10)}
+    .ux-compare{display:inline-flex;gap:4px;margin-top:22px;padding:4px;border-radius:999px;background:#efece3;border:1px solid rgba(41, 40, 39,.10)}
     .ux-btn{border:0;background:transparent;font:inherit;font-weight:700;font-size:var(--text-sm);color:#6b6658;padding:8px 16px;border-radius:999px;cursor:pointer;transition:background .15s,color .15s,box-shadow .15s}
-    .ux-btn.on{background:#fff;color:#1c1b16;box-shadow:0 1px 3px rgba(20,19,13,.14)}
+    .ux-btn.on{background:#fff;color:#292827;box-shadow:0 1px 3px rgba(17, 17, 16,.14)}
     /* inline live recreation (natural height, auto-sized iframe) */
     .recblock{margin-top:30px}
     .recframe{display:block;width:100%;border:0}
     /* Gallery teaser: show a generous live sample, then hand off to the full Storybook. */
-    .library-embed{position:relative;height:60vh;height:60svh;min-height:420px;overflow:hidden;border-radius:12px;background:#fff;border:1px solid rgba(28,27,22,.12);box-shadow:0 42px 90px rgba(20,19,13,.16)}
+    .library-embed{position:relative;height:60vh;height:60svh;min-height:420px;overflow:hidden;border-radius:12px;background:#fff;border:1px solid rgba(41, 40, 39,.12);box-shadow:0 42px 90px rgba(17, 17, 16,.16)}
     .library-embed .library-frame{height:100% !important;min-height:0}
     .library-embed::after{content:"";position:absolute;z-index:1;left:0;right:0;bottom:0;height:148px;pointer-events:none;background:linear-gradient(to bottom,rgba(255,255,255,0),#fff 84%)}
     .library-storybook-action{position:absolute;z-index:2;left:50%;bottom:22px;transform:translateX(-50%);display:flex;justify-content:center;width:calc(100% - 32px)}
     .library-storybook-action .storybook-cta{justify-content:center;min-width:184px}
     @media(max-width:760px){.library-embed{min-height:360px}.library-embed::after{height:124px}.library-storybook-action{bottom:16px}}
-    .recwrap[data-pane="png"] img{width:100%;display:block;border-radius:16px;border:1px solid rgba(28,27,22,.12);box-shadow:0 1px 2px rgba(20,19,13,.05),0 8px 22px rgba(20,19,13,.06)}
+    .recwrap[data-pane="png"] img{width:100%;display:block;border-radius:16px;border:1px solid rgba(41, 40, 39,.12);box-shadow:0 1px 2px rgba(17, 17, 16,.05),0 8px 22px rgba(17, 17, 16,.06)}
     [data-pane][hidden]{display:none}
-    .shot-bar{height:38px;display:flex;align-items:center;gap:8px;padding:0 16px;background:linear-gradient(180deg,#f3f1ea,#e8e5dc);border-bottom:1px solid rgba(28,27,22,.10)}
-    .shot-bar span{width:11px;height:11px;border-radius:50%;background:rgba(28,27,22,.16)}
-    .shot-media{position:relative;display:grid;place-items:center;background:linear-gradient(135deg,#f1efe7,#e6e3d8);overflow:hidden}
+    .shot-bar{height:38px;display:flex;align-items:center;gap:8px;padding:0 16px;background:linear-gradient(180deg,#f2f0eb,#ece9e2);border-bottom:1px solid rgba(41, 40, 39,.10)}
+    .shot-bar span{width:11px;height:11px;border-radius:50%;background:rgba(41, 40, 39,.16)}
+    .shot-media{position:relative;display:grid;place-items:center;background:linear-gradient(135deg,#f2f0eb,#ece9e2);overflow:hidden}
     .shot-media img{position:relative;z-index:1;display:block;width:100%;height:auto}
     .shot-cap{margin:16px 4px 0;color:var(--muted);font-size:var(--text-sm);line-height:1.6}
     .shot-grid{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:34px}
@@ -252,14 +252,14 @@
     .card-grid{gap:0;border-top:1px solid var(--hair)}
     .mini-card{background:transparent;border:0;border-right:1px solid var(--hair);border-radius:0;box-shadow:none;padding:24px 26px 4px 0}
     .mini-card:last-child{border-right:0}
-    .mini-card p{color:#514d45;font-size:15px;line-height:1.6}
+    .mini-card p{color:#565049;font-size:15px;line-height:1.6}
     .icon{width:auto;height:auto;border-radius:0;background:transparent;color:var(--blue);display:block;font-weight:800;font-size:30px;margin-bottom:10px;line-height:1}
 
     /* the agent contract — a read-order chain */
     .chain{display:grid;gap:0;margin-top:32px;border-top:1px solid var(--hair)}
     .chain-step{display:grid;grid-template-columns:150px 1fr;gap:26px;align-items:baseline;padding:20px 0;border-bottom:1px solid var(--hair)}
     .chain-step code{font-family:ui-monospace,Menlo,monospace;font-size:13px;font-weight:600;color:var(--blue-2);word-break:break-word}
-    .chain-step p{margin:0;color:#514d45;font-size:15px;line-height:1.6}
+    .chain-step p{margin:0;color:#565049;font-size:15px;line-height:1.6}
 
     /* skills grid */
     .skill-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;margin-top:30px;border-top:1px solid var(--hair)}
@@ -267,7 +267,7 @@
     .skill:nth-child(odd){border-right:1px solid var(--hair)}
     .skill:nth-child(even){padding-left:26px}
     .skill code{display:block;font-family:ui-monospace,Menlo,monospace;font-size:13px;font-weight:600;color:var(--blue-2);margin-bottom:8px}
-    .skill p{margin:0;color:#514d45;font-size:14.5px;line-height:1.6}
+    .skill p{margin:0;color:#565049;font-size:14.5px;line-height:1.6}
 
     /* copy formulas */
     .formula-table{margin-top:30px;border-top:1px solid var(--ink)}
@@ -276,19 +276,19 @@
     .formula-cell + .formula-cell{border-left:1px solid var(--hair);padding-left:24px}
     .formula-cell small{display:block;text-transform:uppercase;letter-spacing:.14em;font-size:10px;font-weight:800;color:var(--blue-2);margin-bottom:10px}
     .formula-cell code{font-family:ui-monospace,Menlo,monospace;font-size:13.5px;color:var(--ink);line-height:1.55}
-    .formula-cell.out p{margin:0;color:#33312a;font-size:var(--text-md);line-height:1.55;font-style:italic}
+    .formula-cell.out p{margin:0;color:#33323a;font-size:var(--text-md);line-height:1.55;font-style:italic}
 
     /* ============ Multi-agent pipeline (dark) ============ */
     .stage-flow{display:grid;grid-template-columns:1fr 34px 1fr 34px 1fr;align-items:stretch;margin-top:34px;border-top:1px solid rgba(242,240,230,.2)}
     .stage{padding:26px 24px 20px 0}
-    .stage small{display:block;text-transform:uppercase;letter-spacing:.16em;font-size:10px;font-weight:800;color:#ff7d63;margin-bottom:12px}
-    .stage strong{display:block;color:#f7f5ec;font-size:21px;font-weight:800;letter-spacing:-.01em;margin-bottom:10px}
+    .stage small{display:block;text-transform:uppercase;letter-spacing:.16em;font-size:10px;font-weight:800;color:#9e6ee5;margin-bottom:12px}
+    .stage strong{display:block;color:#f1ecfb;font-size:21px;font-weight:800;letter-spacing:-.01em;margin-bottom:10px}
     .stage p{margin:0;color:rgba(242,240,230,.8);font-size:14.5px;line-height:1.6}
-    .stage-arrow{display:grid;place-items:center;color:#f7f5ec;font-size:20px;opacity:.4}
+    .stage-arrow{display:grid;place-items:center;color:#f1ecfb;font-size:20px;opacity:.4}
 
     .grade-bars{margin-top:36px;border-top:1px solid rgba(242,240,230,.2);padding-top:24px}
     .grade-row{display:grid;grid-template-columns:64px 1fr 92px;align-items:center;gap:16px;padding:9px 0}
-    .grade-row b{font-size:var(--text-md);font-weight:800;color:#f7f5ec}
+    .grade-row b{font-size:var(--text-md);font-weight:800;color:#f1ecfb}
     .grade-track{height:10px;background:rgba(242,240,230,.14);border-radius:999px;overflow:hidden}
     .grade-fill{display:block;height:100%;border-radius:999px;background:#ff8a72}
     .grade-row span{font-size:var(--text-sm);color:rgba(242,240,230,.7);text-align:right}
@@ -297,7 +297,7 @@
     .breakage{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;margin-top:38px;border-top:1px solid rgba(242,240,230,.2)}
     .break-item{padding:26px 28px 22px 0}
     .break-item:nth-child(even){padding-left:28px;border-left:1px solid rgba(242,240,230,.18)}
-    .break-item strong{display:block;color:#f7f5ec;font-size:20px;font-weight:800;letter-spacing:-.01em;margin-bottom:10px}
+    .break-item strong{display:block;color:#f1ecfb;font-size:20px;font-weight:800;letter-spacing:-.01em;margin-bottom:10px}
     .break-item p{margin:0;color:rgba(242,240,230,.8);font-size:14.5px;line-height:1.65}
     .break-item p + p{margin-top:12px;color:rgba(242,240,230,.62);font-size:13.5px}
 
@@ -322,7 +322,7 @@
     .loop-node strong{display:block;color:var(--ink);font-size:18px;font-weight:800;margin-bottom:8px;letter-spacing:-.01em}
     .loop-node p{margin:0;color:var(--muted);font-size:14px;line-height:1.55}
     .loop-legend{display:grid;gap:12px;margin-top:26px;padding-top:22px;border-top:2px solid var(--ink)}
-    .loop-legend div{display:grid;grid-template-columns:26px 1fr;gap:14px;align-items:baseline;font-size:var(--text-md);line-height:1.65;color:#514d45}
+    .loop-legend div{display:grid;grid-template-columns:26px 1fr;gap:14px;align-items:baseline;font-size:var(--text-md);line-height:1.65;color:#565049}
     .loop-legend b{color:var(--blue);font-weight:800}
 
     /* ============ Prototype vs product ============ */
@@ -331,7 +331,7 @@
     .vs-row.head span{font-size:var(--text-xs);font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
     .vs-row.head{padding:12px 0;border-bottom:1px solid var(--line)}
     .vs-row b{font-weight:700;color:var(--ink);font-size:var(--text-md)}
-    .vs-row p{margin:0;font-size:14.5px;line-height:1.6;color:#514d45}
+    .vs-row p{margin:0;font-size:14.5px;line-height:1.6;color:#565049}
     .vs-row p.weak{color:var(--muted)}
 
     /* ============ Limits ============ */
@@ -352,7 +352,7 @@
     .audit-card.v .tagline{color:#ff8a72;border-color:#ff8a72}
     .audit-card.d .tagline{color:#ffcf7a;border-color:#ffcf7a}
     .audit-card.n .tagline{color:#8fb6ff;border-color:#8fb6ff}
-    .audit-card h3{margin:0 0 10px;color:#f7f5ec}
+    .audit-card h3{margin:0 0 10px;color:#f1ecfb}
     .audit-card p{margin:0;color:rgba(242,240,230,.8);font-size:14px;line-height:1.6}
     .audit-card p.eg{margin-top:14px;padding-top:14px;border-top:1px solid rgba(242,240,230,.16);color:rgba(242,240,230,.62);font-size:13px}
     .audit-card code{font-family:ui-monospace,Menlo,monospace;color:#ffcf7a;font-size:12.5px}
@@ -370,7 +370,7 @@
     .result-item:nth-last-child(-n+2):nth-child(odd),.result-item:last-child{border-bottom:0}
     .result-idx{display:block;margin-bottom:8px;color:var(--blue);font-family:ui-monospace,Menlo,monospace;font-size:var(--text-xs);font-weight:700;letter-spacing:.1em}
     .result-item h3{margin:0 0 8px;color:var(--ink);font-size:var(--h3);line-height:1.12}
-    .result-item p{margin:0;color:#514d45;font-size:var(--text-md);line-height:1.6}
+    .result-item p{margin:0;color:#565049;font-size:var(--text-md);line-height:1.6}
     @media(max-width:760px){.result-grid{grid-template-columns:1fr}.result-item{border-right:0!important;padding:22px 0!important;border-bottom:1px solid var(--hair)!important}.result-item:last-child{border-bottom:0!important}}
 
     /* ============ Main UX — white section, title + install side by side ============ */
@@ -389,8 +389,8 @@
     .harness-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:34px}
     .harness-card{border:1px solid rgba(242,240,230,.16);border-radius:12px;background:rgba(255,255,255,.035);overflow:hidden;display:flex;flex-direction:column}
     .harness-file{font-family:ui-monospace,Menlo,monospace;font-size:var(--text-xs);color:rgba(242,240,230,.66);padding:12px 16px;border-bottom:1px solid rgba(242,240,230,.12);background:rgba(255,255,255,.03);display:flex;align-items:center;gap:9px}
-    .harness-file::before{content:"";width:9px;height:9px;border-radius:50%;background:#ff7d63;flex:0 0 9px}
-    .harness-card h3{padding:16px 16px 0;margin:0;color:#f7f5ec;font-size:var(--h3);line-height:1.12}
+    .harness-file::before{content:"";width:9px;height:9px;border-radius:50%;background:#9e6ee5;flex:0 0 9px}
+    .harness-card h3{padding:16px 16px 0;margin:0;color:#f1ecfb;font-size:var(--h3);line-height:1.12}
     .harness-card > p{padding:8px 16px 18px;margin:0;color:rgba(242,240,230,.78);font-size:var(--text-sm);line-height:1.56}
     .harness-card ul{margin:0;padding:2px 16px 18px 34px;color:rgba(242,240,230,.72);font-size:13.5px;line-height:1.7}
     .harness-card ul code,.harness-card > p code{color:#ffcf7a;font-family:ui-monospace,Menlo,monospace;font-size:12px}
@@ -419,25 +419,25 @@
     .itable{margin-top:30px;overflow:hidden;border:1px solid var(--line);border-radius:14px;background:#fff;box-shadow:none}
     .itable table{width:100%;border-collapse:collapse;font-size:var(--text-sm)}
     .itable thead tr{background:#fff;text-align:left}
-    .itable th{padding:18px 20px;font-size:var(--text-xs);font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#615d52;border-bottom:1px solid var(--line)}
+    .itable th{padding:18px 20px;font-size:var(--text-xs);font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#6b675f;border-bottom:1px solid var(--line)}
     .itable th + th,.itable td + td{border-left:1px solid var(--line)}
-    .itable td{padding:18px 20px;color:#615d52;border-top:1px solid var(--line);line-height:1.55;vertical-align:top}
+    .itable td{padding:18px 20px;color:#6b675f;border-top:1px solid var(--line);line-height:1.55;vertical-align:top}
     .itable td.k{font-weight:700;color:var(--ink);font-family:ui-monospace,Menlo,monospace;font-size:12.5px;white-space:nowrap}
-    .itable tbody tr:nth-child(odd){background:#faf9f4}
+    .itable tbody tr:nth-child(odd){background:#ffffff}
     .itable .st{font-size:var(--text-xs);font-weight:800;letter-spacing:.04em;white-space:nowrap}
     .itable .st.done{color:var(--good)}.itable .st.open{color:#b26a1e}
     @media(max-width:760px){.itable th,.itable td{padding:10px 12px}}
 
     /* ============ read-progress widget (bottom-right ring) ============ */
-    .read-progress{position:fixed;right:22px;bottom:22px;z-index:120;display:flex;align-items:center;gap:12px;padding:9px 16px 9px 11px;border-radius:999px;background:rgba(20,19,13,.9);backdrop-filter:blur(8px);box-shadow:0 14px 34px rgba(14,13,8,.32);opacity:0;transform:translateY(10px);transition:opacity .3s ease,transform .3s ease;pointer-events:none}
+    .read-progress{position:fixed;right:22px;bottom:22px;z-index:120;display:flex;align-items:center;gap:12px;padding:9px 16px 9px 11px;border-radius:999px;background:rgba(17, 17, 16,.9);backdrop-filter:blur(8px);box-shadow:0 14px 34px rgba(14,13,8,.32);opacity:0;transform:translateY(10px);transition:opacity .3s ease,transform .3s ease;pointer-events:none}
     .read-progress.is-visible{opacity:1;transform:translateY(0)}
     .read-progress-ring{position:relative;width:44px;height:44px;flex:0 0 44px}
     .read-progress-ring svg{transform:rotate(-90deg);display:block}
     .read-progress-ring .rp-track{stroke:rgba(242,240,230,.18)}
     .read-progress-ring .rp-bar{stroke:url(#rpGrad);stroke-linecap:round;transition:stroke-dashoffset .18s linear}
-    .read-progress-pct{position:absolute;inset:0;display:grid;place-items:center;font-size:var(--text-xs);font-weight:800;color:#f4f2ea}
+    .read-progress-pct{position:absolute;inset:0;display:grid;place-items:center;font-size:var(--text-xs);font-weight:800;color:#f2f0eb}
     .read-progress-copy{display:grid;gap:2px;max-width:210px}
-    .read-progress-title{font-size:var(--text-sm);font-weight:800;letter-spacing:-.01em;line-height:1.1;color:#f7f5ec}
+    .read-progress-title{font-size:var(--text-sm);font-weight:800;letter-spacing:-.01em;line-height:1.1;color:#f1ecfb}
     .read-progress-sub{font-size:var(--text-xs);line-height:1.28;color:rgba(242,240,230,.72)}
     @media(max-width:560px){.read-progress-copy{display:none}.read-progress{padding:8px;right:16px;bottom:16px}}
     @media(prefers-reduced-motion:reduce){.read-progress,.read-progress-ring .rp-bar{transition:none}}
@@ -454,10 +454,10 @@
     /* CTA row: primary Storybook button + npm/github icon buttons */
     .icon-cta{display:flex;flex-wrap:wrap;align-items:center;gap:12px}
     .storybook-cta{display:inline-flex;align-items:center;gap:9px;height:46px;padding:0 20px;border-radius:999px;background:var(--blue);color:#fff;font-weight:700;text-decoration:none;border:0;transition:background .15s,transform .15s,box-shadow .15s}
-    .storybook-cta:hover{background:var(--blue-2);transform:translateY(-2px);box-shadow:0 10px 22px rgba(207,59,35,.28)}
+    .storybook-cta:hover{background:var(--blue-2);transform:translateY(-2px);box-shadow:0 10px 22px rgba(113, 76, 182,.28)}
     .storybook-cta svg{width:20px;height:20px;display:block}
     .icon-btn{position:relative;display:inline-grid;place-items:center;width:46px;height:46px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.55);color:var(--ink);transition:transform .15s,box-shadow .15s,background .15s}
-    .icon-btn:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(20,19,13,.16);background:#fff}
+    .icon-btn:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(17, 17, 16,.16);background:#fff}
     .icon-btn:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
     .icon-btn svg{width:24px;height:24px;display:block}
     .icon-btn::after{content:attr(data-tip);position:absolute;bottom:calc(100% + 9px);left:50%;transform:translateX(-50%) translateY(4px);background:var(--ink);color:#f2f0e5;font-size:12px;font-weight:800;letter-spacing:.02em;padding:5px 10px;border-radius:7px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .14s,transform .14s;z-index:5}
@@ -471,7 +471,7 @@
     .section-dark .results-row{border-bottom-color:rgba(242,240,230,.16)}
     .section-dark .results-row.head{border-bottom-color:rgba(242,240,230,.28)}
     .section-dark .results-row.head span{color:rgba(242,240,230,.6)}
-    .section-dark .results-row b{color:#f7f5ec}
+    .section-dark .results-row b{color:#f1ecfb}
     .section-dark .results-row b small{color:rgba(242,240,230,.62)}
     .section-dark .r-before{color:rgba(242,240,230,.55)}
     .section-dark .r-after{color:#8fe0a8}
@@ -481,12 +481,12 @@
 
     /* Evidence and audit tables stay white—even inside a dark section. */
     /* Measured before/after results use the same comparison language. */
-    .results-table{border:1px solid rgba(242,240,230,.16);border-radius:14px;background:#12110c;overflow:hidden}
+    .results-table{border:1px solid rgba(242,240,230,.16);border-radius:14px;background:#0e0e0d;overflow:hidden}
     .results-row{padding:16px var(--result-gutter);margin:0;border-bottom-color:rgba(242,240,230,.12)}
-    .results-row.head{padding:14px var(--result-gutter);background:#12110c;border-bottom-color:rgba(242,240,230,.16);color:#f2f0e6;text-transform:uppercase;font-size:var(--text-xs);font-weight:800;letter-spacing:.08em}
-    .results-row.head span:nth-child(2){color:#ff8a6f}.results-row.head span:last-child{color:#7dc98d}
-    .results-row b,.results-row b small{color:#f2f0e6}
-    .results-row .r-before{padding:8px 10px;border-radius:8px;background:rgba(207,59,35,.12);color:#ffd0c5}
+    .results-row.head{padding:14px var(--result-gutter);background:#0e0e0d;border-bottom-color:rgba(242,240,230,.16);color:#f7f5f2;text-transform:uppercase;font-size:var(--text-xs);font-weight:800;letter-spacing:.08em}
+    .results-row.head span:nth-child(2){color:#9e6ee5}.results-row.head span:last-child{color:#7dc98d}
+    .results-row b,.results-row b small{color:#f7f5f2}
+    .results-row .r-before{padding:8px 10px;border-radius:8px;background:rgba(113, 76, 182,.12);color:#ece3fb}
     .results-row .r-after{padding:8px 10px;border-radius:8px;background:rgba(81,139,92,.13);color:#d4ead8}
     @media(max-width:760px){#limits .itable{overflow-x:auto}#limits .itable table{min-width:680px}}
     @media(max-width:900px){
@@ -495,14 +495,14 @@
     }
 
     /* ============ Section rhythm ============ */
-    .section-dark{background:linear-gradient(180deg,#1f1d16,#141308);color:#f2f0e6}
-    .section-dark h2,.section-dark h3{color:#f7f5ec}
-    .section-dark .eyebrow{color:#ff7d63}
+    .section-dark{background:linear-gradient(180deg,#17161a,#111014);color:#f7f5f2}
+    .section-dark h2,.section-dark h3{color:#f1ecfb}
+    .section-dark .eyebrow{color:#9e6ee5}
     .section-dark .lede p,.section-dark p,.section-dark .section-head p{color:rgba(242,240,230,.82)}
     .section-dark-soft{background:var(--paper-2);color:var(--text)}
     .section-dark-soft h2,.section-dark-soft h3{color:var(--ink)}
     .section-dark-soft .eyebrow{color:var(--blue-2)}
-    .section-dark-soft .lede p,.section-dark-soft p{color:#514d45}
+    .section-dark-soft .lede p,.section-dark-soft p{color:#565049}
     #copy-system,#loop{background:var(--paper-2)}
     .quote{font-size:clamp(20px,2.4vw,30px);font-weight:700;letter-spacing:-.02em;line-height:1.35;color:var(--ink);max-width:900px;margin:44px 0 0}
     .footer{border-top:1px solid var(--line)}
@@ -569,13 +569,13 @@
       .decision-log-table{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--line);border-radius:12px;background:#fff}
       .decision-log-head,.decision-log-body{min-width:680px;grid-template-columns:1.1fr 1.1fr 1.2fr 1fr;gap:0}
       .decision-log-head{padding:0}
-      .decision-log-head div{padding:12px 14px;font-size:11px;line-height:1.3;border-left:1px solid rgba(28,27,22,.08)}
+      .decision-log-head div{padding:12px 14px;font-size:11px;line-height:1.3;border-left:1px solid rgba(41, 40, 39,.08)}
       .decision-log-head div:first-child{border-left:0}
       .decision-log-body{padding:0}
-      .decision-log-body + .decision-log-body{border-top:1px solid rgba(28,27,22,.1)}
-      .decision-log-cell{padding:13px 14px;border-left:1px solid rgba(28,27,22,.08);margin-top:0}
+      .decision-log-body + .decision-log-body{border-top:1px solid rgba(41, 40, 39,.1)}
+      .decision-log-cell{padding:13px 14px;border-left:1px solid rgba(41, 40, 39,.08);margin-top:0}
       .decision-log-cell:first-child{border-left:0}
-      .decision-log-cell + .decision-log-cell{margin-top:0;border-left:1px solid rgba(28,27,22,.08)}
+      .decision-log-cell + .decision-log-cell{margin-top:0;border-left:1px solid rgba(41, 40, 39,.08)}
       .decision-log-cell p{font-size:12.5px;line-height:1.5}
       .decision-log-cell::before{display:none}
       /* persona table -> real table that scrolls sideways */
@@ -598,6 +598,9 @@
       .journey-step{padding-left:16px}
     }
   </style>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght;500;600;700&family=Inter:wght;500;600;700&display=swap" rel="stylesheet">
+  <style id="rd-fonts">body{font-family:"Inter",ui-sans-serif,system-ui,sans-serif}h1,h2,h3,h4,h5,.eyebrow,[class*="title"],[class*="kicker"],[class*="heading"]{font-family:"Space Grotesk","Inter",sans-serif}</style>
+  <link rel="stylesheet" href="redesign-system.css?v=43">
 </head>
 <body class="case-study-page">
   <div class="landing-grid" aria-hidden="true"></div>
@@ -642,7 +645,7 @@
           <span class="case-title-mobile">Design to code, both directions.</span>
         </h1>
         <p class="lead">
-          I was LettrLabs' first and only Product Designer. There was no design system, so I built one from raw hex in Figma — then, after I was let go, took it all the way into a packaged React library an AI can build from. I had it audited against a written standard; it came back bad, and I published it anyway. That's the part worth reading.
+          I was LettrLabs' first and only Product Designer. There was no design system, so I built one from raw hex in Figma. After I was let go I kept going and took it all the way into a packaged React library an AI can build from. Then I had it audited against a written standard. It came back bad and I published it anyway.
         </p>
         <div class="icon-cta">
           <a class="storybook-cta" href="https://josejeani06.github.io/ivanlabs-design-system/" target="_blank" rel="noopener" aria-label="Visit Storybook">
@@ -659,10 +662,10 @@
 
         <div class="hero-facts">
           <div class="panel kv">
-            <div class="kv-item"><span>Role</span><strong>First and only Product Designer at LettrLabs (14 months). Built 100% of the components, patterns, UX copy and tone — the Figma library and the AI validators for copy, component rules and PR checks — as prototypes, not code</strong></div>
-            <div class="kv-item"><span>Built</span><strong>On my own, took it into a fully-usable React package: machine-readable specs, agent skills, and a multi-agent QA pipeline</strong></div>
-            <div class="kv-item"><span>Status</span><strong>On npm as @ivancreatelabs/design-system (v0.5.0). Engineer-reviewed as fit to build on — a personal project, not yet in production</strong></div>
-            <div class="kv-item"><span>Adopted</span><strong>A Senior PM built three working prototypes straight from it — proven beyond its author</strong></div>
+            <div class="kv-item"><span>Role</span><strong>First and only Product Designer at LettrLabs (14 months). Built 100% of the components, patterns, UX copy and tone. That meant the Figma library plus the AI validators for copy, component rules and PR checks, all built as prototypes rather than code</strong></div>
+            <div class="kv-item"><span>Built</span><strong>On my own, took it into a fully-usable React package with machine-readable specs, agent skills, and a multi-agent QA pipeline</strong></div>
+            <div class="kv-item"><span>Status</span><strong>On npm as @ivancreatelabs/design-system (v0.5.0). An engineer reviewed it and called it fit to build on. Still a personal project, not yet in production</strong></div>
+            <div class="kv-item"><span>Adopted</span><strong>A Senior PM built three working prototypes straight from it, so it works for someone other than its author</strong></div>
           </div>
 
           <div class="hero-install">
@@ -672,7 +675,7 @@
 <span class="m"># load the tokens once, at your app root</span>
 <span class="p">$</span> import "@ivancreatelabs/design-system/tokens.css"
 
-<span class="m"># then build with it — Button, DataTable, MapCard…</span>
+<span class="m"># then build with Button, DataTable, MapCard…</span>
 <span class="p">$</span> import { Button, MapCard } from "@ivancreatelabs/design-system"</code></div>
           </div>
         </div>
@@ -680,33 +683,33 @@
     </section>
 
     <!-- AT A GLANCE -->
-    <section class="section at-glance-band" style="background:#eceadf">
+    <section class="section at-glance-band" style="background:#f7f5f2">
       <div class="container">
         <div class="section-head" style="margin-bottom:34px">
           <div class="eyebrow">At a glance</div>
           <h2>95 components, one written standard, and a grade I didn't choose.</h2>
         </div>
         <div class="metric-strip">
-          <div class="metric-tile"><strong style="white-space:nowrap">56<span style="display:inline;color:var(--muted);font-weight:700;font-size:.6em;letter-spacing:0"> + 39</span></strong><span>global primitives plus product-specific components — 95 in all, each documented and under test</span></div>
-          <div class="metric-tile"><strong>439</strong><span>generated design tokens (colour, dimension, type, elevation) — the only place those values are allowed to come from</span></div>
-          <div class="metric-tile"><strong>3</strong><span>review stages — write the standard, audit, repair — with one agent per component per stage</span></div>
+          <div class="metric-tile"><strong style="white-space:nowrap">56<span style="display:inline;color:var(--muted);font-weight:700;font-size:.6em;letter-spacing:0"> + 39</span></strong><span>global primitives plus product-specific components. 95 in all, each documented and under test</span></div>
+          <div class="metric-tile"><strong>439</strong><span>generated design tokens (colour, dimension, type, elevation). Nothing on a screen is allowed to get those values anywhere else</span></div>
+          <div class="metric-tile"><strong>3</strong><span>review stages. Write the standard, audit, then repair, with one agent per component per stage</span></div>
           <div class="metric-tile"><strong>705</strong><span>lines in the component standard all three stages worked against</span></div>
           <div class="metric-tile"><strong>857</strong><span>findings raised by the agent audit, sorted into ten categories</span></div>
-          <div class="metric-tile"><strong>76</strong><span>components graded one by one against the written standard — the other 19 are still ungraded</span></div>
+          <div class="metric-tile"><strong>76</strong><span>components graded one by one against the written standard. The other 19 are still ungraded</span></div>
         </div>
-        <p class="glance-note">The counts come from the repo's own scripts, not from me. This is a personal project — it isn't running in production anywhere.</p>
+        <p class="glance-note">The counts come from the repo's own scripts, not from me. It's a personal project and it isn't running in production anywhere.</p>
         <div class="at-glance">
           <div class="at-glance-item">
             <small>The question</small>
-            <p>A Figma library and a codebase drift apart from day one. I'd built the Figma half and written the rules, but never had to defend either against a compiler — so I wanted a straight answer: is the system actually consistent, or does it just look that way in Figma?</p>
+            <p>A Figma library and a codebase drift apart from day one. I'd built the Figma half and written the rules, but I'd never had to defend either against a compiler. So I wanted a straight answer. Is the system actually consistent, or does it only look that way in Figma?</p>
           </div>
           <div class="at-glance-item">
             <small>What I did</small>
-            <p>Rebuilt the library in React on three-tier tokens, wrote the rules in a format an AI can read, and packaged it with versions and releases. Then a three-stage agent pipeline graded 76 of 95 components against the written standard; 19 remain explicitly ungraded.</p>
+            <p>Rebuilt the library in React on three-tier tokens, wrote the rules in a format an AI can read, and packaged it with versions and releases. Then a three-stage agent pipeline graded 76 of 95 components against the written standard. 19 remain explicitly ungraded.</p>
           </div>
           <div class="at-glance-item">
             <small>The outcome</small>
-            <p>Blunt: not one component got an A, and the worst category was the rule I was most sure of. I fixed everything a script could catch and published the rest as open findings — rather than quietly closing them.</p>
+            <p>Not one component got an A, and the worst category was the rule I was most sure of. I fixed everything a script could catch, then published the rest as open findings instead of quietly closing them.</p>
           </div>
         </div>
       </div>
@@ -717,14 +720,14 @@
       <div class="container">
         <div class="section-head section-head-stack">
           <div class="eyebrow">Main UX</div>
-          <h2>It's real — not screenshots.</h2>
-          <p>The installed library running live in your browser. Real product surfaces — sign-in, billing, a pipeline dashboard, an org-scope editor, a map, a mail-merge print preview and more — each built from the same components and tokens — the fields type, the toggles flip, the layout reflows.</p>
+          <h2>It's real, not screenshots.</h2>
+          <p>This is the installed library running live in your browser. Sign-in, billing, a pipeline dashboard, an org-scope editor, a map, a mail-merge print preview and more, all built from the same components and tokens. The fields type, the toggles flip, the layout reflows.</p>
         </div>
 
         <div class="board-embed">
-          <iframe src="https://josejeani06.github.io/portfolio/ivanlabs-hero.html?embed=1&v=20260729" scrolling="no" title="Ivanlabs design system — live board of product surfaces built from the library" loading="lazy"></iframe>
+          <iframe src="https://josejeani06.github.io/portfolio/ivanlabs-hero.html?embed=1&v=20260729" scrolling="no" title="Ivanlabs design system, live board of product surfaces built from the library" loading="lazy"></iframe>
         </div>
-        <p class="shot-cap" style="margin-top:16px">Every surface is a live instance from the installed package — nothing here is a picture.</p>
+        <p class="shot-cap" style="margin-top:16px">Every surface is a live instance from the installed package. Nothing here is a picture.</p>
       </div>
     </section>
 
@@ -736,18 +739,18 @@
         </div>
         <div class="lede">
           <p>
-            When I joined, LettrLabs had no design system at all. In Figma there was nothing — raw hex colours, no text or type styles, no components, and no designer had ever owned it. In the product it showed as 10 button styles, 4 table patterns, up to 5 "primary" buttons competing on a single screen, no documented UX process and no voice. On the screens that drove revenue, buttons fought for the same click.
+            When I joined, LettrLabs had no design system at all. Figma was empty. Raw hex colours, no text or type styles, no components, and no designer had ever owned it. In the product it showed as 10 button styles, 4 table patterns, up to 5 "primary" buttons competing on a single screen, no documented UX process and no voice. On the screens that drove revenue, buttons fought for the same click.
           </p>
           <p>
-            So I built the system, and I built it with the people who'd live in it. I worked directly with the CTO, the CEO and the engineers to pin down the primary action on each screen, the core flows and the feel. From raw colours up, I built the Figma foundation — type styles, tokens, components — and held it to one rule: <b>same job, same pattern</b>. An orders table behaves like every other table. One primary action, one CTA. A mental model you learn once and reuse everywhere.
+            So I built the system, and I built it with the people who'd live in it. I worked directly with the CTO, the CEO and the engineers to pin down the primary action on each screen, the core flows and the feel. From raw colours up I built the Figma foundation, meaning type styles, tokens and components, and held all of it to one rule. <b>Same job, same pattern</b>. An orders table behaves like every other table. One primary action, one CTA. A mental model you learn once and reuse everywhere.
           </p>
           <p>
-            Here's the honest part: even as the sole designer, the system still drifted and regressed — we rebuilt the library and workspace twice in fourteen months. Rules that live in one person's head, even mine, don't hold — so they had to become machine-checkable. That's the bridge from the Figma work to the AI validators, and later to the lint-enforced package. After I was let go, I finished the job: I rewrote the whole system as a packaged React library with rules a script — or a model — can enforce. The rest of this page is that system.
+            Here's the honest part. Even with one designer holding it, the system still drifted and regressed. We rebuilt the library and workspace twice in fourteen months. Rules that live in one person's head, even mine, don't hold, so they had to become machine-checkable. That's the bridge from the Figma work to the AI validators, and later to the lint-enforced package. After I was let go I finished the job and rewrote the whole system as a packaged React library, with rules a script or a model can enforce. The rest of this page is that system.
           </p>
         </div>
       </div>
       <div class="container" style="margin-top:38px">
-        <p class="quote" style="color:#f7f5ec">"We spent a week arguing about one button. It sounds inefficient — but that decision became the criteria every component after it was measured against, and the rest went fast. Working with engineers who think in systems, my job wasn't to control the outcome — it was to find the decision they already wanted, and make it consistent."</p>
+        <p class="quote" style="color:#f1ecfb">"We spent a week arguing about one button. That sounds inefficient, but the decision became the criteria every component after it was measured against, and the rest went fast. Working with engineers who think in systems, my job wasn't to control the outcome. It was to find the decision they already wanted, and make it consistent."</p>
       </div>
     </section>
 
@@ -769,7 +772,7 @@
           <div class="ds-rung">
             <small>Layer 02</small>
             <strong>Semantic</strong>
-            <span>Roles point at primitives — <code>brand/bg/default</code>, <code>neutral/text-icon/strong</code> — so what you meant stays the same even when the value under it changes.</span>
+            <span>Roles point at primitives like <code>brand/bg/default</code> and <code>neutral/text-icon/strong</code>, so what you meant stays the same even when the value under it changes.</span>
           </div>
           <div class="ds-arrow" aria-hidden="true">→</div>
           <div class="ds-rung">
@@ -782,7 +785,7 @@
         <div class="families-grid">
           <div class="family"><div class="swatch" aria-hidden="true" style="background:#5551FF"></div><strong>Brand</strong><span>Reserved for the user's positive action</span></div>
           <div class="family"><div class="swatch" aria-hidden="true" style="background:#6c757d"></div><strong>Neutral</strong><span>Text, icons, surfaces, borders</span></div>
-          <div class="family"><div class="swatch" aria-hidden="true" style="background:#2f6fed"></div><strong>Info</strong><span>Selection and information — blue, not brand</span></div>
+          <div class="family"><div class="swatch" aria-hidden="true" style="background:#2f6fed"></div><strong>Info</strong><span>Selection and information. Blue, not brand</span></div>
           <div class="family"><div class="swatch" aria-hidden="true" style="background:#22c55e"></div><strong>Success</strong><span>Confirmed and completed states</span></div>
           <div class="family"><div class="swatch" aria-hidden="true" style="background:#f59e0b"></div><strong>Warning</strong><span>Caution without failure</span></div>
           <div class="family"><div class="swatch" aria-hidden="true" style="background:#ef4444"></div><strong>Error</strong><span>Blocking failures only</span></div>
@@ -793,14 +796,14 @@
           <div class="recwrap" data-pane="live">
             <iframe class="recframe" src="https://josejeani06.github.io/portfolio/recreations/ds-tokens.html?v=20260730b" title="Live recreation: the three token layers and the families-by-roles swatch table, rendered from the real stylesheet" loading="lazy"></iframe>
           </div>
-          <p class="shot-cap">Rendered straight from <code class="inline-code">tokens.css</code> — the swatches are the live values, not a diagram of them.</p>
+          <p class="shot-cap">Rendered straight from <code class="inline-code">tokens.css</code>, so the swatches are the live values and not a diagram of them.</p>
         </div>
 
         <div class="rule-list">
-          <div class="rule"><strong>Brand is reserved.</strong> It marks the thing you want people to do — primary button, active tab, current step, focus ring. Never body text, never decoration. That one rule does most of the work in keeping a screen calm.</div>
+          <div class="rule"><strong>Brand is reserved.</strong> It marks the thing you want people to do. Primary button, active tab, current step, focus ring. Never body text, never decoration. That one rule does most of the work in keeping a screen calm.</div>
           <div class="rule"><strong>Dimension scales aren't interchangeable.</strong> Spacing, padding, gap, radius, border, height, icon size and opacity are separate scales, each used only where it belongs. Merging them is how a system rots.</div>
           <div class="rule"><strong>Focus is a 4px halo, no exceptions.</strong> The same focus ring on every control, so the whole thing reads as one product instead of a pile of widgets.</div>
-          <div class="rule"><strong>Disabled uses lighter tokens, never opacity.</strong> And selection on small controls is info-blue, not brand — brand stays reserved for the action you want people to take.</div>
+          <div class="rule"><strong>Disabled uses lighter tokens, never opacity.</strong> And selection on small controls is info-blue, not brand, because brand stays reserved for the action you want people to take.</div>
         </div>
 
         <div class="recblock">
@@ -812,10 +815,10 @@
               </a>
             </div>
           </div>
-          <p class="shot-cap">Forty of the ninety-five, each a real interactive instance from the installed package — flip the toggles, type the fields.</p>
+          <p class="shot-cap">Forty of the ninety-five, each a real interactive instance from the installed package. Flip the toggles, type in the fields.</p>
         </div>
 
-        <p class="tier-note">Worth saying plainly, because the count hides it: 56 of the 95 are <b>global primitives</b> built as a system (Button, InputField, DataTable); the other 39 are <b>product one-offs</b> — map tools, charts, org and campaign screens — I pulled into one place. Both are real components; only one set was ever built to a standard. The audit felt that difference.</p>
+        <p class="tier-note">The count hides something I should say plainly. 56 of the 95 are <b>global primitives</b> built as a system (Button, InputField, DataTable). The other 39 are <b>product one-offs</b> I pulled into one place, things like map tools, charts, org and campaign screens. Both are real components. Only one set was ever built to a standard, and the audit felt that difference.</p>
       </div>
     </section>
 
@@ -824,7 +827,7 @@
         <div class="section-head section-head-stack">
           <div class="eyebrow">Act II · The machine-readable layer</div>
           <h2>If a model can't follow the rule, it wasn't written well enough.</h2>
-          <p>Writing the docs for an AI made them better for people too — you can't tell a model to "use appropriate spacing," so every rule had to become something checkable, or it got cut. Four things carry the system to whoever, or whatever, builds next.</p>
+          <p>Writing the docs for an AI made them better for people too. You can't tell a model to "use appropriate spacing," so every rule had to turn into something checkable or it got cut. Four things carry the system to whoever, or whatever, builds next.</p>
         </div>
 
         <div class="harness-grid">
@@ -836,12 +839,12 @@
           <article class="harness-card">
             <div class="harness-file">docs/SKILL.md</div>
             <h3>The agent contract, five rules</h3>
-            <p>The core rule first: <em>search for what already exists and reuse it</em> before making anything new — and never hard-code a colour, size or radius where a token exists. Flag what's missing; don't paper over it.</p>
+            <p>The core rule comes first. <em>Search for what already exists and reuse it</em> before making anything new, and never hard-code a colour, size or radius where a token exists. Flag what's missing instead of papering over it.</p>
           </article>
           <article class="harness-card">
             <div class="harness-file">UX copy · tone</div>
             <h3>Copy became a formula, not a guess</h3>
-            <p>Every message follows a pattern — what happened, what it means, what to do next. Give a model the state; it fills the blanks.</p>
+            <p>Every message follows the same pattern. What happened, what it means, what to do next. Give a model the state and it fills in the blanks.</p>
             <ul>
               <li><code>System failure</code> → "We couldn't [action]. [Next step]. If it continues, [fallback]."</li>
               <li><code>Validation</code> → "[Item] is required. [Action] to continue."</li>
@@ -850,11 +853,11 @@
           <article class="harness-card">
             <div class="harness-file">docs/QA-FINDINGS.md</div>
             <h3>Every finding is one of three things</h3>
-            <p>Not every difference is a mistake, but each gets a decision — how a one-person system survives a growing team.</p>
+            <p>Not every difference is a mistake, but every one of them gets a decision. That's how a one-person system survives a growing team.</p>
             <ul>
-              <li><code>Violation</code> — breaks a rule → fix the design</li>
-              <li><code>Deviation</code> — right value, no token → fix the binding</li>
-              <li><code>New pattern</code> — undocumented → name it, or replace it</li>
+              <li><code>Violation</code> breaks a rule → fix the design</li>
+              <li><code>Deviation</code> has the right value but no token → fix the binding</li>
+              <li><code>New pattern</code> is undocumented → name it, or replace it</li>
             </ul>
           </article>
         </div>
@@ -865,8 +868,8 @@
       <div class="container">
         <div class="section-head section-head-stack">
           <div class="eyebrow">Act III · Multi-agent QA</div>
-          <h2>I'm the worst judge of my own work — so I wrote a testable standard and ran an agent audit.</h2>
-          <p>I couldn't audit 95 components by hand, and I didn't trust myself to. So I ran a three-stage agent audit—write the standard, grade 76 components against it, then fix—and let the written rules, not my taste, decide. Nineteen components remain explicitly ungraded.</p>
+          <h2>I'm the worst judge of my own work, so I wrote a testable standard and ran an agent audit.</h2>
+          <p>I couldn't audit 95 components by hand, and I didn't trust myself to. So I ran a three-stage agent audit. Write the standard, grade 76 components against it, then fix. The written rules decided, not my taste. Nineteen components remain explicitly ungraded.</p>
         </div>
 
         <div class="grade-bars">
@@ -874,13 +877,13 @@
           <div class="grade-row"><b>B</b><span class="grade-track" aria-hidden="true"><i class="grade-fill" style="width:4%;background:#8fb6ff"></i></span><span>3 components</span></div>
           <div class="grade-row"><b>C</b><span class="grade-track" aria-hidden="true"><i class="grade-fill" style="width:42%;background:#ffcf7a"></i></span><span>32 components</span></div>
           <div class="grade-row"><b>D</b><span class="grade-track" aria-hidden="true"><i class="grade-fill" style="width:54%"></i></span><span>41 components</span></div>
-          <p class="grade-note">Not one A. The biggest failure was the rule I was surest of — raw values where a token already existed. I'd have called this system consistent; measured, it mostly wasn't.</p>
+          <p class="grade-note">Not one A. The biggest failure was the rule I was surest of, raw values sitting where a token already existed. I'd have called this system consistent. Measured, it mostly wasn't.</p>
         </div>
 
         <div class="section-head section-head-stack" style="margin-top:52px">
           <div class="eyebrow">What changed</div>
-          <h2>Four checks the build now enforces — before, and after.</h2>
-          <p>Every row is a script that fails the build, so it can't quietly regress — numbers anyone with the code can reproduce.</p>
+          <h2>Four checks the build now enforces, before and after.</h2>
+          <p>Every row is a script that fails the build, so it can't quietly regress. Anyone with the code can run these numbers again.</p>
         </div>
 
         <div class="results-table">
@@ -896,7 +899,7 @@
             <span class="result-value r-before">36</span><span class="r-arrow" aria-hidden="true">→</span><span class="result-value r-after">0</span>
           </div>
           <div class="results-row">
-            <b>Components with a manifest entry<small>The old one was maintained by hand, so it fell behind the code. The new one is generated from the code itself.</small></b>
+            <b>Components with a manifest entry<small>The old one was kept by hand, so it fell behind the code. The new one is generated from the code itself.</small></b>
             <span class="result-value r-before">50</span><span class="r-arrow" aria-hidden="true">→</span><span class="result-value r-after">95</span>
           </div>
           <div class="results-row">
@@ -906,7 +909,6 @@
         </div>
         <figure class="shot">
           <div class="shot-frame">
-            <div class="shot-bar"><span></span><span></span><span></span></div>
             <div class="shot-media"><img src="images/ds-verify.webp" alt="Terminal output: npm run smoke reports 95 of 95 components rendering; npm run check:tokens reports 439 tokens defined with zero violations; npm run check:refs reports all 95 components attaching a ref." loading="lazy"></div>
           </div>
         </figure>
@@ -918,7 +920,7 @@
         <div class="section-head section-head-stack">
           <div class="eyebrow">The limits</div>
           <h2>What the audit found that I haven't fixed yet.</h2>
-          <p>The audit ships with the system, unfixed findings and all — what it actually looks like beats what its owner says. Two categories are closed and enforced by the build; the other eight are open or partly open, and I'm naming each rather than call the audit complete. Anything without a check behind it drifts back, whatever I claim today.</p>
+          <p>The audit ships with the system, unfixed findings and all. What a system actually looks like beats what its owner says about it. Two categories are closed and enforced by the build. The other eight are open or partly open, and I'd rather name each one than call the audit complete. Anything without a check behind it drifts back, whatever I claim today.</p>
         </div>
 
         <div class="itable">
@@ -927,16 +929,16 @@
               <tr><th>Category</th><th>What the audit found</th><th>Status</th></tr>
             </thead>
             <tbody>
-              <tr><td class="k">semantic-token</td><td>Raw values where a token exists. The biggest category in the audit, and now the most strictly enforced — the lint fails the build.</td><td><span class="st done">Closed · enforced</span></td></tr>
+              <tr><td class="k">semantic-token</td><td>Raw values where a token exists. The biggest category in the audit, and now the most strictly enforced, because the lint fails the build.</td><td><span class="st done">Closed · enforced</span></td></tr>
               <tr><td class="k">ref</td><td>Refs not forwarded, or forwarded then dropped before they reach an element. Every component now gets rendered and checked.</td><td><span class="st done">Closed · enforced</span></td></tr>
-              <tr><td class="k">a11y</td><td>Labels, error announcements and icon labelling are fixed and checked. Keyboard navigation, focus trapping and expanded/selected state aren't — several menus and overlays still can't be used properly from a keyboard.</td><td><span class="st open">Partly open</span></td></tr>
-              <tr><td class="k">dynamic-data</td><td>Components shipping hardcoded sample data as a default, or missing their loading, empty and error states. The data table is fixed; the rest aren't.</td><td><span class="st open">Open</span></td></tr>
+              <tr><td class="k">a11y</td><td>Labels, error announcements and icon labelling are fixed and checked. Keyboard navigation, focus trapping and expanded/selected state aren't. Several menus and overlays still can't be used properly from a keyboard.</td><td><span class="st open">Partly open</span></td></tr>
+              <tr><td class="k">dynamic-data</td><td>Components shipping hardcoded sample data as a default, or missing their loading, empty and error states. The data table is fixed. The rest aren't.</td><td><span class="st open">Open</span></td></tr>
               <tr><td class="k">props-api</td><td>Names that don't match sibling components, missing passthrough, and props leaking onto DOM nodes.</td><td><span class="st open">Open</span></td></tr>
-              <tr><td class="k">controlled</td><td>Components that handle controlled or uncontrolled use, but not both properly — a parent sets a value after mount and nothing happens.</td><td><span class="st open">Open</span></td></tr>
+              <tr><td class="k">controlled</td><td>Components that handle controlled or uncontrolled use, but not both properly. A parent sets a value after mount and nothing happens.</td><td><span class="st open">Open</span></td></tr>
               <tr><td class="k">state · consistency</td><td>States you can't reach or can't tell apart, and components solving the same problem differently from their siblings.</td><td><span class="st open">Open</span></td></tr>
               <tr><td class="k">ssr</td><td>A few components touch window or document outside an effect, which crashes server-side rendering.</td><td><span class="st open">Open</span></td></tr>
-              <tr><td class="k">no tiering</td><td>The manifest lists all 95 flat — nothing in the data tells an agent a map control isn't a reusable primitive, so it invites reuse of one-off product components everywhere.</td><td><span class="st open">Open</span></td></tr>
-              <tr><td class="k">never audited</td><td>Nineteen components never got graded. They pass the automated checks, but nobody has actually read them yet — and I'd rather say that than call the audit complete.</td><td><span class="st open">Open</span></td></tr>
+              <tr><td class="k">no tiering</td><td>The manifest lists all 95 flat. Nothing in the data tells an agent that a map control isn't a reusable primitive, so it invites reuse of one-off product components everywhere.</td><td><span class="st open">Open</span></td></tr>
+              <tr><td class="k">never audited</td><td>Nineteen components never got graded. They pass the automated checks, but nobody has actually read them yet, and I'd rather say so than call the audit complete.</td><td><span class="st open">Open</span></td></tr>
             </tbody>
           </table>
         </div>
@@ -948,15 +950,15 @@
         <div class="section-head section-head-stack">
           <div class="eyebrow">What this is evidence of</div>
           <h2>What I'd bring to a team that has this problem.</h2>
-          <p>This never shipped to customers, so I'm not going to claim a business result. What it is: a worked example of how I'd run a design system with engineers involved, and proof I can take one past the Figma file.</p>
+          <p>This never shipped to customers, so I'm not going to claim a business result. It's a worked example of how I'd run a design system with engineers involved, and proof I can take one past the Figma file.</p>
         </div>
         <div class="result-grid">
-          <div class="result-item"><span class="result-idx">01 / PACKAGED</span><h3>Past the Figma file, into a package</h3><p>Most design-system work dies at the Figma file. Mine is an installed, versioned npm package — tokens plus 95 components — that a team could build on today. That's the half I'd never taken a system through before.</p></div>
-          <div class="result-item"><span class="result-idx">02 / Proven beyond me</span><h3>Holds up in someone else's hands</h3><p>A Senior PM built three working prototypes straight from the same system, so it's not just consistent for its author — someone who didn't design it could build with it.</p></div>
-          <div class="result-item"><span class="result-idx">03 / RIGOR</span><h3>Willing to be graded</h3><p>I ran an agent audit against a written standard and published what it returned—open findings and all—instead of the version that flatters me.</p></div>
-          <div class="result-item"><span class="result-idx">04 / Design that survives code</span><h3>Compiles, not just looks right</h3><p>I can hand an engineer tokens and components that forward refs and pass a lint — not a Figma link and a conversation about what I meant.</p></div>
-          <div class="result-item"><span class="result-idx">05 / Rules that enforce themselves</span><h3>Write the check first</h3><p>The rules that survived the audit were the ones a script could check; the ones I'd written as good taste got broken everywhere, by me as much as any model. So the check comes first now, or the rule doesn't count.</p></div>
-          <div class="result-item"><span class="result-idx">06 / AI, constrained not trusted</span><h3>Build from what exists</h3><p>Give an agent a readable spec and a reuse-first rule and it builds from what's there. Give it neither and it invents — a design problem before it's a tooling one.</p></div>
+          <div class="result-item"><span class="result-idx">01 / PACKAGED</span><h3>Past the Figma file, into a package</h3><p>Most design-system work dies at the Figma file. Mine is an installed, versioned npm package with tokens plus 95 components, and a team could build on it today. That's the half I'd never taken a system through before.</p></div>
+          <div class="result-item"><span class="result-idx">02 / Proven beyond me</span><h3>Holds up in someone else's hands</h3><p>A Senior PM built three working prototypes straight from the same system. It isn't only consistent for its author. Someone who didn't design it could build with it.</p></div>
+          <div class="result-item"><span class="result-idx">03 / RIGOR</span><h3>Willing to be graded</h3><p>I ran an agent audit against a written standard and published what it returned, open findings and all, instead of the version that flatters me.</p></div>
+          <div class="result-item"><span class="result-idx">04 / Design that survives code</span><h3>Compiles, not just looks right</h3><p>I can hand an engineer tokens and components that forward refs and pass a lint, instead of a Figma link and a conversation about what I meant.</p></div>
+          <div class="result-item"><span class="result-idx">05 / Rules that enforce themselves</span><h3>Write the check first</h3><p>The rules that survived the audit were the ones a script could check. The ones I'd written as good taste got broken everywhere, by me as much as by any model. So the check comes first now, or the rule doesn't count.</p></div>
+          <div class="result-item"><span class="result-idx">06 / AI, constrained not trusted</span><h3>Build from what exists</h3><p>Give an agent a readable spec and a reuse-first rule and it builds from what's there. Give it neither and it invents. That's a design problem before it's a tooling one.</p></div>
         </div>
       </div>
     </section>
@@ -972,17 +974,31 @@
             The open list is the roadmap. Keyboard and focus first, because that's the one where a gap actually locks people out instead of just looking messy. Then the props API, so components stop surprising the people building with them.
           </p>
           <p>
-            The package is why any of this holds: one versioned source of truth a fast prototype can pull from and a team can build on — so a fix travels both ways instead of dying in a single screen, and a demo and production stop drifting apart. That's the part an HTML mockup can never be.
+            The package is why any of this holds. There's one versioned source of truth that a fast prototype can pull from and a team can build on, so a fix travels both ways instead of dying in a single screen, and the demo and production stop drifting apart. That's the part an HTML mockup can never be.
           </p>
           <p>
-            So the work now is narrow: turn more of the open list into checks, and drop any rule I can't enforce. A claim I can't hand someone as a command they run for themselves isn't a finished rule — it's a hope with good intentions.
+            So the work now is narrow. Turn more of the open list into checks, and drop any rule I can't enforce. If I can't hand someone a command they run for themselves, it isn't a finished rule yet. It's a hope with good intentions.
           </p>
         </div>
       </div>
       <div class="container">
         <p class="quote">
-          "A design system earns its keep when the same rules produce the same answer — whether a designer or a model is doing the work."
+          "A design system earns its keep when the same rules produce the same answer, whether a designer or a model is doing the work."
         </p>
+      </div>
+    </section>
+  
+    <section class="section next-case-cta">
+      <div class="container">
+        <div class="next-case-panel">
+          <span class="next-case-kicker">Next case study</span>
+          <h2>Redesigning a map into an audience builder</h2>
+          <p>A two-year-old geographic map workflow reframed as an audience builder for four mental models.</p>
+          <div class="next-case-actions">
+            <a class="next-case-primary" href="map-case-study.html">Read it <svg class="arw" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            <a class="next-case-outline" href="index.html#work">All work</a>
+          </div>
+        </div>
       </div>
     </section>
   </main>
@@ -991,6 +1007,7 @@
     <div class="container footer-nav" style="padding:36px 0">
       <a class="footer-move prev" href="billing-case-study.html"><span class="fm-dir">← Previous</span><span class="fm-name">Org billing &amp; spend</span></a>
       <a class="button secondary" href="index.html">All work</a>
+      <a class="footer-move next" href="map-case-study.html"><span class="fm-dir">Next →</span><span class="fm-name">Map audience builder</span></a>
     </div>
   </footer>
 
@@ -1015,7 +1032,7 @@
   <div class="read-progress" id="read-progress" aria-hidden="true">
     <div class="read-progress-ring">
       <svg viewBox="0 0 44 44" width="44" height="44" aria-hidden="true">
-        <defs><linearGradient id="rpGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff8a2a"/><stop offset=".5" stop-color="#ff4d8d"/><stop offset="1" stop-color="#2cc8ff"/></linearGradient></defs>
+        <defs><linearGradient id="rpGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9e6ee5"/><stop offset=".5" stop-color="#ff4d8d"/><stop offset="1" stop-color="#2cc8ff"/></linearGradient></defs>
         <circle class="rp-track" cx="22" cy="22" r="18" fill="none" stroke-width="4"/>
         <circle class="rp-bar" id="rp-bar" cx="22" cy="22" r="18" fill="none" stroke-width="4" stroke-dasharray="113.097" stroke-dashoffset="113.097"/>
       </svg>
@@ -1311,5 +1328,6 @@
       clarity("event", "case_study_view");
     })();
   </script>
+  <script defer src="scroll-hint.js?v=1"></script>
 </body>
 </html>

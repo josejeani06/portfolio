@@ -6,12 +6,12 @@
    ============================================================================= */
 (function () {
   const PAGES = [
-    'redesign.html',
-    'map-case-study-redesign.html',
-    'integration-case-study-redesign.html',
-    'org-management-case-study-redesign.html',
-    'billing-case-study-redesign.html',
-    'design-system-case-study-redesign.html',
+    'index.html',
+    'map-case-study.html',
+    'integration-case-study.html',
+    'org-management-case-study.html',
+    'billing-case-study.html',
+    'design-system-case-study.html',
   ];
   const WIDTHS = [375, 768, 1280];
 
@@ -19,10 +19,10 @@
   // measured from live MARKUP (not grep of CSS+markup). Each page uses a
   // different interaction pattern, so each has its own selector + floor.
   const INTERACTION_BASELINE = {
-    'map-case-study-redesign.html':            { sel: '.refine-slide',       min: 7  },
-    'integration-case-study-redesign.html':    { sel: '.scroll-story-step',  min: 5  },
-    'org-management-case-study-redesign.html': { sel: '.refine-slide',       min: 6  },
-    'billing-case-study-redesign.html':        { sel: '.refine-slide',       min: 12 },
+    'map-case-study.html':            { sel: '.refine-slide',       min: 7  },
+    'integration-case-study.html':    { sel: '.scroll-story-step',  min: 5  },
+    'org-management-case-study.html': { sel: '.refine-slide',       min: 6  },
+    'billing-case-study.html':        { sel: '.refine-slide',       min: 12 },
   };
 
   const APPROVED_BUTTONS = [

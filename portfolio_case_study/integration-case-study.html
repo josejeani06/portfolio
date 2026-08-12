@@ -12,19 +12,19 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-  <title>Building a Reusable Integration Flow for Supported API Connections — Ivan Jose</title>
-  <meta name="description" content="Senior Product Designer case study: one reusable integration framework — client credentials, validation states, attribution, and account management — so every new connector ships as configuration, not a redesign. Built cross-functionally with PM and engineering. By Ivan Jose." />
+  <title>Building a Reusable Integration Flow for Supported API Connections | Ivan Jose</title>
+  <meta name="description" content="Senior Product Designer case study: one reusable integration framework, client credentials, validation states, attribution, and account management, so every new connector ships as configuration, not a redesign. Built cross-functionally with PM and engineering. By Ivan Jose." />
   <link rel="canonical" href="https://josejeani06.github.io/portfolio/integration-case-study.html" />
   <meta name="author" content="Jean Ivan Jose" />
   <meta property="og:type" content="article" />
   <meta property="og:site_name" content="Ivan Jose" />
   <meta property="og:url" content="https://josejeani06.github.io/portfolio/integration-case-study.html" />
   <meta property="og:title" content="Building a Reusable Integration Flow for Supported API Connections" />
-  <meta property="og:description" content="One reusable integration framework — credentials, validation states, attribution, and account management — so every new connector ships as configuration, not a redesign." />
+  <meta property="og:description" content="One reusable integration framework, credentials, validation states, attribution, and account management, so every new connector ships as configuration, not a redesign." />
   <meta property="og:image" content="https://josejeani06.github.io/portfolio/images/integration-manage-connections.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Building a Reusable Integration Flow for Supported API Connections" />
-  <meta name="twitter:description" content="A reusable B2B SaaS integration framework — by Senior Product Designer Ivan Jose." />
+  <meta name="twitter:description" content="A reusable B2B SaaS integration framework, by Senior Product Designer Ivan Jose." />
   <meta name="twitter:image" content="https://josejeani06.github.io/portfolio/images/integration-manage-connections.png" />
   <script type="application/ld+json">
   {
@@ -44,12 +44,12 @@
   <style>
     /* ===== Editorial base (palette + scaffolding shared with the map & billing) ===== */
     body.case-study-page{
-      --bg:#eceadf;--surface:transparent;--surface-2:#e5e2d5;--text:#1c1b16;--muted:#615d52;--ink:#14130d;
-      --line:rgba(28,27,22,.16);--hair:rgba(28,27,22,.12);
-      --blue:#cf3b23;--blue-2:#a92f1b;--blue-soft:rgba(207,59,35,.10);
+      --bg:#f7f5f2;--surface:transparent;--surface-2:#ece9e2;--text:#292827;--muted:#6b675f;--ink:#111110;
+      --line:rgba(41, 40, 39,.16);--hair:rgba(41, 40, 39,.12);
+      --blue:#714cb6;--blue-2:#5f3da0;--blue-soft:rgba(113, 76, 182,.10);
       --info:#3c5496;--info-soft:rgba(60,84,150,.10);--good:#3f7a4e;--good-soft:rgba(63,122,78,.10);
       --surface-border:0;--surface-shadow:none;--shadow:none;
-      background:#eceadf;color:#1c1b16;font-family:Manrope,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+      background:#f7f5f2;color:#292827;font-family:Manrope,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
     }
     body.case-study-page{
       --h1:clamp(46px,7.6vw,104px);
@@ -63,49 +63,49 @@
       --text-sm:14px;
       --text-xs:12px;
     }
-    .case-study-page::before{background:linear-gradient(180deg,#efede4,#e6e3d7)}
+    .case-study-page::before{background:linear-gradient(180deg,#f2f0eb,#ece9e2)}
     .case-study-page .landing-grid{display:none}
-    .nav{background:rgba(236,234,223,.74);border-bottom:1px solid rgba(28,27,22,.16)}
-    .brand-mark{background:#cf3b23;box-shadow:none;border-radius:3px}
-    .nav-indicator{background:#cf3b23}
+    .nav{background:rgba(236,234,223,.74);border-bottom:1px solid rgba(41, 40, 39,.16)}
+    .brand-mark{background:#714cb6;box-shadow:none;border-radius:3px}
+    .nav-indicator{background:#714cb6}
     h1,h2,h3{letter-spacing:-.045em}
     h2{font-size:var(--h2);line-height:1.04;font-weight:700}
     h3{font-size:var(--h3);font-weight:700}
     .eyebrow{color:var(--blue-2);letter-spacing:.08em;font-weight:720;font-size:var(--text-xs);text-transform:uppercase}
     .lead{color:#4a473f}
     /* .button inherits the pill radius from style.css — no override */
-    .button.secondary{background:rgba(236,234,223,.9);border:1px solid rgba(28,27,22,.16);color:var(--text)}
+    .button.secondary{background:transparent;border:1px solid rgba(41, 40, 39,.16);color:var(--text)}
     .section{padding:80px 0}
-    .section-dark{background:linear-gradient(180deg,#1f1d16,#141308);color:#f2f0e6}
-    .section-dark-soft{background:linear-gradient(180deg,#2a2820,#201e17)}
+    .section-dark{background:linear-gradient(180deg,#17161a,#111014);color:#f7f5f2}
+    .section-dark-soft{background:linear-gradient(180deg,#26252c,#1c1b20)}
     /* UX audit (id=audit) — override style.css's maroon to the terracotta-dark palette */
-    #audit{background:linear-gradient(180deg,#1f1d16,#141308)}
-    #audit .eyebrow{color:#ff8a6f}
+    #audit{background:linear-gradient(180deg,#17161a,#111014)}
+    #audit .eyebrow{color:#9e6ee5}
     #audit .comparison-head div{color:rgba(255,231,219,.72)}
     /* ---- design evolution as a dark "concept shift" section (matches map's #concept-shift) ---- */
-    #evolution{background:linear-gradient(180deg,#0d0c08,#0a0a06);color:#f2f0e6}
-    #evolution .eyebrow{color:#ff8a6f}
-    #evolution h2,#evolution h3,#evolution .subhead{color:#f7f5ec}
+    #evolution{background:linear-gradient(180deg,#0a0a0a,#0a0a0a);color:#f7f5f2}
+    #evolution .eyebrow{color:#9e6ee5}
+    #evolution h2,#evolution h3,#evolution .subhead{color:#f1ecfb}
     #evolution .section-head p,#evolution .subcopy{color:rgba(242,240,230,.82)}
-    #evolution .subcopy strong{color:#f7f5ec}
-    #evolution .callout{background:linear-gradient(180deg,#1f1d16,#141308);border:1px solid rgba(242,240,231,.12)}
+    #evolution .subcopy strong{color:#f1ecfb}
+    #evolution .callout{background:linear-gradient(180deg,#17161a,#111014);border:1px solid rgba(242,240,231,.12)}
     #evolution .itable{border-color:rgba(242,240,231,.14)}
     #evolution .itable thead tr{background:rgba(255,255,255,.05)}
-    #evolution .itable th{color:#ff8a6f;border-bottom-color:rgba(242,240,231,.14)}
+    #evolution .itable th{color:#9e6ee5;border-bottom-color:rgba(242,240,231,.14)}
     #evolution .itable td{color:rgba(242,240,230,.82);border-top-color:rgba(242,240,231,.1)}
     #evolution .itable tbody tr:nth-child(odd){background:rgba(255,255,255,.03)}
-    #evolution .itable td.k{color:#f7f5ec}
-    .section-dark h2,.section-dark h3{color:#f7f5ec}
-    .section-dark .eyebrow{color:#ff8a6f}
+    #evolution .itable td.k{color:#f1ecfb}
+    .section-dark h2,.section-dark h3{color:#f1ecfb}
+    .section-dark .eyebrow{color:#9e6ee5}
     .section-dark p{color:rgba(242,240,230,.84)}
     .section-dark .section-head p,.section-dark .lede p{color:rgba(242,240,230,.84)}
     .pattern-head{display:flex;flex-direction:column;align-items:flex-start;gap:14px}
     .pattern-head h2,.section-head h2{margin:0}
     .lede{display:grid;gap:16px}
     .section-head{display:flex;flex-direction:column;align-items:flex-start;gap:14px;max-width:none}
-    .section-head p,.lede p{font-size:var(--text-lg);line-height:1.6;color:#615d52;max-width:none;margin:0}
+    .section-head p,.lede p{font-size:var(--text-lg);line-height:1.6;color:#6b675f;max-width:none;margin:0}
     .business-copy p,.dark-copy p,.question-copy p,.lede p{font-size:var(--text-md);line-height:1.7}
-    .callout h3{color:#f7f5ec;margin:0 0 12px;line-height:1.12}
+    .callout h3{color:#f1ecfb;margin:0 0 12px;line-height:1.12}
     .callout p{color:rgba(242,240,230,.82);margin:0;line-height:1.6}
     .quote{font-size:var(--h2);line-height:1.14;letter-spacing:-.02em;max-width:940px;font-weight:600}
     .footer{border-top:1px solid var(--line)}
@@ -129,19 +129,19 @@
     /* case summary layout (shared with org/billing) */
     .case-summary{display:grid;grid-template-columns:1.05fr .95fr;gap:26px;align-items:start;margin-top:36px}
     @media(max-width:900px){.case-summary{grid-template-columns:1fr}}
-    .callout{background:var(--ink);color:#f2f0e6}
+    .callout{background:var(--ink);color:#f7f5f2}
 
     /* screenshot frame (canonical — shared with billing/org) */
     .shot{margin:28px 0 0}
     .shot-wide{margin-top:28px}
-    .shot-frame{border-radius:12px;overflow:hidden;border:1px solid rgba(28,27,22,.12);background:#faf9f4;box-shadow:0 34px 80px rgba(20,19,13,.16)}
-    .shot-bar{height:36px;display:flex;align-items:center;gap:8px;padding:0 15px;background:linear-gradient(180deg,#f3f1ea,#e8e5dc);border-bottom:1px solid rgba(28,27,22,.1)}
-    .shot-bar span{width:11px;height:11px;border-radius:50%;background:rgba(28,27,22,.16)}
-    .shot-media{position:relative;min-height:clamp(220px,34vw,460px);display:grid;place-items:center;background:linear-gradient(135deg,#f1efe7,#e6e3d8);overflow:hidden}
+    .shot-frame{border-radius:12px;overflow:hidden;border:1px solid rgba(41, 40, 39,.12);background:#ffffff;box-shadow:0 34px 80px rgba(17, 17, 16,.16)}
+    .shot-bar{height:36px;display:flex;align-items:center;gap:8px;padding:0 15px;background:linear-gradient(180deg,#f2f0eb,#ece9e2);border-bottom:1px solid rgba(41, 40, 39,.1)}
+    .shot-bar span{width:11px;height:11px;border-radius:50%;background:rgba(41, 40, 39,.16)}
+    .shot-media{position:relative;min-height:clamp(220px,34vw,460px);display:grid;place-items:center;background:linear-gradient(135deg,#f2f0eb,#ece9e2);overflow:hidden}
     .shot-media img{position:relative;z-index:1;display:block;width:100%;height:auto}
-    .shot-ph{position:absolute;inset:0;z-index:0;display:grid;place-items:center;align-content:center;gap:9px;text-align:center;padding:26px;color:#8a857a}
-    .shot-ph strong{font-weight:700;color:#5f5b50;font-size:var(--text-sm)}
-    .shot-ph code{font-family:ui-monospace,Menlo,monospace;font-size:var(--text-xs);color:var(--blue-2);background:rgba(207,59,35,.08);padding:3px 8px;border-radius:6px}
+    .shot-ph{position:absolute;inset:0;z-index:0;display:grid;place-items:center;align-content:center;gap:9px;text-align:center;padding:26px;color:#9a958c}
+    .shot-ph strong{font-weight:700;color:#6b675f;font-size:var(--text-sm)}
+    .shot-ph code{font-family:ui-monospace,Menlo,monospace;font-size:var(--text-xs);color:var(--blue-2);background:rgba(113, 76, 182,.08);padding:3px 8px;border-radius:6px}
     .shot-ph code.good{color:var(--good);background:var(--good-soft)}
     .shot-cap{margin:14px 2px 0;color:var(--muted);font-size:var(--text-sm)}
     .shot-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:28px}
@@ -151,18 +151,18 @@
     /* data table (on-token, used for before/after + validation matrices) */
     .itable{border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-top:8px}
     .itable table{width:100%;border-collapse:collapse;font-size:var(--text-sm)}
-    .itable thead tr{background:rgba(207,59,35,.06);text-align:left}
+    .itable thead tr{background:rgba(113, 76, 182,.06);text-align:left}
     .itable th{padding:14px 16px;font-size:var(--text-xs);font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--blue-2);border-bottom:1px solid var(--line)}
-    .itable td{padding:11px 16px;color:#514d45;border-top:1px solid var(--line)}
+    .itable td{padding:11px 16px;color:#565049;border-top:1px solid var(--line)}
     @media(max-width:760px){.itable th,.itable td{padding:10px 12px;font-size:var(--text-sm)}}
-    .itable tbody tr:nth-child(odd){background:#faf9f4}
+    .itable tbody tr:nth-child(odd){background:#ffffff}
     .itable td.k{font-weight:700;color:var(--ink)}
     /* validation is a successful safeguard, not an error or warning state */
     .itable.validation-table thead tr{background:#fff}
-    .itable.validation-table th{color:#615d52}
+    .itable.validation-table th{color:#6b675f}
 
     /* result band (light tinted, houses the metric strip) */
-    .result-band{margin-top:32px;border:1px solid var(--line);border-radius:14px;padding:28px 30px;background:linear-gradient(135deg,rgba(207,59,35,.05),rgba(207,59,35,.02))}
+    .result-band{margin-top:32px;border:1px solid var(--line);border-radius:14px;padding:28px 30px;background:linear-gradient(135deg,rgba(113, 76, 182,.05),rgba(113, 76, 182,.02))}
     .result-band .eyebrow{display:block;margin-bottom:14px}
     .result-band .metric-strip{grid-template-columns:repeat(3,minmax(0,1fr));gap:30px 26px;margin-top:0;border-top:0}
     .result-band .metric-tile{padding:0;border-right:0}
@@ -174,20 +174,20 @@
     .mini-card h3{font-size:var(--text-lg)}
     /* mini cards on dark sections — translucent, matching base .section-dark .panel */
     .section-dark .mini-card{background:rgba(255,255,255,.06);border-color:rgba(242,240,231,.14);box-shadow:none}
-    .section-dark .mini-card h3{color:#f7f5ec}
+    .section-dark .mini-card h3{color:#f1ecfb}
     .section-dark .mini-card p{color:rgba(242,240,230,.82)}
-    .section-dark .icon{background:rgba(255,138,111,.16);color:#ff8a6f}
+    .section-dark .icon{background:rgba(158, 110, 229,.16);color:#9e6ee5}
 
     /* dark inline note paragraph */
-    .note-dark{margin-top:30px;padding:26px 28px;border:1px solid var(--line);border-radius:14px;background:#14130d;color:#f2f0e6}
+    .note-dark{margin-top:30px;padding:26px 28px;border:1px solid var(--line);border-radius:14px;background:#111110;color:#f7f5f2}
     .note-dark p{margin:0;font-size:clamp(17px,2vw,21px);line-height:1.5;font-weight:600;max-width:80ch}
     /* two-box summary of the exploration: what we cut vs what shipped */
     .note-grid{margin-top:30px;display:grid;grid-template-columns:1fr 1fr;gap:16px}
-    .note-box{padding:24px 26px;border:1px solid var(--line);border-radius:14px;background:#14130d;display:flex;flex-direction:column;gap:10px}
+    .note-box{padding:24px 26px;border:1px solid var(--line);border-radius:14px;background:#111110;display:flex;flex-direction:column;gap:10px}
     .note-box--ship{background:#161a12;border-color:rgba(147,197,114,.28)}
-    .note-box h3{margin:0;font-size:clamp(17px,1.7vw,20px);color:#f7f5ec}
+    .note-box h3{margin:0;font-size:clamp(17px,1.7vw,20px);color:#f1ecfb}
     .note-box p{margin:0;font-size:var(--text-md);line-height:1.55;color:rgba(242,240,230,.82)}
-    .note-box p strong{color:#f7f5ec}
+    .note-box p strong{color:#f1ecfb}
     @media (max-width:760px){.note-grid{grid-template-columns:1fr}}
 
     .subhead{margin:34px 0 4px;font-size:clamp(18px,1.8vw,22px)}
@@ -199,30 +199,30 @@
     .at-glance{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:36px 44px;border-top:2px solid var(--ink);padding-top:28px}
     .at-glance-item{padding:0}
     .at-glance-item small{display:block;margin-bottom:12px;color:var(--blue-2);font-size:var(--text-xs);font-weight:800;letter-spacing:.12em;text-transform:uppercase}
-    .at-glance-item p{margin:0;font-size:var(--text-md);line-height:1.62;color:#33312a}
+    .at-glance-item p{margin:0;font-size:var(--text-md);line-height:1.62;color:#33323a}
     .at-glance-item b{color:var(--ink);font-weight:800}
     @media(max-width:820px){.at-glance{grid-template-columns:1fr}.at-glance-item{border-right:0;border-bottom:1px solid var(--hair);padding:20px 0}.at-glance-item:last-child{border-bottom:0}}
     /* decision-log table — question / trade-off / decision / future (shared style with map) */
     .decision-log-table{border:var(--surface-border);border-radius:12px;background:var(--surface);box-shadow:var(--surface-shadow);overflow:hidden;margin-top:8px}
     .decision-log-head,.decision-log-body{display:grid;grid-template-columns:1.1fr 1.1fr 1.3fr 1fr}
-    .decision-log-head{border-bottom:1px solid rgba(28,27,22,.1);background:rgba(255,255,255,.4)}
+    .decision-log-head{border-bottom:1px solid rgba(41, 40, 39,.1);background:rgba(255,255,255,.4)}
     .decision-log-head div{padding:18px 20px;color:var(--blue-2);font-weight:800;text-transform:uppercase;letter-spacing:.08em;font-size:var(--text-sm)}
-    .decision-log-head div + div,.decision-log-cell + .decision-log-cell{border-left:1px solid rgba(28,27,22,.08)}
-    .decision-log-body + .decision-log-body{border-top:1px solid rgba(28,27,22,.1)}
+    .decision-log-head div + div,.decision-log-cell + .decision-log-cell{border-left:1px solid rgba(41, 40, 39,.08)}
+    .decision-log-body + .decision-log-body{border-top:1px solid rgba(41, 40, 39,.1)}
     .decision-log-cell{padding:18px 20px;font-size:var(--text-sm);line-height:1.55;color:var(--muted)}
     .decision-log-cell p{margin:0}
-    @media(max-width:900px){.decision-log-table{border:0;border-radius:0;background:transparent;box-shadow:none}.decision-log-head{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;padding:0 0 12px;border-bottom:1px solid rgba(28,27,22,.12);background:transparent}.decision-log-head div{padding:0;color:var(--blue-2);font-size:10px;line-height:1.2}.decision-log-head div + div{border-left:0}.decision-log-body{grid-template-columns:1fr;padding:18px 0}.decision-log-body + .decision-log-body{border-top:1px solid rgba(28,27,22,.12)}.decision-log-cell{padding:0;border-left:0}.decision-log-cell + .decision-log-cell{margin-top:10px;border-left:0}.decision-log-cell::before{display:none}}
+    @media(max-width:900px){.decision-log-table{border:0;border-radius:0;background:transparent;box-shadow:none}.decision-log-head{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;padding:0 0 12px;border-bottom:1px solid rgba(41, 40, 39,.12);background:transparent}.decision-log-head div{padding:0;color:var(--blue-2);font-size:10px;line-height:1.2}.decision-log-head div + div{border-left:0}.decision-log-body{grid-template-columns:1fr;padding:18px 0}.decision-log-body + .decision-log-body{border-top:1px solid rgba(41, 40, 39,.12)}.decision-log-cell{padding:0;border-left:0}.decision-log-cell + .decision-log-cell{margin-top:10px;border-left:0}.decision-log-cell::before{display:none}}
     /* The comparison stays compact through tablet widths: one legend, then clean decision entries. */
-    @media(max-width:1024px){.decision-log-table{border:0;border-radius:0;background:transparent;box-shadow:none}.decision-log-head{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;padding:0 0 12px;border-bottom:1px solid rgba(28,27,22,.12);background:transparent}.decision-log-head div{padding:0;color:var(--blue-2);font-size:10px;line-height:1.2}.decision-log-head div + div{border-left:0}.decision-log-body{grid-template-columns:1fr;padding:18px 0}.decision-log-body + .decision-log-body{border-top:1px solid rgba(28,27,22,.12)}.decision-log-cell{padding:0;border-left:0}.decision-log-cell + .decision-log-cell{margin-top:10px;border-left:0}.decision-log-cell::before{display:none}}
+    @media(max-width:1024px){.decision-log-table{border:0;border-radius:0;background:transparent;box-shadow:none}.decision-log-head{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;padding:0 0 12px;border-bottom:1px solid rgba(41, 40, 39,.12);background:transparent}.decision-log-head div{padding:0;color:var(--blue-2);font-size:10px;line-height:1.2}.decision-log-head div + div{border-left:0}.decision-log-body{grid-template-columns:1fr;padding:18px 0}.decision-log-body + .decision-log-body{border-top:1px solid rgba(41, 40, 39,.12)}.decision-log-cell{padding:0;border-left:0}.decision-log-cell + .decision-log-cell{margin-top:10px;border-left:0}.decision-log-cell::before{display:none}}
     /* discovery evidence table (signal → what it told us; shared concept with map's discovery) */
-    .discovery-band{margin-top:8px;padding:32px;border-radius:var(--surface-radius);background:#fff;border:1px solid rgba(28,27,22,.1);box-shadow:var(--surface-shadow)}
+    .discovery-band{margin-top:8px;padding:32px;border-radius:var(--surface-radius);background:#fff;border:1px solid rgba(41, 40, 39,.1);box-shadow:var(--surface-shadow)}
     .discovery-evidence-head,.discovery-evidence-row{display:grid;grid-template-columns:minmax(180px,.4fr) minmax(0,1fr);gap:24px}
     .discovery-evidence-head{padding:18px 0 16px}
-    .discovery-evidence-head div{color:#14130d;font-size:var(--text-md);font-weight:800;letter-spacing:-.01em}
-    .discovery-evidence-row{padding:20px 0;border-top:1px solid rgba(28,27,22,.1)}
+    .discovery-evidence-head div{color:#111110;font-size:var(--text-md);font-weight:800;letter-spacing:-.01em}
+    .discovery-evidence-row{padding:20px 0;border-top:1px solid rgba(41, 40, 39,.1)}
     .discovery-evidence-head + .discovery-evidence-row{border-top:0}
-    .discovery-evidence-row div:first-child{color:#14130d;font-size:var(--text-md);font-weight:700;line-height:1.35}
-    .discovery-evidence-row div:last-child{color:#615d52;font-size:var(--text-md);line-height:1.55}
+    .discovery-evidence-row div:first-child{color:#111110;font-size:var(--text-md);font-weight:700;line-height:1.35}
+    .discovery-evidence-row div:last-child{color:#6b675f;font-size:var(--text-md);line-height:1.55}
     @media(max-width:760px){.discovery-evidence-head{display:none}.discovery-evidence-row{grid-template-columns:1fr;gap:6px;padding:16px 0}}
     /* outcome grid (shared style with map's #outcome) */
     .result-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:2px solid var(--ink);margin-top:8px}
@@ -232,7 +232,7 @@
     .result-item:nth-last-child(-n+2):nth-child(odd),.result-item:last-child{border-bottom:0}
     .result-idx{display:block;margin-bottom:8px;color:var(--blue);font-family:ui-monospace,Menlo,monospace;font-size:var(--text-xs);font-weight:700;letter-spacing:.1em}
     .result-item h3{margin:0 0 8px;color:var(--ink);font-size:var(--h3);line-height:1.12}
-    .result-item p{margin:0;color:#514d45;font-size:var(--text-md);line-height:1.6}
+    .result-item p{margin:0;color:#565049;font-size:var(--text-md);line-height:1.6}
     @media(max-width:760px){.result-grid{grid-template-columns:1fr}.result-item{border-right:0!important;padding:22px 0!important;border-bottom:1px solid var(--hair)!important}.result-item:last-child{border-bottom:0!important}}
 
     /* overflow fix so position:sticky works (clip, not hidden) — required for scroll-story sticky images */
@@ -245,12 +245,12 @@
     .hero-status-tag::before{content:"";width:8px;height:8px;border-radius:50%;background:#eafff3;box-shadow:0 0 0 3px rgba(234,255,243,.3)}
 
     /* hero "why this mattered" flow strip (dark card, shared pattern with map) */
-    .story-diagram{margin-top:28px;padding:28px;border-radius:12px;background:#0d0c08;color:#f2f0e6}
-    .diagram-title{margin:0 0 18px;font-size:var(--text-sm);letter-spacing:.12em;text-transform:uppercase;color:rgba(207,59,35,.88);font-weight:800}
-    .story-diagram .diagram-title{color:#f7f5ec}
+    .story-diagram{margin-top:28px;padding:28px;border-radius:12px;background:#0a0a0a;color:#f7f5f2}
+    .diagram-title{margin:0 0 18px;font-size:var(--text-sm);letter-spacing:.12em;text-transform:uppercase;color:rgba(113, 76, 182,.88);font-weight:800}
+    .story-diagram .diagram-title{color:#f1ecfb}
     .diagram-flow{display:flex;gap:12px 20px;align-items:flex-start;flex-wrap:wrap}
     .diagram-node{min-width:150px;flex:1}
-    .diagram-node strong{display:block;color:#f7f5ec;font-size:var(--text-md);margin-bottom:4px}
+    .diagram-node strong{display:block;color:#f1ecfb;font-size:var(--text-md);margin-bottom:4px}
     .diagram-node span{display:block;font-size:var(--text-sm);line-height:1.45;color:rgba(242,240,230,.72)}
     .diagram-arrow{color:rgba(242,240,230,.4);font-weight:800;align-self:center;font-size:var(--text-lg)}
     @media(max-width:760px){.diagram-flow{display:grid;grid-template-columns:1fr}.diagram-arrow{display:none}}
@@ -267,9 +267,9 @@
     .journey-group-line{position:absolute;left:27px;top:32px;bottom:12px;width:3px;border-radius:999px;background:linear-gradient(180deg,rgba(242,240,230,.58),rgba(242,240,230,.14))}
     .journey-group-items{display:grid;gap:28px}
     .journey-timeline-item{position:relative;display:grid;grid-template-columns:auto 1fr;gap:22px;align-items:start}
-    .journey-timeline-marker{position:relative;z-index:1;display:grid;place-items:center;width:56px;height:56px;border-radius:999px;border:3px solid var(--ink);background:#f2f0e6;color:var(--ink);font-size:var(--h3);font-weight:800;line-height:1;box-shadow:0 0 0 8px rgba(20,19,13,.22)}
+    .journey-timeline-marker{position:relative;z-index:1;display:grid;place-items:center;width:56px;height:56px;border-radius:999px;border:3px solid var(--ink);background:#f7f5f2;color:var(--ink);font-size:var(--h3);font-weight:800;line-height:1;box-shadow:0 0 0 8px rgba(17, 17, 16,.22)}
     .journey-timeline-copy{padding-top:4px}
-    .journey-timeline-copy h3{margin:0 0 10px;color:#f2f0e6;font-size:var(--h2);line-height:1.05}
+    .journey-timeline-copy h3{margin:0 0 10px;color:#f7f5f2;font-size:var(--h2);line-height:1.05}
     .journey-timeline-copy p{margin:0;max-width:780px;color:rgba(242,240,230,.88);font-size:var(--text-md);line-height:1.62}
     .journey-timeline-item.is-risk .journey-timeline-marker{border-color:#e08a70;background:#3a1a16;color:#ffe6dc;box-shadow:0 0 0 8px rgba(224,120,90,.16)}
     .journey-timeline-item.is-risk .journey-timeline-copy h3{color:#fff0ea}
@@ -283,22 +283,22 @@
     .scroll-story-step.is-active{opacity:1;transform:translateY(0)}
     .scroll-story-label{display:block;margin-bottom:12px;color:var(--blue-2);font-size:var(--text-xs);font-weight:800;letter-spacing:.14em;text-transform:uppercase}
     .scroll-story-step h3{margin:0 0 12px;color:var(--ink);font-size:var(--h2);line-height:1.05}
-    .scroll-story-step p{margin:0;color:#615d52;font-size:var(--text-md);line-height:1.65;max-width:34ch}
+    .scroll-story-step p{margin:0;color:#6b675f;font-size:var(--text-md);line-height:1.65;max-width:34ch}
     .scroll-story-step p + p{margin-top:14px}
     .scroll-story-sticky{position:sticky;top:clamp(110px,calc(50vh - 300px),320px);align-self:start}
     .scroll-story-stage{position:relative;height:72vh;min-height:520px;max-height:720px;overflow:visible}
     .scroll-story-media{position:absolute;inset:0;margin:0;display:grid;place-items:center;opacity:0;pointer-events:none;transform:scale(.985);transition:opacity .32s ease,transform .32s ease}
     .scroll-story-media.is-active{opacity:1;pointer-events:auto;transform:scale(1)}
-    .scroll-story-media img{display:block;width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain;border-radius:12px;border:1px solid rgba(28,27,22,.12);box-shadow:0 34px 80px rgba(20,19,13,.16);background:#faf9f4}
+    .scroll-story-media img{display:block;width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain;border-radius:12px;border:1px solid rgba(41, 40, 39,.12);box-shadow:0 34px 80px rgba(17, 17, 16,.16);background:#ffffff}
     /* Live recreations use fixed artboards that are scaled by the parent. This keeps
        the HTML alive while avoiding the browser's 150px default iframe height. */
     .scroll-story-stage .fitframe,.liveframe-stage .fitframe{display:block;border:0;background:transparent;max-width:none;max-height:none;flex:none;width:var(--frame-w,960px);height:var(--frame-h,640px)}
     .liveframe-stage{display:none}
     .scroll-story-mobile-media{display:none}
-    .scroll-story-progress{position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(180deg,rgba(207,59,35,.04),rgba(207,59,35,.18))}
-    .scroll-story-progress::after{content:"";position:absolute;left:0;right:0;height:84px;border-radius:999px;background:linear-gradient(180deg,#e07a55,#cf3b23);transform:translateY(var(--story-progress,0px));transition:transform .26s ease}
+    .scroll-story-progress{position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(180deg,rgba(113, 76, 182,.04),rgba(113, 76, 182,.18))}
+    .scroll-story-progress::after{content:"";position:absolute;left:0;right:0;height:84px;border-radius:999px;background:linear-gradient(180deg,#9e6ee5,#714cb6);transform:translateY(var(--story-progress,0px));transition:transform .26s ease}
     @media(max-width:900px){.scroll-story{grid-template-columns:1fr;gap:18px}.scroll-story-copy{order:2;padding-left:0;padding-right:0}.scroll-story-sticky{position:relative;top:auto;order:1}.scroll-story-stage{height:auto;min-height:auto;aspect-ratio:4/5}.scroll-story-step{min-height:0;opacity:1;transform:none;padding:12px 0 24px}.scroll-story-progress{display:none}}
-    @media(max-width:760px){.scroll-story-sticky{display:none}.scroll-story-mobile-media{display:none;margin:0 0 18px}.scroll-story-mobile-media img{display:block;width:100%;height:auto;border-radius:12px;border:1px solid rgba(28,27,22,.12);background:#f4f2ea}.liveframe-stage{position:relative;display:grid;place-items:center;width:100%;min-width:0;max-width:100%;min-height:0;margin:20px 0 12px;aspect-ratio:var(--frame-ratio,16 / 10);overflow:visible}.liveframe-stage .fitframe{position:absolute;left:50%;top:50%;margin:0}.scroll-story-step + .scroll-story-step{margin-top:22px;padding-top:28px}}
+    @media(max-width:760px){.scroll-story-sticky{display:none}.scroll-story-mobile-media{display:none;margin:0 0 18px}.scroll-story-mobile-media img{display:block;width:100%;height:auto;border-radius:12px;border:1px solid rgba(41, 40, 39,.12);background:#f2f0eb}.liveframe-stage{position:relative;display:grid;place-items:center;width:100%;min-width:0;max-width:100%;min-height:0;margin:20px 0 12px;aspect-ratio:var(--frame-ratio,16 / 10);overflow:visible}.liveframe-stage .fitframe{position:absolute;left:50%;top:50%;margin:0}.scroll-story-step + .scroll-story-step{margin-top:22px;padding-top:28px}}
     @media(max-width:760px) and (prefers-reduced-motion:reduce){.liveframe-stage{display:none}.scroll-story-mobile-media{display:block}}
     /* connection flow: center the sticky image in the viewport and vertically center each step's text to it (mirrors map's #design-evolution) */
     #connection .scroll-story{align-items:start}
@@ -324,18 +324,18 @@
     }
 
     /* concept carousel — big-button slideshow for old / not-approved versions (shared pattern with map; dark band = the discarded path) */
-    .concept-carousel{margin-top:28px;padding:clamp(22px,4vw,40px);border-radius:16px;background:linear-gradient(180deg,#1f1d16,#141308)}
+    .concept-carousel{margin-top:28px;padding:clamp(22px,4vw,40px);border-radius:16px;background:linear-gradient(180deg,#17161a,#111014)}
     .concept-carousel-shell{position:relative;padding:0 68px}
     .concept-carousel-viewport{overflow:hidden}
     .concept-carousel-track{display:flex;transition:transform .42s ease}
     .concept-carousel-slide{min-width:100%;display:grid;grid-template-columns:minmax(0,.82fr) minmax(340px,1.08fr);gap:36px;align-items:center}
     .concept-carousel-copy{padding-right:12px}
-    .concept-carousel-label{display:block;margin-bottom:12px;color:rgba(255,138,111,.9);font-size:var(--text-xs);font-weight:800;letter-spacing:.14em;text-transform:uppercase}
-    .concept-carousel-copy h3{margin:0 0 12px;color:#f7f5ec;font-size:var(--h2);line-height:1.05}
+    .concept-carousel-label{display:block;margin-bottom:12px;color:rgba(158, 110, 229,.9);font-size:var(--text-xs);font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+    .concept-carousel-copy h3{margin:0 0 12px;color:#f1ecfb;font-size:var(--h2);line-height:1.05}
     .concept-carousel-copy p{margin:0;color:rgba(242,240,230,.82);font-size:var(--text-md);line-height:1.65;max-width:40ch}
     .concept-carousel-media{margin:0;display:grid;place-items:center}
     .concept-carousel-media img{display:block;width:auto;height:auto;max-width:100%;max-height:500px;object-fit:contain;margin:auto;border-radius:12px;border:1px solid rgba(242,240,231,.12);box-shadow:0 24px 60px rgba(0,0,0,.4)}
-    .concept-carousel-btn{position:absolute;top:50%;transform:translateY(-50%);width:52px;height:52px;border-radius:999px;border:1px solid rgba(242,240,231,.16);background:#f4f2ea;color:#cf3b23;display:grid;place-items:center;cursor:pointer;z-index:2;box-shadow:0 14px 30px rgba(0,0,0,.35);transition:background .2s ease,box-shadow .2s ease,opacity .2s ease}
+    .concept-carousel-btn{position:absolute;top:50%;transform:translateY(-50%);width:52px;height:52px;border-radius:999px;border:1px solid rgba(242,240,231,.16);background:#f2f0eb;color:#714cb6;display:grid;place-items:center;cursor:pointer;z-index:2;box-shadow:0 14px 30px rgba(0,0,0,.35);transition:background .2s ease,box-shadow .2s ease,opacity .2s ease}
     .concept-carousel-btn:hover{background:#fff}
     .concept-carousel-icon{display:grid;place-items:center;width:24px;height:24px}
     .concept-carousel-icon svg{width:22px;height:22px;display:block}
@@ -343,52 +343,55 @@
     .concept-carousel-btn[disabled]{opacity:.4;cursor:default}
     .concept-carousel-meta{display:flex;justify-content:center;gap:10px;margin-top:20px}
     .concept-carousel-dot{width:10px;height:10px;border-radius:999px;border:0;padding:0;background:rgba(242,240,230,.3);cursor:pointer;transition:background .2s ease,transform .2s ease}
-    .concept-carousel-dot.is-active{background:#f2f0e6;transform:scale(1.15)}
+    .concept-carousel-dot.is-active{background:#f7f5f2;transform:scale(1.15)}
     @media(max-width:820px){.concept-carousel{padding-top:16px}.concept-carousel-slide{grid-template-columns:1fr;gap:18px;padding-top:0}.concept-carousel-copy{order:2;padding-right:0}.concept-carousel-media{order:1;margin-top:0}.concept-carousel-shell{padding:0 0 64px}.concept-carousel-btn{top:auto!important;bottom:0;transform:none}.concept-carousel-btn.prev{left:calc(50% - 60px)}.concept-carousel-btn.next{right:calc(50% - 60px)}}
 
     /* reading progress indicator (shared with map & billing) */
-    .read-progress{position:fixed;right:22px;bottom:22px;z-index:120;display:flex;align-items:center;gap:12px;padding:9px 16px 9px 11px;border-radius:999px;background:rgba(20,19,13,.9);backdrop-filter:blur(8px);box-shadow:0 14px 34px rgba(14,13,8,.32);opacity:0;transform:translateY(10px);transition:opacity .3s ease,transform .3s ease;pointer-events:none}
+    .read-progress{position:fixed;right:22px;bottom:22px;z-index:120;display:flex;align-items:center;gap:12px;padding:9px 16px 9px 11px;border-radius:999px;background:rgba(17, 17, 16,.9);backdrop-filter:blur(8px);box-shadow:0 14px 34px rgba(14,13,8,.32);opacity:0;transform:translateY(10px);transition:opacity .3s ease,transform .3s ease;pointer-events:none}
     .read-progress.is-visible{opacity:1;transform:translateY(0)}
     .read-progress-ring{position:relative;width:44px;height:44px;flex:0 0 44px}
     .read-progress-ring svg{transform:rotate(-90deg);display:block}
     .read-progress-ring .rp-track{stroke:rgba(242,240,230,.18)}
     .read-progress-ring .rp-bar{stroke:url(#rpGrad);stroke-linecap:round;transition:stroke-dashoffset .18s linear}
-    .read-progress-pct{position:absolute;inset:0;display:grid;place-items:center;font-size:var(--text-xs);font-weight:800;color:#f4f2ea}
+    .read-progress-pct{position:absolute;inset:0;display:grid;place-items:center;font-size:var(--text-xs);font-weight:800;color:#f2f0eb}
     .read-progress-copy{display:grid;gap:2px;max-width:210px}
-    .read-progress-title{font-size:var(--text-sm);font-weight:800;letter-spacing:-.01em;line-height:1.1;color:#f7f5ec}
+    .read-progress-title{font-size:var(--text-sm);font-weight:800;letter-spacing:-.01em;line-height:1.1;color:#f1ecfb}
     .read-progress-sub{font-size:var(--text-xs);line-height:1.28;color:rgba(242,240,230,.72)}
     @media(max-width:560px){.read-progress-copy{display:none}.read-progress{padding:8px;right:16px;bottom:16px}}
     @media(prefers-reduced-motion:reduce){.read-progress,.read-progress-ring .rp-bar{transition:none}}
     /* Canonical tables: dark comparison; white decision and evidence surfaces. */
-    #audit .comparison-table{border:1px solid rgba(242,240,230,.16);border-radius:14px;background:#12110c;box-shadow:none;overflow:hidden}
-    #audit .comparison-head{background:#12110c;border-bottom-color:rgba(242,240,230,.16)}
-    #audit .comparison-head div:first-child{color:#ff8a6f}
+    #audit .comparison-table{border:1px solid rgba(242,240,230,.16);border-radius:14px;background:#0e0e0d;box-shadow:none;overflow:hidden}
+    #audit .comparison-head{background:#0e0e0d;border-bottom-color:rgba(242,240,230,.16)}
+    #audit .comparison-head div:first-child{color:#9e6ee5}
     #audit .comparison-head div:last-child{color:#7dc98d}
     #audit .comparison-table .row{border-top-color:rgba(242,240,230,.12)}
     #audit .comparison-table .cell{padding:18px 20px;border-left-color:rgba(242,240,230,.12)}
-    #audit .comparison-table .cell:first-child{background:rgba(207,59,35,.12);color:#ffd0c5}
+    #audit .comparison-table .cell:first-child{background:rgba(113, 76, 182,.12);color:#ece3fb}
     #audit .comparison-table .cell:last-child{background:rgba(81,139,92,.13);color:#d4ead8}
     .decision-log-table{border:1px solid var(--line);border-radius:14px;background:#fff;box-shadow:none}
     .decision-log-head{background:#fff}
     .discovery-band{background:#fff;border:1px solid var(--line);box-shadow:none}
     .discovery-evidence-head,.discovery-evidence-row{gap:0}
     .discovery-evidence-head{padding:0;background:#fff;border-bottom:1px solid var(--line)}
-    .discovery-evidence-head div{padding:18px 20px;color:#615d52;font-size:var(--text-xs);letter-spacing:.08em;text-transform:uppercase}
+    .discovery-evidence-head div{padding:18px 20px;color:#6b675f;font-size:var(--text-xs);letter-spacing:.08em;text-transform:uppercase}
     .discovery-evidence-head div:first-child,.discovery-evidence-row div:first-child{border-right:1px solid var(--line)}
     .discovery-evidence-row{padding:0;border-top:1px solid var(--line)}
     .discovery-evidence-row div{padding:18px 20px}
     @media(max-width:760px){.discovery-evidence-head{display:none}.discovery-evidence-row{grid-template-columns:1fr;gap:0;padding:0}.discovery-evidence-row div{padding:14px 0}.discovery-evidence-row div:first-child{border-right:0;padding-bottom:4px}.discovery-evidence-row div:last-child{padding-top:4px}}
-    #evolution .itable.comparison-itable{background:#12110c;border-color:rgba(242,240,230,.16);box-shadow:none}
-    #evolution .itable.comparison-itable thead tr{background:#12110c}
-    #evolution .itable.comparison-itable th{color:#f2f0e6;border-bottom-color:rgba(242,240,230,.16)}
-    #evolution .itable.comparison-itable th:nth-child(2){color:#ff8a6f}
+    #evolution .itable.comparison-itable{background:#0e0e0d;border-color:rgba(242,240,230,.16);box-shadow:none}
+    #evolution .itable.comparison-itable thead tr{background:#0e0e0d}
+    #evolution .itable.comparison-itable th{color:#f7f5f2;border-bottom-color:rgba(242,240,230,.16)}
+    #evolution .itable.comparison-itable th:nth-child(2){color:#9e6ee5}
     #evolution .itable.comparison-itable th:last-child{color:#7dc98d}
     #evolution .itable.comparison-itable td{border-top-color:rgba(242,240,230,.12)}
-    #evolution .itable.comparison-itable td:nth-child(2){background:rgba(207,59,35,.12);color:#ffd0c5}
+    #evolution .itable.comparison-itable td:nth-child(2){background:rgba(113, 76, 182,.12);color:#ece3fb}
     #evolution .itable.comparison-itable td:last-child{background:rgba(81,139,92,.13);color:#d4ead8}
-    #evolution .itable.comparison-itable td.k{color:#f2f0e6}
+    #evolution .itable.comparison-itable td.k{color:#f7f5f2}
     @media(max-width:760px){.itable{overflow-x:auto}.itable table{min-width:640px}}
   </style>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght;500;600;700&family=Inter:wght;500;600;700&display=swap" rel="stylesheet">
+  <style id="rd-fonts">body{font-family:"Inter",ui-sans-serif,system-ui,sans-serif}h1,h2,h3,h4,h5,.eyebrow,[class*="title"],[class*="kicker"],[class*="heading"]{font-family:"Space Grotesk","Inter",sans-serif}</style>
+  <link rel="stylesheet" href="redesign-system.css?v=43">
 </head>
 <body class="case-study-page">
   <div class="landing-grid" aria-hidden="true"></div>
@@ -426,9 +429,9 @@
           <span class="case-title-mobile">Building a reusable integration flow for supported API connections.</span>
         </h1>
         <p class="lead">
-          Connecting one app is easy. Designing a repeatable system that can support CRMs, ecommerce tools, webhooks,
-          custom APIs, attribution, automation triggers, and future integrations without redesigning everything each time?
-          That is where the fun starts.
+          Connecting one app is easy. The hard part is a system that holds up across CRMs, ecommerce tools, webhooks,
+          custom APIs, attribution, automation triggers, and whatever gets added next, without redesigning everything
+          each time. That's the part I wanted to solve.
         </p>
         <div class="case-actions">
           <a class="button" href="#connection">See the framework</a>
@@ -439,15 +442,15 @@
           <div class="callout">
             <h3>North Star</h3>
             <p>
-              Design one reusable integration framework where connecting third-party apps feels familiar, fast, and trustworthy
-              even when the underlying APIs, fields, and business logic are different.
+              Build one integration framework we could reuse, so connecting a third-party app feels familiar, quick, and safe
+              even when the APIs, fields, and business logic underneath are nothing alike.
             </p>
           </div>
           <div class="kv">
-            <div class="kv-item"><span>My role</span><strong>Led UX strategy &amp; the end-to-end design — flows, states, validations, UI, QA</strong></div>
-            <div class="kv-item"><span>Team</span><strong>Cross-functional — a PM, a developer, and me on design &amp; UX strategy</strong></div>
-            <div class="kv-item"><span>Challenge</span><strong>Unify many API setups into one product experience</strong></div>
-            <div class="kv-item"><span>Outcome</span><strong>Per-connector lead time fell from 3–4 weeks to ~2; the first parallel batch shipped 4 new connectors in 3 weeks</strong></div>
+            <div class="kv-item"><span>My role</span><strong>Led UX strategy and the end-to-end design. Flows, states, validations, UI, QA</strong></div>
+            <div class="kv-item"><span>Team</span><strong>Cross-functional. A PM, a developer, and me on design and UX strategy</strong></div>
+            <div class="kv-item"><span>Challenge</span><strong>Turn many different API setups into one product experience</strong></div>
+            <div class="kv-item"><span>Outcome</span><strong>A connector used to take 3 to 4 weeks. It now takes ~2, and the first parallel batch shipped 4 new connectors in 3 weeks</strong></div>
           </div>
         </div>
       </div>
@@ -463,23 +466,23 @@
         <div class="metric-strip" style="margin-top:0;margin-bottom:40px">
           <div class="metric-tile"><strong>$350K/mo</strong><span>of direct mail already runs on customer-integration data</span></div>
           <div class="metric-tile"><strong>32%</strong><span>of customers build automations from a connected integration</span></div>
-          <div class="metric-tile"><strong>28/mo</strong><span>support tickets—12 asking for a new connector, 16 stuck setting one up—pulling in CS, Sales, and engineering</span></div>
-          <div class="metric-tile"><strong>3–4 → 2 wks</strong><span>per-connector lead time after the reusable pattern replaced one-off flows</span></div>
-          <div class="metric-tile"><strong>4 in 3 wks</strong><span>new connectors on the first run—Salesforce, ServiceTitan, HubSpot, Housecall Pro</span></div>
-          <div class="metric-tile"><strong>1 pattern</strong><span>one lifecycle new connectors slot into as configuration, not a redesign</span></div>
+          <div class="metric-tile"><strong>28/mo</strong><span>support tickets. 12 asking for a new connector, 16 stuck setting one up. Every one pulled in CS, Sales, and engineering</span></div>
+          <div class="metric-tile"><strong>3 to 4 → 2 wks</strong><span>per-connector lead time after the reusable pattern replaced one-off flows</span></div>
+          <div class="metric-tile"><strong>4 in 3 wks</strong><span>new connectors on the first run. Salesforce, ServiceTitan, HubSpot, Housecall Pro</span></div>
+          <div class="metric-tile"><strong>1 pattern</strong><span>one lifecycle that new connectors slot into as configuration, not a redesign</span></div>
         </div>
         <div class="at-glance">
           <div class="at-glance-item">
             <small>The problem</small>
-            <p>Customer data lived across <b>6 separate tools</b> and every connector was a one-off build. <b>32%</b> of customers already automate from an integration and <b>~$350K of mail/month</b> runs on that data—yet <b>12 tickets/month</b> asked for new connectors and <b>16/month</b> came from users stuck setting one up (<b>3 in 10</b> couldn't finish), pulling in CS, Sales, and engineering. <span style="opacity:.65">(Figures from internal product analytics, rounded.)</span></p>
+            <p>Customer data lived across <b>6 separate tools</b> and every connector was a one-off build. <b>32%</b> of customers already automate from an integration and <b>~$350K of mail/month</b> runs on that data. Even so, <b>12 tickets/month</b> asked for new connectors and <b>16/month</b> came from people stuck setting one up (<b>3 in 10</b> couldn't finish). Each of those pulled in CS, Sales, and engineering. <span style="opacity:.65">(Figures from internal product analytics, rounded.)</span></p>
           </div>
           <div class="at-glance-item">
             <small>What I did</small>
-            <p>Led the <b>UX strategy and end-to-end design</b> for one reusable integration framework—systems thinking over a shared <b>connect → test → attribute → manage</b> lifecycle—so a new connector ships as configuration, not a redesign. With a PM and a developer.</p>
+            <p>Led the <b>UX strategy and end-to-end design</b> for one reusable integration framework. I built it as a system around a shared <b>connect → test → attribute → manage</b> lifecycle, so a new connector ships as configuration, not a redesign. Worked with a PM and a developer.</p>
           </div>
           <div class="at-glance-item">
             <small>The outcome</small>
-            <p>Per-connector lead time fell from <b>3–4 weeks to ~2</b>. In the first <b>3-week parallel batch</b> we shipped <b>4 new connectors</b>—including <b>Salesforce</b>, requested by a client worth <b>~500K mails</b>.</p>
+            <p>A connector used to take <b>3 to 4 weeks</b>. It now takes <b>~2</b>. In the first <b>3-week parallel batch</b> we shipped <b>4 new connectors</b>. One of them was <b>Salesforce</b>, asked for by a client worth <b>~500K mails</b>.</p>
           </div>
         </div>
       </div>
@@ -491,17 +494,16 @@
         <div class="section-head">
           <div class="eyebrow">Main UX</div>
           <h2>The whole integration surface in one view.</h2>
-          <p>One management screen for connected accounts, their status and sync details, attribution setup, and the next action—so every connector lives in the same place.</p>
+          <p>One management screen holds connected accounts, their status and sync details, attribution setup, and the next action. Every connector lives in the same place.</p>
         </div>
         <figure class="shot shot-wide" style="margin-top:0">
           <div class="shot-frame">
-            <div class="shot-bar"><span></span><span></span><span></span></div>
             <div class="shot-media">
-              <img src="images/integration-manage-connections.webp" alt="Manage Integration screen for Housecall Pro—connected accounts with Pending and Active status, sync details, Add New Account, Create an Automation, and Customize Attribution actions" onerror="this.remove()">
-              <span class="shot-ph"><strong>Manage Integration — connected accounts with status and sync details, plus add-account, automation, and attribution actions</strong></span>
+              <img src="images/integration-manage-connections.webp" alt="Manage Integration screen for Housecall Pro, connected accounts with Pending and Active status, sync details, Add New Account, Create an Automation, and Customize Attribution actions" onerror="this.remove()">
+              <span class="shot-ph"><strong>Manage Integration. Connected accounts with status and sync details, plus add-account, automation, and attribution actions</strong></span>
             </div>
           </div>
-          <figcaption class="shot-cap">Final management screen: connected accounts, status, attribution setup, and next actions.</figcaption>
+          <figcaption class="shot-cap">The final management screen. Connected accounts, status, attribution setup, and next actions.</figcaption>
         </figure>
       </div>
     </section>
@@ -511,11 +513,11 @@
       <div class="container">
         <div class="pattern-head">
           <div class="eyebrow">The problem</div>
-          <h2>Why did adding one integration take a month—and still trip up the customer who asked for it?</h2>
+          <h2>Why did adding one integration take a month and still trip up the customer who asked for it?</h2>
         </div>
         <div class="question-copy">
-          <p>LettrLabs' vision is to be a one-stop shop for direct mail—but customers keep their leads, purchases, jobs, and CRM activity across many platforms. Every new connector had been its own build, so the same slow, expensive path repeated each time.</p>
-          <p>My reframing: this wasn't "add one more app." It was the gap between how a new integration <em>should</em> reach a customer and how it actually did.</p>
+          <p>LettrLabs wants to be the one-stop shop for direct mail. Customers keep their leads, purchases, jobs, and CRM activity spread across many platforms though. Every new connector had been its own build, so the same slow, expensive path repeated each time.</p>
+          <p>So I reframed it. The job wasn't "add one more app." It was the gap between how a new integration <em>should</em> reach a customer and how it actually did.</p>
         </div>
       </div>
       <div class="container question-journey">
@@ -529,21 +531,21 @@
                 <div class="journey-timeline-marker">1</div>
                 <div class="journey-timeline-copy">
                   <h3>The business picks what to connect</h3>
-                  <p>Customers, engineering, and business agree on which integrations are worth building, guided by what customers actually request.</p>
+                  <p>Customers, engineering, and the business agree on which integrations are worth building, guided by what customers actually ask for.</p>
                 </div>
               </div>
               <div class="journey-timeline-item">
                 <div class="journey-timeline-marker">2</div>
                 <div class="journey-timeline-copy">
                   <h3>Engineering builds it once, consistently</h3>
-                  <p>Devs focus on a proper data pipeline and reuse one consistent workflow for every integration instead of reinventing the setup.</p>
+                  <p>Devs put their time into a proper data pipeline and reuse the same workflow for every integration instead of rebuilding the setup.</p>
                 </div>
               </div>
               <div class="journey-timeline-item">
                 <div class="journey-timeline-marker">3</div>
                 <div class="journey-timeline-copy">
                   <h3>The customer uses it within a week</h3>
-                  <p>Once released, the connector is familiar and self-serve—the customer connects and starts automating within a week.</p>
+                  <p>Once it's released, the connector is familiar and self-serve, so the customer connects and starts automating within a week.</p>
                 </div>
               </div>
             </div>
@@ -556,21 +558,21 @@
                 <div class="journey-timeline-marker">1</div>
                 <div class="journey-timeline-copy">
                   <h3>The request waits a month to be heard</h3>
-                  <p>A customer asks for an integration, and it takes at least a month just to reach management and get prioritized—before any design or build begins.</p>
+                  <p>A customer asks for an integration. It takes at least a month just to reach management and get prioritized, and that's before any design or build starts.</p>
                 </div>
               </div>
               <div class="journey-timeline-item is-risk">
                 <div class="journey-timeline-marker">2</div>
                 <div class="journey-timeline-copy">
                   <h3>Every build is researched from scratch</h3>
-                  <p>Devs research the data pipeline and work with product to design the data model and satisfy each API's quirks—a fresh, custom effort every time.</p>
+                  <p>Devs research the data pipeline, then work with product to design the data model and handle each API's quirks. A fresh custom effort every time.</p>
                 </div>
               </div>
               <div class="journey-timeline-item is-risk">
                 <div class="journey-timeline-marker">3</div>
                 <div class="journey-timeline-copy">
                   <h3>The customer hits a brand-new flow</h3>
-                  <p>They finally use it—but it's another unfamiliar process, so they run into problems or difficulty, and support gets pulled right back in.</p>
+                  <p>They finally use it, but it's another unfamiliar process. They hit problems or get stuck, and support gets pulled right back in.</p>
                 </div>
               </div>
             </div>
@@ -584,38 +586,38 @@
       <div class="container">
         <div class="section-head">
           <div class="eyebrow">Discovery</div>
-          <h2>The real question wasn't "which app next." It was "why does every connection start over?"</h2>
-          <p>The support queue and the analytics said the same thing: integrations were already core to how customers got value—but the way we built and set them up didn't scale. Before designing a screen, I let the evidence point at the pattern.</p>
+          <h2>Why does every connection start over? That was the question, more than "which app next."</h2>
+          <p>The support queue and the analytics agreed. Integrations were already central to how customers got value, but the way we built and set them up didn't scale. Before I drew a screen, I let the evidence point at the pattern.</p>
         </div>
         <div class="discovery-band">
           <div class="discovery-evidence-head"><div>What we saw</div><div>What it told us</div></div>
-          <div class="discovery-evidence-row"><div>12 tickets / mo</div><div>Customers were actively asking for connectors we didn't have yet—unmet demand, not a hypothesis. The queue was telling us where to expand.</div></div>
+          <div class="discovery-evidence-row"><div>12 tickets / mo</div><div>Customers were actively asking for connectors we didn't have yet. That's unmet demand, not a hypothesis. The queue was telling us where to expand.</div></div>
           <div class="discovery-evidence-row"><div>16 tickets / mo</div><div>The setup itself was the blocker. Every one pulled in Customer Success, Sales, and engineering just to get a customer connected.</div></div>
-          <div class="discovery-evidence-row"><div>3 in 10 users</div><div>Couldn't add their account and trigger an automation on their own—the flow was failing before anyone reached value.</div></div>
+          <div class="discovery-evidence-row"><div>3 in 10 users</div><div>Couldn't add their account and trigger an automation on their own. The flow was failing before anyone got anything out of it.</div></div>
           <div class="discovery-evidence-row"><div>32% · $350K/mo</div><div>A third of customers already automate from an integration, and ~$350K of mail a month rides on that data. Integrations were core infrastructure, not a nice-to-have.</div></div>
-          <div class="discovery-evidence-row"><div>6 one-off builds</div><div>Each connector had been designed and built separately—3–4 weeks each—so the roadmap couldn't add sources fast enough to keep up with demand.</div></div>
-          <div class="discovery-evidence-row"><div>1 key client</div><div>A single client worth ~500K mails asked for Salesforce, which made the cost of <em>not</em> having a scalable pattern concrete and urgent.</div></div>
+          <div class="discovery-evidence-row"><div>6 one-off builds</div><div>Each connector had been designed and built separately, 3 to 4 weeks each, so the roadmap couldn't add sources fast enough to keep up with demand.</div></div>
+          <div class="discovery-evidence-row"><div>1 key client</div><div>One client worth ~500K mails asked for Salesforce. That put a number on what it cost us <em>not</em> to have a pattern that scaled, and made it urgent.</div></div>
         </div>
       </div>
     </section>
 
     <!-- FRAMEWORK -->
     <!-- UX AUDIT -->
-    <section class="section" id="audit">
+    <section class="section section-dark" id="audit">
       <div class="container">
         <div class="section-head">
           <div class="eyebrow">UX audit</div>
           <h2>I moved the conversation from "add an app" to "unblock the setup."</h2>
-          <p>The strongest signal wasn't that any one screen looked wrong. It was that connecting an app kept stalling—so I audited every blocker and paired it with the fix the reusable pattern shipped.</p>
+          <p>No single screen looked wrong. Connecting an app just kept stalling. So I listed every blocker and paired it with the fix the reusable pattern shipped.</p>
         </div>
         <div class="comparison-table">
           <div class="comparison-head"><div>Blocker</div><div>Fix</div></div>
-          <div class="row"><div class="cell" data-label="Blocker">A request waited ~a month just to be prioritized, then every connector was built from scratch—3–4 weeks each.</div><div class="cell" data-label="Fix">One reusable lifecycle turns a new connector into configuration—logo, name, fields, attributes—so it ships as setup, not a project.</div></div>
-          <div class="row"><div class="cell" data-label="Blocker">16 tickets a month came from users stuck in setup, and 3 in 10 couldn't finish connecting on their own.</div><div class="cell" data-label="Fix">A guided connect → test → confirm → manage flow that tests credentials before it saves and explains every wait, so users self-serve.</div></div>
-          <div class="row"><div class="cell" data-label="Blocker">Attribution was buried in a heavyweight, data-engineering setup marketers couldn't complete.</div><div class="cell" data-label="Fix">Attribution became its own short, explicit step—confirm which statuses count as a Lead or Conversion, with a live warning if nothing would attribute.</div></div>
-          <div class="row"><div class="cell" data-label="Blocker">Each API's quirks—custom objects, renamed fields, multiple pipelines—broke one-size-fits-all guesses.</div><div class="cell" data-label="Fix">A checkbox-grid mapping handles multiple pipelines and non-linear stages explicitly, in the marketer's own language.</div></div>
-          <div class="row"><div class="cell" data-label="Blocker">Success and failure states lived on one screen, so users lost track of what was active, syncing, or failed.</div><div class="cell" data-label="Fix">Status surfaces in the account list and in-app notifications—active, sync-in-progress, failed, or ready for the next step.</div></div>
-          <div class="row"><div class="cell" data-label="Blocker">Every connector was designed and maintained separately across product and engineering.</div><div class="cell" data-label="Fix">One pattern devs reuse and the product team scales—new sources slot in as configuration, not a redesign.</div></div>
+          <div class="row"><div class="cell" data-label="Blocker">A request waited ~a month just to get prioritized. Then every connector was built from scratch, 3 to 4 weeks each.</div><div class="cell" data-label="Fix">One reusable lifecycle turns a new connector into configuration. Logo, name, fields, attributes. It ships as setup, not a project.</div></div>
+          <div class="row"><div class="cell" data-label="Blocker">16 tickets a month came from users stuck in setup, and 3 in 10 couldn't finish connecting on their own.</div><div class="cell" data-label="Fix">A guided connect → test → confirm → manage flow that tests credentials before it saves and explains every wait, so users can do it themselves.</div></div>
+          <div class="row"><div class="cell" data-label="Blocker">Attribution was buried in a heavy, data-engineering setup marketers couldn't finish.</div><div class="cell" data-label="Fix">Attribution became its own short, explicit step. You confirm which statuses count as a Lead or Conversion, and a live warning fires if nothing would attribute.</div></div>
+          <div class="row"><div class="cell" data-label="Blocker">Every API has its own quirks, like custom objects, renamed fields, and multiple pipelines. They broke any one-size-fits-all guess.</div><div class="cell" data-label="Fix">A checkbox-grid mapping handles multiple pipelines and non-linear stages out in the open, in the marketer's own language.</div></div>
+          <div class="row"><div class="cell" data-label="Blocker">Success and failure states lived on one screen, so users lost track of what was active, syncing, or failed.</div><div class="cell" data-label="Fix">Status shows in the account list and in-app notifications, whether that's active, sync-in-progress, failed, or ready for the next step.</div></div>
+          <div class="row"><div class="cell" data-label="Blocker">Every connector was designed and maintained separately across product and engineering.</div><div class="cell" data-label="Fix">One pattern devs reuse and the product team scales. New sources slot in as configuration, not a redesign.</div></div>
         </div>
       </div>
     </section>
@@ -756,13 +758,13 @@
       .decision-log-table{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--line);border-radius:12px;background:#fff}
       .decision-log-head,.decision-log-body{min-width:680px;grid-template-columns:1.1fr 1.1fr 1.2fr 1fr;gap:0}
       .decision-log-head{padding:0}
-      .decision-log-head div{padding:12px 14px;font-size:11px;line-height:1.3;border-left:1px solid rgba(28,27,22,.08)}
+      .decision-log-head div{padding:12px 14px;font-size:11px;line-height:1.3;border-left:1px solid rgba(41, 40, 39,.08)}
       .decision-log-head div:first-child{border-left:0}
       .decision-log-body{padding:0}
-      .decision-log-body + .decision-log-body{border-top:1px solid rgba(28,27,22,.1)}
-      .decision-log-cell{padding:13px 14px;border-left:1px solid rgba(28,27,22,.08);margin-top:0}
+      .decision-log-body + .decision-log-body{border-top:1px solid rgba(41, 40, 39,.1)}
+      .decision-log-cell{padding:13px 14px;border-left:1px solid rgba(41, 40, 39,.08);margin-top:0}
       .decision-log-cell:first-child{border-left:0}
-      .decision-log-cell + .decision-log-cell{margin-top:0;border-left:1px solid rgba(28,27,22,.08)}
+      .decision-log-cell + .decision-log-cell{margin-top:0;border-left:1px solid rgba(41, 40, 39,.08)}
       .decision-log-cell p{font-size:12.5px;line-height:1.5}
       .decision-log-cell::before{display:none}
       /* persona table -> real table that scrolls sideways */
@@ -799,7 +801,7 @@
         <div class="section-head">
           <div class="eyebrow">Supported ecosystem</div>
           <h2>Built for many sources of customer data, not just one CRM.</h2>
-          <p>Six connectors already existed as one-off builds. The reusable pattern let us add four more—including Salesforce, requested by a client worth ~500K mails—in a single three-week run. Each one is the same card, the same flow, a different source.</p>
+          <p>Six connectors already existed as one-off builds. The reusable pattern let us add four more in a single three-week run, Salesforce among them, asked for by a client worth ~500K mails. Each one is the same card and the same flow with a different source.</p>
         </div>
 
         <div class="eco-marquee" aria-label="Supported integrations">
@@ -807,11 +809,11 @@
           <div class="eco-row eco-row--1"><div class="eco-track">
             <article class="eco-card">
               <div class="eco-card__media"><span class="eco-card__logo"><img src="images/logos/klaviyo.webp" alt="" loading="lazy" width="292" height="150"></span></div>
-              <div class="eco-card__body"><div class="eco-card__title">Klaviyo</div><p class="eco-card__desc">Fold direct mail into your SMS and email campaigns by leveraging your Klaviyo segments.</p></div>
+              <div class="eco-card__body"><div class="eco-card__title">Klaviyo</div><p class="eco-card__desc">Fold direct mail into your SMS and email campaigns using your Klaviyo segments.</p></div>
             </article>
             <article class="eco-card">
               <div class="eco-card__media"><span class="eco-card__logo"><img src="images/logos/shopify.webp" alt="" loading="lazy" width="292" height="150"></span></div>
-              <div class="eco-card__body"><div class="eco-card__title">Shopify</div><p class="eco-card__desc">Retarget Shopify customers—first-time buyers, win-back segments, and more—straight into print.</p></div>
+              <div class="eco-card__body"><div class="eco-card__title">Shopify</div><p class="eco-card__desc">Retarget Shopify customers straight into print, from first-time buyers to win-back segments and more.</p></div>
             </article>
             <article class="eco-card">
               <div class="eco-card__media"><span class="eco-card__new">New</span><span class="eco-card__logo"><img src="images/logos/salesforce.webp" alt="" loading="lazy" width="292" height="150"></span></div>
@@ -863,7 +865,7 @@
             </article>
             <article class="eco-card">
               <div class="eco-card__media"><span class="eco-card__logo"><img src="images/logos/recipient-search.webp" alt="" loading="lazy" width="292" height="150"></span></div>
-              <div class="eco-card__body"><div class="eco-card__title">Recipient Search</div><p class="eco-card__desc">Build a target audience by searching recipients directly—no upstream source required.</p></div>
+              <div class="eco-card__body"><div class="eco-card__title">Recipient Search</div><p class="eco-card__desc">Build a target audience by searching recipients directly, with no upstream source needed.</p></div>
             </article>
             <article class="eco-card">
               <div class="eco-card__media"><span class="eco-card__logo"><img src="images/logos/csv-upload.webp" alt="" loading="lazy" width="292" height="150"></span></div>
@@ -880,7 +882,7 @@
           </div></div>
         </div>
 
-        <p class="eco-legend"><span class="eco-dot"></span>The <b>four “New”</b> connectors were added in the first 3-week run on the reusable pattern; the rest pre-existed as separate one-off builds.</p>
+        <p class="eco-legend"><span class="eco-dot"></span>The <b>four “New”</b> connectors were added in the first 3-week run on the reusable pattern. The rest already existed as separate one-off builds.</p>
       </div>
     </section>
     <script>
@@ -897,12 +899,12 @@
     </script>
 
     <!-- EVOLUTION -->
-    <section class="section" id="evolution">
+    <section class="section section-dark" id="evolution">
       <div class="container">
         <div class="section-head">
           <div class="eyebrow">Design evolution</div>
-          <h2>The version we didn't ship—and why "easier" won.</h2>
-          <p>The first design was far more powerful. To connect a CRM like Salesforce, you'd browse the entire schema, hand-map every object and field to the attribution model, define conversion/lead/exclude rules, then run a full extract-and-load pipeline into SQL. It could model almost anything—and that was exactly the problem.</p>
+          <h2>The version we didn't ship, and why "easier" won.</h2>
+          <p>The first design was far more powerful. To connect a CRM like Salesforce, you'd browse the entire schema, hand-map every object and field to the attribution model, define conversion/lead/exclude rules, then run a full extract-and-load pipeline into SQL. It could model almost anything, and that was exactly the problem.</p>
         </div>
 
         <div class="concept-carousel" id="concept-carousel">
@@ -914,33 +916,33 @@
               <div class="concept-carousel-track">
                 <article class="concept-carousel-slide is-active">
                   <div class="concept-carousel-copy">
-                    <span class="concept-carousel-label">Not shipped · V1 — step 01</span>
+                    <span class="concept-carousel-label">Not shipped · V1 · step 01</span>
                     <h3>Browse the CRM schema.</h3>
-                    <p>The advanced path started by asking the user to explore the whole Salesforce object model and pick what mattered—Opportunity, Lead, Case, Order, Campaign, Contact, Account.</p>
+                    <p>The advanced path opened with the whole Salesforce object model and asked the user to pick what mattered. Opportunity, Lead, Case, Order, Campaign, Contact, Account.</p>
                   </div>
                   <figure class="concept-carousel-media"><img src="images/integration-v1-schema.webp" alt="V1: browse the Salesforce schema and pick objects" onerror="this.style.display='none'"></figure>
                 </article>
                 <article class="concept-carousel-slide">
                   <div class="concept-carousel-copy">
-                    <span class="concept-carousel-label">Not shipped · V1 — step 02</span>
+                    <span class="concept-carousel-label">Not shipped · V1 · step 02</span>
                     <h3>Hand-map every field.</h3>
-                    <p>Event object, customer object, and every field mapped by hand—plus the relationship between them. Precise, and a lot to ask before any value appears.</p>
+                    <p>Event object, customer object, and every field mapped by hand, plus the relationship between them. Precise, and a lot to ask before anything useful comes back.</p>
                   </div>
                   <figure class="concept-carousel-media"><img src="images/integration-v1-mapping.webp" alt="V1: hand-map event and customer objects and every field" onerror="this.style.display='none'"></figure>
                 </article>
                 <article class="concept-carousel-slide">
                   <div class="concept-carousel-copy">
-                    <span class="concept-carousel-label">Not shipped · V1 — step 03</span>
+                    <span class="concept-carousel-label">Not shipped · V1 · step 03</span>
                     <h3>Build the attribution rules.</h3>
-                    <p>Conversion, lead, and exclude criteria—each a rule builder the user had to reason about up front, before they'd seen a single result.</p>
+                    <p>Conversion, lead, and exclude criteria. Each one a rule builder the user had to reason about up front, before they'd seen a single result.</p>
                   </div>
                   <figure class="concept-carousel-media"><img src="images/integration-v1-criteria.webp" alt="V1: conversion, lead, and exclude rule builders" onerror="this.style.display='none'"></figure>
                 </article>
                 <article class="concept-carousel-slide">
                   <div class="concept-carousel-copy">
-                    <span class="concept-carousel-label">Not shipped · V1 — step 04</span>
+                    <span class="concept-carousel-label">Not shipped · V1 · step 04</span>
                     <h3>Run a data pipeline.</h3>
-                    <p>And then run an extract-and-load pipeline into SQL—with a "skip dbt" toggle. Powerful, and unmistakably a data-engineering task.</p>
+                    <p>Then run an extract-and-load pipeline into SQL, with a "skip dbt" toggle. Powerful, and plainly a data-engineering task.</p>
                   </div>
                   <figure class="concept-carousel-media"><img src="images/integration-v1-pipeline.webp" alt="V1: run an extract-and-load pipeline into SQL" onerror="this.style.display='none'"></figure>
                 </article>
@@ -948,7 +950,7 @@
                   <div class="concept-carousel-copy">
                     <span class="concept-carousel-label">Not shipped · explored</span>
                     <h3>Auto-infer the field mappings.</h3>
-                    <p>Guess every mapping on connect and read it back as a filled-in review. Elegant—until custom objects and renamed fields meant "guess it for them" quietly guessed wrong on real Salesforce orgs.</p>
+                    <p>Guess every mapping on connect and read it back as a filled-in review. It was elegant until custom objects and renamed fields showed up. Then guessing for people quietly guessed wrong on real Salesforce orgs.</p>
                   </div>
                   <figure class="concept-carousel-media"><img src="images/integration-v2-attribution.webp" alt="Explored, not shipped: auto-inferred field mappings shown as a plain-language review" onerror="this.style.display='none'"></figure>
                 </article>
@@ -956,7 +958,7 @@
                   <div class="concept-carousel-copy">
                     <span class="concept-carousel-label">Not shipped · explored</span>
                     <h3>Attribution as one slider.</h3>
-                    <p>Drag a single handle across your Salesforce stages to declare "a Lead starts here, a Conversion here." Beautiful for one linear pipeline—but real orgs run several, across two objects, so it couldn't generalize.</p>
+                    <p>Drag a single handle across your Salesforce stages to say "a Lead starts here, a Conversion here." Lovely for one linear pipeline. Real orgs run several, across two objects, so it couldn't stretch to cover them.</p>
                   </div>
                   <figure class="concept-carousel-media"><img src="images/integration-v2-review.webp" alt="Explored, not shipped: a single slider maps Salesforce lead and opportunity stages to Lead and Conversion" onerror="this.style.display='none'"></figure>
                 </article>
@@ -979,29 +981,29 @@
         <div class="note-grid">
           <div class="note-box">
             <h3>What we cut, and why</h3>
-            <p>V1 could model anything but assumed every user was a data engineer. Two simpler replacements looked elegant and quietly failed real Salesforce orgs: <strong>auto-inferred mappings</strong> guessed wrong on custom objects and renamed fields, and <strong>a single attribution slider</strong> couldn't represent two objects—Lead and Opportunity—with non-linear stages. Good ideas to kill.</p>
+            <p>V1 could model anything, but it assumed every user was a data engineer. Two simpler replacements looked elegant and then quietly failed on real Salesforce orgs. <strong>Auto-inferred mappings</strong> guessed wrong on custom objects and renamed fields, and <strong>a single attribution slider</strong> couldn't handle two objects, Lead and Opportunity, with non-linear stages. Both were good ideas to kill.</p>
           </div>
           <div class="note-box note-box--ship">
             <h3>What shipped</h3>
-            <p>The least clever version held up. You connect with credentials, then attribution becomes its own explicit step: <strong>confirm which statuses count as a Lead, a Conversion, or Job Complete</strong>, with a live warning if the choice would attribute nothing. A checkbox grid handles the pipelines and non-linear stages the slider couldn't.</p>
+            <p>The least clever version held up. You connect with credentials, and attribution becomes its own explicit step. You <strong>confirm which statuses count as a Lead, a Conversion, or Job Complete</strong>, and a live warning fires if the choice would attribute nothing. A checkbox grid handles the pipelines and non-linear stages the slider couldn't.</p>
           </div>
         </div>
 
         <div class="itable comparison-itable">
           <table>
             <thead>
-              <tr><th style="width:26%">The job</th><th>V1 — powerful, complex</th><th>Shipped — simple &amp; explicit</th></tr>
+              <tr><th style="width:26%">The job</th><th>V1, powerful and complex</th><th>Shipped, simple and explicit</th></tr>
             </thead>
             <tbody>
-              <tr><td class="k">Find the data</td><td>Browse the full CRM schema and pick objects</td><td>Connect with credentials; the connection exposes what's needed</td></tr>
-              <tr><td class="k">Map it</td><td>Hand-map event/customer objects + every field</td><td>Confirm which statuses count—explicit, a few clicks</td></tr>
+              <tr><td class="k">Find the data</td><td>Browse the full CRM schema and pick objects</td><td>Connect with credentials, and the connection exposes what's needed</td></tr>
+              <tr><td class="k">Map it</td><td>Hand-map event/customer objects + every field</td><td>Confirm which statuses count, a few clicks</td></tr>
               <tr><td class="k">Attribution</td><td>Define conversion/lead/exclude rules up front</td><td>Confirm Lead / Conversion stages, warned if nothing would attribute</td></tr>
-              <tr><td class="k">Move the data</td><td>Configure &amp; run an extract-load (dbt/SQL) pipeline</td><td>The connection tests and syncs on its own</td></tr>
+              <tr><td class="k">Move the data</td><td>Configure and run an extract-load (dbt/SQL) pipeline</td><td>The connection tests and syncs on its own</td></tr>
               <tr><td class="k">How it felt</td><td>Like data engineering</td><td>Like signing in</td></tr>
             </tbody>
           </table>
         </div>
-        <p class="subcopy" style="margin:18px 0 0">This is the through-line of the whole project: the reusable pattern below is what's left <em>after</em> deciding what the user should never have to care about.</p>
+        <p class="subcopy" style="margin:18px 0 0">That's the through-line of the whole project. The reusable pattern below is what's left <em>after</em> deciding what the user should never have to care about.</p>
       </div>
     </section>
 
@@ -1011,7 +1013,7 @@
         <div class="section-head">
           <div class="eyebrow">Connection flow</div>
           <h2>The connection flow, its states, and what it validates.</h2>
-          <p>The reusable pattern shown on a real connector (Housecall Pro): one entry point, a credentialed connect step that tests before it proceeds, explicit connecting/connected states, a management list for multiple accounts, and attribution setup as a separate job.</p>
+          <p>Here's the reusable pattern on a real connector, Housecall Pro. One entry point, a connect step that tests credentials before it moves on, clear connecting and connected states, a management list for multiple accounts, and attribution setup as its own job.</p>
         </div>
 
         <h3 class="subhead">The shipped flow, step by step.</h3>
@@ -1021,33 +1023,33 @@
               <figure class="scroll-story-mobile-media"><img src="images/integration-connect.webp" alt="Connect Housecall Pro: connection name, client ID, client secret, test and continue" onerror="this.closest('.scroll-story-mobile-media').remove()"></figure>
               <span class="scroll-story-label">Final output · step 01</span>
               <h3>Create a new connection.</h3>
-              <p>Only the essentials—name, Client ID, masked Client Secret—then <em>Test and Continue</em> before anything is saved.</p>
+              <p>Only the essentials. Name, Client ID, masked Client Secret. Then <em>Test and Continue</em> before anything is saved.</p>
               <figure class="liveframe-stage" style="--frame-w:760px;--frame-h:840px;--frame-ratio:760 / 840"><iframe class="fitframe" data-w="760" data-h="840" width="760" height="840" src="recreations/integration-connect.html?auto&amp;v=20260729" scrolling="no" title="Live animated connection flow" loading="eager"></iframe></figure>
             </article>
             <article class="scroll-story-step" data-scroll-step="cf-connecting">
               <figure class="scroll-story-mobile-media"><img src="images/integration-connecting.webp" alt="Connecting loading state while credentials are validated and objects discovered" onerror="this.closest('.scroll-story-mobile-media').remove()"></figure>
               <span class="scroll-story-label">Final output · step 02</span>
               <h3>Connecting…</h3>
-              <p>The wait is explained: credentials are being verified and objects/fields discovered—not a dead spinner.</p>
+              <p>The wait says what it's doing. Credentials are being verified and objects and fields discovered, so it isn't a dead spinner.</p>
             </article>
             <article class="scroll-story-step" data-scroll-step="cf-connected">
               <figure class="scroll-story-mobile-media"><img src="images/integration-connected.webp" alt="You are connected, now finish setup with a clear next action" onerror="this.closest('.scroll-story-mobile-media').remove()"></figure>
               <span class="scroll-story-label">Final output · step 03</span>
               <h3>Connected → finish setup.</h3>
-              <p>Success isn't the end—it routes straight to the next action (Customize Attribution).</p>
+              <p>Success isn't the end. It routes straight to the next action (Customize Attribution).</p>
             </article>
             <article class="scroll-story-step" data-scroll-step="cf-attribution">
               <figure class="scroll-story-mobile-media"><img src="images/integration-attribution-setup.webp" alt="Attribution setup: name the automation and pick a trigger before saving" onerror="this.closest('.scroll-story-mobile-media').remove()"></figure>
               <span class="scroll-story-label">Final output · step 04</span>
               <h3>Attribution setup.</h3>
-              <p>Configuration is its own step: name the automation and pick a trigger before Save &amp; Continue.</p>
+              <p>Configuration is its own step. Name the automation, pick a trigger, then Save &amp; Continue.</p>
               <figure class="liveframe-stage" style="--frame-w:940px;--frame-h:440px;--frame-ratio:940 / 440"><iframe class="fitframe" data-w="940" data-h="440" data-replay="__replayAttribution" width="940" height="440" src="recreations/integration-attribution-setup.html?v=20260729" scrolling="no" title="Live attribution setup" loading="eager"></iframe></figure>
             </article>
             <article class="scroll-story-step" data-scroll-step="cf-manage">
               <figure class="scroll-story-mobile-media"><img src="images/integration-accounts.webp" alt="Manage Integration: connected accounts with active status, sync progress, finish setup, and remove" onerror="this.closest('.scroll-story-mobile-media').remove()"></figure>
               <span class="scroll-story-label">Final output · step 05</span>
               <h3>Manage your accounts.</h3>
-              <p>Every connected account on one surface—status (Active / Sync in Progress), last sync, Finish Setup, Customize Attribution, Add New Account, and Remove.</p>
+              <p>Every connected account sits on one surface with its status (Active / Sync in Progress), last sync, Finish Setup, Customize Attribution, Add New Account, and Remove.</p>
               <figure class="liveframe-stage" style="--frame-w:996px;--frame-h:852px;--frame-ratio:996 / 852"><iframe class="fitframe" data-w="996" data-h="852" data-replay="__replayAccounts" width="996" height="852" src="recreations/integration-accounts.html?v=20260729" scrolling="no" title="Live integration account management" loading="eager"></iframe></figure>
             </article>
             <div class="scroll-story-progress" aria-hidden="true"></div>
@@ -1062,18 +1064,18 @@
         </div>
 
         <h3 class="subhead">Validation we added to the flow</h3>
-        <p class="subcopy">Because the same pattern has to hold across very different APIs, the safety lives in validation—catching problems at entry instead of after a broken sync.</p>
+        <p class="subcopy">The same pattern has to hold across very different APIs, so the safety lives in validation. It catches problems at entry instead of after a sync has already broken.</p>
         <div class="itable validation-table">
           <table>
             <thead>
               <tr><th>Field / step</th><th>Validation added</th><th>Why it matters</th></tr>
             </thead>
             <tbody>
-              <tr><td class="k">Connection identity &amp; credentials</td><td>Name, format-checked Client ID, and a masked Client Secret are required; the secret is never shown again after save.</td><td>Accounts stay legible and bad or exposed credentials are caught at entry.</td></tr>
-              <tr><td class="k">Test before save</td><td>A live connection test plus object and field discovery must pass before the user can continue.</td><td>No half-connected accounts; failures appear early enough to recover.</td></tr>
-              <tr><td class="k">Account identity &amp; status</td><td>Tenant IDs are unique, duplicates are blocked, and every account shows sync state with a last-updated time.</td><td>People can trust which source is connected and how fresh its data is.</td></tr>
-              <tr><td class="k">Setup completion</td><td>Attribution is required before activation; the automation has to be named and tied to a valid trigger.</td><td>Automations are not launched on undefined, half-configured data.</td></tr>
-              <tr><td class="k">Destructive change</td><td>Removing a connected account requires an explicit confirmation.</td><td>Changes that may affect live automations stay deliberate.</td></tr>
+              <tr><td class="k">Connection identity &amp; credentials</td><td>Name, format-checked Client ID, and a masked Client Secret are all required. The secret is never shown again after save.</td><td>Accounts stay easy to tell apart, and bad or exposed credentials get caught at entry.</td></tr>
+              <tr><td class="k">Test before save</td><td>A live connection test plus object and field discovery have to pass before the user can continue.</td><td>No half-connected accounts, and failures show up early enough to recover.</td></tr>
+              <tr><td class="k">Account identity &amp; status</td><td>Tenant IDs are unique, duplicates are blocked, and every account shows its sync state with a last-updated time.</td><td>People can trust which source is connected and how fresh its data is.</td></tr>
+              <tr><td class="k">Setup completion</td><td>Attribution is required before activation, and the automation has to be named and tied to a valid trigger.</td><td>Nothing launches on undefined, half-configured data.</td></tr>
+              <tr><td class="k">Destructive change</td><td>Removing a connected account takes an explicit confirmation.</td><td>Changes that could hit live automations stay deliberate.</td></tr>
             </tbody>
           </table>
         </div>
@@ -1086,7 +1088,7 @@
         <div class="section-head">
           <div class="eyebrow">Decision making</div>
           <h2>The hard parts weren't the screens. They were the trade-offs.</h2>
-          <p>I made the cost of each call visible so PM, engineering, and I could align faster.</p>
+          <p>I wrote down what each call cost us, so the PM, engineering, and I could agree faster.</p>
         </div>
         <div class="decision-log-table">
           <div class="decision-log-head">
@@ -1094,26 +1096,26 @@
           </div>
           <div class="decision-log-body">
             <div class="decision-log-cell" data-label="Question"><p>How much should the connect step ask for up front?</p></div>
-            <div class="decision-log-cell" data-label="Trade-off"><p>Exposing every object and field was powerful, but it turned setup into a data-engineering task—3 in 10 users stalled before finishing.</p></div>
-            <div class="decision-log-cell" data-label="Decision"><p>Reduced connect to the few required inputs—name, Client ID, masked secret—tested before anything saves; deeper mapping became a separate, optional step.</p></div>
+            <div class="decision-log-cell" data-label="Trade-off"><p>Exposing every object and field was powerful, but it turned setup into a data-engineering task. 3 in 10 users stalled before finishing.</p></div>
+            <div class="decision-log-cell" data-label="Decision"><p>Cut connect down to the few required inputs, name, Client ID, and masked secret, all tested before anything saves. Deeper mapping became a separate, optional step.</p></div>
             <div class="decision-log-cell" data-label="Future"><p>Use AI to pre-suggest field mappings so even the optional step gets faster.</p></div>
           </div>
           <div class="decision-log-body">
-            <div class="decision-log-cell" data-label="Question"><p>Connect and attribution—one flow, or two?</p></div>
-            <div class="decision-log-cell" data-label="Trade-off"><p>One flow felt continuous, but attribution carries different business logic and risk than authentication.</p></div>
-            <div class="decision-log-cell" data-label="Decision"><p>Split them: connect stays lightweight and universal; attribution is its own explicit job, shown only to users who need it.</p></div>
+            <div class="decision-log-cell" data-label="Question"><p>Connect and attribution, one flow or two?</p></div>
+            <div class="decision-log-cell" data-label="Trade-off"><p>One flow felt continuous, but attribution carries different business logic and different risk than authentication.</p></div>
+            <div class="decision-log-cell" data-label="Decision"><p>Split them. Connect stays lightweight and works the same everywhere. Attribution is its own job, shown only to the users who need it.</p></div>
             <div class="decision-log-cell" data-label="Future"><p>Infer attribution defaults per connector, keeping the explicit step as the override.</p></div>
           </div>
           <div class="decision-log-body">
             <div class="decision-log-cell" data-label="Question"><p>Build each connector custom, or one reusable shell?</p></div>
-            <div class="decision-log-cell" data-label="Trade-off"><p>Custom screens fit each API perfectly, but every new app restarted design and engineering—6 one-off builds, 3–4 weeks each.</p></div>
-            <div class="decision-log-cell" data-label="Decision"><p>One reusable lifecycle where logo, name, fields, and attributes are configuration—so a connector ships as setup, not a redesign. Four shipped in a three-week parallel batch.</p></div>
+            <div class="decision-log-cell" data-label="Trade-off"><p>Custom screens fit each API perfectly, but every new app restarted design and engineering. That was 6 one-off builds at 3 to 4 weeks each.</p></div>
+            <div class="decision-log-cell" data-label="Decision"><p>One reusable lifecycle where logo, name, fields, and attributes are configuration, so a connector ships as setup instead of a redesign. Four shipped in a three-week parallel batch.</p></div>
             <div class="decision-log-cell" data-label="Future"><p>A connector "manifest" so a new source can be added with no new design at all.</p></div>
           </div>
           <div class="decision-log-body">
             <div class="decision-log-cell" data-label="Question"><p>Where should connection status live?</p></div>
             <div class="decision-log-cell" data-label="Trade-off"><p>Keeping status on the detail page was simplest, but users lost track of what was active, syncing, or failed across many accounts.</p></div>
-            <div class="decision-log-cell" data-label="Decision"><p>Surfaced status in the account list and in-app notifications—active, sync-in-progress, failed, or ready—beyond a single screen.</p></div>
+            <div class="decision-log-cell" data-label="Decision"><p>Put status in the account list and in-app notifications, active, sync-in-progress, failed, or ready, instead of on one screen.</p></div>
             <div class="decision-log-cell" data-label="Future"><p>Proactive alerts when a sync breaks, before it silently pauses an automation.</p></div>
           </div>
         </div>
@@ -1125,16 +1127,16 @@
       <div class="container">
         <div class="section-head">
           <div class="eyebrow">Outcome</div>
-          <h2>Adding an integration became a routine—not a project.</h2>
-          <p>The win wasn't a prettier connect screen. It was a workflow that matched how the business, engineering, and customers actually add a source.</p>
+          <h2>Adding an integration became routine instead of a project.</h2>
+          <p>The workflow finally matched how the business, engineering, and customers actually add a source. That mattered more than a prettier connect screen.</p>
         </div>
         <div class="result-grid">
-          <div class="result-item"><span class="result-idx">01 / CUSTOMER · SHIPPED FLOW</span><h3>A clearer path to connection</h3><p>The shipped connect → test → confirm → manage flow validates credentials before save and makes each next action explicit. Completion and ticket reduction are the measures to validate with live usage.</p></div>
-          <div class="result-item"><span class="result-idx">02 / Business</span><h3>A routine, not a project</h3><p>Per-connector lead time fell from 3–4 weeks to ~2, and the first parallel batch shipped 4 new connectors in three weeks—including the Salesforce one a ~500K-mail client was waiting on.</p></div>
-          <div class="result-item"><span class="result-idx">03 / Engineering</span><h3>One workflow to reuse</h3><p>Instead of researching and building each connector from scratch, engineering slots new sources into a stable lifecycle—logo, name, fields, and attributes as configuration.</p></div>
-          <div class="result-item"><span class="result-idx">04 / Platform</span><h3>A reusable base for the next connectors</h3><p>The reusable pattern shipped across four new connectors—Salesforce, ServiceTitan, HubSpot, and Housecall Pro—and is designed to support future sources as configuration rather than a redesign.</p></div>
-          <div class="result-item"><span class="result-idx">05 / SUPPORT · BASELINE</span><h3>Setup was the next measure</h3><p>The baseline was 16 setup tickets a month and 3 in 10 users unable to finish alone. The new flow gives that work a clear measurement plan: connection completion, setup tickets, and time to first automation.</p></div>
-          <div class="result-item"><span class="result-idx">06 / PLATFORM · NEXT</span><h3>Connection enables the next workflow</h3><p>The framework links account setup to attribution, automation, and analytics. The opportunity is to expand the $350K/month integration-data base through more completed, well-configured connections—not to claim that growth before it is measured.</p></div>
+          <div class="result-item"><span class="result-idx">01 / CUSTOMER · SHIPPED FLOW</span><h3>A clearer path to connection</h3><p>The shipped connect → test → confirm → manage flow checks credentials before save and spells out each next action. Completion rate and ticket reduction are what we still need to confirm with live usage.</p></div>
+          <div class="result-item"><span class="result-idx">02 / Business</span><h3>A routine, not a project</h3><p>Lead time per connector went from 3 to 4 weeks down to ~2, and the first parallel batch shipped 4 new connectors in three weeks. One of them was the Salesforce connector a ~500K-mail client was waiting on.</p></div>
+          <div class="result-item"><span class="result-idx">03 / Engineering</span><h3>One workflow to reuse</h3><p>Instead of researching and building each connector from scratch, engineering slots new sources into a stable lifecycle where logo, name, fields, and attributes are configuration.</p></div>
+          <div class="result-item"><span class="result-idx">04 / Platform</span><h3>A reusable base for the next connectors</h3><p>The reusable pattern shipped across four new connectors, Salesforce, ServiceTitan, HubSpot, and Housecall Pro. It's built so future sources arrive as configuration rather than a redesign.</p></div>
+          <div class="result-item"><span class="result-idx">05 / SUPPORT · BASELINE</span><h3>Setup was the next measure</h3><p>The baseline was 16 setup tickets a month and 3 in 10 users unable to finish on their own. The new flow has a clear measurement plan behind it. Connection completion, setup tickets, and time to first automation.</p></div>
+          <div class="result-item"><span class="result-idx">06 / PLATFORM · NEXT</span><h3>Connection enables the next workflow</h3><p>The framework links account setup to attribution, automation, and analytics. The chance now is to grow the $350K/month integration-data base with more completed, well-configured connections. I won't claim that growth before it's measured.</p></div>
         </div>
       </div>
     </section>
@@ -1144,15 +1146,29 @@
       <div class="container split">
         <div class="pattern-head">
           <div class="eyebrow">Reflection</div>
-          <h2>Technical complexity does not always need a complex interface.</h2>
+          <h2>Technical complexity doesn't always need a complex interface.</h2>
         </div>
         <div class="lede">
-          <p style="color:rgba(242,240,230,.86)">My first assumption was that connecting integrations would require many fields and a lot of visible configuration. But after working through the flow with the team, the better answer was the simpler one: ask for only what is essential, validate it clearly, and let the backend do the heavy lifting.</p>
-          <p style="color:rgba(242,240,230,.86)">Version 2 would refine syncing status, add stronger search for integrations, broaden the supported credential types, and use AI to help preselect fields for automation, data merge, and attribution setup.</p>
+          <p style="color:rgba(242,240,230,.86)">I assumed at first that connecting an integration would need a lot of fields and a lot of visible configuration. After working the flow through with the team, the simpler answer turned out to be the better one. Ask for only what's essential, validate it clearly, and let the backend do the hard part.</p>
+          <p style="color:rgba(242,240,230,.86)">Version 2 would tighten syncing status, add better search for integrations, support more credential types, and use AI to help preselect fields for automation, data merge, and attribution setup.</p>
         </div>
       </div>
       <div class="container" style="margin-top:36px">
-        <p class="quote" style="color:#f7f5ec">"This project taught me that good platform design is not about showing all the data. It is about knowing which data matters, hiding the rest, and making the next integration easier than the last."</p>
+        <p class="quote" style="color:#f1ecfb">"This project taught me that good platform design isn't about showing all the data. It's about knowing which data matters, hiding the rest, and making the next integration easier than the last."</p>
+      </div>
+    </section>
+  
+    <section class="section next-case-cta">
+      <div class="container">
+        <div class="next-case-panel">
+          <span class="next-case-kicker">Next case study</span>
+          <h2>Enterprise org management</h2>
+          <p>One place to manage roles, permissions, and shared templates across an enterprise org.</p>
+          <div class="next-case-actions">
+            <a class="next-case-primary" href="org-management-case-study.html">Read it <svg class="arw" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            <a class="next-case-outline" href="index.html#work">All work</a>
+          </div>
+        </div>
       </div>
     </section>
   </main>
@@ -1350,7 +1366,7 @@
   <div class="read-progress" id="read-progress" aria-hidden="true">
     <div class="read-progress-ring">
       <svg viewBox="0 0 44 44" width="44" height="44" aria-hidden="true">
-        <defs><linearGradient id="rpGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff8a2a"/><stop offset=".5" stop-color="#ff4d8d"/><stop offset="1" stop-color="#2cc8ff"/></linearGradient></defs>
+        <defs><linearGradient id="rpGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9e6ee5"/><stop offset=".5" stop-color="#ff4d8d"/><stop offset="1" stop-color="#2cc8ff"/></linearGradient></defs>
         <circle class="rp-track" cx="22" cy="22" r="18" fill="none" stroke-width="4"/>
         <circle class="rp-bar" id="rp-bar" cx="22" cy="22" r="18" fill="none" stroke-width="4" stroke-dasharray="113.097" stroke-dashoffset="113.097"/>
       </svg>
@@ -1661,5 +1677,7 @@
       clarity("event", "case_study_view");
     })();
   </script>
+  <script defer src="carousel-swipe.js?v=3"></script>
+  <script defer src="scroll-hint.js?v=1"></script>
 </body>
 </html>
