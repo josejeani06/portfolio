@@ -396,11 +396,46 @@ img,svg,video,iframe,canvas{max-width:100%}
 .rd-ba-tag.old{left:16px;background:#c0392b}
 .rd-ba-tag.new{right:16px;background:#15703c}
 
-/* mobile carousel (map reference): the cards under the media are information
-   only — the arrows and the swipe gesture drive it, so they are not tappable */
+/* Mobile carousel (the reference behaviour). Below the image the items stop
+   being cards entirely: no box, no fill, not tappable — just the information,
+   separated by hairlines. Arrows + swipe are the only controls. */
 @media(max-width:900px){
-  .refine-item{pointer-events:none;cursor:default}
-  .refine-controls{gap:10px;margin-top:14px}
-  .refine-carousel{gap:14px}
+  .refine-carousel{gap:0}
   .refine-viewport{touch-action:pan-y}
+  .refine-controls{gap:0;margin-top:18px}
+  /* only the CURRENT slide's information is shown */
+  .refine-item:not(.is-active){display:none!important}
+  /* !important: each page's own <style> block is parsed after this file */
+  .refine-item{
+    pointer-events:none!important;cursor:default!important;
+    border:0!important;background:transparent!important;box-shadow:none!important;
+    border-radius:0!important;padding:0!important;text-align:left!important;
+  }
+  .refine-item-bar{display:none!important}
+}
+/* clipped image + Show full */
+.show-full-btn{
+  position:absolute;left:50%;bottom:12px;transform:translateX(-50%);z-index:4;
+  border:0;cursor:pointer;
+  padding:9px 16px;border-radius:999px;
+  background:rgba(34,24,54,.92);color:#fff;
+  font-family:"Space Grotesk",sans-serif;font-size:12.5px;font-weight:600;
+  box-shadow:0 8px 22px rgba(17,17,16,.3);
+}
+.is-clipped::after{
+  content:"";position:absolute;left:0;right:0;bottom:0;height:96px;z-index:3;pointer-events:none;
+  background:linear-gradient(180deg,rgba(255,255,255,0),rgba(255,255,255,.92));
+}
+:is(.section-dark,.section-dark-soft) .is-clipped::after{
+  background:linear-gradient(180deg,rgba(34,24,54,0),rgba(34,24,54,.92));
+}
+.img-lightbox{
+  position:fixed;inset:0;z-index:999;display:grid;place-items:center;
+  background:rgba(17,17,16,.92);padding:20px;overflow:auto;
+}
+.img-lightbox img{max-width:100%;height:auto;border-radius:10px;background:#fff}
+.img-lightbox-close{
+  position:fixed;top:14px;right:14px;width:44px;height:44px;border-radius:50%;
+  border:1px solid rgba(255,255,255,.25);background:rgba(17,17,16,.8);color:#fff;
+  font-size:24px;line-height:1;cursor:pointer;z-index:1000;
 }
