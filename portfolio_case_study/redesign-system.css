@@ -1,0 +1,507 @@
+/* =============================================================================
+   REDESIGN THEME LAYER — case-study pages
+   Superhuman palette × Uber layout, applied on top of style.css + each page's
+   own inline <style>. Loaded LAST, scoped to body.case-study-page.
+
+   DESIGN RULE THAT GOVERNS THIS FILE:
+   Never strip a background without replacing it. The previous version used
+   `.section{background-image:none!important}`, which deleted the gradients that
+   *were* the dark sections and left their light text on white. Every dark
+   surface below is therefore set as a background-COLOR, and every force-dark is
+   paired with a matching force-light text rule in the same block.
+   ============================================================================= */
+
+:root, body.case-study-page{
+  --rd-purple:#714cb6;
+  --rd-purple-2:#5f3da0;
+  --rd-bright:#9e6ee5;
+  --rd-bright-text:#b998f0;   /* accent as TEXT on dark: 7.0:1 (was 4.65:1) */
+  --rd-lav:#d4c7ff;
+  --rd-lav-bg:#f1ecfb;
+  --rd-ink:#111110;
+  --rd-dark:#221836;        /* the one dark surface colour */
+  --rd-dark-2:#2c2147;      /* nested card on a dark surface */
+  --rd-dline:rgba(246,243,234,.16);
+  --rd-ease:cubic-bezier(.22,.61,.24,1);
+  --hair:rgba(41,40,39,.12);
+}
+
+/* remap the original warm tokens to the redesign palette.
+   Applied to :root as well as body — style.css defines them on :root, and the
+   old warm --muted (#563d42) was still resolving there. */
+:root, body.case-study-page{
+  --bg:#ffffff;
+  --surface:#ffffff;
+  --surface-2:#f2f0eb;
+  --text:#292827;
+  --muted:#6b675f;
+  --line:rgba(41,40,39,.12);
+  --blue:#714cb6;
+  --blue-2:#5f3da0;
+  --blue-soft:rgba(113,76,182,.10);
+  --ink:#111110;
+}
+
+/* ---------------------------------------------------------------- type ---- */
+body.case-study-page,
+.case-study-page p,.case-study-page li{
+  font-family:"Inter",ui-sans-serif,system-ui,sans-serif;
+}
+.case-study-page h1,.case-study-page h2,.case-study-page h3,
+.case-study-page h4,.case-study-page .section-head h2,
+.case-study-page .metric-tile strong,.case-study-page .result-idx,
+.case-study-page [class*="-title"]{
+  font-family:"Space Grotesk","Inter",sans-serif;
+  letter-spacing:-.03em;
+}
+/* one type scale across all six pages: body 17px, h2 clamp(30px,4vw,48px).
+   The case studies were shipping 16px body and a 43.5px h2 — visibly smaller
+   than the landing and map at the same viewport. */
+body.case-study-page{font-size:17px!important}
+.case-study-page :is(.section-head h2,.showcase-head h2,h2.case-h2){
+  font-size:clamp(30px,4vw,48px)!important;
+  letter-spacing:-.035em;line-height:1.08;padding-bottom:.06em;
+}
+.case-study-page .case-title{font-size:clamp(46px,7.4vw,104px)!important;line-height:1.0;letter-spacing:-.045em;padding-bottom:.06em}
+
+/* -------------------------------------------------------------- rhythm ----
+   Identical to the map (redesign.css:67-68,73) so every page shares one scale */
+.case-study-page .section{padding:clamp(72px,9vw,132px) 0}
+.case-study-page .section-head{margin-bottom:clamp(36px,5vw,60px);max-width:none}
+/* the at-a-glance band sits tight under the hero/exec block */
+.case-study-page .at-glance-band{padding:clamp(40px,5vw,72px) 0!important}
+.case-study-page .at-glance-band + .section{padding-top:clamp(40px,5vw,72px)}
+
+/* ---------------------------------------------- executive summary (North Star)
+   Same shape as the map's .rd-exec: dark statement card + label/value rows with
+   hairline dividers and right-aligned bold values. Layout only — no content moves. */
+.case-study-page .case-summary{
+  grid-template-columns:1fr 1.08fr!important;
+  gap:clamp(28px,4vw,64px)!important;
+  align-items:start!important;
+  margin-top:clamp(28px,4vw,44px)!important;
+}
+.case-study-page .case-summary .callout,
+.case-study-page .hero-facts .callout{
+  border-radius:20px!important;
+  padding:clamp(28px,3.2vw,44px)!important;
+  box-shadow:none!important;
+}
+.case-study-page .kv{gap:0!important}
+.case-study-page .kv-item{
+  padding:20px 0!important;
+  border-bottom:0!important;
+  border-top:1px solid var(--line)!important;
+  align-items:start!important;
+}
+.case-study-page .kv-item:first-child{border-top:0!important;padding-top:0!important}
+.case-study-page .kv-item span{
+  color:var(--muted)!important;font-size:14.5px!important;font-weight:400!important;
+  white-space:normal!important;line-height:1.5!important;
+}
+.case-study-page .kv-item strong{
+  color:var(--rd-ink)!important;font-size:14.5px!important;font-weight:600!important;
+  text-align:right!important;line-height:1.5!important;overflow-wrap:anywhere;
+}
+.case-study-page :is(.section-dark,.section-dark-soft) .kv-item{border-top-color:var(--rd-dline)!important}
+.case-study-page :is(.section-dark,.section-dark-soft) .kv-item span{color:rgba(255,255,255,.66)!important}
+.case-study-page :is(.section-dark,.section-dark-soft) .kv-item strong{color:#fff!important}
+@media(max-width:900px){.case-study-page .case-summary{grid-template-columns:1fr!important;gap:28px!important}}
+@media(max-width:600px){
+  .case-study-page .kv-item{flex-direction:column!important;gap:5px!important;padding:16px 0!important}
+  .case-study-page .kv-item strong{text-align:left!important}
+}
+
+/* ------------------------------------------------ at a glance (stat grid) ---
+   Matches the map's .rd-stats: one bordered card, hairline cells, purple numbers */
+.case-study-page .metric-strip{
+  display:grid!important;grid-template-columns:repeat(3,1fr)!important;gap:0!important;
+  border:1px solid var(--line)!important;border-radius:20px!important;
+  overflow:hidden!important;background:#fff!important;
+}
+.case-study-page .metric-strip .metric-tile{
+  padding:clamp(24px,2.6vw,34px)!important;margin:0!important;
+  border:0!important;
+  border-left:1px solid var(--line)!important;
+  border-top:1px solid var(--line)!important;
+  border-radius:0!important;background:transparent!important;box-shadow:none!important;
+}
+.case-study-page .metric-strip .metric-tile:nth-child(-n+3){border-top:0!important}
+.case-study-page .metric-strip .metric-tile:nth-child(3n+1){border-left:0!important}
+.case-study-page .metric-strip .metric-tile strong{
+  font-family:"Space Grotesk","Inter",sans-serif!important;
+  font-size:clamp(34px,4.4vw,52px)!important;font-weight:600!important;
+  letter-spacing:-.045em!important;line-height:1!important;
+  color:var(--rd-purple)!important;margin-bottom:12px!important;
+}
+.case-study-page .metric-strip .metric-tile span{font-size:14.5px!important;color:var(--muted)!important;line-height:1.45!important}
+@media(max-width:720px){
+  .case-study-page .metric-strip{grid-template-columns:1fr 1fr!important}
+  .case-study-page .metric-strip .metric-tile:nth-child(3n+1){border-left:1px solid var(--line)!important}
+  .case-study-page .metric-strip .metric-tile:nth-child(2n+1){border-left:0!important}
+  .case-study-page .metric-strip .metric-tile:nth-child(-n+2){border-top:0!important}
+  .case-study-page .metric-strip .metric-tile:nth-child(3){border-top:1px solid var(--line)!important}
+}
+@media(max-width:460px){
+  .case-study-page .metric-strip{grid-template-columns:1fr!important}
+  .case-study-page .metric-strip .metric-tile{border-left:0!important;border-top:1px solid var(--line)!important}
+  .case-study-page .metric-strip .metric-tile:first-child{border-top:0!important}
+}
+/* the 3-up prose row under the stats = the map's .rd-cols */
+.case-study-page .at-glance{
+  grid-template-columns:repeat(3,1fr)!important;
+  gap:clamp(28px,4vw,56px)!important;
+  border-top:1px solid var(--line)!important;
+  padding-top:clamp(32px,4vw,48px)!important;
+  margin-top:clamp(32px,4vw,48px)!important;
+}
+.case-study-page .at-glance-item small{
+  display:inline-flex;align-items:center;gap:9px;
+  font-family:"Space Grotesk",sans-serif!important;font-size:13px!important;font-weight:600!important;
+  letter-spacing:.03em!important;color:var(--rd-purple)!important;text-transform:none!important;margin-bottom:14px;
+}
+.case-study-page .at-glance-item small::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--rd-bright);flex:0 0 auto}
+.case-study-page .at-glance-item p{margin:0!important;color:var(--muted)!important;line-height:1.65!important}
+@media(max-width:820px){.case-study-page .at-glance{grid-template-columns:1fr!important;gap:32px!important}}
+/* no 100vh fold — matches the landing + map */
+.case-study-page .case-hero{
+  min-height:0!important;
+  padding:clamp(36px,5vw,64px) 0 clamp(40px,5vw,64px)!important;
+}
+
+/* -------------------------------------------------------------- kicker ---- */
+.case-study-page .eyebrow{
+  display:inline-flex !important;align-items:center;gap:9px;
+  font-family:"Space Grotesk",sans-serif !important;
+  font-size:13px !important;font-weight:600 !important;
+  letter-spacing:.03em !important;text-transform:none !important;
+  color:var(--rd-purple) !important;line-height:1.2;
+}
+.case-study-page .eyebrow::before{
+  content:"";width:8px;height:8px;border-radius:50%;
+  background:var(--rd-bright);flex:0 0 auto;
+}
+/* one eyebrow per section — never stack a second badge */
+.case-study-page .ai-badge,.case-study-page .pattern-head .ai-badge{display:none!important}
+
+/* --------------------------------------------------------------- cards ---- */
+.case-study-page .persona-card,
+.case-study-page .choice-card,
+.case-study-page .refine-item,
+.case-study-page .roadmap-phase{
+  border-radius:18px !important;
+  border:1px solid var(--hair) !important;
+  background:#fff !important;
+  box-shadow:0 1px 2px rgba(41,40,39,.05) !important;
+  transition:transform .3s var(--rd-ease),box-shadow .3s var(--rd-ease),border-color .3s var(--rd-ease) !important;
+}
+.case-study-page .persona-card:hover,
+.case-study-page .choice-card:hover,
+.case-study-page .refine-item:hover,
+.case-study-page .roadmap-phase:hover{
+  transform:translateY(-4px);
+  box-shadow:0 22px 50px rgba(41,40,39,.10) !important;
+  border-color:rgba(41,40,39,.2) !important;
+}
+
+/* --------------------------------------------------------------- chips ---- */
+.case-study-page .a11y-chip,
+.case-study-page .a11y-tag{
+  background:var(--rd-lav-bg) !important;
+  border:1px solid var(--rd-lav) !important;
+  color:var(--rd-purple-2) !important;
+  border-radius:999px !important;
+  font-weight:500 !important;
+  padding:6px 13px!important;min-height:0!important;line-height:1.2!important;
+}
+.case-study-page .a11y-line{gap:10px!important;flex-wrap:wrap}
+
+/* --------------------------------------------------------------- media ---- */
+.case-study-page .vid-frame,
+.case-study-page .visual-scene,
+.case-study-page figure img,
+.case-study-page .shot,
+.case-study-page .frame{border-radius:16px !important;overflow:hidden}
+.case-study-page .vid-frame,
+.case-study-page .visual-scene{
+  border:1px solid var(--hair) !important;
+  box-shadow:0 20px 50px rgba(41,40,39,.08);
+}
+/* NO fake browser chrome (close / minimise / maximise dots) */
+.case-study-page .shot-bar,
+.case-study-page .audience-builder-window-dots{display:none!important}
+.case-study-page .audience-builder-frame::before{display:none!important}
+/* show screenshots whole — no letterbox panel, no min-height padding */
+.case-study-page .shot-media{
+  min-height:0!important;
+  background:transparent!important;
+  background-image:none!important;
+}
+.case-study-page .shot-media img{width:100%;height:auto;display:block}
+
+/* ------------------------------------------------------------- buttons ----
+   EXACTLY three styles:
+   (a) filled purple / white     (b) outline on light      (c) outline on dark
+   The cream/ivory fills are removed everywhere, including style.css's fallback. */
+.case-study-page .button{
+  border-radius:999px !important;
+  font-family:"Inter",sans-serif;font-weight:600 !important;
+  background:var(--rd-purple)!important;
+  color:#fff!important;
+  border:1.5px solid transparent!important;
+}
+.case-study-page .button.secondary{
+  background:transparent!important;
+  border:1.5px solid rgba(41,40,39,.20)!important;
+  color:var(--rd-ink)!important;
+}
+.case-study-page .button.secondary:hover{border-color:var(--rd-ink)!important}
+/* (c) on any dark surface */
+.case-study-page :is(.section-dark,.section-dark-soft) .button.secondary{
+  background:transparent!important;
+  border-color:rgba(255,255,255,.45)!important;
+  color:#fff!important;
+}
+.case-study-page :is(.section-dark,.section-dark-soft) .button.secondary:hover{
+  border-color:#fff!important;background:rgba(255,255,255,.08)!important;
+}
+/* circular carousel controls: dark pill, never cream */
+.case-study-page .concept-carousel-btn{
+  background:rgba(34,24,54,.82)!important;
+  border:0!important;color:#fff!important;box-shadow:none!important;
+}
+.case-study-page .icon-btn{
+  background:transparent!important;
+  border:1.5px solid rgba(41,40,39,.20)!important;
+  color:var(--rd-ink)!important;
+}
+
+/* ================================================================= DARK ====
+   Explicit dark surfaces. background-COLOR (never a bare image strip), each
+   paired with the light-text rules directly below. */
+.case-study-page :is(
+  .section-dark,.section-dark-soft,
+  .callout,.dark-copy,.harness-grid,.code,.term,
+  .quote-dark,.stat-dark,.dark,.panel-dark,
+  .concept-carousel,.converge-core
+){
+  background-color:var(--rd-dark)!important;
+  background-image:none!important;
+}
+
+/* light text on every one of those surfaces (th included — it was missing) */
+.case-study-page :is(
+  .section-dark,.section-dark-soft,
+  .callout,.dark-copy,.harness-grid,.term,
+  .quote-dark,.stat-dark,.panel-dark,
+  .concept-carousel,.converge-core
+) :where(p,li,dd,dt,td,th,span,figcaption,blockquote,em,i,small,label,div){
+  color:rgba(255,255,255,.92)!important;
+}
+.case-study-page :is(
+  .section-dark,.section-dark-soft,
+  .callout,.dark-copy,.harness-grid,.term,
+  .quote-dark,.stat-dark,.panel-dark,
+  .concept-carousel,.converge-core
+) :where(h1,h2,h3,h4,h5,strong,b,a){
+  color:#fff!important;
+}
+/* accent labels stay bright purple on dark */
+.case-study-page :is(
+  .section-dark,.section-dark-soft,.callout,.dark-copy,.concept-carousel
+) :is(.eyebrow,[class*="label"],.subhead){color:var(--rd-bright-text)!important}
+.case-study-page :is(.section-dark,.section-dark-soft) .metric-tile strong{color:var(--rd-bright-text)!important}
+
+/* hairlines/borders on dark surfaces */
+.case-study-page :is(.section-dark,.section-dark-soft) :where(hr,.itable,.itable td,.itable th,.results-table,.rd-fact){
+  border-color:var(--rd-dline)!important;
+}
+
+/* nested panels that were light INSIDE a dark section -> dark cards.
+   (accessibility "manual pass" box, billing object-model figure, DS audit table) */
+.case-study-page :is(.section-dark,.section-dark-soft) :is(
+  [style*="background:#ffffff"],
+  [style*="background:#fff"],
+  [style*="background:#f7f5f2"],
+  .itable,.itable thead tr,.results-table,.om-node,.jc
+){
+  background:var(--rd-dark-2)!important;
+  background-color:var(--rd-dark-2)!important;
+  background-image:none!important;
+  border-color:var(--rd-dline)!important;
+}
+/* tables inside a dark section: the wrapper carries the dark card, every inner
+   row/cell goes transparent. `.itable tbody tr:nth-child(odd){background:#fff}`
+   is why the audit table stayed white-on-white. */
+.case-study-page :is(.section-dark,.section-dark-soft) :is(
+  .itable table,.itable thead tr,.itable tbody tr,.itable tr,.itable td,.itable th,
+  .results-table table,.results-table tr,.results-table td,.results-table th,
+  .perm-matrix tbody tr,.perm-matrix td,.perm-matrix th
+){
+  background:transparent!important;
+  background-color:transparent!important;
+  background-image:none!important;
+}
+.case-study-page :is(.section-dark,.section-dark-soft) :is(.itable,.results-table){
+  background:var(--rd-dark-2)!important;background-color:var(--rd-dark-2)!important;
+}
+
+/* the object-model connector text was mid-grey on a light card */
+.case-study-page .om-arrow,.case-study-page .om-bridge,.case-study-page .om-bridge-sub{color:rgba(255,255,255,.72)!important}
+/* #9e6ee5 on #2c2147 is only 4.11:1 at 12px uppercase — lighten it.
+   Needs the parent in the selector to outrank the generic [class*="label"] rule
+   above, which is (0,3,0); a bare .om-bridge-label would be (0,2,0) and lose. */
+.case-study-page .om-bridge .om-bridge-label{color:var(--rd-bright-text)!important}
+/* "Core Tier" pill in the connector ecosystem — 3.97:1 */
+.case-study-page .eco-card .eco-card__core{color:#4a3080!important}
+/* connector-ecosystem "New" badge: #16a34a on #e7f6ec is 2.95:1 at 11px */
+.case-study-page .eco-card__new{color:#136c32!important}
+/* Image-failure placeholder sits behind the img on a white .shot-frame — so it
+   stays dark-on-white even inside a dark section (the frame is the backing). */
+.case-study-page .shot-ph,
+.case-study-page .shot-ph *,
+.case-study-page :is(.section-dark,.section-dark-soft) :is(.shot-ph,.shot-ph *){
+  color:var(--muted)!important;
+}
+.case-study-page .om-bridge-arrow{color:var(--rd-bright-text)!important}
+
+/* chips on a dark surface: translucent purple pill, light text.
+   MUST come after the dark-text block above — that block matches `span`, and at
+   equal specificity the later rule wins, which is what whitened these chips. */
+.case-study-page :is(
+  .section-dark,.section-dark-soft,.callout,.dark-copy,.harness-grid,.panel-dark
+) :is(.a11y-chip,.a11y-tag,.otn-chip){
+  background:rgba(158,110,229,.18)!important;
+  border:1px solid rgba(158,110,229,.38)!important;
+  color:#e4d7fa!important;
+}
+.case-study-page :is(
+  .section-dark,.section-dark-soft
+) :is(.a11y-chip,.a11y-tag) :is(b,strong){color:#fff!important}
+
+/* captions: --faint (#9a958c) is only 2.98:1 on white — use --muted */
+.case-study-page :is(.shot-cap,.figure-cap,figcaption,.caption,.note,.glance-note){color:var(--muted)!important}
+.case-study-page :is(.section-dark,.section-dark-soft) :is(.shot-cap,figcaption,.caption,.note){color:rgba(255,255,255,.78)!important}
+
+/* status colours — red/green parity, readable on dark */
+.case-study-page .good,.case-study-page [class*="--good"],
+.case-study-page .itable .st.done{color:#4ade80!important}
+.case-study-page .bad,.case-study-page [class*="--bad"]{color:#ff6b5a!important}
+.case-study-page .itable .st.open{color:#e0a458!important}
+/* on light surfaces keep the deeper red/green */
+.case-study-page .section:not(.section-dark):not(.section-dark-soft) :is(.good,[class*="--good"]){color:#15703c!important}
+.case-study-page .section:not(.section-dark):not(.section-dark-soft) :is(.bad,[class*="--bad"]){color:#c0392b!important}
+
+.case-study-page .metric-tile strong{font-weight:600 !important;letter-spacing:-.045em !important}
+.case-study-page :is(.section:not(.section-dark):not(.section-dark-soft)) .metric-tile strong{color:var(--rd-purple)!important}
+
+/* =============================================== clean landing-page look ====
+   no background grid, no decorative gradients */
+.case-study-page .landing-grid,
+.case-study-page .landing-blob,
+.case-study-page .glow-zone::before{display:none!important}
+.case-study-page::before,.case-study-page::after{background:none!important;background-image:none!important;content:none!important}
+body.case-study-page{background:#ffffff!important;font-family:"Inter",ui-sans-serif,system-ui,-apple-system,sans-serif!important}
+.case-study-page .nav{background:rgba(255,255,255,.82)!important;border-bottom:1px solid rgba(41,40,39,.10)!important;backdrop-filter:saturate(160%) blur(16px)}
+/* flatten decorative gradients on LIGHT bands only (never a whole .section) */
+.case-study-page .at-glance-band{background:var(--surface-2)!important;background-image:none!important}
+.case-study-page ::selection{background:var(--rd-lav);color:var(--rd-ink)}
+
+/* --------------------------------------------------- tables (light ones) --- */
+.case-study-page .comparison-head span,.case-study-page .perm-matrix thead th{letter-spacing:.06em}
+.case-study-page .comparison-table{background-image:none!important}
+
+/* -------------------------------------------------------- carousel arrows --
+   org + billing already ship the markup and the JS; they were display:none
+   above the mobile breakpoint. Show them, in the map's geometry. */
+.case-study-page .refine-viewport{position:relative!important}
+.case-study-page .refine-arrow{
+  display:grid!important;
+  position:absolute;top:auto!important;bottom:14px!important;transform:none!important;
+  width:40px;height:40px;border-radius:50%;
+  background:rgba(34,24,54,.82)!important;border:0!important;color:#fff!important;
+  place-items:center;z-index:4;box-shadow:none!important;cursor:pointer;
+}
+.case-study-page .refine-arrow svg{width:18px;height:18px;display:block}
+.case-study-page .refine-arrow.prev{left:14px!important;right:auto!important}
+.case-study-page .refine-arrow.next{left:62px!important;right:auto!important}
+
+/* ------------------------------------------------------ next-case-study ---- */
+.case-study-page .companion-card{
+  background:var(--rd-purple)!important;background-image:none!important;
+  border:0!important;color:#fff!important;border-radius:28px!important;
+}
+.case-study-page .companion-card :where(h2,h3,p,span,a,small,strong,b,.companion-copy){color:#fff!important}
+.case-study-page .companion-copy small{color:#e6dbff!important}
+.case-study-page .companion-arrow,.case-study-page .companion-card svg{color:#fff!important;stroke:#fff!important}
+
+/* ------------------------------------------------- next-case-study panel ----
+   Same purple panel the map ends on (map:373-385). Sits above the prev/next row. */
+.case-study-page .next-case-cta{padding:clamp(40px,5vw,72px) 0!important}
+.case-study-page .next-case-panel{
+  background:var(--rd-purple);color:#fff;border-radius:28px;text-align:center;
+  padding:clamp(44px,6vw,80px) clamp(28px,5vw,64px);
+}
+.case-study-page .next-case-kicker{
+  display:inline-flex;align-items:center;gap:9px;
+  font-family:"Space Grotesk",sans-serif;font-size:13px;font-weight:600;letter-spacing:.03em;color:#e6dbff;
+}
+.case-study-page .next-case-kicker::before{content:"";width:8px;height:8px;border-radius:50%;background:#e6dbff}
+.case-study-page .next-case-panel h2{
+  font-family:"Space Grotesk","Inter",sans-serif;font-weight:600;
+  font-size:clamp(30px,4vw,48px);line-height:1.08;letter-spacing:-.035em;
+  color:#fff;margin:16px 0 0;padding-bottom:.06em;
+}
+.case-study-page .next-case-panel p{color:rgba(255,255,255,.86);max-width:52ch;margin:16px auto 0;line-height:1.6}
+.case-study-page .next-case-actions{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:28px}
+.case-study-page :is(.next-case-primary,.next-case-outline){
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  height:52px;padding:0 24px;border-radius:999px;
+  font-family:"Inter",sans-serif;font-weight:600;font-size:15.5px;
+  border:1.5px solid transparent;white-space:nowrap;
+  transition:transform .2s var(--rd-ease),background .2s var(--rd-ease),border-color .2s var(--rd-ease);
+}
+/* documented exception: purple-on-purple is impossible, so the primary inverts */
+.case-study-page .next-case-primary{background:#fff;color:var(--rd-purple)}
+.case-study-page .next-case-primary:hover{transform:translateY(-2px)}
+.case-study-page .next-case-outline{background:transparent;color:#fff;border-color:rgba(255,255,255,.6)}
+.case-study-page .next-case-outline:hover{border-color:#fff;background:rgba(255,255,255,.12);transform:translateY(-2px)}
+.case-study-page .next-case-panel .arw{transition:transform .25s var(--rd-ease)}
+.case-study-page .next-case-primary:hover .arw{transform:translateX(4px)}
+@media(max-width:420px){
+  .case-study-page .next-case-actions{flex-direction:column;align-items:stretch}
+  .case-study-page :is(.next-case-primary,.next-case-outline){width:100%}
+}
+
+/* ------------------------------------------------------------- footers ----- */
+.case-study-page .footer{border-top:1px solid var(--line)!important;background:#fff!important}
+.case-study-page .site-footer{background-color:#221836!important;background-image:none!important;color:#fff}
+.case-study-page .site-footer a{color:rgba(255,255,255,.8)!important}
+.case-study-page .site-footer a:hover{color:#fff!important}
+.case-study-page .footer-move .fm-dir{color:var(--rd-purple)!important}
+.case-study-page .footer-move .fm-name{color:var(--rd-ink)!important}
+.case-study-page .read-progress{background-color:rgba(34,24,54,.95)!important}
+
+/* ---------------------------------------------------------- responsive ----- */
+img,svg,video,iframe,canvas{max-width:100%}
+@media(max-width:600px){
+  .case-study-page .shot-grid{grid-template-columns:1fr!important}
+  .case-study-page .footer-nav{flex-direction:column;align-items:flex-start;gap:18px}
+}
+@media(hover:none){
+  .case-study-page .persona-card:hover,.case-study-page .choice-card:hover,
+  .case-study-page .refine-item:hover,.case-study-page .roadmap-phase:hover{transform:none;box-shadow:none!important}
+}
+/* WCAG 2.5.5: 44px minimum touch target for every control */
+@media(max-width:600px){
+  .case-study-page :is(.refine-persona,.ps-tab,.tab,.filter-chip){
+    min-height:44px!important;padding-top:11px!important;padding-bottom:11px!important;
+  }
+  .case-study-page .refine-arrow{width:44px!important;height:44px!important}
+  /* carousel dots are 10-12px by design — give them an invisible 44px hit area */
+  .case-study-page .concept-carousel-dot{position:relative}
+  .case-study-page .concept-carousel-dot::after{
+    content:"";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+    width:44px;height:44px;border-radius:50%;
+  }
+}

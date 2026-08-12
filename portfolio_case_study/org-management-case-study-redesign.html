@@ -1,0 +1,1142 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){if(window.self!==window.top)return;
+      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "xu2es8f588");
+  </script>
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <title>Enterprise Org Management: Roles, Permissions &amp; Templates — Ivan Jose</title>
+  <meta name="description" content="Senior Product Designer case study: an enterprise organization layer — nested permissions that follow the hierarchy and centrally governed templates — designed to surface structural-change impact before it reaches a live automation. Built cross-functionally to meet a high-revenue account's named requirements. By Ivan Jose." />
+  <link rel="canonical" href="https://josejeani06.github.io/portfolio/org-management-case-study.html" />
+  <meta name="author" content="Jean Ivan Jose" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Ivan Jose" />
+  <meta property="og:url" content="https://josejeani06.github.io/portfolio/org-management-case-study.html" />
+  <meta property="og:title" content="Enterprise Org Management: Roles, Permissions &amp; Shared Templates" />
+  <meta property="og:description" content="An enterprise org layer — permission that follows the hierarchy and centrally governed templates — designed to surface structural-change impact before it reaches a live automation." />
+  <meta property="og:image" content="https://josejeani06.github.io/portfolio/images/org-manage-members.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Enterprise Org Management: Roles, Permissions &amp; Shared Templates" />
+  <meta name="twitter:description" content="Enterprise roles, permissions, and governed templates — by Senior Product Designer Ivan Jose." />
+  <meta name="twitter:image" content="https://josejeani06.github.io/portfolio/images/org-manage-members.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "headline": "Enterprise org management: roles, permissions, and shared templates",
+    "about": "B2B SaaS product design case study — an enterprise organization and permission model with governed templates",
+    "keywords": ["product design","B2B SaaS","enterprise","RBAC","permissions","design systems","templates","UX"],
+    "url": "https://josejeani06.github.io/portfolio/org-management-case-study.html",
+    "author": { "@type": "Person", "name": "Jean Ivan Jose", "alternateName": "Ivan Jose", "jobTitle": "Senior Product Designer", "url": "https://josejeani06.github.io/portfolio/" }
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ===== Editorial palette (matches the map case study) ===== */
+    body.case-study-page{
+      --bg:#f7f5f2;--surface:transparent;--surface-2:#ece9e2;--text:#292827;--muted:#6b675f;--ink:#111110;
+      --line:rgba(41, 40, 39,.16);--hair:rgba(41, 40, 39,.12);
+      --blue:#714cb6;--blue-2:#5f3da0;--blue-soft:rgba(113, 76, 182,.10);
+      --info:#3c5496;--info-soft:rgba(60,84,150,.10);--good:#3f7a4e;--good-soft:rgba(63,122,78,.10);
+      --surface-border:0;--surface-shadow:none;--shadow:none;
+      background:#f7f5f2;color:#292827;font-family:Manrope,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+    }
+    body.case-study-page{
+      --h1:clamp(46px,7.6vw,104px);
+      --h2:clamp(29px,3.4vw,44px);
+      --h3:clamp(18px,2.2vw,20px);
+      --h4:18px;
+      --h5:16px;
+      --h6:14px;
+      --text-lg:clamp(16px,1.6vw,18px);
+      --text-md:16px;
+      --text-sm:14px;
+      --text-xs:12px;
+    }
+    .case-study-page::before{background:linear-gradient(180deg,#f2f0eb,#ece9e2)}
+    .case-study-page .landing-grid{background-image:linear-gradient(rgba(41, 40, 39,.10) 1px,transparent 1px),linear-gradient(90deg,rgba(41, 40, 39,.10) 1px,transparent 1px);background-size:66px 66px;opacity:.5;mask-image:radial-gradient(circle at 50% 22%,black 66%,transparent 100%)}
+    .nav{background:rgba(236,234,223,.74);border-bottom:1px solid rgba(41, 40, 39,.16)}
+    .brand-mark{background:#714cb6;box-shadow:none;border-radius:3px}
+    .nav-indicator{background:#714cb6}
+    h1,h2,h3{letter-spacing:-.045em}
+    h2{font-size:var(--h2);line-height:1.04;font-weight:700}
+    h3{font-size:var(--h3);font-weight:700}
+    .eyebrow{color:var(--blue-2);letter-spacing:.08em;font-weight:720;font-size:var(--text-xs)}
+    .lead{color:#4a473f}
+    /* .button inherits the pill radius + 700 weight from style.css — no override */
+    .button.secondary{background:transparent;border:1px solid var(--line);color:var(--text)}
+    .section{padding:80px 0}
+    .section-dark{background:linear-gradient(180deg,#17161a,#111014);color:#f7f5f2}
+    .section-dark h2,.section-dark h3{color:#f1ecfb}
+    .section-dark .eyebrow{color:#9e6ee5}
+    .section-dark p{color:rgba(242,240,230,.84)}
+    .section-dark .section-head p,.section-dark .pattern-head p,.section-dark .lede p{color:rgba(242,240,230,.86)}
+    /* reflection copy + pull-quote — kept identical to the billing companion study */
+    .dark-copy{max-width:none;padding-top:8px}
+    .dark-copy p{margin:0;color:rgba(242,240,230,.88);font-size:var(--text-md);line-height:1.7}
+    .dark-copy p + p{margin-top:18px}
+    .section-dark .quote{color:#f1ecfb}
+    .pattern-head{display:flex;flex-direction:column;align-items:flex-start;gap:14px}
+    .pattern-head h2,.section-head h2{margin:0}
+    .section-head{display:flex;flex-direction:column;align-items:flex-start;gap:14px;max-width:none}
+    .section-head p,.lede p{font-size:var(--text-lg);line-height:1.6;color:#6b675f;max-width:none;margin:0}
+    .business-copy p,.dark-copy p,.question-copy p,.lede p{font-size:var(--text-md);line-height:1.7}
+    .case-hero .case-title,.case-hero .lead{max-width:none}
+    .case-hero .lead{font-size:var(--text-lg)}
+    .case-hero .case-title{line-height:1;font-size:var(--h1)}
+    .lede{display:grid;gap:16px}
+    /* full-width stacked reframe sections (matches map & billing — never a 2-col title/copy split) */
+    .split{display:grid;grid-template-columns:1fr;gap:18px;align-items:start}
+    .split .lede{padding-top:4px}
+    .status-tag{display:inline-flex;align-items:center;min-height:26px;padding:0 12px;border:1px solid var(--blue);border-radius:2px;color:var(--blue-2);font-size:var(--text-xs);font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+    .hero-status-tag{display:inline-flex;align-items:center;gap:8px;min-height:30px;padding:0 14px;border-radius:999px;border:0;background:#1f9d57;color:#f1fff8;font-size:var(--text-xs);font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+    .hero-status-tag::before{content:"";width:8px;height:8px;border-radius:50%;background:#eafff3;box-shadow:0 0 0 3px rgba(234,255,243,.3)}
+    .callout{background:var(--ink);color:#f7f5f2}
+    .callout h3{color:#f1ecfb;margin:0 0 12px}
+    .callout p{color:rgba(242,240,230,.82);margin:0;line-height:1.6}
+    .case-summary{display:grid;grid-template-columns:1.05fr .95fr;gap:26px;align-items:start;margin-top:36px}
+    @media(max-width:900px){.case-summary{grid-template-columns:1fr}}
+    @media(max-width:760px){.case-summary .panel.kv{padding-left:0;padding-right:0}}
+    .story-diagram{margin-top:28px;padding:28px;border-radius:12px;background:#0a0a0a;color:#f7f5f2}
+    .diagram-title{margin:0 0 18px;font-size:var(--text-sm);letter-spacing:.12em;text-transform:uppercase;color:rgba(113, 76, 182,.88);font-weight:800}
+    .story-diagram .diagram-title{color:#f1ecfb}
+    .diagram-flow{display:flex;gap:12px 20px;align-items:flex-start;flex-wrap:wrap}
+    .diagram-node{min-width:150px;flex:1}
+    .diagram-node strong{display:block;color:#f1ecfb;font-size:var(--text-md);margin-bottom:4px}
+    .diagram-node span{display:block;font-size:var(--text-sm);line-height:1.45;color:rgba(242,240,230,.72)}
+    .diagram-arrow{color:rgba(242,240,230,.4);font-weight:800;align-self:center;font-size:var(--text-lg)}
+    @media(max-width:760px){.diagram-flow{display:grid;grid-template-columns:1fr}.diagram-arrow{display:none}}
+
+    /* metric strip (base class shared with map & billing) */
+    .metric-strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;margin-top:34px;border-top:2px solid var(--ink)}
+    .metric-tile{padding:26px 20px 24px 0;border-right:1px solid var(--hair)}
+    .metric-tile:last-child{border-right:0}
+    .metric-tile strong{display:block;font-size:var(--h2);font-weight:800;line-height:1.04;color:var(--blue);letter-spacing:-.02em;margin-bottom:10px}
+    .metric-tile span{display:block;font-size:var(--text-sm);color:var(--muted);line-height:1.45}
+    @media(max-width:760px){.metric-strip{grid-template-columns:1fr 1fr}.metric-tile{border-right:0;border-bottom:1px solid var(--hair);padding-right:0}}
+    /* ---- at-a-glance band: numbers + problem/what-did/outcome (matches integration) ---- */
+    /* opaque page-cream fill so the fixed background grid doesn't show through this band */
+    .at-glance-band{position:relative;z-index:0;background:linear-gradient(180deg,#eeece3,#eae7dd)}
+    .at-glance-band .metric-strip{grid-template-columns:repeat(3,minmax(0,1fr));gap:30px 26px;margin-top:34px;border-top:0}
+    .at-glance-band .metric-tile{padding:0;border:0;border-right:0;border-radius:0;background:transparent;box-shadow:none}
+    .at-glance-band .metric-tile strong{display:block;font-size:var(--h2);font-weight:800;line-height:1.04;letter-spacing:-.02em;color:var(--blue);margin-bottom:8px}
+    .at-glance-band .metric-tile span{display:block;font-size:var(--text-sm);color:var(--muted);line-height:1.45}
+    @media(max-width:760px){.at-glance-band .metric-strip{grid-template-columns:1fr}}
+    .at-glance{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:38px 48px;margin-top:6px}
+    .at-glance-item{padding:0}
+    .at-glance-item small{display:block;margin-bottom:12px;color:var(--blue-2);font-size:var(--text-xs);font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+    .at-glance-item p{margin:0;font-size:var(--text-md);line-height:1.62;color:#33323a}
+    .at-glance-item b{color:var(--ink);font-weight:800}
+    @media(max-width:820px){.at-glance{grid-template-columns:1fr;gap:26px}.at-glance-item{border:0;padding:0}}
+
+    /* screenshot frame */
+    .shot{margin:28px 0 0}
+    .shot-wide{margin-top:28px}
+    .shot-frame{border-radius:12px;overflow:hidden;border:1px solid rgba(41, 40, 39,.12);background:#ffffff;box-shadow:0 34px 80px rgba(17, 17, 16,.16)}
+    .shot-bar{height:36px;display:flex;align-items:center;gap:8px;padding:0 15px;background:linear-gradient(180deg,#f2f0eb,#ece9e2);border-bottom:1px solid rgba(41, 40, 39,.1)}
+    .shot-bar span{width:11px;height:11px;border-radius:50%;background:rgba(41, 40, 39,.16)}
+    .shot-media{position:relative;min-height:clamp(220px,34vw,460px);display:grid;place-items:center;background:linear-gradient(135deg,#f2f0eb,#ece9e2);overflow:hidden}
+    .shot-media img{position:relative;z-index:1;display:block;width:100%;height:auto}
+    .shot-ph{position:absolute;inset:0;z-index:0;display:grid;place-items:center;align-content:center;gap:9px;text-align:center;padding:26px;color:#9a958c}
+    .shot-ph strong{font-weight:700;color:#6b675f;font-size:var(--text-sm)}
+    .shot-ph code{font-family:ui-monospace,Menlo,monospace;font-size:var(--text-xs);color:var(--blue-2);background:rgba(113, 76, 182,.08);padding:3px 8px;border-radius:6px}
+    .shot-cap{margin:14px 2px 0;color:var(--muted);font-size:var(--text-sm)}
+    .shot-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:28px}
+    @media(max-width:820px){.shot-grid{grid-template-columns:1fr}}
+
+    /* hierarchy diagram */
+    .hier{display:grid;gap:14px;margin-top:30px}
+    .hier-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+    .hier-node{border:1px solid var(--line);border-radius:12px;background:#fff;padding:16px 20px;min-width:170px}
+    .hier-node small{display:block;font-family:ui-monospace,Menlo,monospace;font-size:var(--text-xs);letter-spacing:.12em;text-transform:uppercase;color:var(--blue);font-weight:700;margin-bottom:6px}
+    .hier-node strong{display:block;color:var(--ink);font-size:var(--text-md)}
+    .hier-node span{display:block;color:var(--muted);font-size:var(--text-sm);line-height:1.45;margin-top:3px}
+    .hier-arrow{color:rgba(41, 40, 39,.4);font-size:var(--h3)}
+    .hier-node.partner{background:var(--blue-soft);border-color:rgba(113, 76, 182,.30)}
+    .hier-node.partner small{color:var(--blue-2)}
+
+    /* roles */
+    .roles{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px}
+    @media(max-width:700px){.roles{grid-template-columns:1fr}}
+    .role{border:1px solid var(--line);border-radius:12px;background:#fff;padding:20px 22px}
+    .role h4{margin:0 0 8px;font-size:var(--text-md);color:var(--ink)}
+    .role p{margin:0;color:#565049;font-size:var(--text-sm);line-height:1.55}
+
+    /* impact / automation callout */
+    .impact{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px}
+    @media(max-width:760px){.impact{grid-template-columns:1fr}}
+    .impact-card{border-radius:12px;padding:18px 20px}
+    .impact-card.lose{background:rgba(113, 76, 182,.07);border:1px solid rgba(113, 76, 182,.22)}
+    .impact-card.gain{background:var(--good-soft);border:1px solid rgba(63,122,78,.28)}
+    .impact-card small{display:block;font-size:var(--text-xs);font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
+    .impact-card.lose small{color:#5f3da0}.impact-card.gain small{color:#2f6b3d}
+    .impact-card p{margin:0;font-size:var(--text-sm);line-height:1.55;color:#3a3942}
+    /* impact cards + captions on dark sections — these are styled for light bg; lift them so they stay legible on the dark section */
+    .section-dark .impact-card.lose{background:rgba(224,120,90,.14);border-color:rgba(224,120,90,.34)}
+    .section-dark .impact-card.gain{background:rgba(120,200,150,.12);border-color:rgba(120,200,150,.30)}
+    .section-dark .impact-card.lose small{color:#ff9d86}
+    .section-dark .impact-card.gain small{color:#8fd6a0}
+    .section-dark .impact-card p{color:rgba(242,240,230,.86)}
+    .section-dark .shot-cap{color:rgba(242,240,230,.72)}
+
+    /* feature list */
+    .flist{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:26px;border-top:1px solid var(--hair)}
+    @media(max-width:760px){.flist{grid-template-columns:1fr}}
+    .fitem{padding:20px 26px 20px 0;border-bottom:1px solid var(--hair)}
+    .fitem:nth-child(odd){border-right:1px solid var(--hair)}
+    .fitem:nth-child(even){padding-left:26px}
+    @media(max-width:760px){.fitem:nth-child(odd){border-right:0}.fitem:nth-child(even){padding-left:0}}
+    .fitem h4{margin:0 0 6px;font-size:var(--text-md);color:var(--ink)}
+    .fitem p{margin:0;font-size:var(--text-sm);line-height:1.55;color:#565049}
+
+    /* outcome result grid (shared shape with the billing companion study) */
+    .result-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;margin-top:26px;border-top:1px solid var(--hair)}
+    .result-item{padding:24px 28px 24px 0;border-bottom:1px solid var(--hair)}
+    .result-item:nth-child(odd){border-right:1px solid var(--hair)}
+    .result-item:nth-child(even){padding-left:28px}
+    .result-idx{display:block;font-family:ui-monospace,Menlo,monospace;font-size:var(--text-xs);font-weight:700;color:var(--blue);letter-spacing:.1em;margin-bottom:8px}
+    .result-item h3{margin:0 0 8px;color:var(--ink);font-size:var(--h3)}
+    .result-item p{margin:0;color:#565049;font-size:var(--text-md);line-height:1.6}
+    .result-item strong{color:var(--ink);font-weight:800}
+    @media(max-width:760px){.result-grid{grid-template-columns:1fr}.result-item,.result-item:nth-child(even){border-right:0;padding-left:0;padding-right:0}}
+
+    /* how-i-worked, folded into the Templates section as a role + AI panel */
+    .approach{margin-top:52px;padding-top:36px;border-top:1px solid var(--hair);display:grid;grid-template-columns:minmax(0,.82fr) minmax(0,1.5fr);gap:26px 56px;align-items:start}
+    .approach-head{display:flex;flex-direction:column;align-items:flex-start;gap:12px}
+    .approach-head .eyebrow{color:var(--blue-2)}
+    .approach-body p{margin:0;font-size:var(--text-md);line-height:1.66;color:#33323a}
+    .approach-body p + p{margin-top:16px}
+    .approach-body strong{color:var(--ink);font-weight:800}
+    @media(max-width:820px){.approach{grid-template-columns:1fr;gap:16px;margin-top:40px;padding-top:26px}}
+
+    .ai-badge{display:inline-flex;align-items:center;gap:8px;padding:5px 12px;border-radius:999px;border:1px solid rgba(158, 110, 229,.5);color:#9e6ee5;font-family:ui-monospace,Menlo,monospace;font-size:var(--text-xs);font-weight:700;letter-spacing:.16em}
+    .approach-head .ai-badge{color:#d8593d;border-color:rgba(216,89,61,.45)}
+    .ai-badge::before{content:"";width:8px;height:8px;border-radius:50%;background:#9e6ee5;animation:aipulse 2.4s ease-out infinite}
+    @keyframes aipulse{0%{box-shadow:0 0 0 0 rgba(158, 110, 229,.5)}70%{box-shadow:0 0 0 8px rgba(158, 110, 229,0)}100%{box-shadow:0 0 0 0 rgba(158, 110, 229,0)}}
+
+    /* ---- AI in the process: design-system harness (shared shape with map & billing) ---- */
+    .harness-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:52px}
+    .harness-card{border:1px solid rgba(242,240,230,.16);border-radius:12px;background:rgba(255,255,255,.035);overflow:hidden;display:flex;flex-direction:column}
+    .harness-file{font-family:ui-monospace,Menlo,monospace;font-size:var(--text-xs);color:rgba(242,240,230,.66);padding:12px 16px;border-bottom:1px solid rgba(242,240,230,.12);background:rgba(255,255,255,.03);display:flex;align-items:center;gap:9px}
+    .harness-file::before{content:"";width:9px;height:9px;border-radius:50%;background:#9e6ee5;flex:0 0 9px}
+    .harness-card h3{padding:16px 16px 0;margin:0;color:#f1ecfb;font-size:var(--h3);line-height:1.12}
+    .harness-card p{padding:8px 16px 18px;margin:0;color:rgba(242,240,230,.78);font-size:var(--text-sm);line-height:1.56}
+    @media(max-width:760px){.harness-grid{grid-template-columns:1fr}}
+
+    /* ---- compact accessibility facts, folded into the dark AI section (shared with map & billing) ---- */
+    .a11y-facts{margin-top:24px;display:grid;gap:0}
+    .a11y-line{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 16px;padding:12px 0;border-top:1px solid var(--hair)}
+    .a11y-line:last-child{border-bottom:1px solid var(--hair)}
+    .a11y-lbl{flex:none;min-width:92px;font-size:var(--text-xs);font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--blue-2)}
+    .a11y-chip{font-size:var(--text-sm);color:#6b675f;white-space:nowrap}
+    .a11y-chip b{color:var(--ink);font-weight:800;font-variant-numeric:tabular-nums}
+    .a11y-chip i{font-style:normal;font-size:var(--text-xs);font-weight:800;letter-spacing:.04em;color:var(--blue-2)}
+    .a11y-tag{font-size:var(--text-sm);color:#3a3942;white-space:nowrap}
+    .a11y-tag::before{content:"";display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--blue);margin-right:8px;vertical-align:middle}
+    .inline-link{color:var(--blue-2);font-weight:700;text-decoration:underline;text-underline-offset:2px;text-decoration-thickness:1px}
+    .inline-link:hover{color:#5f3da0}
+    @media(max-width:760px){.a11y-lbl{min-width:100%}.a11y-chip,.a11y-tag{white-space:normal}}
+    /* dark treatment when the a11y block sits inside the dark AI section */
+    #accessibility .section-head h3{color:#f1ecfb}
+    #accessibility .section-head p{color:rgba(242,240,230,.82)}
+    #accessibility .section-head p span{color:rgba(242,240,230,.55)!important}
+    #accessibility .inline-link{color:#9e6ee5}
+    #accessibility .a11y-lbl{color:#9e6ee5}
+    #accessibility .a11y-chip{color:rgba(242,240,230,.82)}
+    #accessibility .a11y-chip b{color:#f1ecfb}
+    #accessibility .a11y-chip i{color:#9e6ee5}
+    #accessibility .a11y-tag{color:rgba(242,240,230,.86)}
+    #accessibility .a11y-tag::before{background:#9e6ee5}
+    #accessibility .a11y-line{border-color:rgba(242,240,230,.16)}
+    .quote{font-size:var(--h2);line-height:1.14;letter-spacing:-.02em;max-width:940px;font-weight:600}
+    .footer{border-top:1px solid var(--line)}
+
+    /* refinement carousel — clickable, filterable feature table (shared with billing) */
+    .refine-carousel{margin-top:26px;display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:14px 36px;align-items:start}
+    .refine-personas{grid-column:1 / -1;display:flex;flex-wrap:wrap;gap:10px;margin-bottom:6px}
+    .refine-persona{appearance:none;border:1px solid var(--line);background:transparent;color:var(--muted);border-radius:999px;padding:9px 16px;font-family:inherit;font-weight:700;font-size:var(--text-sm);cursor:pointer;transition:background .2s ease,border-color .2s ease,color .2s ease}
+    .refine-persona:hover{border-color:var(--blue);color:var(--blue-2)}
+    .refine-persona.is-active{background:var(--blue);border-color:var(--blue);color:#f1ecfb}
+    .refine-viewport{position:relative;overflow:hidden;border-radius:16px;border:1px solid var(--line);background:#ece9e2}
+    .refine-track{display:flex;transition:transform .45s cubic-bezier(.2,1,.22,1)}
+    .refine-slide{min-width:100%;box-sizing:border-box;padding:14px;display:grid;place-items:center}
+    .refine-slide img{width:auto;height:auto;max-width:100%;max-height:560px;object-fit:contain;display:block;margin:0 auto;border-radius:10px;box-shadow:0 18px 44px rgba(17, 17, 16,.18);background:#ffffff}
+    .refine-controls{display:flex;flex-direction:column;gap:10px}
+    .refine-item{position:relative;overflow:hidden;appearance:none;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:5px;padding:16px 18px 18px;border:1px solid var(--line);border-radius:14px;background:transparent;transition:background .2s ease,border-color .2s ease}
+    .refine-item:hover{border-color:rgba(113, 76, 182,.4)}
+    .refine-item.is-active{background:#fff;border-color:transparent;box-shadow:0 16px 40px rgba(17, 17, 16,.10)}
+    .refine-item.is-hidden{display:none}
+    .refine-item-persona{font-size:var(--text-xs);font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--blue)}
+    .refine-item-title{font-size:var(--h3);font-weight:700;color:var(--ink);line-height:1.16}
+    .refine-item-desc{font-size:var(--text-sm);line-height:1.5;color:var(--muted)}
+    .refine-item-bar{position:absolute;left:0;bottom:0;height:3px;width:100%;background:transparent}
+    .refine-item.is-active .refine-item-bar{background:rgba(113, 76, 182,.16)}
+    .refine-item-bar i{display:block;height:100%;width:0;background:var(--blue);transition:width .12s linear}
+    .refine-arrow{display:none;position:absolute;top:50%;transform:translateY(-50%);z-index:4;width:44px;height:44px;border-radius:999px;place-items:center;background:rgba(255,251,246,.92);border:1px solid rgba(41, 40, 39,.14);color:var(--ink);box-shadow:0 10px 24px rgba(17, 17, 16,.18);cursor:pointer}
+    .refine-arrow.prev{left:10px}.refine-arrow.next{right:10px}.refine-arrow svg{width:22px;height:22px;display:block}
+    @media(max-width:900px){.refine-carousel{grid-template-columns:1fr;gap:16px}.refine-controls{gap:0}.refine-item:not(.is-active){display:none}.refine-item.is-active{border:0;background:transparent;box-shadow:none;padding:2px 0 0;text-align:center;align-items:center}.refine-item.is-active .refine-item-bar{display:none}.refine-arrow{display:grid}}
+
+    /* reading progress indicator (shared with map & billing) */
+    .read-progress{position:fixed;right:22px;bottom:22px;z-index:120;display:flex;align-items:center;gap:12px;padding:9px 16px 9px 11px;border-radius:999px;background:rgba(17, 17, 16,.9);backdrop-filter:blur(8px);box-shadow:0 14px 34px rgba(14,13,8,.32);opacity:0;transform:translateY(10px);transition:opacity .3s ease,transform .3s ease;pointer-events:none}
+    .read-progress.is-visible{opacity:1;transform:translateY(0)}
+    .read-progress-ring{position:relative;width:44px;height:44px;flex:0 0 44px}
+    .read-progress-ring svg{transform:rotate(-90deg);display:block}
+    .read-progress-ring .rp-track{stroke:rgba(242,240,230,.18)}
+    .read-progress-ring .rp-bar{stroke:url(#rpGrad);stroke-linecap:round;transition:stroke-dashoffset .18s linear}
+    .read-progress-pct{position:absolute;inset:0;display:grid;place-items:center;font-size:var(--text-xs);font-weight:800;color:#f2f0eb}
+    .read-progress-copy{display:grid;gap:2px;max-width:210px}
+    .read-progress-title{font-size:var(--text-sm);font-weight:800;letter-spacing:-.01em;line-height:1.1;color:#f1ecfb}
+    .read-progress-sub{font-size:var(--text-xs);line-height:1.28;color:rgba(242,240,230,.72)}
+    @media(max-width:560px){.read-progress-copy{display:none}.read-progress{padding:8px;right:16px;bottom:16px}}
+    @media(prefers-reduced-motion:reduce){.read-progress,.read-progress-ring .rp-bar{transition:none}.ai-badge::before{animation:none}}
+
+    /* keep the sticky nav working: style.css sets overflow-x:hidden on html/body,
+       which breaks position:sticky — clip preserves it (same fix as map & billing) */
+    html{overflow-x:clip}
+    body.case-study-page{overflow-x:clip}
+    /* nav prototype pill + hero meta (shared with map & billing) */
+    .nav-inner{align-items:center}
+    .nav-right{display:flex;align-items:center;gap:18px}
+    .nav-prototype-link{
+      position:relative;display:inline-flex;align-items:center;align-self:center;gap:10px;
+      min-height:42px;padding:0 16px;border:1px solid transparent;border-radius:999px;
+      background:var(--blue);color:#fff;font-size:var(--text-sm);font-weight:800;line-height:1;letter-spacing:-.01em;
+      white-space:nowrap;box-shadow:0 10px 24px rgba(17, 17, 16,.08);
+      transition:transform .2s ease,box-shadow .2s ease;
+    }
+    .nav-prototype-link:hover{transform:translateY(-1px);background:var(--blue-2);box-shadow:0 14px 28px rgba(17, 17, 16,.16)}
+    .nav-prototype-icon{width:16px;height:16px;display:block;flex:0 0 16px;filter:brightness(0) invert(1)}
+    .nav-prototype-icon svg{display:block;width:100%;height:100%}
+    @media(max-width:980px){.nav-right{gap:12px}.nav-prototype-link{padding:0 13px;min-height:38px;font-size:var(--text-xs)}}
+    @media(max-width:760px){.nav-prototype-link span:last-child{display:none}.nav-prototype-link{padding:0 11px;min-width:38px;justify-content:center}}
+    .hero-meta{display:grid;justify-items:start;gap:10px}
+
+    /* permission matrix — same table treatment as map/integration blocker tables */
+    .perm-matrix{width:100%;border-collapse:collapse}
+    .comparison-table:has(.perm-matrix){background:#fff;border:1px solid var(--line);box-shadow:none}
+    .perm-matrix th,.perm-matrix td{padding:14px 16px;border-bottom:1px solid var(--line);vertical-align:middle}
+    .perm-matrix tr:last-child th,.perm-matrix tr:last-child td{border-bottom:0}
+    .perm-matrix thead th{padding:14px 16px;background:#fff;text-transform:uppercase;letter-spacing:.08em;font-size:var(--text-xs);font-weight:800;color:#6b675f;text-align:center}
+    .perm-matrix thead th:first-child{text-align:left}
+    .perm-matrix thead th + th,.perm-matrix tbody td{border-left:1px solid var(--line)}
+    .perm-matrix tbody tr:nth-child(odd){background:#ffffff}
+    .perm-matrix tbody th{text-align:left;font-weight:700;color:var(--ink);font-size:var(--text-sm);line-height:1.35;background:transparent}
+    .perm-matrix tbody td{text-align:center}
+    .perm-matrix .ic{width:21px;height:21px;display:inline-block;vertical-align:middle}
+    .perm-matrix .can{color:var(--good)}
+    .perm-matrix .see{color:var(--info)}
+    .perm-matrix .no{color:rgba(41, 40, 39,.3);font-weight:800}
+    .matrix-legend{display:flex;flex-wrap:wrap;align-items:center;gap:6px 18px;margin:14px 2px 0;color:var(--muted);font-size:var(--text-sm)}
+    .matrix-legend span{display:inline-flex;align-items:center;gap:7px}
+    .matrix-legend .ic{width:18px;height:18px}
+    .matrix-legend .can{color:var(--good)}.matrix-legend .see{color:var(--info)}.matrix-legend .no{color:rgba(41, 40, 39,.4);font-weight:800}
+    .matrix-note{margin:12px 2px 0;color:var(--muted);font-size:var(--text-sm);line-height:1.55}
+    @media(max-width:640px){.comparison-table:has(.perm-matrix){overflow-x:auto}.perm-matrix{min-width:620px}.perm-matrix th,.perm-matrix td{padding:11px 12px}.perm-matrix thead th{font-size:11px}.perm-matrix tbody th{font-size:13px}.perm-matrix .ic{width:18px;height:18px}}
+
+    /* model comparison — shared white-table treatment, with a compact mobile reading order */
+    .model-comparison-table{border:1px solid rgba(242,240,230,.16);border-radius:14px;background:#0e0e0d;box-shadow:none}
+    .model-comparison-table .comparison-head{background:#0e0e0d;border-bottom-color:rgba(242,240,230,.16)}
+    .model-comparison-table .comparison-head div{padding:14px 16px;color:#f7f5f2;font-size:var(--text-xs)}
+    .model-comparison-table .comparison-head div:last-child{color:#7dc98d}
+    .model-comparison-table .row{border-color:rgba(242,240,230,.12)}
+    .model-comparison-table .cell{padding:16px;color:#ece3fb;font-size:var(--text-sm);line-height:1.55;background:rgba(113, 76, 182,.12)}
+    .model-comparison-table .cell:first-child{border-right:1px solid rgba(242,240,230,.12)}
+    .model-comparison-table .cell small{margin-bottom:7px;color:#9e6ee5;font-size:var(--text-xs);letter-spacing:.08em}
+    .model-comparison-table .cell strong{font-size:var(--text-md);color:#fff3ec}
+    .model-comparison-table .row.model-shipped .cell{background:rgba(81,139,92,.13);color:#d4ead8}
+    .model-comparison-table .row.model-shipped .cell small{color:#7dc98d}
+    .model-comparison-table .row.model-shipped .cell strong{color:#eff9f0}
+    @media(max-width:760px){
+      .model-comparison-table{border:1px solid rgba(242,240,230,.16);border-radius:14px;background:#0e0e0d;overflow:hidden}
+      .model-comparison-table .comparison-head{display:grid;grid-template-columns:1fr 1fr;gap:14px;padding:14px 16px;border-bottom:1px solid rgba(242,240,230,.16);background:#0e0e0d}
+      .model-comparison-table .comparison-head div{padding:0;font-size:10px}
+      .model-comparison-table .comparison-head div:first-child{border-right:0}
+      .model-comparison-table .row{display:grid;grid-template-columns:1fr;gap:0;margin:0;padding:0;background:transparent!important}
+      .model-comparison-table .cell{padding:14px 16px;border:0!important}
+      .model-comparison-table .cell::before{display:none}
+    }
+
+    /* companion case-study link card (Outcome) */
+    .companion-card{display:flex;align-items:center;justify-content:space-between;gap:24px;margin-top:34px;padding:22px 26px;border:1px solid var(--line);border-radius:14px;background:#ffffff;text-decoration:none;transition:border-color .2s ease,box-shadow .2s ease,transform .2s ease}
+    .companion-card:hover{border-color:rgba(113, 76, 182,.42);box-shadow:0 16px 40px rgba(17, 17, 16,.10);transform:translateY(-1px)}
+    .companion-copy small{display:block;color:var(--blue-2);font-size:var(--text-xs);font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px}
+    .companion-copy strong{display:block;color:var(--ink);font-size:var(--h3);line-height:1.15;margin-bottom:6px}
+    .companion-copy > span{display:block;color:var(--muted);font-size:var(--text-sm);line-height:1.5;max-width:660px}
+    .companion-arrow{flex:0 0 auto;color:var(--blue);font-size:var(--h2);font-weight:800;transition:transform .2s ease}
+    .companion-card:hover .companion-arrow{transform:translateX(4px)}
+    @media(max-width:600px){.companion-card{flex-direction:column;align-items:flex-start;gap:12px}}
+
+    /* ---- org hierarchy: top-to-bottom flow tree with branching connector lines ---- */
+    .org-tree{--otline:rgba(41, 40, 39,.32);--otdash:rgba(113, 76, 182,.55);margin-top:30px;display:flex;flex-direction:column;align-items:center}
+    .otn{position:relative;z-index:1;background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 18px;box-shadow:0 12px 30px rgba(17, 17, 16,.06)}
+    .otn small{display:block;font-family:ui-monospace,Menlo,monospace;font-size:var(--text-xs);letter-spacing:.14em;text-transform:uppercase;color:var(--blue);font-weight:700;margin-bottom:5px}
+    .otn strong{display:block;color:var(--ink);font-size:var(--text-lg);line-height:1.14}
+    .otn span{display:block;color:var(--muted);font-size:var(--text-sm);line-height:1.46;margin-top:4px}
+    .otn-chip{display:inline-block;margin-top:9px;padding:3px 11px;border-radius:999px;background:var(--blue-soft);color:var(--blue-2);font-size:var(--text-xs);font-weight:800;letter-spacing:.02em}
+    /* Organization row: centred, with Partner floated to the right via a 3-col grid */
+    .ot-orgrow{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;width:100%}
+    .otn-org{width:min(440px,100%);border-color:rgba(113, 76, 182,.3);background:#fff}
+    .ot-ext{display:flex;align-items:center;justify-self:start}
+    .ot-ext-line{flex:0 0 46px;height:2px;background:0;border-top:2px dashed var(--otdash)}
+    .otn-partner{width:min(268px,100%);border-style:dashed;border-color:rgba(113, 76, 182,.45);background:var(--blue-soft);box-shadow:none}
+    .otn-mid{width:min(340px,100%)}
+    /* vertical trunk segments */
+    .ot-stem{width:2px;height:28px;background:var(--otline)}
+    /* fork: parent splits into two children with real connector lines (width-agnostic half-bars) */
+    .ot-fork{display:flex;justify-content:center;align-items:flex-start;gap:26px}
+    .ot-branch{position:relative;display:flex;flex-direction:column;align-items:center;padding-top:26px}
+    .ot-branch::before{content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);width:2px;height:26px;background:var(--otline)}
+    .ot-branch::after{content:"";position:absolute;top:0;height:2px;background:var(--otline);width:calc(50% + 13px)}
+    .ot-branch:first-child::after{left:50%}
+    .ot-branch:last-child::after{right:50%}
+    .ot-leaf{width:min(220px,44vw)}
+    @media(max-width:1080px){
+      .ot-orgrow{grid-template-columns:1fr;justify-items:center}
+      .ot-orgrow > .ot-spacer{display:none}
+      .otn-org,.otn-mid,.otn-partner{width:min(440px,100%)}
+      .ot-ext{flex-direction:column;justify-self:center;margin-top:24px}
+      .ot-ext-line{flex:0 0 22px;width:2px;height:22px;border-top:0;border-left:2px dashed var(--otdash)}
+      .ot-fork{flex-direction:column;gap:0;align-items:center}
+      .ot-branch{padding-top:0}
+      .ot-branch::after{display:none}
+      .ot-branch::before{position:static;display:block;height:22px;margin:2px auto;transform:none}
+      .ot-leaf{width:min(440px,100%)}
+    }
+  
+    /* ===================== MOBILE (≤640px) — see skill: mobile-case-study =====================
+       Placed after the ≤900 restacks so these win. Selectors absent on a page are no-ops. */
+    @media(max-width:640px){
+      .section{padding:40px 0!important}
+      /* at-a-glance stats: 2 columns (2x3 for the six metrics) */
+      .at-glance-band .metric-strip{grid-template-columns:1fr 1fr;gap:26px 20px}
+      .at-glance-band .metric-tile{border-right:0}
+      /* permission-model comparison IS a table: keep the two columns, scroll sideways */
+      .model-comparison-table{overflow-x:auto;-webkit-overflow-scrolling:touch}
+      .model-comparison-table .comparison-head,.model-comparison-table .row{grid-template-columns:minmax(190px,1fr) minmax(260px,1.3fr);min-width:560px}
+      .model-comparison-table .cell::before{display:none}
+      /* compare slider: full-bleed the de-boxed stage */
+      #compare .compare-stage{width:100vw;max-width:none;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw)}
+      #compare .compare-slider,.compare-slider{border-radius:0;border-left:0;border-right:0}
+      /* scroll-story mobile media: full-bleed */
+      .scroll-story-mobile-media{width:100vw;margin-left:calc(50% - 50vw)}
+      .scroll-story-mobile-media img{border-radius:0;border-left:0;border-right:0}
+      /* refinement carousel: video full-bleed, arrows BELOW it */
+      #refine-carousel .refine-viewport,.refine-viewport{width:100vw;max-width:none;margin-left:calc(50% - 50vw);border-radius:0;padding-bottom:56px}
+      #refine-carousel .refine-arrow,.refine-arrow{top:auto;bottom:8px;transform:none}
+      #refine-carousel .refine-arrow.prev,.refine-arrow.prev{left:calc(50% - 54px);right:auto}
+      #refine-carousel .refine-arrow.next,.refine-arrow.next{right:calc(50% - 54px);left:auto}
+      /* decision-log: keep 4 columns, scroll sideways */
+      .decision-log-table{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--line);border-radius:12px;background:#fff}
+      .decision-log-head,.decision-log-body{min-width:680px;grid-template-columns:1.1fr 1.1fr 1.2fr 1fr;gap:0}
+      .decision-log-head{padding:0}
+      .decision-log-head div{padding:12px 14px;font-size:11px;line-height:1.3;border-left:1px solid rgba(41, 40, 39,.08)}
+      .decision-log-head div:first-child{border-left:0}
+      .decision-log-body{padding:0}
+      .decision-log-body + .decision-log-body{border-top:1px solid rgba(41, 40, 39,.1)}
+      .decision-log-cell{padding:13px 14px;border-left:1px solid rgba(41, 40, 39,.08);margin-top:0}
+      .decision-log-cell:first-child{border-left:0}
+      .decision-log-cell + .decision-log-cell{margin-top:0;border-left:1px solid rgba(41, 40, 39,.08)}
+      .decision-log-cell p{font-size:12.5px;line-height:1.5}
+      .decision-log-cell::before{display:none}
+      /* persona table -> real table that scrolls sideways */
+      .persona-table-shell{overflow-x:auto;-webkit-overflow-scrolling:touch;padding:14px}
+      .persona-table{display:table;min-width:620px;border-collapse:collapse}
+      .persona-table thead{display:table-header-group}
+      .persona-table thead th{display:table-cell;padding:0 12px 8px}
+      .persona-table tbody{display:table-row-group}
+      .persona-table tr{display:table-row}
+      .persona-table tr + tr{border-top:0}
+      .persona-table td{display:table-cell;width:auto;padding:10px 12px;font-size:13px}
+      .persona-table tbody tr + tr td{border-top:1px solid var(--line)}
+      .persona-table td::before{display:none}
+      /* itable: scroll sideways, mobile font */
+      .itable{overflow-x:auto;-webkit-overflow-scrolling:touch}
+      .itable table{min-width:600px}
+      .itable td,.itable th{font-size:12.5px}
+      /* journey lanes: scroll steps sideways */
+      .journey-steps.cols-3,.journey-steps.cols-4{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(210px,72vw);overflow-x:auto;-webkit-overflow-scrolling:touch;gap:16px;padding-bottom:8px}
+      .journey-step{padding-left:16px}
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght;500;600;700&family=Inter:wght;500;600;700&display=swap" rel="stylesheet">
+  <style id="rd-fonts">body{font-family:"Inter",ui-sans-serif,system-ui,sans-serif}h1,h2,h3,h4,h5,.eyebrow,[class*="title"],[class*="kicker"],[class*="heading"]{font-family:"Space Grotesk","Inter",sans-serif}</style>
+  <link rel="stylesheet" href="redesign-system.css?v=26">
+</head>
+<body class="case-study-page">
+  <div class="landing-grid" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a class="brand" href="redesign.html">Ivan Jose</a>
+      <div class="nav-right">
+        <div class="nav-links">
+          <a href="#summary" data-section-link="summary">Summary</a>
+          <a href="#model" data-section-link="model">Org Model</a>
+          <a href="#automations" data-section-link="automations">Safety</a>
+          <a href="#templates" data-section-link="templates">Templates</a>
+          <a href="#ai-process" data-section-link="process">Process</a>
+          <a href="#outcome" data-section-link="outcome">Results</a>
+          <span class="nav-indicator" aria-hidden="true"></span>
+        </div>
+        <a class="nav-prototype-link" href="design-system-case-study-redesign.html">
+          <span class="nav-prototype-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="aiPrototypeGradient" x1="2" y1="3" x2="22" y2="21" gradientUnits="userSpaceOnUse">
+                  <stop offset="0" stop-color="#9e6ee5"/>
+                  <stop offset=".28" stop-color="#ff4d8d"/>
+                  <stop offset=".56" stop-color="#8f6dff"/>
+                  <stop offset=".8" stop-color="#2cc8ff"/>
+                  <stop offset="1" stop-color="#7cf0a6"/>
+                </linearGradient>
+              </defs>
+              <path d="M12 2.6 13.76 8l5.45 1.76-5.45 1.74L12 16.9l-1.74-5.4L4.8 9.76 10.26 8 12 2.6Z" fill="url(#aiPrototypeGradient)"/>
+              <path d="m18.2 13.8.9 2.7 2.7.9-2.7.88-.9 2.72-.88-2.72-2.72-.88 2.72-.9.88-2.7Z" fill="url(#aiPrototypeGradient)"/>
+              <path d="m6.24 14.58.64 1.93 1.94.64-1.94.63-.64 1.94-.62-1.94-1.94-.63 1.94-.64.62-1.93Z" fill="url(#aiPrototypeGradient)"/>
+            </svg>
+          </span>
+          <span>Read design system</span>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <!-- HERO -->
+    <section class="case-hero" id="summary">
+      <div class="container">
+        <div class="hero-meta">
+          <div class="eyebrow">Org Management · LettrLabs</div>
+          <div class="hero-status-tag">Shipped Product</div>
+        </div>
+        <h1 class="case-title">Giving enterprise teams one place to manage roles, permissions, and shared templates.</h1>
+        <p class="lead">
+          LettrLabs' biggest customers had outgrown group management. This is the organization layer above the groups—shared roles, permissions, and centrally-governed templates—built to meet the named requirements of a high-value enterprise prospect, with CEO and CTO sponsorship.
+        </p>
+        <div class="case-actions">
+          <a class="button" href="#model">See the org model</a>
+          <a class="button secondary" href="https://www.lettrlabs.com/" target="_blank" rel="noreferrer">Visit LettrLabs</a>
+          <span class="prototype-note">Led the template system end-to-end; org-level actions built closely with engineering, alongside a PM and a Staff Designer.</span>
+        </div>
+
+        <div class="case-summary">
+          <div class="callout">
+            <h3>Executive summary</h3>
+            <p>
+              We shipped organization management—members, roles, a nested permission model, governed templates, and partner—so the product can support structural actions in-product rather than routing every one through ops. Built to meet a high-revenue account's named requirements to sign.
+            </p>
+          </div>
+          <div class="panel kv">
+            <div class="kv-item"><span>My role</span><strong>Led the Template system end-to-end; contributed to Members, Groups &amp; Billing; reused the system for Partner. With a PM, a Staff Designer, and engineering.</strong></div>
+            <div class="kv-item"><span>Scope (this study)</span><strong>Members · Roles · Permission model · Templates · Partner</strong></div>
+            <div class="kv-item"><span>The hard part</span><strong>Every structural change can affect a live automation, so the flow has to surface its impact before commit</strong></div>
+            <div class="kv-item"><span>AI in the work</span><strong>Design system, validations, UX stories, first-draft prototype, and UX copy</strong></div>
+            <div class="kv-item"><span>Status</span><strong>Evaluated and shipped</strong></div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- AT A GLANCE -->
+    <section class="section at-glance-band">
+      <div class="container">
+        <div class="section-head" style="margin-bottom:34px">
+          <div class="eyebrow">At a glance</div>
+          <h2>One permission system, five surfaces, designed for self-service.</h2>
+        </div>
+        <div class="metric-strip" style="margin-top:0;margin-bottom:40px">
+          <div class="metric-tile"><strong>1</strong><span>high-value enterprise account named org management a requirement to sign—one of several must-haves it was built to meet</span></div>
+          <div class="metric-tile"><strong>5 surfaces</strong><span>designed on one backbone: members, roles, the permission model, templates, and partner (billing is a companion study)</span></div>
+          <div class="metric-tile"><strong>3 → self-serve</strong><span>structural changes used to need Customer Success, the CTO, and the Director of Engineering; the shipped system was designed to move those actions in-product</span></div>
+          <div class="metric-tile"><strong>5 levels</strong><span>groups nest up to five deep, with permission that follows the hierarchy</span></div>
+          <div class="metric-tile"><strong>~75%</strong><span>of revenue sits with the 3 largest clients this org layer had to serve</span></div>
+          <div class="metric-tile"><strong>1 system</strong><span>one permission model reused across members, templates, and partner—not four separate builds</span></div>
+        </div>
+        <p class="glance-note" style="margin:0 0 34px;color:var(--muted);font-size:var(--text-sm)">Account and revenue figures come from internal reporting, rounded.</p>
+        <div class="at-glance">
+          <div class="at-glance-item">
+            <small>The problem</small>
+            <p>LettrLabs' biggest customers had outgrown group management: many teams and budgets, but no <b>organization layer</b> above the groups—no shared roles, pooled billing, or centrally-governed templates. Every <b>structural change</b> had to route through <b>Customer Success, the CTO, and the Director of Engineering</b>, and a paused automation is lost revenue.</p>
+          </div>
+          <div class="at-glance-item">
+            <small>What I did</small>
+            <p>Led the <b>Template system end-to-end</b>, then contributed its shared permission model and patterns across members, roles, billing, and partner with a PM, a Staff Designer, and engineering.</p>
+          </div>
+          <div class="at-glance-item">
+            <small>The outcome</small>
+            <p>The shipped pattern moves structural actions into the product; adoption and completion time are <b>launch measures</b>. Org management also sits on the <b>must-have list of a major enterprise prospect</b> whose named requirements it was built to meet.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MAIN UX (white background) -->
+    <!-- ORG MODEL (Main UX screenshot folded in as opening proof) -->
+    <section class="section" id="model" style="background:#ffffff">
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">Main UX</div>
+          <h2>The real design problem was permission that follows the hierarchy.</h2>
+          <p>Before any screen, I had to get the model right: how organizations, groups, users, and partners relate—and exactly who can see and do what.</p>
+        </div>
+        <figure class="shot shot-wide" style="margin-top:24px">
+          <div class="shot-frame">
+            <div class="shot-media">
+              <img src="images/org-manage-members.webp" alt="Manage members with org tree, roles, and the nested scope selector" onerror="this.remove()">
+              <span class="shot-ph"><strong>Manage Members — org tree, roles, and the nested scope selector</strong></span>
+            </div>
+          </div>
+          <figcaption class="shot-cap">The whole organization in one view: members, admins, and users read against the org tree; scopes are chosen from the nested hierarchy so access always matches the structure.</figcaption>
+        </figure>
+
+        <div class="org-tree" role="img" aria-label="Organization hierarchy: the Organization sits at the top and owns billing, templates, and analytics. It branches down to nestable Groups/teams (up to five levels deep) and, on a separate external branch, to Partners (walled off). Inside a group, users are either an Admin (modify) or a Member (view).">
+          <div class="ot-orgrow">
+            <div class="ot-spacer" aria-hidden="true"></div>
+            <div class="otn otn-org"><small>Top</small><strong>Organization</strong><span>Owns billing, templates, and analytics for everything beneath it.</span></div>
+            <div class="ot-ext">
+              <span class="ot-ext-line" aria-hidden="true"></span>
+              <div class="otn otn-partner"><small>External</small><strong>Partner</strong><span>An outside party the org pays for—limited template use, isolated analytics, walled off.</span></div>
+            </div>
+          </div>
+          <div class="ot-stem" aria-hidden="true"></div>
+          <div class="otn otn-mid"><small>Nestable</small><strong>Groups / teams</strong><span>Independent teams—each with its own budget, campaigns, and people.</span><span class="otn-chip">Nests up to 5 levels deep</span></div>
+          <div class="ot-stem" aria-hidden="true"></div>
+          <div class="ot-fork">
+            <div class="ot-branch"><div class="otn ot-leaf"><small>User · modify</small><strong>Admin</strong><span>Changes within their branch of the tree.</span></div></div>
+            <div class="ot-branch"><div class="otn ot-leaf"><small>User · view</small><strong>Member</strong><span>Sees their org and groups—no changes.</span></div></div>
+          </div>
+        </div>
+
+        <div class="comparison-table" style="margin-top:22px">
+          <table class="perm-matrix">
+            <thead>
+              <tr><th scope="col">Capability</th><th scope="col">Owner</th><th scope="col">Admin</th><th scope="col">Member</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">See their org &amp; the groups they belong to</th>
+                <td class="can" aria-label="Can do"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></td>
+                <td class="can" aria-label="Can do"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></td>
+                <td class="see" aria-label="View only"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M1.5 12S5.5 5 12 5s10.5 7 10.5 7-4 7-10.5 7S1.5 12 1.5 12Z" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3.2" fill="currentColor"/></svg></td>
+              </tr>
+              <tr>
+                <th scope="row">Invite people, set roles &amp; scopes</th>
+                <td class="can" aria-label="Can do"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></td>
+                <td class="can" aria-label="Can do"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></td>
+                <td class="no" aria-label="No access">–</td>
+              </tr>
+              <tr>
+                <th scope="row">Manage billing</th>
+                <td class="can" aria-label="Can do"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></td>
+                <td class="can" aria-label="Can do"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></td>
+                <td class="no" aria-label="No access">–</td>
+              </tr>
+              <tr>
+                <th scope="row">Create &amp; govern templates</th>
+                <td class="can" aria-label="Can do"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></td>
+                <td class="can" aria-label="Can do"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></td>
+                <td class="no" aria-label="No access">–</td>
+              </tr>
+              <tr>
+                <th scope="row">Transfer ownership or delete the org</th>
+                <td class="can" aria-label="Can do"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></td>
+                <td class="no" aria-label="No access">–</td>
+                <td class="no" aria-label="No access">–</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="matrix-legend">
+          <span class="can"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg> Can do</span>
+          <span class="see"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M1.5 12S5.5 5 12 5s10.5 7 10.5 7-4 7-10.5 7S1.5 12 1.5 12Z" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3.2" fill="currentColor"/></svg> View only</span>
+          <span><span class="no">–</span> No access</span>
+        </p>
+        <p class="matrix-note">Groups are independent: a member of Group A can't see Group B—only someone in the <strong>umbrella group above both</strong> can. Permission inherits down the tree, never sideways, and an admin's reach stays bounded to the highest group they administer.</p>
+
+        <div class="section-head" style="margin-top:44px">
+          <div class="eyebrow">Before nesting — models I ruled out</div>
+          <h3>Three simpler permission models, and why each broke at enterprise scale.</h3>
+          <p>Nested inheritance wasn't the obvious first choice—it was what survived after the simpler options failed against real, multi-level org charts.</p>
+        </div>
+        <div class="comparison-table model-comparison-table" style="margin-top:22px">
+          <div class="comparison-head"><div>Permission model</div><div>Why it broke — or survived</div></div>
+          <div class="row model-rejected"><div class="cell" data-label="Permission model"><small>Ruled out</small><strong>Flat org-wide roles&nbsp;✕</strong></div><div class="cell" data-label="Why it broke">Easiest to build, but it can't bound reach—a regional lead could edit another region's billing and templates. No way to say "admin here, not there."</div></div>
+          <div class="row model-rejected"><div class="cell" data-label="Permission model"><small>Ruled out</small><strong>Access-list per resource&nbsp;✕</strong></div><div class="cell" data-label="Why it broke">Maximally flexible, but it doesn't scale: every new hire or template means re-granting across the tree, and "who can see what" drifts out of anyone's head within a quarter.</div></div>
+          <div class="row model-rejected"><div class="cell" data-label="Permission model"><small>Ruled out</small><strong>Two levels only (org → team)&nbsp;✕</strong></div><div class="cell" data-label="Why it broke">Enough for a small company, but enterprises run region → county → office—deeper than two. A hard cap forced customers to flatten their real structure.</div></div>
+          <div class="row model-shipped"><div class="cell" data-label="Permission model"><small>Shipped</small><strong>Nested inheritance&nbsp;✓</strong></div><div class="cell" data-label="Why it survived">Reach is automatically bounded to a branch, it scales as the tree grows, and it matches how the enterprise is organized. Its one cost—resolving which live automations a change touches—became the "show the blast radius before you commit" flow.</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- THE SPINE: automations -->
+    <section class="section section-dark" id="automations">
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">The problem behind every screen</div>
+          <h2>Almost every structural change can pause a live automation.</h2>
+          <p style="color:rgba(242,240,230,.82)">Moving a team, deleting a payment method, removing a template scope, editing a locked design—each can silently break a running campaign, and a paused automation is lost revenue. The through-line of the whole project: never let an admin make a structural change without first showing exactly what it breaks.</p>
+        </div>
+
+        <div class="impact">
+          <div class="impact-card lose"><small>Before you commit — who loses access</small><p>Move a team to a new parent and some admins lose their reach. The move dialog names each person and why—"admin of previous parent group"—before anything changes.</p></div>
+          <div class="impact-card gain"><small>Before you commit — who gains access</small><p>The same dialog shows who gains access under the new parent, so the person making the move sees the full blast radius, both directions.</p></div>
+        </div>
+
+        <div class="shot-grid">
+          <figure class="shot" style="margin-top:0">
+            <div class="shot-frame">
+              <div class="shot-media">
+                <img src="images/new%20org/Modal-container.webp" alt="Move office dialog showing members who lose and gain access" onerror="this.remove()">
+                <span class="shot-ph"><strong>Move a team — members who lose vs gain access</strong></span>
+              </div>
+            </div>
+            <figcaption class="shot-cap">Structural moves show the human impact—lose and gain—before you confirm.</figcaption>
+          </figure>
+          <figure class="shot" style="margin-top:0">
+            <div class="shot-frame">
+              <div class="shot-media">
+                <img src="images/new%20org/Modal-container-1.webp" alt="Delete a region warning listing members who lose access and their roles" onerror="this.remove()">
+                <span class="shot-ph"><strong>Delete a region — who loses access, and where the sub-groups go</strong></span>
+              </div>
+            </div>
+            <figcaption class="shot-cap">Destructive structural changes name each member who loses access and why, re-home the sub-groups to the parent, and hold behind a deliberate delete delay.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- TEMPLATES -->
+    <section class="section" id="templates">
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">Templates · my end-to-end area</div>
+          <h2>Govern centrally, use locally—without touching live campaigns.</h2>
+          <p>A top-level admin creates a template once; any group can use it, as long as a <strong>scope</strong> (the shared group) is set. It's how an org sends one campaign across many teams—while keeping control of the design.</p>
+        </div>
+
+        <h3 class="subhead" style="margin:0 0 4px;font-size:clamp(18px,1.8vw,22px);color:var(--ink)">Every template control, one surface—filter by the job.</h3>
+        <p class="subcopy" style="margin:0 0 4px;color:var(--muted);font-size:var(--text-md)">Pick a job to filter the controls, then click any row to open that screen.</p>
+        <div class="refine-carousel" id="refine-carousel">
+          <div class="refine-personas" role="tablist" aria-label="Filter template features by job">
+            <button class="refine-persona is-active" type="button" data-persona="scope">Share &amp; scope</button>
+            <button class="refine-persona" type="button" data-persona="lock">Lock &amp; personalize</button>
+            <button class="refine-persona" type="button" data-persona="protect">Govern &amp; protect</button>
+          </div>
+          <div class="refine-viewport">
+            <button class="refine-arrow prev" type="button" aria-label="Previous feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+            <button class="refine-arrow next" type="button" aria-label="Next feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
+            <div class="refine-track">
+              <article class="refine-slide"><img src="images/new%20org/edit%20scope.webp" alt="Edit template scope tree — choose which groups a template reaches and surface the automations affected by a removed account" onerror="this.closest('.refine-slide').style.display='none'"></article>
+              <article class="refine-slide"><img src="images/org-update-automation.webp" alt="Removing a scope surfaces the active automations that need attention" onerror="this.closest('.refine-slide').style.display='none'"></article>
+              <article class="refine-slide"><img src="images/org-template-variable.webp" alt="A locked mail-merge variable image — personalization stays, layout is fixed" onerror="this.closest('.refine-slide').style.display='none'"></article>
+              <article class="refine-slide"><img src="images/new%20org/grid%20templates.webp" alt="Templates across the organization with scope filtering, shared use, locks, and live-automation counts" onerror="this.closest('.refine-slide').style.display='none'"></article>
+              <article class="refine-slide"><img src="images/org-manage-members.webp" alt="Inherited organization members are marked read-only while locally scoped members remain manageable" onerror="this.closest('.refine-slide').style.display='none'"></article>
+              <article class="refine-slide"><img src="images/org-update-automation.webp" alt="Updating a template reveals every active automation that needs review before the change is committed" onerror="this.closest('.refine-slide').style.display='none'"></article>
+            </div>
+          </div>
+          <div class="refine-controls" role="tablist" aria-label="Template features">
+            <button class="refine-item is-active" type="button" role="tab" data-persona="scope">
+              <span class="refine-item-persona">Share &amp; scope</span>
+              <span class="refine-item-title">Scopes decide who can use it</span>
+              <span class="refine-item-desc">A template only reaches a group when its scope includes that group—chosen from the same nested tree as everything else.</span>
+              <span class="refine-item-bar" aria-hidden="true"><i></i></span>
+            </button>
+            <button class="refine-item is-hidden" type="button" role="tab" data-persona="scope">
+              <span class="refine-item-persona">Share &amp; scope</span>
+              <span class="refine-item-title">Removing a scope is a careful act</span>
+              <span class="refine-item-desc">Drop a group from a template's scope and its active automations need attention—we surface them so income isn't quietly paused.</span>
+              <span class="refine-item-bar" aria-hidden="true"><i></i></span>
+            </button>
+            <button class="refine-item is-hidden" type="button" role="tab" data-persona="lock">
+              <span class="refine-item-persona">Lock &amp; personalize</span>
+              <span class="refine-item-title">Locked layers</span>
+              <span class="refine-item-desc">Admins lock specific variables, images, or placements. Lower-group members can still personalize—mail-merge data—but can't touch the locked design.</span>
+              <span class="refine-item-bar" aria-hidden="true"><i></i></span>
+            </button>
+            <button class="refine-item is-hidden" type="button" role="tab" data-persona="lock">
+              <span class="refine-item-persona">Lock &amp; personalize</span>
+              <span class="refine-item-title">Separate editing domains</span>
+              <span class="refine-item-desc">Name, design, scope, and tags are edited independently—each in its own modal—because they carry different permissions and different risks.</span>
+              <span class="refine-item-bar" aria-hidden="true"><i></i></span>
+            </button>
+            <button class="refine-item is-hidden" type="button" role="tab" data-persona="protect">
+              <span class="refine-item-persona">Govern &amp; protect</span>
+              <span class="refine-item-title">Higher-level templates are read-mostly</span>
+              <span class="refine-item-desc">If a template was created above you, you can push data merges but not edit the design—so central control holds.</span>
+              <span class="refine-item-bar" aria-hidden="true"><i></i></span>
+            </button>
+            <button class="refine-item is-hidden" type="button" role="tab" data-persona="protect">
+              <span class="refine-item-persona">Govern &amp; protect</span>
+              <span class="refine-item-title">Editing a design ripples out</span>
+              <span class="refine-item-desc">Change a locked design and every automation using it has to be re-checked; the flow makes that impact visible rather than silent.</span>
+              <span class="refine-item-bar" aria-hidden="true"><i></i></span>
+            </button>
+          </div>
+        </div>
+
+        <!-- How I worked — role + AI, folded into the Templates section -->
+        <div class="approach">
+          <div class="approach-head">
+            <div class="eyebrow">How I worked</div>
+          </div>
+          <div class="approach-body">
+            <p>Templates were my end-to-end area. Working with a PM, a Staff Designer, and engineering, I owned the <strong>template system in full</strong>—its scopes, locked layers, and affected-automations flow became the patterns reused across Groups, Billing, and Partner. <a class="inline-link" href="#ai-process">How I drove AI through the work →</a></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- AI IN PROCESS + ACCESSIBILITY (map #design-system layout, a11y folded in) -->
+    <section class="section section-dark" id="ai-process">
+      <div class="container split">
+        <div class="pattern-head">
+          <div class="eyebrow">AI in the process</div>
+          <span class="ai-badge">AI-READY SYSTEM</span>
+          <h2>AI prototyped org states from the shared Figma system—keeping drafts aligned with the product.</h2>
+        </div>
+        <div class="dark-copy">
+          <p>
+            The org surface has a lot of states—empty groups, deeply nested scopes, locked templates, affected-automation warnings. The key move: <strong>AI drafted those states from the design system's own components and our shared Markdown (.md) specs</strong>—the same components and voice-and-tone docs behind the Figma system. So drafts stayed aligned with that system instead of becoming one-off mocks. (These ran as HTML prototypes; the coded React version came later, on my own, after I was let go—that's the design-system case study.)
+          </p>
+          <p>
+            That freed the team for the flows that carried real risk—the structural, automation-touching ones. I'm usually the one bringing AI into the workflow—testing Figma Make, Codex, Claude's design tooling, and MCP, pushing them past production output into usability, research, and discovery, then documenting what works. I taught the approach to our Staff Designer and we learned it together; our <strong>Senior PM built three of his own prototypes</strong> from the same specs. Still a workflow we're refining.
+          </p>
+          <a class="button" href="design-system-case-study-redesign.html">Read the design system case study →</a>
+        </div>
+      </div>
+      <div class="container">
+        <div class="harness-grid">
+          <article class="harness-card">
+            <div class="harness-file">component-specs.md</div>
+            <h3>One source of truth</h3>
+            <p>Components, tokens, and rules authored once in the Figma system—so every AI-drafted org state used the real components, not a one-off mock that would drift from that source of truth.</p>
+          </article>
+          <article class="harness-card">
+            <div class="harness-file">validations-branches.md</div>
+            <h3>States &amp; logic</h3>
+            <p>Relevancy checks, validations, and conditional branches—empty, nested-scope, locked-template, affected-automation—drafted with AI from the same specs behind the design system.</p>
+          </article>
+          <article class="harness-card">
+            <div class="harness-file">ux-copy.md</div>
+            <h3>First-draft copy</h3>
+            <p>A machine-readable voice-and-tone reference produced first-draft UX copy for each org state that already sounded like the product—so the AI passes stayed aligned with the Figma system.</p>
+          </article>
+        </div>
+      </div>
+      <div class="container" id="accessibility" style="padding-top:8px">
+        <div class="section-head">
+          <h3>The same system made accessibility a spec, not a cleanup.</h3>
+          <p>Permission and structure screens are exactly where accessibility gets skipped—but because the rules live in that system, it was a constraint from the start; the org UI met <strong>WCAG 2.1 AA</strong>. Here's what it held to on the shipped UI. <span>(Ratios sampled from the shipped LettrLabs UI.)</span></p>
+        </div>
+        <div class="a11y-facts">
+          <div class="a11y-line">
+            <span class="a11y-lbl">Contrast</span>
+            <span class="a11y-chip"><b>13.1:1</b> primary text <i>AAA</i></span>
+            <span class="a11y-chip"><b>15.6:1</b> nav on dark <i>AAA</i></span>
+            <span class="a11y-chip"><b>6.8:1</b> muted text <i>AA</i></span>
+            <span class="a11y-chip"><b>4.9:1</b> button label <i>AA</i></span>
+          </div>
+          <div class="a11y-line">
+            <span class="a11y-lbl">Built in</span>
+            <span class="a11y-tag">Keyboard-operable</span>
+            <span class="a11y-tag">Visible focus</span>
+            <span class="a11y-tag">Never color alone</span>
+            <span class="a11y-tag">Errors tied to the field</span>
+            <span class="a11y-tag">Screen-reader checked</span>
+          </div>
+        </div>
+        <div class="split-2-wrap" style="margin-top:16px;border:1px solid rgba(242,240,230,.16);border-radius:12px;overflow:hidden">
+          <div class="split-2" style="display:grid;grid-template-columns:1fr 1fr">
+            <div style="padding:22px 24px;background:rgba(255,255,255,.035);color:#f7f5f2">
+              <div style="font-size:var(--text-xs);font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#9e6ee5;margin-bottom:12px">How it was tested</div>
+              <h4 style="margin:0 0 8px;font-size:var(--text-md);color:#f1ecfb">Automated + manual, not just a scan</h4>
+              <p style="margin:0;font-size:var(--text-sm);line-height:1.6;color:rgba(242,240,230,.82)">Automated checks ran in <strong>axe DevTools</strong> against WCAG rules. Those catch only a fraction of real issues, so that pass was the floor—the manual one is where the org flows became usable.</p>
+            </div>
+            <div style="padding:22px 24px;background:#ffffff">
+              <div style="font-size:var(--text-xs);font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#6b675f;margin-bottom:12px">Manual pass — every flow</div>
+              <ul style="margin:0;padding-left:18px;color:#3a3942;font-size:var(--text-sm);line-height:1.7">
+                <li>Everything runs on <strong>Tab, Shift+Tab, Enter, Space, arrows</strong></li>
+                <li>Focus <strong>visible</strong>, in a <strong>logical order</strong></li>
+                <li>Modals <strong>trap focus</strong> and return it on close</li>
+                <li>Holds at <strong>200–400% zoom</strong> and narrow widths</li>
+                <li>Meaning never carried by <strong>color alone</strong></li>
+                <li>Error, empty, loading and success states read clearly</li>
+                <li>The org tree, scope selectors and destructive dialogs have <strong>accessible alternatives</strong></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- OUTCOME -->
+    <section class="section" id="outcome" style="background:#ffffff">
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">Outcome</div>
+          <h2>One shared org model, ready for customer self-management.</h2>
+          <p>Org management and billing shipped as <strong>one system on a shared permission backbone</strong>, so the two studies report the same outcome—told here from the org side, and from the money side in the companion study.</p>
+        </div>
+        <div class="result-grid">
+          <div class="result-item"><span class="result-idx">01 / SELF-SERVE · PROJECTED</span><h3>Designed for self-management</h3><p>The shipped pattern moves structural actions—access, roles, billing edits, and template sharing—into the product. All four enterprise accounts are expected to self-manage at launch; adoption and completion time remain pre-launch measures to validate with live accounts.</p></div>
+          <div class="result-item"><span class="result-idx">02 / REVENUE · PROJECTED</span><h3>Built for the base—and on the next deal's must-have list</h3><p>These surfaces serve the three accounts behind ~75% of revenue—and the prospect we're pursuing, <strong>~$2M in potential revenue if it signs</strong>, named org management and org billing as requirements to join. A named requirement, not a nice-to-have.</p></div>
+          <div class="result-item"><span class="result-idx">03 / SAFETY</span><h3>A pattern that protects revenue</h3><p>The shipped pattern shows the blast radius before a structural change, so admins can assess risk to the <strong>95 live automations</strong> each account runs. The same protection is reused across billing edits, roles, scopes, and templates.</p></div>
+          <div class="result-item"><span class="result-idx">04 / GOVERNANCE · SHIPPED MODEL</span><h3>One model for enterprise governance</h3><p>Teams, budgets, and centrally governed templates share one organization model, with permission following the hierarchy up to five levels deep. Live self-management is the launch behavior to validate.</p></div>
+          <div class="result-item"><span class="result-idx">05 / DESIGN SYSTEM</span><h3>0 → 45 components, 3 md specs</h3><p>The org surface drew from a Figma design system taken from 0 to 45 components with 3 Markdown spec files—the same components and specs AI prototyped from—cutting roughly <strong>~30% off design time</strong> (internal estimate) and keeping drafts aligned with the Figma system.</p></div>
+          <div class="result-item"><span class="result-idx">06 / REUSE</span><h3>One backbone, five surfaces</h3><p>The scope model and the show-the-impact-before-you-commit flow are reused across members, roles, templates, billing, and partner—systems thinking applied structurally, rather than solving one surface at a time.</p></div>
+        </div>
+        <a class="companion-card" href="billing-case-study-redesign.html">
+          <span class="companion-copy">
+            <small>Companion case study</small>
+            <strong>Org-wide billing &amp; spend</strong>
+            <span>Pooled balances, per-group caps, transfers, and disbursement—on the same permission backbone. Complex enough to stand on its own.</span>
+          </span>
+          <span class="companion-arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- REFLECTION -->
+    <section class="section section-dark" id="reflection">
+      <div class="container split">
+        <div class="pattern-head">
+          <div class="eyebrow">Reflection</div>
+          <h2>The automation-protection flow is crucial—and still my biggest open question.</h2>
+        </div>
+        <div class="dark-copy">
+          <p>
+            The hardest, most important part was making structural changes safer by surfacing their impact before commit. We shipped that safeguard, but there's a cleaner flow than checking affected automations one modal at a time; it's the first thing I'd revisit.
+          </p>
+        </div>
+      </div>
+      <div class="container">
+        <p class="quote">
+          "The screens were the easy part. The real work was a permission model that keeps central control and local use legible—and surfaces campaign impact before a structural change is committed."
+        </p>
+      </div>
+    </section>
+  
+    <section class="section next-case-cta">
+      <div class="container">
+        <div class="next-case-panel">
+          <span class="next-case-kicker">Next case study</span>
+          <h2>Self-serve enterprise billing</h2>
+          <p>Pooled balances, per-group caps, and transfers that never interrupt a live campaign.</p>
+          <div class="next-case-actions">
+            <a class="next-case-primary" href="billing-case-study-redesign.html">Read it <svg class="arw" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            <a class="next-case-outline" href="redesign.html#work">All work</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-nav" style="padding:36px 0">
+      <a class="footer-move prev" href="integration-case-study-redesign.html"><span class="fm-dir">← Previous</span><span class="fm-name">A reusable integration flow</span></a>
+      <a class="button secondary" href="redesign.html">All work</a>
+      <a class="footer-move next" href="billing-case-study-redesign.html"><span class="fm-dir">Next →</span><span class="fm-name">Org billing &amp; spend</span></a>
+    </div>
+  </footer>
+
+  <script>
+    // Scroll-spy nav indicator (shared behaviour with the map, billing & integration studies)
+    const sectionLinks = document.querySelectorAll("[data-section-link]");
+    const navIndicator = document.querySelector(".nav-indicator");
+    const sectionNodes = {
+      summary: document.getElementById("summary"),
+      model: document.getElementById("model"),
+      automations: document.getElementById("automations"),
+      templates: document.getElementById("templates"),
+      process: document.getElementById("ai-process"),
+      outcome: document.getElementById("outcome")
+    };
+    function setActiveNav(sectionKey) {
+      if (!navIndicator) return;
+      let activeLink = null;
+      sectionLinks.forEach((link) => {
+        const isActive = link.dataset.sectionLink === sectionKey;
+        link.classList.toggle("is-active", isActive);
+        if (isActive) activeLink = link;
+      });
+      if (!activeLink) { navIndicator.style.opacity = "0"; return; }
+      navIndicator.style.opacity = "1";
+      navIndicator.style.width = activeLink.offsetWidth + "px";
+      navIndicator.style.transform = "translateX(" + activeLink.offsetLeft + "px)";
+    }
+    function updateActiveSection() {
+      const navHeight = document.querySelector(".nav")?.offsetHeight || 72;
+      const threshold = navHeight + 28;
+      let current = "summary";
+      Object.entries(sectionNodes).forEach(([key, node]) => {
+        if (!node) return;
+        if (node.getBoundingClientRect().top <= threshold) current = key;
+      });
+      setActiveNav(current);
+    }
+    window.addEventListener("scroll", updateActiveSection, { passive: true });
+    window.addEventListener("resize", updateActiveSection);
+    updateActiveSection();
+  </script>
+
+  <div class="read-progress" id="read-progress" aria-hidden="true">
+    <div class="read-progress-ring">
+      <svg viewBox="0 0 44 44" width="44" height="44" aria-hidden="true">
+        <defs><linearGradient id="rpGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9e6ee5"/><stop offset=".5" stop-color="#ff4d8d"/><stop offset="1" stop-color="#2cc8ff"/></linearGradient></defs>
+        <circle class="rp-track" cx="22" cy="22" r="18" fill="none" stroke-width="4"/>
+        <circle class="rp-bar" id="rp-bar" cx="22" cy="22" r="18" fill="none" stroke-width="4" stroke-dasharray="113.097" stroke-dashoffset="113.097"/>
+      </svg>
+      <div class="read-progress-pct" id="rp-pct">0%</div>
+    </div>
+    <div class="read-progress-copy">
+      <div class="read-progress-title" id="rp-title">Overview</div>
+      <div class="read-progress-sub" id="rp-sub">Enterprise org management</div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var el = document.getElementById("read-progress");
+      if (!el) return;
+      var bar = document.getElementById("rp-bar"), pct = document.getElementById("rp-pct"),
+          title = document.getElementById("rp-title"), sub = document.getElementById("rp-sub");
+      var C = 113.097;
+      var steps = [
+        { p: 0.00, t: "Overview",        s: "Enterprise org management" },
+        { p: 0.12, t: "At a glance",     s: "The short version" },
+        { p: 0.24, t: "Main UX",         s: "The whole org in one view" },
+        { p: 0.36, t: "The org model",   s: "Permission follows hierarchy" },
+        { p: 0.52, t: "Safety",          s: "Show the blast radius first" },
+        { p: 0.66, t: "Templates",       s: "Govern centrally, use locally" },
+        { p: 0.80, t: "AI in the process", s: "AI-ready system · accessibility" },
+        { p: 0.90, t: "Outcome",         s: "Enterprises self-manage" },
+        { p: 0.975,t: "Reflection",      s: "Thanks for reading" }
+      ];
+      function pick(p) { var r = steps[0]; for (var i = 0; i < steps.length; i++) { if (p >= steps[i].p) r = steps[i]; } return r; }
+      var last = "";
+      function update() {
+        var h = document.documentElement;
+        var max = (h.scrollHeight - h.clientHeight) || 1;
+        var p = Math.min(1, Math.max(0, (window.scrollY || h.scrollTop) / max));
+        bar.style.strokeDashoffset = (C * (1 - p)).toFixed(2);
+        pct.textContent = Math.round(p * 100) + "%";
+        var st = pick(p);
+        if (st.t !== last) { title.textContent = st.t; sub.textContent = st.s; last = st.t; }
+        el.classList.toggle("is-visible", p > 0.02);
+      }
+      window.addEventListener("scroll", update, { passive: true });
+      window.addEventListener("resize", update);
+      update();
+    })();
+  </script>
+
+  <script>
+    (function () {
+      var root = document.getElementById("refine-carousel");
+      if (!root) return;
+      var track = root.querySelector(".refine-track");
+      var slides = Array.prototype.slice.call(root.querySelectorAll(".refine-slide"));
+      var items = Array.prototype.slice.call(root.querySelectorAll(".refine-item"));
+      var badges = Array.prototype.slice.call(root.querySelectorAll(".refine-persona"));
+      if (!track || slides.length !== items.length) {
+        console.warn("Refinement carousel requires one preview per feature.", { slides: slides.length, items: items.length });
+        return;
+      }
+      var personaOf = items.map(function (it) { return it.getAttribute("data-persona"); });
+      var activePersona = badges.length ? badges[0].getAttribute("data-persona") : null;
+      var index = 0;
+      function listFor(persona) {
+        var out = [];
+        personaOf.forEach(function (p, i) { if (p === persona) out.push(i); });
+        return out;
+      }
+      function go(i) {
+        index = (i + slides.length) % slides.length;
+        activePersona = personaOf[index] || activePersona;
+        track.style.transform = "translateX(-" + (index * 100) + "%)";
+        badges.forEach(function (b) {
+          var activeBadge = b.getAttribute("data-persona") === activePersona;
+          b.classList.toggle("is-active", activeBadge);
+          b.setAttribute("aria-selected", activeBadge ? "true" : "false");
+        });
+        items.forEach(function (item, n) {
+          item.classList.toggle("is-hidden", personaOf[n] !== activePersona);
+          var active = n === index;
+          item.classList.toggle("is-active", active);
+          item.setAttribute("aria-selected", active ? "true" : "false");
+          var bar = item.querySelector(".refine-item-bar i");
+          if (bar) bar.style.width = active ? "100%" : "0";
+        });
+        slides.forEach(function (slide, n) { slide.setAttribute("aria-hidden", n === index ? "false" : "true"); });
+      }
+      function step(dir) {
+        var list = listFor(activePersona);
+        var pos = list.indexOf(index);
+        if (pos === -1) { if (list.length) go(list[0]); return; }
+        go(list[(pos + dir + list.length) % list.length]);
+      }
+      items.forEach(function (item, n) { item.addEventListener("click", function () { go(n); }); });
+      badges.forEach(function (b) {
+        b.addEventListener("click", function () {
+          var list = listFor(b.getAttribute("data-persona"));
+          if (list.length) go(list[0]);
+        });
+      });
+      var prevBtn = root.querySelector(".refine-arrow.prev");
+      var nextBtn = root.querySelector(".refine-arrow.next");
+      if (prevBtn) prevBtn.addEventListener("click", function () { step(-1); });
+      if (nextBtn) nextBtn.addEventListener("click", function () { step(1); });
+      var first = listFor(activePersona);
+      go(first.length ? first[0] : 0);
+    })();
+  </script>
+  <script defer src="case-study-mobile.js"></script>
+  <footer class="site-footer">
+    <div class="container">
+      <div class="site-footer-top">
+        <a class="site-footer-brand" href="redesign.html">Ivan Jose</a>
+        <nav class="site-footer-links" aria-label="Footer">
+          <a href="redesign.html#work">Case Studies</a>
+          <a href="redesign.html#other-work">Other Works</a>
+          <a href="redesign.html#approach">Approach</a>
+        </nav>
+        <div class="site-footer-social" aria-label="Social links">
+          <a class="site-footer-icon" href="https://www.behance.net/ivancreatives" target="_blank" rel="noreferrer" aria-label="Behance" title="Behance"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.7 12c.9-.4 1.4-1.1 1.4-2.2 0-2-1.5-2.8-3.3-2.8H1v11h6c2 0 3.6-.9 3.6-3 0-1.3-.7-2.4-1.9-3zM3.6 8.9h2.7c.8 0 1.4.3 1.4 1.2s-.5 1.3-1.4 1.3H3.6V8.9zm2.9 7.2H3.6v-2.9h3c1 0 1.7.4 1.7 1.5 0 1-.8 1.4-1.8 1.4zM23 13.7c0-2.6-1.5-4.7-4.2-4.7-2.6 0-4.4 2-4.4 4.5 0 2.7 1.7 4.5 4.4 4.5 2 0 3.4-.9 4-2.8h-2.3c-.2.6-.9 1-1.6 1-1.2 0-1.9-.7-1.9-1.9H23c0-.1 0-.3 0-.6zm-6-1c.1-1 .7-1.6 1.7-1.6 1 0 1.5.6 1.6 1.6H17zM16 7h6v1.5h-6V7z"></path></svg></a>
+          <a class="site-footer-icon" href="https://www.linkedin.com/in/ivancreatives/" target="_blank" rel="noreferrer" aria-label="LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.37 3.1A2.37 2.37 0 1 1 5.4 7.84 2.37 2.37 0 0 1 5.37 3.1ZM3.3 9.7h4.14V21H3.3V9.7ZM10.04 9.7H14v1.54h.06c.55-1.04 1.9-2.14 3.9-2.14 4.18 0 4.95 2.75 4.95 6.32V21h-4.13v-4.96c0-1.18-.02-2.7-1.64-2.7-1.65 0-1.9 1.29-1.9 2.62V21h-4.14V9.7Z"></path></svg></a>
+          <a class="site-footer-icon site-footer-icon--whatsapp" href="https://wa.me/639679223947" target="_blank" rel="noopener" aria-label="WhatsApp" title="WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-3-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.6-6.1c-.25-.13-1.5-.74-1.7-.82-.23-.08-.4-.13-.56.13-.17.25-.64.82-.79.99-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.02-1.25-.75-.66-1.25-1.48-1.4-1.73-.14-.25-.01-.39.11-.51.11-.11.25-.29.38-.44.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.42h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1s.9 2.44 1.03 2.61c.13.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.43.53.6.19 1.15.16 1.58.1.48-.07 1.5-.61 1.71-1.2.21-.59.21-1.1.15-1.2-.06-.11-.23-.17-.48-.29z"></path></svg></a>
+        </div>
+      </div>
+      <div class="site-footer-bottom">
+        <span>© 2026 Ivan Jose · Senior Product Designer</span>
+        <a href="mailto:helloivanjose@gmail.com">helloivanjose@gmail.com</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* Home -> case-study funnel: tag this case-study view for Microsoft Clarity so
+       the dashboard can build a funnel (which case study, and whether the visit
+       arrived from the homepage). Top window only — embeds are gated out elsewhere. */
+    (function () {
+      if (window.self !== window.top) return;
+      if (typeof window.clarity !== "function") return;
+      var slug = (location.pathname.split("/").pop() || "").replace(/\.html$/, "") || "case-study";
+      var ref = document.referrer || "";
+      var fromHome = /\/portfolio\/(index\.html)?($|[?#])/.test(ref) || /\/portfolio\/?$/.test(ref);
+      clarity("set", "case_study", slug);
+      clarity("set", "entry_from_home", fromHome ? "yes" : "no");
+      clarity("event", "case_study_view");
+    })();
+  </script>
+</body>
+</html>
