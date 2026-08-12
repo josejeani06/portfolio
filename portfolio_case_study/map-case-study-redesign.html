@@ -21,7 +21,7 @@
   <link rel="preconnect" href="https://unpkg.com" crossorigin>
   <link rel="preconnect" href="https://esm.sh" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="redesign.css?v=26" />
+  <link rel="stylesheet" href="redesign.css?v=28" />
   <style>
     /* map-specific: Uber bento + tabs + play-prototype + outcome grid */
     .out-grid{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:var(--paper)}
@@ -124,7 +124,7 @@
           <a class="rd-btn rd-btn--primary" href="audience-builder-prototype/index.html" target="_blank" rel="noreferrer">Open map prototype <svg class="arw" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
           <a class="rd-btn rd-btn--outline" href="https://www.lettrlabs.com/" target="_blank" rel="noreferrer">Visit LettrLabs</a>
         </div>
-        <div class="rd-ba rd-reveal" id="mapBA" style="--pos:100%;margin-top:clamp(40px,5vw,64px)">
+        <div class="rd-ba rd-reveal" id="mapBA" style="--pos:75%;margin-top:clamp(40px,5vw,64px)">
           <img src="images/map-compare-new.webp" alt="After — the new audience builder with clear entry points">
           <img class="rd-ba-clip" src="images/map-compare-old.webp" alt="Before — the old map that assumes you'll draw">
           <div class="rd-ba-line"></div>
@@ -418,12 +418,12 @@
     var pb=document.getElementById("playBtn");if(pb){pb.addEventListener("click",function(){var f=document.getElementById("builderFrame");f.src="https://josejeani06.github.io/portfolio/audience-builder-prototype/index.html";pb.style.display="none";});}
     var ipb=document.getElementById("initPlayBtn");if(ipb){ipb.addEventListener("click",function(){var f=document.getElementById("initFrame");f.src="https://josejeani06.github.io/lettrlabs-service-area-map-builder/";ipb.style.display="none";f.addEventListener("load",function(){window.dispatchEvent(new Event("resize"));});setTimeout(function(){window.dispatchEvent(new Event("resize"));},400);});}
     var ba=document.getElementById("mapBA");if(ba){var drag=false;function setPos(x){var r=ba.getBoundingClientRect();var p=Math.max(0,Math.min(1,(x-r.left)/r.width));ba.style.setProperty("--pos",(p*100)+"%");}ba.addEventListener("pointerdown",function(e){drag=true;setPos(e.clientX);try{ba.setPointerCapture(e.pointerId);}catch(err){}});ba.addEventListener("pointermove",function(e){if(drag)setPos(e.clientX);});window.addEventListener("pointerup",function(){drag=false;});
-      /* Scroll-in hint: the divider travels right -> left by a quarter of the
-         width, once, as an affordance that it can be dragged. Driven by a CSS
+      /* Scroll-in hint: the divider travels right -> left from 3/4 to 1/4, so the
+         "after" state ends up mostly revealed. Driven by a CSS
          transition on the registered --pos property (see redesign.css), so it
          does not depend on requestAnimationFrame. */
       (function(){
-        var START=100, END=75, played=false;
+        var START=75, END=25, played=false;
         var reduce=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
         ba.style.setProperty("--pos",START+"%");
         function play(){
