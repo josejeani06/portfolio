@@ -1,0 +1,922 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){if(window.self!==window.top)return;
+      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "xu2es8f588");
+  </script>
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <title>Enterprise Billing Designed to Protect Paying Campaigns — Ivan Jose</title>
+  <meta name="description" content="Senior Product Designer case study: org-wide billing — pooled balances, per-group caps, transfers, and disbursement — designed to protect paying campaigns with spend legible from the org down to a single automation. Built cross-functionally with engineering. By Ivan Jose." />
+  <link rel="canonical" href="https://josejeani06.github.io/portfolio/billing-case-study.html" />
+  <meta name="author" content="Jean Ivan Jose" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Ivan Jose" />
+  <meta property="og:url" content="https://josejeani06.github.io/portfolio/billing-case-study.html" />
+  <meta property="og:title" content="Enterprise Billing Designed to Protect Paying Campaigns" />
+  <meta property="og:description" content="Org-wide billing — pooled balances, per-group caps, transfers, and disbursement — with spend legible from the org down to a single automation." />
+  <meta property="og:image" content="https://josejeani06.github.io/portfolio/images/new%20billing/Manage%20Members%20at%20Group%20Level.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Enterprise Billing Designed to Protect Paying Campaigns" />
+  <meta name="twitter:description" content="Org-wide financial UX — pooled balances, caps, transfers, disbursement — by Senior Product Designer Ivan Jose." />
+  <meta name="twitter:image" content="https://josejeani06.github.io/portfolio/images/new%20billing/Manage%20Members%20at%20Group%20Level.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "headline": "Enterprise billing designed to protect paying campaigns",
+    "about": "B2B SaaS product design case study — org-wide billing, pooled balances, caps, transfers, and spend analytics",
+    "keywords": ["product design","B2B SaaS","billing","payments","financial UX","enterprise","design systems"],
+    "url": "https://josejeani06.github.io/portfolio/billing-case-study.html",
+    "author": { "@type": "Person", "name": "Jean Ivan Jose", "alternateName": "Ivan Jose", "jobTitle": "Senior Product Designer", "url": "https://josejeani06.github.io/portfolio/" }
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="redesign.css?v=9" />
+  <style>
+    /* =========================================================================
+       BILLING page-local components only. Everything else comes from redesign.css
+       No grid-template-columns is ever written inline (see contract §6).
+       ========================================================================= */
+
+    /* diagram/micro titles — not eyebrows (no dot), so one kicker per section holds */
+    .diag-title{font-family:var(--font-display);font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--purple);margin:0 0 16px}
+    .rd-section--dark .diag-title{color:var(--bright)}
+
+    /* ---- journey: expected vs. reality ---- */
+    .jrn{display:grid;grid-template-columns:1fr;gap:clamp(24px,3vw,40px)}
+    @media(min-width:901px){.jrn{grid-template-columns:1fr 1fr}}
+    .jrn-col{border-top:1px solid var(--d-line);padding-top:18px}
+    .jrn-head{font-family:var(--font-display);font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#fff;margin:0 0 6px}
+    .jrn-item{display:grid;grid-template-columns:44px 1fr;gap:12px;padding:18px 0;border-top:1px solid var(--d-line)}
+    .jrn-item:first-of-type{border-top:0}
+    .jrn-num{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-family:var(--font-display);font-weight:600;font-size:14px;color:#fff;border:1px solid rgba(255,255,255,.34)}
+    .jrn-item.is-risk .jrn-num{border-color:#e0705f;color:#ffbdb2}
+    .jrn-item p{margin:8px 0 0;color:rgba(255,255,255,.92);font-size:var(--sm);line-height:1.6}
+    @media(max-width:600px){.jrn-item{grid-template-columns:1fr;gap:8px}}
+
+    /* ---- request donut ---- */
+    .donut{display:grid;grid-template-columns:1fr;gap:26px;align-items:center;margin:0;padding:0}
+    @media(min-width:901px){.donut{grid-template-columns:1fr 1fr;gap:34px}}
+    .donut > svg{max-width:420px;width:100%;height:auto;justify-self:center}
+    .donut figcaption{font-family:var(--font-display);font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--purple);margin-bottom:16px}
+    .leg{list-style:none;margin:0;padding:0;display:grid;gap:13px}
+    .leg li{display:flex;align-items:baseline;gap:11px;font-size:var(--sm);color:var(--ink);line-height:1.45}
+    .leg .sw{width:12px;height:12px;border-radius:3px;flex:0 0 auto;transform:translateY(2px)}
+    .leg b{font-size:var(--body);font-weight:600;color:var(--ink-strong)}
+
+    /* ---- object model (light card on the dark model section) ---- */
+    .om-card{margin:clamp(26px,3vw,36px) 0 0;background:var(--paper-2);border:1px solid var(--d-line);border-radius:var(--radius);padding:clamp(22px,2.6vw,32px)}
+    .om-card figcaption{font-family:var(--font-display);font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--purple);margin:0 0 8px}
+    .om-card > p{color:var(--muted);font-size:var(--sm);line-height:1.6;margin:0 0 20px}
+    .om-card > p strong{color:var(--ink-strong);font-weight:600}
+    .om{display:grid;grid-template-columns:1fr;gap:12px;align-items:center}
+    @media(min-width:721px){.om{grid-template-columns:1fr 116px 1fr}}
+    .om-lbl{font-family:var(--font-display);font-size:11.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-bottom:12px}
+    .om-node{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+    .om-node strong{display:block;font-size:var(--sm);color:var(--ink-strong)}
+    .om-node span{display:block;font-size:var(--xs);color:var(--muted);margin-top:2px;line-height:1.4}
+    .om-node.om-accent{border-color:rgba(113,76,182,.55)}
+    .om-node.om-pay{border-color:rgba(2,126,111,.42)}
+    .om-arrow{text-align:center;color:var(--faint);font-weight:700;line-height:1;margin:8px 0}
+    .om-bridge{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:var(--faint)}
+    .om-bridge b{font-family:var(--font-display);font-size:11.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+    .om-bridge .ar{font-size:30px;color:var(--purple);line-height:1}
+    .om-bridge span{font-size:var(--xs);text-align:center}
+    @media(max-width:720px){.om-bridge{flex-direction:row;gap:10px;margin:8px 0}.om-bridge .ar{transform:rotate(90deg)}}
+
+    /* ---- rejected / shipped stacks ---- */
+    .stack-list{display:grid;gap:12px;margin:16px 0 0}
+    .stack-list p{position:relative;margin:0;padding-left:26px;font-size:var(--sm);line-height:1.6;color:var(--muted)}
+    .stack-list p::before{content:"×";position:absolute;left:2px;top:-1px;font-weight:700;color:#c0392b}
+    .stack-list.good p::before{content:"✓";color:#1f9d57}
+    .stack-list p em{color:var(--ink)}
+
+    /* ---- 4-column decision table: ratios only above the stacking breakpoint ---- */
+    @media(min-width:901px){
+      .dec-table .rd-crow{grid-template-columns:1fr 1.1fr 1.5fr 1fr}
+    }
+    @media(max-width:900px){
+      .dec-table .rd-crow{grid-template-columns:1fr!important;gap:10px}
+      .dec-table .rd-crow.is-head{display:none!important}
+      .dec-table .rd-crow .side::before,.dec-table .rd-crow .stage::before{content:attr(data-l);display:block;font-family:var(--font-display);font-size:11.5px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--purple);margin-bottom:5px}
+    }
+    .dec-table .rd-crow .side p,.dec-table .rd-crow .stage p{margin:0}
+
+    /* ---- refinement carousel (13 billing screens, filtered by job) ---- */
+    .refine-carousel{margin-top:14px;display:grid;grid-template-columns:1fr;gap:22px}
+    @media(min-width:901px){.refine-carousel{grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:14px 36px;align-items:start}}
+    .refine-viewport{position:relative;overflow:hidden;border-radius:16px}
+    .refine-track{display:flex;transition:transform .45s cubic-bezier(.2,1,.22,1)}
+    .refine-slide{min-width:100%}
+    .refine-slide .vid-frame{aspect-ratio:4/3;width:100%;margin:0;border-radius:16px;overflow:hidden;border:1px solid var(--d-line);background:#f2f0eb;display:grid;place-items:center;cursor:zoom-in}
+    .refine-controls{display:flex;flex-direction:column;gap:10px}
+    .refine-item{position:relative;overflow:hidden;appearance:none;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:5px;padding:16px 18px 18px;border:1px solid rgba(255,255,255,.14);border-radius:14px;background:transparent;font-family:inherit;transition:background .2s ease,border-color .2s ease}
+    .refine-item:hover{border-color:rgba(158,110,229,.5)}
+    .refine-item.is-active{background:rgba(255,255,255,.06);border-color:rgba(158,110,229,.55)}
+    .refine-item-persona{font-family:var(--font-display);font-size:var(--xs);font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#9e6ee5}
+    .refine-item-title{font-family:var(--font-display);font-size:var(--h3);font-weight:600;color:#fff;line-height:1.14}
+    .refine-item-desc{font-size:var(--sm);line-height:1.5;color:rgba(255,255,255,.82)}
+    .refine-item-bar{position:absolute;left:0;bottom:0;height:3px;width:100%;background:transparent}
+    .refine-item.is-active .refine-item-bar{background:rgba(158,110,229,.22)}
+    .refine-item-bar i{display:block;height:100%;width:0;background:#9e6ee5;transition:width .12s linear}
+    .refine-personas{grid-column:1 / -1;display:flex;flex-wrap:wrap;gap:10px;margin-bottom:6px}
+    .refine-persona{appearance:none;border:1px solid rgba(255,255,255,.2);background:transparent;color:rgba(255,255,255,.82);border-radius:999px;padding:11px 18px;font-family:inherit;font-weight:600;font-size:var(--sm);cursor:pointer;transition:all .2s ease}
+    .refine-persona:hover{border-color:#9e6ee5;color:#fff}
+    .refine-persona.is-active{background:var(--purple);border-color:var(--purple);color:#fff}
+    .refine-item.is-hidden{display:none}
+    .refine-arrow{position:absolute;bottom:14px;z-index:2;width:44px;height:44px;border-radius:50%;border:0;background:rgba(34,24,54,.82);color:#fff;display:grid;place-items:center;cursor:pointer}
+    .refine-arrow svg{width:18px;height:18px}
+    .refine-arrow.prev{left:14px}.refine-arrow.next{left:66px}
+    /* phone: keep the arrows off the screenshot — park them under the viewport */
+    @media(max-width:640px){
+      .refine-viewport{padding-bottom:58px}
+      .refine-arrow{bottom:4px}
+      .refine-arrow.prev{left:calc(50% - 52px)}
+      .refine-arrow.next{left:auto;right:calc(50% - 52px)}
+    }
+
+    /* ---- dark .md spec cards ---- */
+    .md-card{background:var(--d-bg-2);border:1px solid var(--d-line);border-radius:16px;overflow:hidden}
+    .md-file{display:flex;align-items:center;gap:9px;padding:15px 20px;border-bottom:1px solid var(--d-line);font-family:ui-monospace,"JetBrains Mono",monospace;font-size:13px;color:rgba(255,255,255,.72);letter-spacing:.01em}
+    .md-file .dot{width:8px;height:8px;border-radius:50%;background:#9e6ee5;flex:0 0 auto}
+    .md-body{padding:20px}
+    .md-body h3{color:#fff;margin:0}
+    .md-body p{color:rgba(255,255,255,.86);font-size:14.5px;line-height:1.6;margin:12px 0 0}
+
+    /* ---- accessibility facts ---- */
+    .a11y-line{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:14px}
+    .a11y-lbl{font-family:var(--font-display);font-size:11.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--purple);margin-right:4px}
+    .a11y-chip{display:inline-flex;align-items:center;gap:7px;font-size:13px;color:var(--muted);background:var(--paper);border:1px solid var(--line);padding:8px 14px;border-radius:999px}
+    .a11y-chip b{color:var(--ink-strong);font-weight:600}
+    .a11y-chip i{font-style:normal;font-size:11px;font-weight:600;letter-spacing:.06em;color:var(--teal)}
+    .a11y-list{margin:14px 0 0;padding-left:20px;color:var(--muted);font-size:var(--sm);line-height:1.75}
+    .a11y-list strong{color:var(--ink);font-weight:600}
+    .inline-link{color:var(--purple);text-decoration:underline;text-underline-offset:3px}
+
+    /* ---- outcome grid ---- */
+    .out-grid{display:grid;grid-template-columns:1fr;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:var(--paper)}
+    .out-cell{padding:clamp(24px,2.6vw,34px);border-top:1px solid var(--line)}
+    .out-cell:first-child{border-top:0}
+    .out-cell .lbl{font-family:var(--font-display);font-size:12px;font-weight:600;letter-spacing:.06em;color:var(--purple);text-transform:uppercase}
+    .out-cell .rd-h3{margin-top:12px}
+    .out-cell p{color:var(--muted);font-size:15px;line-height:1.6;margin:10px 0 0}
+    .out-cell p strong{color:var(--ink);font-weight:600}
+    @media(min-width:601px){
+      .out-grid{grid-template-columns:1fr 1fr}
+      .out-cell{border-left:1px solid var(--line)}
+      .out-cell:nth-child(-n+2){border-top:0}
+      .out-cell:nth-child(odd){border-left:0}
+    }
+
+    /* ---- small utility blocks ---- */
+    .note-card{margin-top:18px;padding:20px 22px;border:1px dashed var(--line-2);border-radius:var(--radius-sm);background:var(--paper)}
+    .note-card p{margin:8px 0 0;font-size:var(--sm);line-height:1.65;color:var(--muted)}
+    .note-card p strong{color:var(--ink);font-weight:600}
+    .case-nav{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;border-top:1px solid var(--line);padding-top:26px;margin-top:clamp(28px,4vw,44px)}
+    .case-nav .dir{display:block;font-size:var(--xs);color:var(--muted)}
+    .case-nav .nm{font-family:var(--font-display);font-weight:600;font-size:17px;color:var(--ink-strong)}
+
+    /* ---- image lightbox ---- */
+    .lb{position:fixed;inset:0;z-index:120;background:rgba(17,17,16,.94);display:grid;place-items:center;padding:clamp(16px,4vw,56px)}
+    .lb[hidden]{display:none}
+    .lb-inner{text-align:center;max-width:1100px}
+    .lb img{max-width:100%;max-height:76vh;object-fit:contain;border-radius:12px;background:#fff;margin-inline:auto}
+    .lb-cap{color:rgba(255,255,255,.92);font-size:var(--sm);line-height:1.6;margin:16px auto 0;max-width:72ch}
+    .lb-cap strong{display:block;font-family:var(--font-display);font-size:17px;color:#fff;margin-bottom:6px}
+    .lb-close{position:absolute;top:18px;right:18px;width:46px;height:46px;border-radius:50%;border:1px solid rgba(255,255,255,.35);background:transparent;color:#fff;font-size:22px;line-height:1;cursor:pointer}
+  </style>
+</head>
+<body>
+  <div class="rd-progress" id="progress" aria-hidden="true"></div>
+
+  <nav class="rd-nav" id="nav">
+    <div class="rd-container rd-nav-inner">
+      <a class="rd-brand" href="redesign.html"><span class="dot"></span>Ivan Jose</a>
+      <div class="rd-nav-links" id="spy">
+        <a href="#summary">Summary</a>
+        <a href="#discovery">Discovery</a>
+        <a href="#concept-shift">Product Design</a>
+        <a href="#design-system">Design System</a>
+        <a href="#before-after">Impact</a>
+        <a href="#outcome">Results</a>
+      </div>
+      <a class="rd-nav-cta" href="design-system-case-study-redesign.html">Read design system</a>
+    </div>
+  </nav>
+
+  <main>
+    <!-- HERO -->
+    <section class="rd-section rd-hero" id="summary">
+      <div class="rd-container">
+        <div class="rd-badges rd-reveal in">
+          <span class="rd-kicker">Org-Wide Billing · LettrLabs</span>
+          <span class="rd-badge rd-badge--status"><span class="dot"></span>Shipped Product</span>
+        </div>
+        <h1 class="rd-h1 rd-reveal in d1" style="margin-top:20px">Self-serve enterprise billing designed to protect paying campaigns.</h1>
+        <p class="rd-lead rd-reveal in d2">The companion surface to organization management. Enterprises don't pay one card for everything—they budget per office, region, and campaign. Billing had to model that: pooled balances, billing groups, per-account caps, transfers, and a disbursement flow that turns one big commitment into a clear allocation—with spend legible from the org down to a single automation.</p>
+        <div class="rd-hero-actions rd-reveal in d3">
+          <a class="rd-btn rd-btn--primary" href="#business-context">See business context <svg class="arw" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <a class="rd-btn rd-btn--outline" href="design-system-case-study-redesign.html">Read design system</a>
+        </div>
+        <div class="rd-frame rd-reveal" style="margin-top:clamp(40px,5vw,64px)">
+          <div class="rd-frame-stage" data-lb-title="Billing Management" data-lb-cap="Total org balance and the enterprise volume commitment up top; each billing group shows its accounts, payment access, monthly caps, balances, and any pending access requests." style="cursor:zoom-in">
+            <img src="images/new%20billing/Manage%20Members%20at%20Group%20Level.webp" alt="Billing Management overview: group balances, payment access, monthly caps, pending requests, and account moves" onerror="this.remove()">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXECUTIVE SUMMARY -->
+    <section class="rd-section rd-section--tight">
+      <div class="rd-container rd-hero-grid" style="margin-top:0">
+        <div class="rd-panel">
+          <h3 class="rd-h3">Executive summary</h3>
+          <p style="margin-top:16px">Billing was the hardest surface in org management—money, permissions, and live automations colliding at once. I designed the flows: billing groups, payment access and caps, transfers and disbursement, in-flow access requests, and spend analytics—with engineering on the org-level payment actions. It reuses the org study's backbone: nested hierarchy, permission that inherits down, and no structural change without first showing what it breaks.</p>
+        </div>
+        <dl class="rd-meta">
+          <div class="rd-meta-row"><dt>My role</dt><dd>Designed the billing &amp; spend flows; org-level payment actions built closely with engineering (with a PM and a Staff Designer)</dd></div>
+          <div class="rd-meta-row"><dt>Outcome</dt><dd>Designed in-product caps, payment access, and disbursement so admins can manage money across the org with clear safeguards</dd></div>
+          <div class="rd-meta-row"><dt>Team</dt><dd>Built with a PM and a Staff Designer; org-level payment actions designed closely with engineering.</dd></div>
+          <div class="rd-meta-row"><dt>Process</dt><dd>AI used from the same Markdown specs as the design system</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- AT A GLANCE -->
+    <section class="rd-section rd-section--tight" id="business-context">
+      <div class="rd-container">
+        <div class="rd-head rd-reveal"><span class="rd-kicker">At a glance</span><h2 class="rd-h2">Billing sat on 75% of revenue—so it had to be safe to hand over.</h2></div>
+        <div class="rd-stats rd-reveal">
+          <div class="rd-stat"><div class="n">~75%</div><div class="l">of revenue in the 3 enterprise accounts this served</div></div>
+          <div class="rd-stat"><div class="n">95</div><div class="l">live automations per account that a payment problem could interrupt</div></div>
+          <div class="rd-stat"><div class="n">~$2M</div><div class="l">potential revenue from a prospect that named org billing as a requirement to join</div></div>
+          <div class="rd-stat"><div class="n">~$158K</div><div class="l">overspend across 3 incidents caps &amp; budgets are built to prevent</div></div>
+          <div class="rd-stat"><div class="n">14</div><div class="l">payment-issue tickets that halted live automations this year</div></div>
+          <div class="rd-stat"><div class="n">1–3 days → mins</div><div class="l">fund transfers &amp; balance purchases, designed for self-service (was a CS/eng ticket)</div></div>
+        </div>
+        <div class="rd-grid-3 rd-mt-m">
+          <div class="rd-card rd-card--flat rd-reveal"><span class="rd-card-label">The problem</span><p>Billing sat on the money itself—<b>3 enterprise accounts</b> behind <b>~75%</b> of revenue, each running <b>95 live automations</b> that a payment issue could interrupt. It had already cost real money: <b>14 tickets</b> this year were payment issues that halted automations, plus <b>~$158K</b> in overspend across three incidents. A <b>~$2M</b> prospect named org billing as a requirement to join.</p></div>
+          <div class="rd-card rd-card--flat rd-reveal d1"><span class="rd-card-label">What I did</span><p>Designed the <b>billing &amp; spend flows</b>—billing groups, payment access &amp; caps, transfers &amp; disbursement, in-flow access requests, and spend analytics—on the org backbone: nested hierarchy, inherited permission, and no structural change without first showing what it breaks. With a PM, a Staff Designer, and engineering on the payment actions.</p></div>
+          <div class="rd-card rd-card--flat rd-reveal d2"><span class="rd-card-label">The outcome</span><p>Caps and budgets are designed to prevent repeat overspend. The shipped flow makes transfers and balance purchases self-serve in the product; the projected 1½- and 3-minute task times are click-level estimates to validate with live accounts. Org billing also addresses a stated prospect requirement.</p></div>
+        </div>
+      </div>
+    </section>
+    <!-- MAIN UX -->
+    <section class="rd-section" id="main-ux">
+      <div class="rd-container">
+        <div class="rd-head rd-reveal">
+          <span class="rd-kicker">Main UX</span>
+          <h2 class="rd-h2">The whole money surface in one view.</h2>
+          <p class="rd-lead">Total org balance and enterprise volume commitment up top; each billing group shows its accounts, payment access, monthly caps, balances, and pending access requests—transfer and purchase inline.</p>
+        </div>
+        <figure class="rd-figure rd-reveal" style="margin:0;cursor:zoom-in" data-lb-title="Billing Management" data-lb-cap="Total org balance and the enterprise volume commitment up top; each billing group shows its accounts, payment access, monthly caps, balances, and any pending access requests.">
+          <img src="images/new%20billing/Manage%20Members%20at%20Group%20Level.webp" alt="Billing Management overview: group balances, payment access, monthly caps, pending requests, and account moves" loading="lazy" onerror="this.style.opacity='0'">
+        </figure>
+        <p class="rd-cap rd-reveal"><strong>Billing Management — the whole money surface in one view</strong></p>
+        <p class="rd-cap rd-reveal">One admin transfers, purchases, caps, and reads spend across the org without leaving this page.</p>
+      </div>
+    </section>
+
+    <!-- THE QUESTION THAT CHANGED THE PROJECT -->
+    <section class="rd-section rd-section--dark" id="question">
+      <div class="rd-container">
+        <div class="rd-head rd-reveal">
+          <span class="rd-kicker">The question that changed the project</span>
+          <h2 class="rd-h2">Why does an enterprise have to email us—and wait 1–3 days—just to move their own money?</h2>
+        </div>
+        <p class="rd-p rd-reveal">Billing looked like a payments screen. The more I studied the flow, the less that held up. The real problem was trust and permissions: how do you let a customer move real money across their own teams—without us in the loop, and without one payment slip pausing a live campaign?</p>
+        <p class="rd-p rd-reveal">So I reframed it. We weren't designing a place to pay. We were designing how an organization routes, caps, and protects money it's actively spending.</p>
+        <div class="rd-mt-l rd-reveal">
+          <p class="diag-title">Expected vs. actual money-move journey</p>
+          <div class="jrn" aria-label="Expected vs actual money-move journey timeline">
+            <div class="jrn-col">
+              <p class="jrn-head">Expected</p>
+              <div class="jrn-item">
+                <div class="jrn-num" aria-hidden="true">1</div>
+                <div>
+                  <h3 class="rd-h3">The org moves its own money</h3>
+                  <p>An enterprise should be able to shift budget between its own teams the moment it needs to—no ticket, no middleman.</p>
+                </div>
+              </div>
+              <div class="jrn-item">
+                <div class="jrn-num" aria-hidden="true">2</div>
+                <div>
+                  <h3 class="rd-h3">Guardrails they set themselves</h3>
+                  <p>Admins cap what each account spends and route methods by function, so budgets hold without asking us to intervene.</p>
+                </div>
+              </div>
+              <div class="jrn-item">
+                <div class="jrn-num" aria-hidden="true">3</div>
+                <div>
+                  <h3 class="rd-h3">Protect spend continuity</h3>
+                  <p>The model is designed to reduce the chance that a payment issue interrupts a live, paying campaign, while making its impact visible before a change is committed.</p>
+                </div>
+              </div>
+            </div>
+            <div class="jrn-col">
+              <p class="jrn-head">Reality</p>
+              <div class="jrn-item is-risk">
+                <div class="jrn-num" aria-hidden="true">1</div>
+                <div>
+                  <h3 class="rd-h3">They email us to move money</h3>
+                  <p>Every transfer or balance purchase routed through Customer Success and engineering—high-level access on real money, by hand.</p>
+                </div>
+              </div>
+              <div class="jrn-item is-risk">
+                <div class="jrn-num" aria-hidden="true">2</div>
+                <div>
+                  <h3 class="rd-h3">1–3 day turnaround</h3>
+                  <p>A support ticket, triage, a dev or director-level lead, then a wait—while the customer's budget sat where they didn't want it.</p>
+                </div>
+              </div>
+              <div class="jrn-item is-risk">
+                <div class="jrn-num" aria-hidden="true">3</div>
+                <div>
+                  <h3 class="rd-h3">Overspend and stalls</h3>
+                  <p>With no self-serve guardrails, budgets blew—~$158K across three incidents—and 14 payment-issue tickets halted live automations this year.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHY BILLING WAS HARDEST -->
+    <section class="rd-section" id="why">
+      <div class="rd-container">
+        <div class="rd-head rd-reveal">
+          <span class="rd-kicker">Why billing was hardest</span>
+          <h2 class="rd-h2">Money is where permissions, structure, and live campaigns all collide.</h2>
+        </div>
+        <p class="rd-p rd-reveal">A template edit affects designs. A billing change affects <em>money that's actively being spent.</em> An enterprise pre-funds a volume commitment, splits it across billing groups, caps each account, and points specific automations at specific payment methods. Change any of that carelessly and a running campaign loses its funding and pauses—so the design had to make every consequence visible before an admin commits.</p>
+        <p class="rd-p rd-reveal">The other half was legibility: a CFO wants the whole org's spend; a regional admin should see only theirs. The same hierarchy and permission rules from org management do that work here—applied to dollars, not roles.</p>
+      </div>
+    </section>
+    <!-- DISCOVERY -->
+    <section class="rd-section rd-section--tight" id="discovery" style="background:var(--paper-2)">
+      <div class="rd-container">
+        <div class="rd-head rd-reveal">
+          <span class="rd-kicker">Discovery</span>
+          <h2 class="rd-h2">The demand was specific—and it came from the accounts that carry the revenue.</h2>
+          <p class="rd-lead">The three enterprise clients behind roughly <strong>75% of company revenue</strong> asked to manage their own org instead of routing every change through us—and a prospect we're pursuing (<strong>~$2M in potential revenue if it signs</strong>) named org billing as a requirement to join. Our PM and CS team ran the interviews; I worked from their findings, the logged requests, and support tickets.</p>
+        </div>
+
+        <figure class="donut rd-reveal">
+          <svg viewBox="0 0 200 200" width="100%" height="auto" role="img" aria-label="17 requests to self-manage the org: 13 fund transfers, 2 payment-method routing, 2 aggregated history and receipts">
+            <g transform="rotate(-90 100 100)" fill="none" stroke-width="30">
+              <circle cx="100" cy="100" r="70" stroke="#714cb6" stroke-dasharray="336.34 103.48" stroke-dashoffset="0"></circle>
+              <circle cx="100" cy="100" r="70" stroke="#5f3da0" stroke-dasharray="51.74 388.08" stroke-dashoffset="-336.34"></circle>
+              <circle cx="100" cy="100" r="70" stroke="#c69a3a" stroke-dasharray="51.74 388.08" stroke-dashoffset="-388.08"></circle>
+            </g>
+            <text x="100" y="95" text-anchor="middle" font-size="38" font-weight="800" fill="#111110">17</text>
+            <text x="100" y="118" text-anchor="middle" font-size="11" font-weight="700" letter-spacing="1.5" fill="#6b675f">REQUESTS</text>
+          </svg>
+          <div>
+            <figcaption>Requests to self-manage the org</figcaption>
+            <ul class="leg">
+              <li><span class="sw" style="background:#714cb6"></span><span><b>13</b>&nbsp;Fund transfers between teams</span></li>
+              <li><span class="sw" style="background:#5f3da0"></span><span><b>2</b>&nbsp;Payment-method routing by function (automation, single order, mailing-list)</span></li>
+              <li><span class="sw" style="background:#c69a3a"></span><span><b>2</b>&nbsp;Aggregated payment history &amp; receipts for the org</span></li>
+            </ul>
+            <p class="rd-cap">Logged from the three enterprise accounts—each request previously brokered by CS on a 1–3 day turnaround. Three of the four accounts (counting the incoming prospect) explicitly asked for billing aggregation.</p>
+          </div>
+        </figure>
+
+        <div class="rd-rows rd-reveal rd-mt-m" role="table" aria-label="Discovery evidence and the decision it forced">
+          <div class="rd-row is-head"><span>Signal</span><span>What the data showed</span></div>
+          <div class="rd-row">
+            <div class="k">Live automations that can't pause</div>
+            <div class="v"><p style="margin:0">The three enterprise accounts each run <strong>95 active automations</strong>. A payment problem doesn't just annoy—it stops revenue. <strong>14 support tickets</strong> this year were payment issues that halted some of those automations.</p></div>
+          </div>
+          <div class="rd-row">
+            <div class="k">Overspend that already happened</div>
+            <div class="v"><p style="margin:0">With no way to set their own limits, budgets got blown—<strong>three times this year, ~$158K</strong> in unintended spend. Customers wanted guardrails as much as access.</p></div>
+          </div>
+          <div class="rd-row">
+            <div class="k">The decision this forced</div>
+            <div class="v"><p style="margin:0">The two facts pulled opposite ways. The overspend argued for hard limits everywhere; the un-pausable automations argued against any cap that could halt a paying campaign. So caps stayed <strong>optional guardrails</strong>, not mandatory—the real protection is structural: <strong>multiple billing groups, each with multiple payment methods</strong>, so one declined card can't take down a campaign.</p></div>
+          </div>
+        </div>
+
+        <div class="rd-panel rd-reveal rd-mt-m">
+          <p style="margin:0"><strong style="color:#fff">What that reframed:</strong> not just "let enterprises pay themselves," but "let them route, cap, and protect money so a payment issue can't stop a live campaign—and nobody overspends by accident."</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- THE BILLING MODEL -->
+    <section class="rd-section rd-section--dark" id="model">
+      <div class="rd-container">
+        <div class="rd-head rd-reveal">
+          <span class="rd-kicker">The billing model</span>
+          <h2 class="rd-h2">Pooled balance at the top, billing groups underneath, caps at the edge.</h2>
+          <p class="rd-lead">The org holds a total balance and, for enterprises, a monthly volume commitment. Admins create billing groups—often per campaign or region—nest groups inside them, attach one or more payment methods, and set how much each account can spend.</p>
+        </div>
+        <figure class="om-card rd-reveal">
+          <figcaption>The object model</figcaption>
+          <p>Two things kept deliberately separate: <strong>who spends</strong> (the org tree) and <strong>what pays</strong> (the funding source). An Account <em>points to</em> a Billing Account, so one funding source can serve many.</p>
+          <div class="om">
+            <div>
+              <div class="om-lbl">Who spends</div>
+              <div class="om-node"><strong>Organization</strong><span>Total balance · volume commitment</span></div>
+              <div class="om-arrow" aria-hidden="true">↓</div>
+              <div class="om-node"><strong>Billing group</strong><span>Per region / campaign · nestable</span></div>
+              <div class="om-arrow" aria-hidden="true">↓</div>
+              <div class="om-node om-accent"><strong>Account</strong><span>Monthly cap (≤ group budget)</span></div>
+            </div>
+            <div class="om-bridge">
+              <b>funded by</b>
+              <span class="ar" aria-hidden="true">→</span>
+              <span>one funds many</span>
+            </div>
+            <div>
+              <div class="om-lbl">What pays</div>
+              <div class="om-node om-pay"><strong>Billing Account</strong><span>Holds payment methods &amp; rules</span></div>
+              <div class="om-arrow" aria-hidden="true">↓</div>
+              <div class="om-node om-pay"><strong>Payment methods</strong><span>Card · bank · invoice</span></div>
+            </div>
+          </div>
+        </figure>
+      </div>
+    </section>
+
+    <!-- CONCEPT SHIFT -->
+    <section class="rd-section" id="concept-shift">
+      <div class="rd-container">
+        <div class="rd-head rd-reveal">
+          <span class="rd-kicker">The model decision · the version I didn't build</span>
+          <h2 class="rd-h2">Why a separate Billing Account—not payment methods bolted onto each team.</h2>
+          <p class="rd-lead">The obvious first model was a 1:1 binding: a team <em>is</em> its payment. Each Group or Team would carry its own cards, and money would live on the team—fast to build, so we considered it first. But it couldn't represent how enterprises actually pay, so I split funding into its own object.</p>
+        </div>
+        <p class="diag-title rd-reveal">Rejected vs. shipped</p>
+        <div class="rd-grid-2 rd-reveal">
+          <div class="rd-card">
+            <h3 class="rd-h3" style="margin-top:0">Rejected — payment on the team (1:1)</h3>
+            <div class="stack-list">
+              <p>Payment methods sit directly on each Group or Team; the team and its money are the same object.</p>
+              <p>A team can pay only one way, and a funding source can't be shared across teams.</p>
+              <p>Finance can't separate <em>who spent</em> from <em>what paid</em>—so receipts and tax don't reconcile.</p>
+            </div>
+          </div>
+          <div class="rd-card">
+            <h3 class="rd-h3" style="margin-top:0">Shipped — a Billing Account as its own entity</h3>
+            <div class="stack-list good">
+              <p>A Billing Account holds the payment methods and rules; any number of org Accounts point to it.</p>
+              <p>Spending ("who") and funding ("what pays") become separate objects that reference each other.</p>
+              <p>One funding source can serve many accounts—and per-account limits draw against it.</p>
+            </div>
+          </div>
+        </div>
+        <div class="rd-grid-3 rd-mt-m rd-reveal">
+          <div class="rd-card"><h3 class="rd-h3" style="margin-top:0">One source, many accounts</h3><p>A shared card or credit line is entered once on the Billing Account and reused, instead of re-adding it to every team.</p></div>
+          <div class="rd-card"><h3 class="rd-h3" style="margin-top:0">Routing by function</h3><p>Because payment is its own object, an Account chooses which method covers which work—one card for automations, another for single orders, another for a mailing list.</p></div>
+          <div class="rd-card"><h3 class="rd-h3" style="margin-top:0">Reconciles for finance</h3><p>Enterprises run different legal entities or banks by state. Anchoring money to the paying entity keeps history, receipts, and tax clean—and a change in one place updates every Account at once.</p></div>
+        </div>
+        <p class="rd-p rd-reveal rd-mt-s">The extra object is worth it: at five levels of nesting, editing payment on every team is exactly where costly mistakes—and paused campaigns—come from. Separating funding from spending removes that whole class of failure.</p>
+      </div>
+    </section>
+    <!-- FEATURE REFINE -->
+    <section class="rd-section rd-section--dark" id="feature-refine">
+      <div class="rd-container">
+        <div class="rd-head rd-reveal">
+          <span class="rd-kicker">Refinement</span>
+          <h2 class="rd-h2">Every money action, self-serve.</h2>
+          <p class="rd-lead">Setting up a group, moving money, protecting a live campaign, reading spend—one billing surface, seen from different jobs. Filter by what you need to do, then click any screen to open it full-size.</p>
+        </div>
+        <div class="refine-carousel" id="refine-carousel">
+          <div class="refine-personas" role="tablist" aria-label="Filter features by job">
+            <button class="refine-persona is-active" type="button" data-persona="setup">Set up</button>
+            <button class="refine-persona" type="button" data-persona="move">Move money</button>
+            <button class="refine-persona" type="button" data-persona="protect">Protect</button>
+            <button class="refine-persona" type="button" data-persona="spend">Spend &amp; receipts</button>
+          </div>
+          <div class="refine-viewport">
+            <button class="refine-arrow prev" type="button" aria-label="Previous feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+            <button class="refine-arrow next" type="button" aria-label="Next feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
+            <div class="refine-track">
+              <article class="refine-slide"><div class="vid-frame"><img src="images/new%20billing/Modal-container-2.webp" alt="Manage Billing Group — grant accounts pooled balance or a card and set monthly caps across Payments, Admins, Budgets, and Settings" style="width:100%;height:100%;object-fit:contain;background:#f2f0eb;display:block" onerror="this.style.opacity='0'"></div></article>
+              <article class="refine-slide"><div class="vid-frame"><img src="images/new%20billing/Manage%20Members%20at%20Group%20Level.webp" alt="Billing group administration — group admins, payment access, balances, and account-level controls" style="width:100%;height:100%;object-fit:contain;background:#f2f0eb;display:block" onerror="this.style.opacity='0'"></div></article>
+              <article class="refine-slide"><div class="vid-frame"><img src="images/bill-budgets.webp" alt="Per-account budgets — set each account's Monthly Cap or No Limit, shown live against remaining balance" style="width:100%;height:100%;object-fit:contain;background:#f2f0eb;display:block" onerror="this.style.opacity='0'"></div></article>
+              <article class="refine-slide"><div class="vid-frame"><img src="images/new%20billing/Modal-container-3.webp" alt="Manage account — balance, total spent, monthly cap, payment access, and automation-specific payment routing" style="width:100%;height:100%;object-fit:contain;background:#f2f0eb;display:block" onerror="this.style.opacity='0'"></div></article>
+              <article class="refine-slide"><div class="vid-frame"><img src="images/new%20billing/Modal-container.webp" alt="Transfer balance between a billing group and an account, with a preview reconciling both new balances before confirmation" style="width:100%;height:100%;object-fit:contain;background:#f2f0eb;display:block" onerror="this.style.opacity='0'"></div></article>
+              <article class="refine-slide"><div class="vid-frame"><img src="images/new%20billing/Modal-container-5.webp" alt="Disbursement — split a volume commitment across billing groups and payment methods with live percentages and amounts" style="width:100%;height:100%;object-fit:contain;background:#f2f0eb;display:block" onerror="this.style.opacity='0'"></div></article>
+              <article class="refine-slide"><div class="vid-frame"><img src="images/new%20billing/Modal-container-1.webp" alt="Purchase balance — add funds using a card, bank account, or invoice" style="width:100%;height:100%;object-fit:contain;background:#f2f0eb;display:block" onerror="this.style.opacity='0'"></div></article>
+              <article class="refine-slide"><div class="vid-frame"><img src="images/new%20billing/Modal-container-4.webp" alt="Migrate an account to another billing group with guided destination, automation routing, and payment-method limits" style="width:100%;height:100%;object-fit:contain;background:#f2f0eb;display:block" onerror="this.style.opacity='0'"></div></article>
+              <article class="refine-slide"><div class="vid-frame"><img src="images/new%20billing/Modal-container-6.webp" alt="Delete a payment method in use — the dialog identifies the dependent automations and requires replacement or pause before deletion" style="width:100%;height:100%;object-fit:contain;background:#f2f0eb;display:block" onerror="this.style.opacity='0'"></div></article>
+              <article class="refine-slide"><div class="vid-frame"><img src="images/bill-request.webp" alt="In-flow access requests — a team with no payment method requests access in-product and an admin approves or rejects, with a clear audit trail" style="width:100%;height:100%;object-fit:contain;background:#f2f0eb;display:block" onerror="this.style.opacity='0'"></div></article>
+              <article class="refine-slide"><div class="vid-frame"><img src="images/bill-analytics.webp" alt="Payment history — spend rolled up by team and by type at org, group, or campaign level, with a filterable ledger of receipts and invoices" style="width:100%;height:100%;object-fit:contain;background:#f2f0eb;display:block" onerror="this.style.opacity='0'"></div></article>
+              <article class="refine-slide"><div class="vid-frame"><img src="images/bill-receipt.webp" alt="Itemized receipt — order, postage, mailing list, credits, and total paid, exportable so finance can reconcile without leaving the product" style="width:100%;height:100%;object-fit:contain;background:#f2f0eb;display:block" onerror="this.style.opacity='0'"></div></article>
+              <article class="refine-slide"><div class="vid-frame"><img src="images/bill-management.webp" alt="Billing management overview — enterprise balance, billing groups, account access, and payment controls in one surface" style="width:100%;height:100%;object-fit:contain;background:#f2f0eb;display:block" onerror="this.style.opacity='0'"></div></article>
+            </div>
+          </div>
+          <div class="refine-controls" role="tablist" aria-label="Billing features">
+            <button class="refine-item is-active" type="button" role="tab" data-persona="setup">
+              <span class="refine-item-persona">Set up</span>
+              <span class="refine-item-title">Billing groups, access &amp; caps</span>
+              <span class="refine-item-desc">Grant an account the pooled group balance or a specific card, then set a monthly cap it can't exceed—Payments, Admins, Budgets, and Settings split into tabs by permission.</span>
+              <span class="refine-item-bar" aria-hidden="true"><i></i></span>
+            </button>
+            <button class="refine-item" type="button" role="tab" data-persona="setup">
+              <span class="refine-item-persona">Set up</span>
+              <span class="refine-item-title">Assign group admins</span>
+              <span class="refine-item-desc">Choose who manages a billing group—accounts, methods, invoices, settings—so approvals route to the right level, not back to us.</span>
+              <span class="refine-item-bar" aria-hidden="true"><i></i></span>
+            </button>
+            <button class="refine-item" type="button" role="tab" data-persona="setup">
+              <span class="refine-item-persona">Set up</span>
+              <span class="refine-item-title">Per-account budgets</span>
+              <span class="refine-item-desc">Each account gets a Monthly Cap or No Limit, shown live against remaining balance—so an invalid cap above budget is impossible to set.</span>
+              <span class="refine-item-bar" aria-hidden="true"><i></i></span>
+            </button>
+            <button class="refine-item" type="button" role="tab" data-persona="setup">
+              <span class="refine-item-persona">Set up</span>
+              <span class="refine-item-title">Route payment by function</span>
+              <span class="refine-item-desc">At the account level, each automation points to its own payment method—one card for automations, another for single orders—alongside balance, total spent, and monthly cap.</span>
+              <span class="refine-item-bar" aria-hidden="true"><i></i></span>
+            </button>
+            <button class="refine-item is-hidden" type="button" role="tab" data-persona="move">
+              <span class="refine-item-persona">Move money</span>
+              <span class="refine-item-title">Transfer between teams</span>
+              <span class="refine-item-desc">Move balance from one billing group or account to another, with a live Transfer Preview that reconciles both new balances before you confirm—13 of the 17 logged requests were fund transfers.</span>
+              <span class="refine-item-bar" aria-hidden="true"><i></i></span>
+            </button>
+            <button class="refine-item is-hidden" type="button" role="tab" data-persona="move">
+              <span class="refine-item-persona">Move money</span>
+              <span class="refine-item-title">Split a commitment</span>
+              <span class="refine-item-desc">Turn one big volume commitment into a clear allocation: charge-from / disburse-to, per-method sliders, and one-tap split-evenly, with live percentages so the total always reconciles.</span>
+              <span class="refine-item-bar" aria-hidden="true"><i></i></span>
+            </button>
+            <button class="refine-item is-hidden" type="button" role="tab" data-persona="move">
+              <span class="refine-item-persona">Move money</span>
+              <span class="refine-item-title">Purchase balance</span>
+              <span class="refine-item-desc">Order more balance by card, bank, or Stripe invoice; a receipt is emailed and charges settle in 1–2 days—so added funds sit in Pending verification, unspendable until they clear.</span>
+              <span class="refine-item-bar" aria-hidden="true"><i></i></span>
+            </button>
+            <button class="refine-item is-hidden" type="button" role="tab" data-persona="move">
+              <span class="refine-item-persona">Move money</span>
+              <span class="refine-item-title">Migrate an account</span>
+              <span class="refine-item-desc">Move an account to another group in guided steps—destination, automation routing, then per-method monthly limits—and the move waits on the destination admins' approval.</span>
+              <span class="refine-item-bar" aria-hidden="true"><i></i></span>
+            </button>
+            <button class="refine-item is-hidden" type="button" role="tab" data-persona="protect">
+              <span class="refine-item-persona">Protect</span>
+              <span class="refine-item-title">Delete a method in use</span>
+              <span class="refine-item-desc">A method funding live automations can't just be removed: the dialog names every automation that depends on it and gates the delete behind swap-or-pause and a delete delay—prevent, don't undo.</span>
+              <span class="refine-item-bar" aria-hidden="true"><i></i></span>
+            </button>
+            <button class="refine-item is-hidden" type="button" role="tab" data-persona="protect">
+              <span class="refine-item-persona">Protect</span>
+              <span class="refine-item-title">In-flow access requests</span>
+              <span class="refine-item-desc">A team with no method requests access in-product; an admin approves or rejects—no side-channel email, and a clear audit of who granted what.</span>
+              <span class="refine-item-bar" aria-hidden="true"><i></i></span>
+            </button>
+            <button class="refine-item is-hidden" type="button" role="tab" data-persona="spend">
+              <span class="refine-item-persona">Spend &amp; receipts</span>
+              <span class="refine-item-title">Spend analytics</span>
+              <span class="refine-item-desc">Where the money's going, answered at org, group, or campaign level: spend rolled up by team and by type, with the same permission rule applied to dollars.</span>
+              <span class="refine-item-bar" aria-hidden="true"><i></i></span>
+            </button>
+            <button class="refine-item is-hidden" type="button" role="tab" data-persona="spend">
+              <span class="refine-item-persona">Spend &amp; receipts</span>
+              <span class="refine-item-title">Itemized receipts</span>
+              <span class="refine-item-desc">Every charge resolves to a clean, itemized receipt—order, postage, mailing list, credits, and total paid—so finance can reconcile and export without leaving the product.</span>
+              <span class="refine-item-bar" aria-hidden="true"><i></i></span>
+            </button>
+            <button class="refine-item is-hidden" type="button" role="tab" data-persona="spend">
+              <span class="refine-item-persona">Spend &amp; receipts</span>
+              <span class="refine-item-title">Billing overview</span>
+              <span class="refine-item-desc">See the enterprise commitment, balances, billing groups, and account access together—the operating surface for billing administration.</span>
+              <span class="refine-item-bar" aria-hidden="true"><i></i></span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- CONSTRAINTS -->
+    <section class="rd-section" id="constraints">
+      <div class="rd-container">
+        <div class="rd-head rd-reveal">
+          <span class="rd-kicker">Designing within real constraints</span>
+          <h2 class="rd-h2">Where the platform pushed back, the interface pushed forward.</h2>
+          <p class="rd-lead">Money runs on systems with hard limits—Stripe, fund verification, settlement. Each pushback became a decision, with a visible trade-off and a path forward.</p>
+        </div>
+        <div class="rd-compare dec-table rd-reveal">
+          <div class="rd-crow is-head"><span>Question</span><span>Trade-off</span><span>Decision</span><span>Future</span></div>
+          <div class="rd-crow">
+            <div class="stage" data-l="Question"><p>Should caps be mandatory?</p></div>
+            <div class="side" data-l="Trade-off"><p>Hard caps stop overspend but could halt a paying campaign.</p></div>
+            <div class="side" data-l="Decision"><p>Optional guardrails plus structural redundancy—multiple billing groups &times; multiple payment methods—so one declined card can't take down a live campaign.</p></div>
+            <div class="side" data-l="Future"><p>AI-suggested caps from an account's past spend.</p></div>
+          </div>
+          <div class="rd-crow">
+            <div class="stage" data-l="Question"><p>How do you change a payment method?</p></div>
+            <div class="side" data-l="Trade-off"><p>Stripe won't let a saved card's number be edited in place.</p></div>
+            <div class="side" data-l="Decision"><p>Make adding effortless; every "change" is really add a new method and repoint the automation—so the limit becomes a fast path, not a wall.</p></div>
+            <div class="side" data-l="Future"><p>Broaden supported credential types.</p></div>
+          </div>
+          <div class="rd-crow">
+            <div class="stage" data-l="Question"><p>When are new funds spendable?</p></div>
+            <div class="side" data-l="Trade-off"><p>Show funds instantly, but they aren't verified yet.</p></div>
+            <div class="side" data-l="Decision"><p>Balance and receipt show at once but sit in <strong>"Pending verification,"</strong> unspendable until they clear—nobody spends money that isn't confirmed.</p></div>
+            <div class="side" data-l="Future"><p>Clearer settlement-time estimates.</p></div>
+          </div>
+          <div class="rd-crow">
+            <div class="stage" data-l="Question"><p>Is a commitment a balance?</p></div>
+            <div class="side" data-l="Trade-off"><p>One number is simpler but misleading.</p></div>
+            <div class="side" data-l="Decision"><p>Show the volume commitment and the spendable balance as two distinct figures, so "committed $100k" is never mistaken for "$100k I can spend right now."</p></div>
+            <div class="side" data-l="Future"><p>&mdash;</p></div>
+          </div>
+        </div>
+        <div class="rd-card rd-card--flat rd-reveal rd-mt-m">
+          <span class="rd-card-label">Three principles run under all of it</span>
+          <p><strong>Prevent, don't undo</strong>—money moves are effectively irreversible, so the UI shows every affected automation before a delete or transfer commits. <strong>Make invalid states impossible</strong>—a cap can't be set above its group's budget, with remaining balance shown live. <strong>Offer only what a role can do</strong>—money actions split into tabs by permission, so requests don't fail.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- AI IN THE PROCESS -->
+    <section class="rd-section rd-section--dark" id="design-system">
+      <div class="rd-container">
+        <div class="rd-head rd-reveal">
+          <span class="rd-kicker">AI in the process</span>
+          <h2 class="rd-h2">AI prototyped billing states from the shared Figma system—keeping drafts aligned with the product.</h2>
+        </div>
+        <p class="rd-p rd-reveal">Billing has a lot of states—empty groups, capped accounts, pending requests, in-use methods, split allocations. The key move: <strong>AI drafted those states from the design system's own components and our shared Markdown (.md) specs</strong>—the same components and voice-and-tone docs behind the Figma system. So the states stayed aligned with that system instead of becoming one-off mocks. (These ran as HTML prototypes; the coded React version came later, on my own, after I was let go—that's the design-system case study.)</p>
+        <p class="rd-p rd-reveal">That freed the team for the flows that carried real risk—the money-moving and destructive ones. I'm usually the one bringing AI into the workflow—testing Figma Make, Codex, Claude's design tooling, and MCP, pushing them past production output into usability, research, and discovery, then documenting what works. On the org and billing surfaces I taught the approach to our Staff Designer and we learned it together; our Senior PM built three of his own prototypes from the same specs. Still a workflow we're refining.</p>
+        <div class="rd-tags rd-reveal rd-mt-m"><span class="rd-tag">AI-READY SYSTEM</span></div>
+        <div class="rd-grid-3 rd-reveal rd-mt-s">
+          <div class="md-card"><div class="md-file"><span class="dot"></span>component-specs.md</div><div class="md-body"><h3 class="rd-h3">One source of truth</h3><p>Components, tokens, and rules authored once in the Figma system—so every AI-drafted billing state used the real components, not a one-off mock that would drift from that source of truth.</p></div></div>
+          <div class="md-card"><div class="md-file"><span class="dot"></span>validations-branches.md</div><div class="md-body"><h3 class="rd-h3">States &amp; logic</h3><p>Relevancy checks, validations, conditional branches, and state flows—empty, capped, pending-verification, in-use, split allocation—drafted with AI from the same specs behind the design system.</p></div></div>
+          <div class="md-card"><div class="md-file"><span class="dot"></span>ux-copy.md</div><div class="md-body"><h3 class="rd-h3">First-draft copy</h3><p>A machine-readable voice-and-tone reference produced first-draft UX copy for each billing state that already sounded like the product—so the AI passes stayed aligned with the Figma system.</p></div></div>
+        </div>
+        <div class="rd-hero-actions rd-reveal"><a class="rd-btn rd-btn--outline" href="design-system-case-study-redesign.html">Read the design system case study <svg class="arw" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+      </div>
+    </section>
+
+    <!-- ACCESSIBILITY -->
+    <section class="rd-section rd-section--tight" id="accessibility" style="background:var(--paper-2)">
+      <div class="rd-container">
+        <div class="rd-head rd-reveal">
+          <span class="rd-kicker">Accessibility</span>
+          <h3 class="rd-h3">The same system made accessibility a spec, not a cleanup.</h3>
+          <p class="rd-lead">A money screen is the worst place for an inaccessible control—and permission-and-spend screens are exactly where it gets skipped. Because the rules live in the <a class="inline-link" href="design-system-case-study-redesign.html">design system</a>, it was a constraint from the start; billing met <strong>WCAG 2.1 AA</strong>. <span>(Ratios sampled from the shipped LettrLabs UI.)</span></p>
+        </div>
+        <div class="rd-reveal">
+          <div class="a11y-line">
+            <span class="a11y-lbl">Contrast</span>
+            <span class="a11y-chip"><b>13.6:1</b> primary text <i>AAA</i></span>
+            <span class="a11y-chip"><b>16.1:1</b> nav on dark <i>AAA</i></span>
+            <span class="a11y-chip"><b>7.2:1</b> muted text <i>AA</i></span>
+            <span class="a11y-chip"><b>4.8:1</b> button label <i>AA</i></span>
+          </div>
+          <div class="a11y-line">
+            <span class="a11y-lbl">Built in</span>
+            <span class="rd-tags">
+              <span class="rd-tag">Keyboard-operable</span>
+              <span class="rd-tag">Visible focus</span>
+              <span class="rd-tag">Never color alone</span>
+              <span class="rd-tag">Errors tied to the field</span>
+              <span class="rd-tag">Screen-reader checked</span>
+            </span>
+          </div>
+        </div>
+        <div class="rd-grid-2 rd-mt-m rd-reveal">
+          <div class="rd-panel">
+            <span class="rd-card-label">How it was tested</span>
+            <h3 class="rd-h3" style="margin-top:12px">Automated + manual, not just a scan</h3>
+            <p>Automated checks ran in <strong style="color:#fff">axe DevTools</strong> against WCAG rules. Those catch only a fraction of real issues, so that pass was the floor—the manual one is where the billing flows became usable.</p>
+          </div>
+          <div class="rd-card rd-card--flat">
+            <span class="rd-card-label">Manual pass — every money flow</span>
+            <ul class="a11y-list">
+              <li>Everything runs on <strong>Tab, Shift+Tab, Enter, Space, arrows</strong></li>
+              <li>Focus <strong>visible</strong>, in a <strong>logical order</strong></li>
+              <li>Modals <strong>trap focus</strong> and return it on close</li>
+              <li>Holds at <strong>200–400% zoom</strong> and narrow widths</li>
+              <li>Meaning never carried by <strong>color alone</strong></li>
+              <li>Error, pending, loading and success states read clearly</li>
+              <li>Sliders, menus and destructive dialogs have <strong>accessible alternatives</strong></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- BEFORE / AFTER -->
+    <section class="rd-section" id="before-after">
+      <div class="rd-container">
+        <div class="rd-head rd-reveal">
+          <span class="rd-kicker">What changed · before &amp; after</span>
+          <h2 class="rd-h2">From a multi-day support path to an in-product money action.</h2>
+          <p class="rd-lead">The old paths ran through LettrLabs. admin panel and backend. The shipped model brings the same actions into the product; task-time estimates and adoption remain launch measures.</p>
+        </div>
+        <div class="rd-compare rd-reveal">
+          <div class="rd-crow is-head"><span>Money action</span><span>Before — email &amp; wait</span><span>After — self-serve</span></div>
+          <div class="rd-crow">
+            <div class="stage"><span class="ix">01</span>Transfer funds between teams</div>
+            <div class="side"><p style="margin:0">Email CS → triage → tag a dev or director → transfer in the internal panel → wait 1–3 days.</p><div class="rd-status rd-status--bad">Blocked · 1–3 days</div></div>
+            <div class="side after"><p style="margin:0">Open the Org Admin Panel, pick billing group from → to, confirm.</p><div class="rd-status rd-status--good">Self-serve · ~1½ min</div></div>
+          </div>
+          <div class="rd-crow">
+            <div class="stage"><span class="ix">02</span>Purchase balance</div>
+            <div class="side"><p style="margin:0">Email the CTO / Director of Sales → discuss → Stripe link → pay → charges settle → available in 1–3 days.</p><div class="rd-status rd-status--bad">Waiting · 1–3 days</div></div>
+            <div class="side after"><p style="margin:0">Manage Balance → Purchase Balance → pay by card, bank, or Stripe invoice; shows at once, spendable once verified.</p><div class="rd-status rd-status--good">Self-serve · ~3 min</div></div>
+          </div>
+          <div class="rd-crow">
+            <div class="stage"><span class="ix">03</span>Route payment by function</div>
+            <div class="side"><p style="margin:0">Ask us to point specific automations at a specific card—by hand, on the backend.</p><div class="rd-status rd-status--bad">Dependent</div></div>
+            <div class="side after"><p style="margin:0">Per-account method routing set in the billing group—one card for automations, another for orders.</p><div class="rd-status rd-status--good">In control</div></div>
+          </div>
+          <div class="rd-crow">
+            <div class="stage"><span class="ix">04</span>Protect a live campaign</div>
+            <div class="side"><p style="margin:0">A failed or removed card silently pauses the automations it funded—found out after the fact.</p><div class="rd-status rd-status--bad">At risk</div></div>
+            <div class="side after"><p style="margin:0">Delete names the affected automations and gates on swap-or-pause first, behind a delete delay.</p><div class="rd-status rd-status--good">Protected</div></div>
+          </div>
+          <div class="rd-crow">
+            <div class="stage"><span class="ix">05</span>Reconcile spend</div>
+            <div class="side"><p style="margin:0">Request aggregated history and receipts through a support ticket.</p><div class="rd-status rd-status--bad">Manual</div></div>
+            <div class="side after"><p style="margin:0">Roll-ups by team and type at any level, with exportable itemized receipts and invoices.</p><div class="rd-status rd-status--good">Legible</div></div>
+          </div>
+        </div>
+        <div class="note-card rd-reveal">
+          <span class="rd-card-label">Backing the time claim</span>
+          <p>A rough <strong>keystroke-level (KLM) model</strong> of the shipped transfer flow—point, select the "from" group, select the "to" group, enter an amount, confirm—totals roughly <strong>15–20 seconds of active interaction</strong> using the standard KLM operator times (Card, Moran &amp; Newell, <em>The Psychology of Human-Computer Interaction</em>, 1983). Add the admin's own thinking—verifying the amount and double-checking balances—and the whole task lands around <strong>1½ minutes</strong> end to end, versus a 1–3 day CS turnaround. (I enumerated the KLM operators with AI to sanity-check the cost before build.) It's a click-level estimate, not a stopwatch—actual completion times will be validated in <strong>Hotjar</strong> once enterprise accounts are live.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- OUTCOME -->
+    <section class="rd-section rd-section--tight" id="outcome" style="background:var(--paper-2)">
+      <div class="rd-container">
+        <div class="rd-head rd-reveal">
+          <span class="rd-kicker">Outcome</span>
+          <h2 class="rd-h2">A billing model designed for safer self-management.</h2>
+          <p class="rd-lead">The product outcome is a clearer in-product path for money moves on a revenue-critical surface. Adoption, completion time, and ticket reduction are the post-launch measures.</p>
+        </div>
+        <div class="out-grid rd-reveal">
+          <div class="out-cell"><span class="lbl">01 / SELF-SERVE · PROJECTED</span><h3 class="rd-h3">Minutes, not days</h3><p>The shipped flows put budgets, caps, transfers, and balance purchases in-product. The projected task model estimates transfers at ~1½ minutes and a purchase submission at ~3 minutes, versus 1–3 business-day CS requests (purchased funds then clear in 1–2 days). All three enterprise accounts are expected to self-manage billing at launch; the estimate needs validation with live accounts.</p></div>
+          <div class="out-cell"><span class="lbl">02 / REVENUE · PROJECTED</span><h3 class="rd-h3">Built for the base—and on the next deal's must-have list</h3><p>These flows serve the three accounts behind ~75% of revenue—and the prospect we're pursuing, <strong>~$2M in potential revenue if it signs</strong>, named org billing as a requirement to join (three of four accounts explicitly asked for billing aggregation). A named requirement, not a nice-to-have.</p></div>
+          <div class="out-cell"><span class="lbl">03 / SAFETY</span><h3 class="rd-h3">A pattern that protects revenue</h3><p>Multiple billing groups and payment methods are designed to reduce single-payment-failure risk across the <strong>95 live automations</strong> each account runs. Budgets and caps address the failure pattern behind <strong>14 payment-issue tickets</strong> and <strong>~$158K across three incidents</strong>; their impact is a post-launch measure.</p></div>
+          <div class="out-cell"><span class="lbl">04 / VISIBILITY</span><h3 class="rd-h3">Spend leaders can trust</h3><p>Roll-ups by team and type with exportable receipts and invoices gave finance one legible view—covering the aggregated payment-history requests that were part of the demand—instead of a support ticket.</p></div>
+          <div class="out-cell"><span class="lbl">05 / DESIGN SYSTEM</span><h3 class="rd-h3">0 → 45 components, 3 md specs</h3><p>The billing surface drew from a Figma design system taken from 0 to 45 components with 3 Markdown spec files—the same components and specs AI prototyped from—cutting roughly <strong>~30% off design time</strong> (internal estimate) and keeping drafts aligned with the Figma system.</p></div>
+          <div class="out-cell"><span class="lbl">06 / SCALE</span><h3 class="rd-h3">17 requests, addressed at the model level</h3><p>The 17 logged self-management requests are addressed structurally rather than one by one—so the same billing model can support the <strong>95 automations per account</strong> as the enterprise base grows.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- REFLECTION -->
+    <section class="rd-section rd-section--dark" id="reflection">
+      <div class="rd-container">
+        <div class="rd-head rd-reveal">
+          <span class="rd-kicker">Reflection</span>
+          <h2 class="rd-h2">Billing is where I'd keep simplifying.</h2>
+        </div>
+        <p class="rd-p rd-reveal">Billing carried the most states and the highest stakes, and it shows: some flows—disbursement, resolving affected automations before a delete—are powerful but still ask a lot of the admin. If I revisited it, I'd collapse the multi-step money moves into fewer, clearer decisions while keeping every consequence visible. The model underneath is the part I'd keep.</p>
+        <p class="rd-p rd-reveal">With more time, I'd let AI pre-suggest budgets and caps from an account's past spend, so setup starts from a sensible default instead of a blank field. I'd also push analytics deeper—surfacing budget vs. ROI so admins see where to allocate more, turning billing data into a business tool, not just a ledger.</p>
+        <blockquote class="rd-quote rd-reveal rd-mt-l"><p class="q" style="margin:0">"Anyone can draw a transfer dialog. The real work was the model underneath it—pooled money, scoped access, and safeguards designed to protect a paying campaign from avoidable funding interruptions."</p></blockquote>
+      </div>
+    </section>
+
+    <!-- NEXT CASE STUDY -->
+    <section class="rd-section rd-section--tight">
+      <div class="rd-container">
+        <div class="rd-panel rd-reveal" style="text-align:center;padding:clamp(44px,6vw,80px) clamp(28px,5vw,64px);background:var(--purple)">
+          <span class="rd-kicker" style="color:#e6dbff">Next case study</span>
+          <h2 class="rd-h2" style="color:#fff;margin-top:16px">Design to code, both directions →</h2>
+          <p style="color:rgba(255,255,255,.86);max-width:52ch;margin:16px auto 0">95 components, one written standard, and a multi-agent audit that grades the build.</p>
+          <div class="rd-hero-actions" style="justify-content:center;margin-top:28px">
+            <a class="rd-btn" style="background:#fff;color:var(--purple)" href="design-system-case-study-redesign.html">Read it <svg class="arw" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            <a class="rd-btn rd-btn--outline" href="redesign.html#work">All work</a>
+          </div>
+        </div>
+        <nav class="case-nav" aria-label="Case study navigation">
+          <a href="org-management-case-study-redesign.html"><span class="dir">← Previous</span><span class="nm">Org management</span></a>
+          <a class="rd-btn rd-btn--outline" href="redesign.html">All work</a>
+          <a href="design-system-case-study-redesign.html" style="text-align:right"><span class="dir">Next →</span><span class="nm">Design system → React</span></a>
+        </nav>
+      </div>
+    </section>
+  </main>
+
+  <footer class="rd-footer">
+    <div class="rd-container">
+      <div class="rd-footer-top">
+        <a class="rd-brand" href="redesign.html"><span class="dot"></span>Ivan Jose</a>
+        <nav class="rd-footer-links" aria-label="Footer"><a href="redesign.html#work">Work</a><a href="redesign.html#capabilities">Capabilities</a><a href="redesign.html#approach">Approach</a></nav>
+        <div style="display:flex;gap:10px">
+          <a class="rd-ico" href="https://www.behance.net/ivancreatives" target="_blank" rel="noreferrer" aria-label="Behance"><span class="be">Bē</span></a>
+          <a class="rd-ico" href="https://www.linkedin.com/in/ivancreatives/" target="_blank" rel="noreferrer" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M5.37 3.1A2.37 2.37 0 1 1 5.4 7.84 2.37 2.37 0 0 1 5.37 3.1ZM3.3 9.7h4.14V21H3.3V9.7ZM10.04 9.7H14v1.54h.06c.55-1.04 1.9-2.14 3.9-2.14 4.18 0 4.95 2.75 4.95 6.32V21h-4.13v-4.96c0-1.18-.02-2.7-1.64-2.7-1.65 0-1.9 1.29-1.9 2.62V21h-4.14V9.7Z"/></svg></a>
+        </div>
+      </div>
+      <div class="rd-footer-bottom"><span>© 2026 Ivan Jose · Senior Product Designer</span><a href="mailto:helloivanjose@gmail.com">helloivanjose@gmail.com</a></div>
+    </div>
+  </footer>
+
+  <!-- Image lightbox (click-to-zoom on framed screenshots) -->
+  <div class="lb" id="lightbox" hidden aria-hidden="true">
+    <button class="lb-close" id="lightbox-close" type="button" aria-label="Close fullscreen image">×</button>
+    <div class="lb-inner">
+      <img id="lightbox-image" alt="" />
+      <p class="lb-cap"><strong id="lightbox-title"></strong><span id="lightbox-text"></span></p>
+    </div>
+  </div>
+
+  <script>
+    /* progress bar + sticky nav */
+    var progress=document.getElementById("progress"),nav=document.getElementById("nav");
+    function ui(){var h=document.documentElement,sc=h.scrollTop||document.body.scrollTop,max=(h.scrollHeight-h.clientHeight)||1;progress.style.width=(sc/max*100)+"%";nav.classList.toggle("is-stuck",sc>16);}
+    window.addEventListener("scroll",ui,{passive:true});ui();
+
+    /* scroll-spy */
+    var spy=document.getElementById("spy"),links=[].slice.call(spy.querySelectorAll("a")),ids=links.map(function(a){return a.getAttribute("href").slice(1);});
+    var secs=ids.map(function(id){return document.getElementById(id);}).filter(Boolean);
+    var so=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){var i=ids.indexOf(e.target.id);links.forEach(function(l){l.classList.remove("is-active");});if(links[i])links[i].classList.add("is-active");}});},{rootMargin:"-45% 0px -50% 0px"});
+    secs.forEach(function(s){so.observe(s);});
+
+    /* reveal on scroll */
+    var reduced=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if(!reduced){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target);}});},{threshold:.12});document.querySelectorAll(".rd-reveal:not(.in)").forEach(function(n){io.observe(n);});}
+    else{document.querySelectorAll(".rd-reveal").forEach(function(n){n.classList.add("in");});}
+
+    /* refinement carousel: job filter + 1:1 slide/item pairing */
+    (function(){
+      var root=document.getElementById("refine-carousel");if(!root)return;
+      var track=root.querySelector(".refine-track");
+      var slides=[].slice.call(root.querySelectorAll(".refine-slide"));
+      var items=[].slice.call(root.querySelectorAll(".refine-item"));
+      var badges=[].slice.call(root.querySelectorAll(".refine-persona"));
+      if(!track||slides.length!==items.length){if(window.console)console.warn("refine: slide/item count mismatch",slides.length,items.length);return;}
+      var personaOf=items.map(function(it){return it.getAttribute("data-persona");});
+      var activePersona=badges.length?badges[0].getAttribute("data-persona"):null;
+      var index=0;
+      function setBar(n,pct){var bar=items[n]&&items[n].querySelector(".refine-item-bar i");if(bar)bar.style.width=pct+"%";}
+      function listFor(p){var out=[];personaOf.forEach(function(x,i){if(x===p)out.push(i);});return out;}
+      function go(i){
+        index=(i+slides.length)%slides.length;
+        activePersona=personaOf[index]||activePersona;
+        track.style.transform="translateX(-"+(index*100)+"%)";
+        badges.forEach(function(b){var a=b.getAttribute("data-persona")===activePersona;b.classList.toggle("is-active",a);b.setAttribute("aria-selected",a?"true":"false");});
+        items.forEach(function(item,n){item.classList.toggle("is-hidden",personaOf[n]!==activePersona);var a=n===index;item.classList.toggle("is-active",a);item.setAttribute("aria-selected",a?"true":"false");setBar(n,a?100:0);});
+        slides.forEach(function(s,n){s.setAttribute("aria-hidden",n===index?"false":"true");});
+      }
+      function step(dir){var list=listFor(activePersona);var pos=list.indexOf(index);if(pos===-1){if(list.length)go(list[0]);return;}go(list[(pos+dir+list.length)%list.length]);}
+      items.forEach(function(item,n){item.addEventListener("click",function(){go(n);});});
+      badges.forEach(function(b){b.addEventListener("click",function(){var list=listFor(b.getAttribute("data-persona"));if(list.length)go(list[0]);});});
+      var pv=root.querySelector(".refine-arrow.prev"),nx=root.querySelector(".refine-arrow.next");
+      if(pv)pv.addEventListener("click",function(){step(-1);});
+      if(nx)nx.addEventListener("click",function(){step(1);});
+      var f=listFor(activePersona);go(f.length?f[0]:0);
+    })();
+
+    /* image lightbox: framed screenshots + every carousel slide */
+    (function(){
+      var lb=document.getElementById("lightbox"),lbImg=document.getElementById("lightbox-image"),
+          lbTitle=document.getElementById("lightbox-title"),lbText=document.getElementById("lightbox-text"),
+          lbClose=document.getElementById("lightbox-close");
+      if(!lb)return;
+      function open(src,alt,title,cap){
+        lbImg.setAttribute("src",src);lbImg.setAttribute("alt",alt||"");
+        lbTitle.textContent=title||"";lbText.textContent=cap||"";
+        lb.hidden=false;lb.setAttribute("aria-hidden","false");document.body.style.overflow="hidden";
+      }
+      function close(){lb.hidden=true;lb.setAttribute("aria-hidden","true");lbImg.removeAttribute("src");document.body.style.overflow="";}
+      document.querySelectorAll("[data-lb-cap]").forEach(function(box){
+        box.addEventListener("click",function(){
+          var img=box.querySelector("img");if(!img)return;
+          open(img.getAttribute("src"),img.getAttribute("alt"),box.getAttribute("data-lb-title"),box.getAttribute("data-lb-cap"));
+        });
+      });
+      document.querySelectorAll("#refine-carousel .refine-slide .vid-frame").forEach(function(box){
+        box.addEventListener("click",function(){
+          var img=box.querySelector("img");if(!img)return;
+          open(img.getAttribute("src"),img.getAttribute("alt"),"",img.getAttribute("alt"));
+        });
+      });
+      lbClose.addEventListener("click",close);
+      lb.addEventListener("click",function(e){if(e.target===lb||e.target.classList.contains("lb-inner"))close();});
+      document.addEventListener("keydown",function(e){if(e.key==="Escape"&&!lb.hidden)close();});
+    })();
+  </script>
+  <script>
+    /* Clarity funnel tagging — top window only */
+    (function(){
+      if(window.self!==window.top)return;
+      if(typeof window.clarity!=="function")return;
+      var slug=(location.pathname.split("/").pop()||"").replace(/\.html$/,"")||"home";
+      var fromHome=/redesign(\.html)?$|index(\.html)?$|\/$/.test(document.referrer||"")?"yes":"no";
+      window.clarity("set","case_study",slug);
+      window.clarity("set","entry_from_home",fromHome);
+      window.clarity("event","case_study_view");
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,609 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){if(window.self!==window.top)return;
+      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "xu2es8f588");
+  </script>
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <title>Design to Code, Both Directions — A Design System an AI Can Build From — Ivan Jose</title>
+  <meta name="description" content="Self-directed design systems project by Senior Product Designer Ivan Jose: taking a Figma design system into a packaged React library, made machine-readable so AI agents build from it, then graded against a written component standard by a multi-agent audit — with the open findings published." />
+  <link rel="canonical" href="https://josejeani06.github.io/portfolio/design-system-case-study.html" />
+  <meta name="author" content="Jean Ivan Jose" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Ivan Jose" />
+  <meta property="og:url" content="https://josejeani06.github.io/portfolio/design-system-case-study.html" />
+  <meta property="og:title" content="Design to Code, Both Directions" />
+  <meta property="og:description" content="A self-directed project: taking a Figma design system into a packaged React library, made machine-readable so AI agents build from it — then graded against a written component standard by a multi-agent audit." />
+  <meta property="og:image" content="https://josejeani06.github.io/portfolio/images/ds-main-ux.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://josejeani06.github.io/portfolio/images/ds-main-ux.png" />
+  <meta name="twitter:title" content="Design to Code, Both Directions" />
+  <meta name="twitter:description" content="A design system a designer, an AI, and a compiler can all build from — by Senior Product Designer Ivan Jose." />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "headline": "Design to Code, Both Directions — Building a Design System an AI Can Build From",
+    "about": "Design systems case study — Figma tokens to a fully-usable React component library (engineer-reviewed, not yet in production), machine-readable specs, and multi-agent QA",
+    "keywords": ["design systems","design tokens","Figma","React","component library","AI","multi-agent","accessibility","product design"],
+    "url": "https://josejeani06.github.io/portfolio/design-system-case-study.html",
+    "author": { "@type": "Person", "name": "Jean Ivan Jose", "alternateName": "Ivan Jose", "jobTitle": "Senior Product Designer", "url": "https://josejeani06.github.io/portfolio/" }
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="redesign.css?v=9" />
+  <style>
+    /* ============================================================
+       design-system page-local components only.
+       Column ratios live inside min-width media queries — never inline.
+       ============================================================ */
+
+    /* stat tile with a smaller trailing figure ("56 + 39") */
+    .n-sub{color:var(--muted);font-weight:700;font-size:.6em;letter-spacing:0}
+
+    /* terminal block inside the dark exec-summary board */
+    .ds-term{margin-top:18px;background:rgba(255,255,255,.06);border:1px solid var(--d-line);border-radius:var(--radius-sm);padding:18px 20px;overflow-x:auto}
+    .ds-term code{display:block;font-family:ui-monospace,"JetBrains Mono",SFMono-Regular,monospace;font-size:13.5px;line-height:1.8;color:#fff;white-space:pre}
+    .ds-term .m{color:rgba(255,255,255,.62)}
+    .ds-term .p{color:#ffb185}
+
+    /* caption micro-label (not an eyebrow: no dot, no purple bullet) */
+    .cap-k{display:block;font-family:var(--font-display);font-size:11.5px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--faint);margin-bottom:5px}
+    .rd-cap strong{color:var(--ink);font-weight:600}
+
+    /* inline code */
+    .inline-code{font-family:ui-monospace,"JetBrains Mono",SFMono-Regular,monospace;font-size:.92em;background:var(--paper-3);border:1px solid var(--line);border-radius:6px;padding:1px 6px}
+    .rd-section--dark .inline-code,.md-body .inline-code{background:rgba(255,255,255,.12);border-color:var(--d-line);color:#fff}
+
+    /* token-ladder arrow kept as the decorative step marker it is */
+    .lad-arw{color:var(--purple);font-weight:700;margin-right:7px}
+
+    /* colour-family swatch */
+    .fam-sw{width:38px;height:38px;border-radius:50%;border:1px solid var(--line)}
+
+    /* full-bleed live embeds (no aspect stage, no scaling) */
+    .init-frame{width:100%}
+    .init-frame iframe{display:block;width:100%;height:clamp(560px,82vh,900px);border:0;background:#fff}
+
+    /* dark .md spec cards (filename banner + heading) */
+    .md-card{background:var(--d-bg-2);border:1px solid var(--d-line);border-radius:16px;overflow:hidden}
+    .md-file{display:flex;align-items:center;gap:9px;padding:15px 20px;border-bottom:1px solid var(--d-line);font-family:ui-monospace,"JetBrains Mono",SFMono-Regular,monospace;font-size:13px;color:rgba(255,255,255,.72);letter-spacing:.01em}
+    .md-file .dot{width:8px;height:8px;border-radius:50%;background:#9e6ee5;flex:0 0 auto}
+    .md-body{padding:20px}
+    .md-body h3{color:#fff;margin:0}
+    .md-body p{color:rgba(255,255,255,.92);font-size:14.5px;line-height:1.6;margin:12px 0 0}
+    .md-list{margin:14px 0 0;padding-left:20px;color:rgba(255,255,255,.92);font-size:14px;line-height:1.7}
+    .md-list li{margin-top:6px}
+    .md-list code{font-family:ui-monospace,"JetBrains Mono",SFMono-Regular,monospace;font-size:.92em;background:rgba(255,255,255,.12);border:1px solid var(--d-line);border-radius:6px;padding:1px 6px;color:#fff}
+
+    /* grade bars — flex, so there is no column template to break on mobile */
+    .gr{display:flex;flex-direction:column;gap:16px}
+    .gr-row{display:flex;align-items:center;gap:16px}
+    .gr-row b{font-family:var(--font-display);font-size:19px;font-weight:600;color:var(--ink-strong);width:20px;flex:0 0 auto}
+    .gr-track{flex:1 1 auto;min-width:0;height:12px;border-radius:999px;background:var(--paper-3);overflow:hidden}
+    .gr-fill{display:block;height:100%;border-radius:999px;background:#ff8a72}
+    .gr-n{flex:0 0 auto;width:112px;text-align:right;font-size:var(--sm);color:var(--muted)}
+    @media(max-width:480px){.gr-n{width:92px;font-size:13px}}
+
+    /* before → after check rows */
+    @media(min-width:761px){.res .rd-crow{grid-template-columns:2.4fr .75fr .75fr}}
+    @media(max-width:760px){
+      .res .rd-crow .side::before{content:attr(data-l);display:block;font-family:var(--font-display);font-size:11.5px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--purple);margin-bottom:5px}
+    }
+    .res .stage small{display:block;margin-top:7px;font-family:var(--font-body);font-weight:400;font-size:13.5px;line-height:1.55;color:var(--muted)}
+    .res .num{font-family:var(--font-display);font-weight:600;font-size:21px;letter-spacing:-.02em;color:var(--purple)}
+    .res .side.after .num{color:#1f9d57}
+    .res .arw-s{color:var(--faint);margin-right:8px}
+
+    /* audit-findings table: 3 prose columns need real width — stack up to 900 */
+    @media(min-width:901px){.lim .rd-crow{grid-template-columns:.8fr 2.4fr .85fr}}
+    @media(max-width:900px){
+      .lim .rd-crow{grid-template-columns:1fr!important;gap:10px}
+      .lim .rd-crow.is-head{display:none!important}
+      .lim .rd-crow .side::before{content:attr(data-l);display:block;font-family:var(--font-display);font-size:11.5px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--purple);margin-bottom:5px}
+    }
+    .lim .stage{font-family:ui-monospace,"JetBrains Mono",SFMono-Regular,monospace;font-size:13.5px;font-weight:500;letter-spacing:-.01em}
+
+    /* previous-case pager link */
+    .prev-case{display:inline-flex;flex-direction:column;gap:3px;padding:14px 0}
+    .prev-case .pc-dir{font-size:var(--xs);font-weight:600;letter-spacing:.04em;color:var(--purple)}
+    .prev-case .pc-name{font-family:var(--font-display);font-size:18px;font-weight:600;letter-spacing:-.02em;color:var(--ink-strong)}
+    .prev-case:hover .pc-name{color:var(--purple)}
+
+    /* reading-progress ring (house pattern, flat: solid stroke, no gradient) */
+    .rp{position:fixed;right:20px;bottom:20px;z-index:40;display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:8px 20px 8px 8px;box-shadow:0 14px 34px rgba(41,40,39,.14);opacity:0;transform:translateY(10px);pointer-events:none;transition:opacity .3s var(--ease),transform .3s var(--ease)}
+    .rp.is-visible{opacity:1;transform:none}
+    .rp-ring{position:relative;width:44px;height:44px;flex:0 0 auto}
+    .rp-track{stroke:var(--paper-3)}
+    .rp-bar{stroke:var(--purple);transform:rotate(-90deg);transform-origin:50% 50%;transition:stroke-dashoffset .2s linear}
+    .rp-pct{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--font-display);font-size:11px;font-weight:600;color:var(--ink-strong)}
+    .rp-t{font-family:var(--font-display);font-size:13px;font-weight:600;line-height:1.2;color:var(--ink-strong)}
+    .rp-s{font-size:12px;line-height:1.3;color:var(--muted);margin-top:2px}
+    @media(max-width:560px){.rp{padding:8px;border-radius:50%}.rp-copy{display:none}}
+    @media(prefers-reduced-motion:reduce){.rp{transition:none}.rp-bar{transition:none}}
+  </style>
+</head>
+<body>
+  <div class="rd-progress" id="progress" aria-hidden="true"></div>
+
+  <nav class="rd-nav" id="nav">
+    <div class="rd-container rd-nav-inner">
+      <a class="rd-brand" href="redesign.html"><span class="dot"></span>Ivan Jose</a>
+      <div class="rd-nav-links" id="spy">
+        <a href="#summary">Summary</a>
+        <a href="#problem">Problem</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#machine">System</a>
+        <a href="#pipeline">Multi-agent QA</a>
+        <a href="#impact">Outcome</a>
+      </div>
+      <a class="rd-nav-cta" href="https://josejeani06.github.io/ivanlabs-design-system/" target="_blank" rel="noopener noreferrer" aria-label="Read the design system Storybook">Read Storybook ↗</a>
+    </div>
+  </nav>
+
+  <main>
+    <section class="rd-section rd-hero" id="summary">
+      <div class="rd-container">
+        <div class="rd-badges rd-reveal in">
+          <span class="rd-kicker">Design systems · Self-directed project</span>
+          <span class="rd-badge rd-badge--status"><span class="dot"></span>Personal project · v0.5.0</span>
+        </div>
+        <h1 class="rd-h1 rd-reveal in d1" style="margin-top:20px">Design to code, both directions.</h1>
+        <p class="rd-lead rd-reveal in d2">I was LettrLabs' first and only Product Designer. There was no design system, so I built one from raw hex in Figma — then, after I was let go, took it all the way into a packaged React library an AI can build from. I had it audited against a written standard; it came back bad, and I published it anyway. That's the part worth reading.</p>
+        <div class="rd-hero-actions rd-reveal in d3">
+          <a class="rd-btn rd-btn--primary" href="https://josejeani06.github.io/ivanlabs-design-system/" target="_blank" rel="noopener" aria-label="Visit Storybook">
+            <svg width="17" height="17" viewBox="0 0 24 24" aria-hidden="true"><path fill="#fff" d="M.02 2.685C-.038 1.36.978.234 2.303.156L18.415.001c1.328-.078 2.47.934 2.55 2.264l.877 18.792c.05 1.098-.79 2.033-1.888 2.093l-13.29.845c-1.098.07-2.046-.762-2.116-1.86L.02 2.685zM17.6 1.98l-.106 2.29a.11.11 0 00.177.082l.735-.557.869.658a.11.11 0 00.174-.093l-.098-2.223 1.245-.06zm-6.51 6.65c0 .35 2.36.183 2.677-.062 0-2.386-1.28-3.64-3.626-3.64-2.346 0-3.66 1.273-3.66 3.182 0 3.325 4.488 3.388 4.488 5.2 0 .508-.25.81-.81.81-.749 0-1.045-.383-1.01-1.68 0-.28-2.845-.368-2.932 0-.222 3.135 1.734 4.04 3.976 4.04 2.174 0 3.878-1.16 3.878-3.22 0-3.564-4.556-3.47-4.556-5.234 0-.716.531-.81.85-.81.335 0 .934.06.902 1.63z"/></svg>
+            Visit Storybook
+          </a>
+          <a class="rd-btn rd-btn--outline" href="https://www.npmjs.com/package/@ivancreatelabs/design-system" target="_blank" rel="noopener" aria-label="View on npm">
+            <svg width="17" height="17" viewBox="0 0 24 24" aria-hidden="true"><path fill="#CB3837" d="M1.763 0C.786 0 0 .786 0 1.763v20.474C0 23.214.786 24 1.763 24h20.474c.977 0 1.763-.786 1.763-1.763V1.763C24 .786 23.214 0 22.237 0H1.763zM5.13 5.323l13.837.019-.009 13.836h-3.464l.01-10.382h-3.456L12.04 19.17H5.113V5.323z"/></svg>
+            NPM
+          </a>
+          <a class="rd-btn rd-btn--outline" href="https://github.com/josejeani06/ivanlabs-design-system" target="_blank" rel="noopener" aria-label="Read the source on GitHub">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.37.5 0 5.87 0 12.5c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58 0-.29-.01-1.04-.02-2.05-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.73.08-.73 1.21.09 1.84 1.24 1.84 1.24 1.07 1.84 2.81 1.31 3.5 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.34-5.47-5.95 0-1.31.47-2.39 1.24-3.23-.12-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 016 0c2.29-1.55 3.3-1.23 3.3-1.23.66 1.65.24 2.87.12 3.17.77.84 1.24 1.92 1.24 3.23 0 4.62-2.81 5.64-5.49 5.94.43.37.82 1.1.82 2.22 0 1.6-.02 2.89-.02 3.29 0 .32.22.7.83.58A12 12 0 0024 12.5C24 5.87 18.63.5 12 .5z"/></svg>
+            Github
+          </a>
+        </div>
+        <figure class="rd-figure rd-reveal" style="margin:clamp(40px,5vw,64px) 0 0">
+          <img src="images/ds-main-ux.webp" alt="The live design-system board of product surfaces" loading="lazy">
+        </figure>
+        <p class="rd-cap rd-reveal"><span class="cap-k">Design system · live</span><strong>The whole system, live</strong> — Real product surfaces, each built from the same installed components and tokens.</p>
+      </div>
+    </section>
+    <section class="rd-section rd-section--tight">
+      <div class="rd-container rd-hero-grid" style="margin-top:0">
+        <div class="rd-panel">
+          <span class="rd-kicker">Executive summary</span>
+          <div class="ds-term"><code><span class="m"># it's on npm</span>
+<span class="p">$</span> npm install @ivancreatelabs/design-system
+
+<span class="m"># load the tokens once, at your app root</span>
+<span class="p">$</span> import "@ivancreatelabs/design-system/tokens.css"
+
+<span class="m"># then build with it — Button, DataTable, MapCard…</span>
+<span class="p">$</span> import { Button, MapCard } from "@ivancreatelabs/design-system"</code></div>
+        </div>
+        <dl class="rd-meta">
+          <div class="rd-meta-row"><dt>Role</dt><dd>First and only Product Designer at LettrLabs (14 months). Built 100% of the components, patterns, UX copy and tone — the Figma library and the AI validators for copy, component rules and PR checks — as prototypes, not code</dd></div>
+          <div class="rd-meta-row"><dt>Built</dt><dd>On my own, took it into a fully-usable React package: machine-readable specs, agent skills, and a multi-agent QA pipeline</dd></div>
+          <div class="rd-meta-row"><dt>Status</dt><dd>On npm as @ivancreatelabs/design-system (v0.5.0). Engineer-reviewed as fit to build on — a personal project, not yet in production</dd></div>
+          <div class="rd-meta-row"><dt>Adopted</dt><dd>A Senior PM built three working prototypes straight from it — proven beyond its author</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="rd-section rd-section--tight" style="background:var(--paper-2)">
+      <div class="rd-container">
+        <div class="rd-head rd-reveal"><span class="rd-kicker">At a glance</span><h2 class="rd-h2">95 components, one written standard, and a grade I didn't choose.</h2></div>
+        <div class="rd-stats rd-reveal">
+          <div class="rd-stat"><div class="n" style="white-space:nowrap">56<span class="n-sub"> + 39</span></div><div class="l">global primitives plus product-specific components — 95 in all, each documented and under test</div></div>
+          <div class="rd-stat"><div class="n">439</div><div class="l">generated design tokens (colour, dimension, type, elevation) — the only place those values are allowed to come from</div></div>
+          <div class="rd-stat"><div class="n">3</div><div class="l">review stages — write the standard, audit, repair — with one agent per component per stage</div></div>
+          <div class="rd-stat"><div class="n">705</div><div class="l">lines in the component standard all three stages worked against</div></div>
+          <div class="rd-stat"><div class="n">857</div><div class="l">findings raised by the agent audit, sorted into ten categories</div></div>
+          <div class="rd-stat"><div class="n">76</div><div class="l">components graded one by one against the written standard — the other 19 are still ungraded</div></div>
+        </div>
+        <p class="rd-note rd-reveal">The counts come from the repo's own scripts, not from me. This is a personal project — it isn't running in production anywhere.</p>
+      </div>
+    </section>
+
+    <section class="rd-section">
+      <div class="rd-container">
+        <div class="rd-cols rd-reveal" style="border-top:0;padding-top:0">
+          <div><span class="rd-kicker">The question</span><p>A Figma library and a codebase drift apart from day one. I'd built the Figma half and written the rules, but never had to defend either against a compiler — so I wanted a straight answer: is the system actually consistent, or does it just look that way in Figma?</p></div>
+          <div><span class="rd-kicker">What I did</span><p>Rebuilt the library in React on three-tier tokens, wrote the rules in a format an AI can read, and packaged it with versions and releases. Then a three-stage agent pipeline graded 76 of 95 components against the written standard; 19 remain explicitly ungraded.</p></div>
+          <div><span class="rd-kicker">The outcome</span><p>Blunt: not one component got an A, and the worst category was the rule I was most sure of. I fixed everything a script could catch and published the rest as open findings — rather than quietly closing them.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="rd-section" id="main-ux">
+      <div class="rd-container">
+        <div class="rd-head rd-reveal">
+          <span class="rd-kicker">Main UX</span>
+          <h2 class="rd-h2">It's real — not screenshots.</h2>
+          <p class="rd-lead">The installed library running live in your browser. Real product surfaces — sign-in, billing, a pipeline dashboard, an org-scope editor, a map, a mail-merge print preview and more — each built from the same components and tokens — the fields type, the toggles flip, the layout reflows.</p>
+        </div>
+        <div class="rd-frame rd-reveal init-frame">
+          <iframe src="https://josejeani06.github.io/portfolio/ivanlabs-hero.html?embed=1&v=20260729" scrolling="no" title="Ivanlabs design system — live board of product surfaces built from the library" loading="lazy"></iframe>
+        </div>
+        <p class="rd-cap rd-reveal">Every surface is a live instance from the installed package — nothing here is a picture.</p>
+      </div>
+    </section>
+    <section class="rd-section rd-section--dark" id="problem">
+      <div class="rd-container">
+        <div class="rd-head rd-reveal">
+          <span class="rd-kicker">Where it started</span>
+          <h2 class="rd-h2">Before there was a system, one screen could show five "primary" buttons.</h2>
+          <p class="rd-lead">When I joined, LettrLabs had no design system at all. In Figma there was nothing — raw hex colours, no text or type styles, no components, and no designer had ever owned it. In the product it showed as 10 button styles, 4 table patterns, up to 5 "primary" buttons competing on a single screen, no documented UX process and no voice. On the screens that drove revenue, buttons fought for the same click.</p>
+        </div>
+        <p class="rd-p rd-reveal">So I built the system, and I built it with the people who'd live in it. I worked directly with the CTO, the CEO and the engineers to pin down the primary action on each screen, the core flows and the feel. From raw colours up, I built the Figma foundation — type styles, tokens, components — and held it to one rule: <b>same job, same pattern</b>. An orders table behaves like every other table. One primary action, one CTA. A mental model you learn once and reuse everywhere.</p>
+        <p class="rd-p rd-reveal">Here's the honest part: even as the sole designer, the system still drifted and regressed — we rebuilt the library and workspace twice in fourteen months. Rules that live in one person's head, even mine, don't hold — so they had to become machine-checkable. That's the bridge from the Figma work to the AI validators, and later to the lint-enforced package. After I was let go, I finished the job: I rewrote the whole system as a packaged React library with rules a script — or a model — can enforce. The rest of this page is that system.</p>
+        <blockquote class="rd-quote rd-reveal" style="margin-top:clamp(32px,4vw,48px)"><span class="q">"We spent a week arguing about one button. It sounds inefficient — but that decision became the criteria every component after it was measured against, and the rest went fast. Working with engineers who think in systems, my job wasn't to control the outcome — it was to find the decision they already wanted, and make it consistent."</span></blockquote>
+      </div>
+    </section>
+
+    <section class="rd-section" id="architecture">
+      <div class="rd-container">
+        <div class="rd-head rd-reveal">
+          <span class="rd-kicker">Act I · Architecture</span>
+          <h2 class="rd-h2">Everything is built on tokens, so nothing on a screen owns a raw value.</h2>
+          <p class="rd-lead">The 439 tokens are layered so meaning drives the UI, and named the same way every time: category, role, intensity.</p>
+        </div>
+
+        <div class="rd-grid-3">
+          <div class="rd-card rd-reveal"><span class="rd-card-label">Layer 01</span><h3 class="rd-h3">Primitive</h3><p>Every colour, size and radius the brand owns, with no meaning attached yet. Nothing on a screen is allowed to use these directly.</p></div>
+          <div class="rd-card rd-reveal d1"><span class="rd-card-label"><span class="lad-arw" aria-hidden="true">→</span>Layer 02</span><h3 class="rd-h3">Semantic</h3><p>Roles point at primitives — <code class="inline-code">brand/bg/default</code>, <code class="inline-code">neutral/text-icon/strong</code> — so what you meant stays the same even when the value under it changes.</p></div>
+          <div class="rd-card rd-reveal d2"><span class="rd-card-label"><span class="lad-arw" aria-hidden="true">→</span>Layer 03</span><h3 class="rd-h3">Component</h3><p>Each component only uses semantic tokens, so a Button or a Toast is never tied to a raw hex or pixel value.</p></div>
+        </div>
+
+        <figure class="rd-figure rd-reveal" style="margin:clamp(28px,3.5vw,44px) 0 0">
+          <img src="images/ds-tokens.webp" alt="The three token layers and the families-by-roles swatch table" loading="lazy">
+        </figure>
+        <p class="rd-cap rd-reveal"><span class="cap-k">Architecture</span><strong>Three token layers</strong> — Primitive → semantic → component, rendered straight from tokens.css.</p>
+
+        <div class="rd-grid-4" style="margin-top:clamp(32px,4vw,52px)">
+          <div class="rd-card rd-reveal"><div class="fam-sw" aria-hidden="true" style="background:#5551FF"></div><h3 class="rd-h3" style="margin-top:14px">Brand</h3><p>Reserved for the user's positive action</p></div>
+          <div class="rd-card rd-reveal"><div class="fam-sw" aria-hidden="true" style="background:#6c757d"></div><h3 class="rd-h3" style="margin-top:14px">Neutral</h3><p>Text, icons, surfaces, borders</p></div>
+          <div class="rd-card rd-reveal d1"><div class="fam-sw" aria-hidden="true" style="background:#2f6fed"></div><h3 class="rd-h3" style="margin-top:14px">Info</h3><p>Selection and information — blue, not brand</p></div>
+          <div class="rd-card rd-reveal d1"><div class="fam-sw" aria-hidden="true" style="background:#22c55e"></div><h3 class="rd-h3" style="margin-top:14px">Success</h3><p>Confirmed and completed states</p></div>
+          <div class="rd-card rd-reveal d2"><div class="fam-sw" aria-hidden="true" style="background:#f59e0b"></div><h3 class="rd-h3" style="margin-top:14px">Warning</h3><p>Caution without failure</p></div>
+          <div class="rd-card rd-reveal d2"><div class="fam-sw" aria-hidden="true" style="background:#ef4444"></div><h3 class="rd-h3" style="margin-top:14px">Error</h3><p>Blocking failures only</p></div>
+          <div class="rd-card rd-reveal d3"><div class="fam-sw" aria-hidden="true" style="background:#e5449b"></div><h3 class="rd-h3" style="margin-top:14px">Special</h3><p>Variable images and mail merge only</p></div>
+        </div>
+
+        <div class="rd-frame rd-reveal init-frame" style="margin-top:clamp(32px,4vw,52px)">
+          <iframe src="https://josejeani06.github.io/portfolio/recreations/ds-tokens.html?v=20260730b" title="Live recreation: the three token layers and the families-by-roles swatch table, rendered from the real stylesheet" loading="lazy"></iframe>
+        </div>
+        <p class="rd-cap rd-reveal">Rendered straight from <code class="inline-code">tokens.css</code> — the swatches are the live values, not a diagram of them.</p>
+
+        <div class="rd-rows rd-reveal" style="margin-top:clamp(32px,4vw,52px)">
+          <div class="rd-row"><div class="k">Brand is reserved.</div><div class="v">It marks the thing you want people to do — primary button, active tab, current step, focus ring. Never body text, never decoration. That one rule does most of the work in keeping a screen calm.</div></div>
+          <div class="rd-row"><div class="k">Dimension scales aren't interchangeable.</div><div class="v">Spacing, padding, gap, radius, border, height, icon size and opacity are separate scales, each used only where it belongs. Merging them is how a system rots.</div></div>
+          <div class="rd-row"><div class="k">Focus is a 4px halo, no exceptions.</div><div class="v">The same focus ring on every control, so the whole thing reads as one product instead of a pile of widgets.</div></div>
+          <div class="rd-row"><div class="k">Disabled uses lighter tokens, never opacity.</div><div class="v">And selection on small controls is info-blue, not brand — brand stays reserved for the action you want people to take.</div></div>
+        </div>
+
+        <div class="rd-frame rd-reveal init-frame" style="margin-top:clamp(32px,4vw,52px)">
+          <iframe src="https://josejeani06.github.io/portfolio/recreations/ds-library.html?v=20260730b" title="Live recreation: a gallery of forty components from the library, each a real interactive instance" loading="lazy"></iframe>
+        </div>
+        <div class="rd-hero-actions rd-reveal" style="margin-top:18px">
+          <a class="rd-btn rd-btn--outline" href="https://josejeani06.github.io/ivanlabs-design-system/" target="_blank" rel="noopener noreferrer" aria-label="Check the full component library in Storybook">Check Storybook <span aria-hidden="true">↗</span></a>
+        </div>
+        <p class="rd-cap rd-reveal">Forty of the ninety-five, each a real interactive instance from the installed package — flip the toggles, type the fields.</p>
+
+        <p class="rd-p rd-reveal" style="margin-top:clamp(28px,3.5vw,44px)">Worth saying plainly, because the count hides it: 56 of the 95 are <b>global primitives</b> built as a system (Button, InputField, DataTable); the other 39 are <b>product one-offs</b> — map tools, charts, org and campaign screens — I pulled into one place. Both are real components; only one set was ever built to a standard. The audit felt that difference.</p>
+      </div>
+    </section>
+    <section class="rd-section rd-section--dark" id="machine">
+      <div class="rd-container">
+        <div class="rd-head rd-reveal">
+          <span class="rd-kicker">Act II · The machine-readable layer</span>
+          <h2 class="rd-h2">If a model can't follow the rule, it wasn't written well enough.</h2>
+          <p class="rd-lead">Writing the docs for an AI made them better for people too — you can't tell a model to "use appropriate spacing," so every rule had to become something checkable, or it got cut. Four things carry the system to whoever, or whatever, builds next.</p>
+        </div>
+        <div class="rd-grid-2">
+          <article class="md-card rd-reveal">
+            <div class="md-file"><span class="dot"></span>llms.txt</div>
+            <div class="md-body">
+              <h3 class="rd-h3">Docs read in a fixed order</h3>
+              <p>The front door names the library and the order to read the rest in, so an agent can't guess halfway through. The <code class="inline-code">components.json</code> index is generated from the code, so it never goes stale.</p>
+            </div>
+          </article>
+          <article class="md-card rd-reveal d1">
+            <div class="md-file"><span class="dot"></span>docs/SKILL.md</div>
+            <div class="md-body">
+              <h3 class="rd-h3">The agent contract, five rules</h3>
+              <p>The core rule first: <em>search for what already exists and reuse it</em> before making anything new — and never hard-code a colour, size or radius where a token exists. Flag what's missing; don't paper over it.</p>
+            </div>
+          </article>
+          <article class="md-card rd-reveal d2">
+            <div class="md-file"><span class="dot"></span>UX copy · tone</div>
+            <div class="md-body">
+              <h3 class="rd-h3">Copy became a formula, not a guess</h3>
+              <p>Every message follows a pattern — what happened, what it means, what to do next. Give a model the state; it fills the blanks.</p>
+              <ul class="md-list">
+                <li><code>System failure</code> → "We couldn't [action]. [Next step]. If it continues, [fallback]."</li>
+                <li><code>Validation</code> → "[Item] is required. [Action] to continue."</li>
+              </ul>
+            </div>
+          </article>
+          <article class="md-card rd-reveal d3">
+            <div class="md-file"><span class="dot"></span>docs/QA-FINDINGS.md</div>
+            <div class="md-body">
+              <h3 class="rd-h3">Every finding is one of three things</h3>
+              <p>Not every difference is a mistake, but each gets a decision — how a one-person system survives a growing team.</p>
+              <ul class="md-list">
+                <li><code>Violation</code> — breaks a rule → fix the design</li>
+                <li><code>Deviation</code> — right value, no token → fix the binding</li>
+                <li><code>New pattern</code> — undocumented → name it, or replace it</li>
+              </ul>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="rd-section" id="pipeline">
+      <div class="rd-container">
+        <div class="rd-head rd-reveal">
+          <span class="rd-kicker">Act III · Multi-agent QA</span>
+          <h2 class="rd-h2">I'm the worst judge of my own work — so I wrote a testable standard and ran an agent audit.</h2>
+          <p class="rd-lead">I couldn't audit 95 components by hand, and I didn't trust myself to. So I ran a three-stage agent audit—write the standard, grade 76 components against it, then fix—and let the written rules, not my taste, decide. Nineteen components remain explicitly ungraded.</p>
+        </div>
+        <div class="gr rd-reveal">
+          <div class="gr-row"><b>A</b><span class="gr-track" aria-hidden="true"><i class="gr-fill" style="width:1%;background:#8fe0a8"></i></span><span class="gr-n">0 components</span></div>
+          <div class="gr-row"><b>B</b><span class="gr-track" aria-hidden="true"><i class="gr-fill" style="width:4%;background:#8fb6ff"></i></span><span class="gr-n">3 components</span></div>
+          <div class="gr-row"><b>C</b><span class="gr-track" aria-hidden="true"><i class="gr-fill" style="width:42%;background:#ffcf7a"></i></span><span class="gr-n">32 components</span></div>
+          <div class="gr-row"><b>D</b><span class="gr-track" aria-hidden="true"><i class="gr-fill" style="width:54%"></i></span><span class="gr-n">41 components</span></div>
+        </div>
+        <p class="rd-p rd-reveal">Not one A. The biggest failure was the rule I was surest of — raw values where a token already existed. I'd have called this system consistent; measured, it mostly wasn't.</p>
+      </div>
+    </section>
+
+    <section class="rd-section rd-section--tight" style="background:var(--paper-2)">
+      <div class="rd-container">
+        <div class="rd-head rd-reveal">
+          <span class="rd-kicker">What changed</span>
+          <h2 class="rd-h2">Four checks the build now enforces — before, and after.</h2>
+          <p class="rd-lead">Every row is a script that fails the build, so it can't quietly regress — numbers anyone with the code can reproduce.</p>
+        </div>
+        <div class="rd-compare rd-reveal res">
+          <div class="rd-crow is-head"><span>Check</span><span>Before</span><span>After</span></div>
+          <div class="rd-crow">
+            <div class="stage">Refs that attach to a DOM node<small>If a ref doesn't attach, the app around it can't focus, measure or animate that component.</small></div>
+            <div class="side" data-l="Before"><span class="num">77</span></div>
+            <div class="side after" data-l="After"><span class="arw-s" aria-hidden="true">→</span><span class="num">95</span></div>
+          </div>
+          <div class="rd-crow">
+            <div class="stage">Hardcoded values left in the code<small>Raw hex, rgba and font stacks sitting where a token already existed.</small></div>
+            <div class="side" data-l="Before"><span class="num">36</span></div>
+            <div class="side after" data-l="After"><span class="arw-s" aria-hidden="true">→</span><span class="num">0</span></div>
+          </div>
+          <div class="rd-crow">
+            <div class="stage">Components with a manifest entry<small>The old one was maintained by hand, so it fell behind the code. The new one is generated from the code itself.</small></div>
+            <div class="side" data-l="Before"><span class="num">50</span></div>
+            <div class="side after" data-l="After"><span class="arw-s" aria-hidden="true">→</span><span class="num">95</span></div>
+          </div>
+          <div class="rd-crow">
+            <div class="stage">Components that render under test<small>The one number that didn't need fixing. It was the floor everything else got measured from.</small></div>
+            <div class="side" data-l="Before"><span class="num">95</span></div>
+            <div class="side after" data-l="After"><span class="arw-s" aria-hidden="true">→</span><span class="num">95</span></div>
+          </div>
+        </div>
+        <figure class="rd-figure rd-reveal" style="margin:clamp(28px,3.5vw,44px) 0 0">
+          <img src="images/ds-verify.webp" alt="Terminal output: npm run smoke reports 95 of 95 components rendering; npm run check:tokens reports 439 tokens defined with zero violations; npm run check:refs reports all 95 components attaching a ref." loading="lazy">
+        </figure>
+      </div>
+    </section>
+    <section class="rd-section rd-section--dark" id="limits">
+      <div class="rd-container">
+        <div class="rd-head rd-reveal">
+          <span class="rd-kicker">The limits</span>
+          <h2 class="rd-h2">What the audit found that I haven't fixed yet.</h2>
+          <p class="rd-lead">The audit ships with the system, unfixed findings and all — what it actually looks like beats what its owner says. Two categories are closed and enforced by the build; the other eight are open or partly open, and I'm naming each rather than call the audit complete. Anything without a check behind it drifts back, whatever I claim today.</p>
+        </div>
+        <div class="rd-compare rd-reveal lim">
+          <div class="rd-crow is-head"><span>Category</span><span>What the audit found</span><span>Status</span></div>
+          <div class="rd-crow">
+            <div class="stage">semantic-token</div>
+            <div class="side" data-l="What the audit found">Raw values where a token exists. The biggest category in the audit, and now the most strictly enforced — the lint fails the build.</div>
+            <div class="side after" data-l="Status"><span class="rd-status rd-status--good">Closed · enforced</span></div>
+          </div>
+          <div class="rd-crow">
+            <div class="stage">ref</div>
+            <div class="side" data-l="What the audit found">Refs not forwarded, or forwarded then dropped before they reach an element. Every component now gets rendered and checked.</div>
+            <div class="side after" data-l="Status"><span class="rd-status rd-status--good">Closed · enforced</span></div>
+          </div>
+          <div class="rd-crow">
+            <div class="stage">a11y</div>
+            <div class="side" data-l="What the audit found">Labels, error announcements and icon labelling are fixed and checked. Keyboard navigation, focus trapping and expanded/selected state aren't — several menus and overlays still can't be used properly from a keyboard.</div>
+            <div class="side after" data-l="Status"><span class="rd-status rd-status--bad">Partly open</span></div>
+          </div>
+          <div class="rd-crow">
+            <div class="stage">dynamic-data</div>
+            <div class="side" data-l="What the audit found">Components shipping hardcoded sample data as a default, or missing their loading, empty and error states. The data table is fixed; the rest aren't.</div>
+            <div class="side after" data-l="Status"><span class="rd-status rd-status--bad">Open</span></div>
+          </div>
+          <div class="rd-crow">
+            <div class="stage">props-api</div>
+            <div class="side" data-l="What the audit found">Names that don't match sibling components, missing passthrough, and props leaking onto DOM nodes.</div>
+            <div class="side after" data-l="Status"><span class="rd-status rd-status--bad">Open</span></div>
+          </div>
+          <div class="rd-crow">
+            <div class="stage">controlled</div>
+            <div class="side" data-l="What the audit found">Components that handle controlled or uncontrolled use, but not both properly — a parent sets a value after mount and nothing happens.</div>
+            <div class="side after" data-l="Status"><span class="rd-status rd-status--bad">Open</span></div>
+          </div>
+          <div class="rd-crow">
+            <div class="stage">state · consistency</div>
+            <div class="side" data-l="What the audit found">States you can't reach or can't tell apart, and components solving the same problem differently from their siblings.</div>
+            <div class="side after" data-l="Status"><span class="rd-status rd-status--bad">Open</span></div>
+          </div>
+          <div class="rd-crow">
+            <div class="stage">ssr</div>
+            <div class="side" data-l="What the audit found">A few components touch window or document outside an effect, which crashes server-side rendering.</div>
+            <div class="side after" data-l="Status"><span class="rd-status rd-status--bad">Open</span></div>
+          </div>
+          <div class="rd-crow">
+            <div class="stage">no tiering</div>
+            <div class="side" data-l="What the audit found">The manifest lists all 95 flat — nothing in the data tells an agent a map control isn't a reusable primitive, so it invites reuse of one-off product components everywhere.</div>
+            <div class="side after" data-l="Status"><span class="rd-status rd-status--bad">Open</span></div>
+          </div>
+          <div class="rd-crow">
+            <div class="stage">never audited</div>
+            <div class="side" data-l="What the audit found">Nineteen components never got graded. They pass the automated checks, but nobody has actually read them yet — and I'd rather say that than call the audit complete.</div>
+            <div class="side after" data-l="Status"><span class="rd-status rd-status--bad">Open</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="rd-section" id="impact">
+      <div class="rd-container">
+        <div class="rd-head rd-reveal">
+          <span class="rd-kicker">What this is evidence of</span>
+          <h2 class="rd-h2">What I'd bring to a team that has this problem.</h2>
+          <p class="rd-lead">This never shipped to customers, so I'm not going to claim a business result. What it is: a worked example of how I'd run a design system with engineers involved, and proof I can take one past the Figma file.</p>
+        </div>
+        <div class="rd-grid-3">
+          <div class="rd-card rd-reveal"><span class="rd-card-label">01 / PACKAGED</span><h3 class="rd-h3">Past the Figma file, into a package</h3><p>Most design-system work dies at the Figma file. Mine is an installed, versioned npm package — tokens plus 95 components — that a team could build on today. That's the half I'd never taken a system through before.</p></div>
+          <div class="rd-card rd-reveal d1"><span class="rd-card-label">02 / Proven beyond me</span><h3 class="rd-h3">Holds up in someone else's hands</h3><p>A Senior PM built three working prototypes straight from the same system, so it's not just consistent for its author — someone who didn't design it could build with it.</p></div>
+          <div class="rd-card rd-reveal d2"><span class="rd-card-label">03 / RIGOR</span><h3 class="rd-h3">Willing to be graded</h3><p>I ran an agent audit against a written standard and published what it returned—open findings and all—instead of the version that flatters me.</p></div>
+          <div class="rd-card rd-reveal"><span class="rd-card-label">04 / Design that survives code</span><h3 class="rd-h3">Compiles, not just looks right</h3><p>I can hand an engineer tokens and components that forward refs and pass a lint — not a Figma link and a conversation about what I meant.</p></div>
+          <div class="rd-card rd-reveal d1"><span class="rd-card-label">05 / Rules that enforce themselves</span><h3 class="rd-h3">Write the check first</h3><p>The rules that survived the audit were the ones a script could check; the ones I'd written as good taste got broken everywhere, by me as much as any model. So the check comes first now, or the rule doesn't count.</p></div>
+          <div class="rd-card rd-reveal d2"><span class="rd-card-label">06 / AI, constrained not trusted</span><h3 class="rd-h3">Build from what exists</h3><p>Give an agent a readable spec and a reuse-first rule and it builds from what's there. Give it neither and it invents — a design problem before it's a tooling one.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="rd-section rd-section--dark" id="reflection">
+      <div class="rd-container">
+        <div class="rd-head rd-reveal">
+          <span class="rd-kicker">What's next</span>
+          <h2 class="rd-h2">Everything I claim should be a command someone else can run.</h2>
+          <p class="rd-lead">The open list is the roadmap. Keyboard and focus first, because that's the one where a gap actually locks people out instead of just looking messy. Then the props API, so components stop surprising the people building with them.</p>
+        </div>
+        <p class="rd-p rd-reveal">The package is why any of this holds: one versioned source of truth a fast prototype can pull from and a team can build on — so a fix travels both ways instead of dying in a single screen, and a demo and production stop drifting apart. That's the part an HTML mockup can never be.</p>
+        <p class="rd-p rd-reveal">So the work now is narrow: turn more of the open list into checks, and drop any rule I can't enforce. A claim I can't hand someone as a command they run for themselves isn't a finished rule — it's a hope with good intentions.</p>
+        <blockquote class="rd-quote rd-reveal" style="margin-top:clamp(32px,4vw,48px)"><span class="q">"A design system earns its keep when the same rules produce the same answer — whether a designer or a model is doing the work."</span></blockquote>
+      </div>
+    </section>
+
+    <section class="rd-section rd-section--tight">
+      <div class="rd-container">
+        <a class="prev-case rd-reveal" href="billing-case-study-redesign.html"><span class="pc-dir">← Previous</span><span class="pc-name">Org billing &amp; spend</span></a>
+        <div class="rd-panel rd-reveal" style="text-align:center;padding:clamp(44px,6vw,80px) clamp(28px,5vw,64px);background:var(--purple);margin-top:14px">
+          <span class="rd-kicker" style="color:#e6dbff">Next case study</span>
+          <h2 class="rd-h2" style="color:#fff;margin-top:16px">Redesigning a map into an audience builder →</h2>
+          <p style="color:rgba(255,255,255,.86);max-width:52ch;margin:16px auto 0">A two-year-old geographic map workflow reframed as an audience builder for four user mental models.</p>
+          <div class="rd-hero-actions" style="justify-content:center;margin-top:28px">
+            <a class="rd-btn" style="background:#fff;color:var(--purple)" href="map-case-study-redesign.html">Read it <svg class="arw" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            <a class="rd-btn rd-btn--outline" href="redesign.html#work">All work</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="rd-footer">
+    <div class="rd-container">
+      <div class="rd-footer-top">
+        <a class="rd-brand" href="redesign.html"><span class="dot"></span>Ivan Jose</a>
+        <nav class="rd-footer-links" aria-label="Footer"><a href="redesign.html#work">Case Studies</a><a href="redesign.html#other-work">Other Works</a><a href="redesign.html#capabilities">Capabilities</a><a href="redesign.html#approach">Approach</a></nav>
+        <div style="display:flex;gap:10px">
+          <a class="rd-ico" href="https://www.behance.net/ivancreatives" target="_blank" rel="noreferrer" aria-label="Behance" title="Behance"><span class="be">Bē</span></a>
+          <a class="rd-ico" href="https://www.linkedin.com/in/ivancreatives/" target="_blank" rel="noreferrer" aria-label="LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24"><path d="M5.37 3.1A2.37 2.37 0 1 1 5.4 7.84 2.37 2.37 0 0 1 5.37 3.1ZM3.3 9.7h4.14V21H3.3V9.7ZM10.04 9.7H14v1.54h.06c.55-1.04 1.9-2.14 3.9-2.14 4.18 0 4.95 2.75 4.95 6.32V21h-4.13v-4.96c0-1.18-.02-2.7-1.64-2.7-1.65 0-1.9 1.29-1.9 2.62V21h-4.14V9.7Z"/></svg></a>
+          <a class="rd-ico" href="https://wa.me/639679223947" target="_blank" rel="noopener" aria-label="WhatsApp" title="WhatsApp"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-3-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.6-6.1c-.25-.13-1.5-.74-1.7-.82-.23-.08-.4-.13-.56.13-.17.25-.64.82-.79.99-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.02-1.25-.75-.66-1.25-1.48-1.4-1.73-.14-.25-.01-.39.11-.51.11-.11.25-.29.38-.44.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.42h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1s.9 2.44 1.03 2.61c.13.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.43.53.6.19 1.15.16 1.58.1.48-.07 1.5-.61 1.71-1.2.21-.59.21-1.1.15-1.2-.06-.11-.23-.17-.48-.29z"/></svg></a>
+        </div>
+      </div>
+      <div class="rd-footer-bottom"><span>© 2026 Ivan Jose · Senior Product Designer</span><a href="mailto:helloivanjose@gmail.com">helloivanjose@gmail.com</a></div>
+    </div>
+  </footer>
+
+  <!-- reading-progress ring (house pattern) -->
+  <div class="rp" id="read-progress" aria-hidden="true">
+    <div class="rp-ring">
+      <svg viewBox="0 0 44 44" width="44" height="44" aria-hidden="true">
+        <circle class="rp-track" cx="22" cy="22" r="18" fill="none" stroke-width="4"/>
+        <circle class="rp-bar" id="rp-bar" cx="22" cy="22" r="18" fill="none" stroke-width="4" stroke-dasharray="113.097" stroke-dashoffset="113.097"/>
+      </svg>
+      <div class="rp-pct" id="rp-pct">0%</div>
+    </div>
+    <div class="rp-copy">
+      <div class="rp-t" id="rp-title">Summary</div>
+      <div class="rp-s" id="rp-sub">A design system an AI can build from</div>
+    </div>
+  </div>
+
+  <script>
+    var progress=document.getElementById("progress"),nav=document.getElementById("nav");
+    function ui(){var h=document.documentElement,sc=h.scrollTop||document.body.scrollTop,max=(h.scrollHeight-h.clientHeight)||1;progress.style.width=(sc/max*100)+"%";nav.classList.toggle("is-stuck",sc>16);}
+    window.addEventListener("scroll",ui,{passive:true});ui();
+    var spy=document.getElementById("spy"),links=[].slice.call(spy.querySelectorAll("a")),ids=links.map(function(a){return a.getAttribute("href").slice(1);});
+    var secs=ids.map(function(id){return document.getElementById(id);}).filter(Boolean);
+    var so=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){var i=ids.indexOf(e.target.id);links.forEach(function(l){l.classList.remove("is-active");});if(links[i])links[i].classList.add("is-active");}});},{rootMargin:"-45% 0px -50% 0px"});
+    secs.forEach(function(s){so.observe(s);});
+    var reduced=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if(!reduced){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target);}});},{threshold:.12});document.querySelectorAll(".rd-reveal:not(.in)").forEach(function(n){io.observe(n);});}
+    else{document.querySelectorAll(".rd-reveal").forEach(function(n){n.classList.add("in");});}
+    /* reading-progress ring: percentage + section title/subtitle */
+    (function(){
+      var el=document.getElementById("read-progress");if(!el)return;
+      var bar=document.getElementById("rp-bar"),pct=document.getElementById("rp-pct"),
+          title=document.getElementById("rp-title"),sub=document.getElementById("rp-sub");
+      var C=113.097;
+      var steps=[
+        { p:0.00, t:"Summary",          s:"A design system an AI can build from" },
+        { p:0.12, t:"Main UX",          s:"The whole system, running live" },
+        { p:0.24, t:"Problem",          s:"Rules that only lived in my head" },
+        { p:0.37, t:"Architecture",     s:"Tokens, layered and named" },
+        { p:0.50, t:"Machine-readable", s:"Docs and skills a model follows" },
+        { p:0.64, t:"Multi-agent QA",   s:"Graded against a written standard" },
+        { p:0.82, t:"Limits",           s:"The open findings, published" },
+        { p:0.93, t:"Outcome",          s:"What this is evidence of" }
+      ];
+      function pick(p){var r=steps[0];for(var i=0;i<steps.length;i++){if(p>=steps[i].p)r=steps[i];}return r;}
+      var last="";
+      function update(){
+        var h=document.documentElement;
+        var max=(h.scrollHeight-h.clientHeight)||1;
+        var p=Math.min(1,Math.max(0,(window.scrollY||h.scrollTop)/max));
+        bar.style.strokeDashoffset=(C*(1-p)).toFixed(2);
+        pct.textContent=Math.round(p*100)+"%";
+        var st=pick(p);
+        if(st.t!==last){title.textContent=st.t;sub.textContent=st.s;last=st.t;}
+        el.classList.toggle("is-visible",p>0.02);
+      }
+      window.addEventListener("scroll",update,{passive:true});
+      window.addEventListener("resize",update);
+      update();
+    })();
+  </script>
+
+  <script>
+    /* Home -> case-study funnel: tag this case-study view for Microsoft Clarity so
+       the dashboard can build a funnel (which case study, and whether the visit
+       arrived from the homepage). Top window only — embeds are gated out elsewhere. */
+    (function () {
+      if (window.self !== window.top) return;
+      if (typeof window.clarity !== "function") return;
+      var slug = (location.pathname.split("/").pop() || "").replace(/\.html$/, "") || "case-study";
+      var ref = document.referrer || "";
+      var fromHome = /\/portfolio\/(index\.html)?($|[?#])/.test(ref) || /\/portfolio\/?$/.test(ref);
+      clarity("set", "case_study", slug);
+      clarity("set", "entry_from_home", fromHome ? "yes" : "no");
+      clarity("event", "case_study_view");
+    })();
+  </script>
+</body>
+</html>

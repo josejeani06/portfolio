@@ -1,0 +1,719 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){if(window.self!==window.top)return;
+      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "xu2es8f588");
+  </script>
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <title>Enterprise Org Management: Roles, Permissions &amp; Templates — Ivan Jose</title>
+  <meta name="description" content="Senior Product Designer case study: an enterprise organization layer — nested permissions that follow the hierarchy and centrally governed templates — designed to surface structural-change impact before it reaches a live automation. Built cross-functionally to meet a high-revenue account's named requirements. By Ivan Jose." />
+  <link rel="canonical" href="https://josejeani06.github.io/portfolio/org-management-case-study.html" />
+  <meta name="author" content="Jean Ivan Jose" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Ivan Jose" />
+  <meta property="og:url" content="https://josejeani06.github.io/portfolio/org-management-case-study.html" />
+  <meta property="og:title" content="Enterprise Org Management: Roles, Permissions &amp; Shared Templates" />
+  <meta property="og:description" content="An enterprise org layer — permission that follows the hierarchy and centrally governed templates — designed to surface structural-change impact before it reaches a live automation." />
+  <meta property="og:image" content="https://josejeani06.github.io/portfolio/images/org-manage-members.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Enterprise Org Management: Roles, Permissions &amp; Shared Templates" />
+  <meta name="twitter:description" content="Enterprise roles, permissions, and governed templates — by Senior Product Designer Ivan Jose." />
+  <meta name="twitter:image" content="https://josejeani06.github.io/portfolio/images/org-manage-members.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "headline": "Enterprise org management: roles, permissions, and shared templates",
+    "about": "B2B SaaS product design case study — an enterprise organization and permission model with governed templates",
+    "keywords": ["product design","B2B SaaS","enterprise","RBAC","permissions","design systems","templates","UX"],
+    "url": "https://josejeani06.github.io/portfolio/org-management-case-study.html",
+    "author": { "@type": "Person", "name": "Jean Ivan Jose", "alternateName": "Ivan Jose", "jobTitle": "Senior Product Designer", "url": "https://josejeani06.github.io/portfolio/" }
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="redesign.css?v=11" />
+  <style>
+    /* ============================================================
+       org-management page-local components only.
+       Column ratios live in min-width media queries — never inline.
+       ============================================================ */
+
+    /* --- framed screenshots + fallback placeholder --- */
+    .om-shot{margin:0}
+    .om-shot + .om-shot{margin-top:22px}
+    .om-ph{position:absolute;inset:0;display:grid;place-items:center;padding:24px;text-align:center;background:var(--paper-3);color:var(--muted);font-family:var(--font-display);font-weight:600;font-size:15px;line-height:1.4}
+    .rd-frame-stage img{position:relative;z-index:1}
+    .rd-section--dark .rd-cap{color:rgba(255,255,255,.92)}
+    .om-note-inline{font-size:var(--sm);color:var(--faint);margin:16px 0 0;line-height:1.55;max-width:none}
+
+    /* --- exec summary meta: 5 cards, ratios only above the stack point --- */
+    @media(min-width:1000px){.om-meta{grid-template-columns:repeat(5,1fr)}}
+    @media(min-width:821px) and (max-width:999px){.om-meta{grid-template-columns:repeat(3,1fr)}}
+
+    /* --- org hierarchy tree --- */
+    .om-tree{display:grid;justify-items:center;margin-top:clamp(30px,4vw,46px)}
+    .om-trow{display:grid;grid-template-columns:1fr;gap:18px;width:100%;justify-items:center;align-items:center}
+    @media(min-width:901px){.om-trow{grid-template-columns:1fr minmax(0,340px) 1fr}}
+    .om-spacer{display:none}
+    @media(min-width:901px){.om-spacer{display:block}}
+    .otn{border:1px solid var(--line);border-radius:var(--radius-sm);background:#fff;padding:18px 20px;width:100%;max-width:360px;text-align:center}
+    .otn small{display:block;font-family:var(--font-display);font-size:11.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--purple)}
+    .otn strong{display:block;font-family:var(--font-display);font-size:19px;font-weight:600;letter-spacing:-.02em;color:var(--ink-strong);margin-top:6px}
+    .otn .otn-desc{display:block;color:var(--muted);font-size:var(--sm);line-height:1.55;margin-top:8px}
+    .otn-partner{border-style:dashed;border-color:var(--line-2)}
+    .otn-org{border-color:var(--line-2)}
+    .otn-chip{display:inline-block;margin-top:12px;padding:5px 12px;border-radius:999px;background:var(--lavender-bg);border:1px solid var(--lavender);color:var(--purple-2);font-size:12.5px;font-weight:600}
+    .om-ext{display:flex;align-items:center;width:100%;justify-content:center}
+    .om-ext-line{flex:0 0 20px;border-top:1px dashed var(--line-2);height:1px}
+    @media(min-width:901px){.om-ext{justify-content:flex-start}.om-ext-line{flex:0 0 34px}}
+    .om-stem{width:1px;height:26px;background:var(--line-2)}
+    .om-fork{display:grid;grid-template-columns:1fr;gap:18px;width:100%;justify-items:center}
+    @media(min-width:701px){.om-fork{grid-template-columns:1fr 1fr}}
+    .om-branch{display:grid;justify-items:center;width:100%}
+
+    /* --- permission matrix: 4 columns above 900, stacked + labelled below --- */
+    @media(min-width:901px){
+      .om-perm .rd-crow{grid-template-columns:1.7fr .77fr .77fr .77fr;align-items:center}
+    }
+    @media(max-width:900px){
+      .om-perm .rd-crow{grid-template-columns:1fr!important;gap:10px}
+      .om-perm .rd-crow.is-head{display:none!important}
+      .om-perm .rd-crow .side::before{content:attr(data-l);display:block;font-family:var(--font-display);font-size:11.5px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--purple);margin-bottom:5px}
+    }
+    .om-perm .ic{width:22px;height:22px;display:block}
+    .om-perm .can{color:#1f9d57}
+    .om-perm .see{color:var(--purple)}
+    .om-perm .no{color:var(--faint);font-size:18px;line-height:1}
+    .om-legend{display:flex;flex-wrap:wrap;gap:18px;align-items:center;margin:16px 0 0;font-size:var(--sm);color:var(--muted)}
+    .om-legend span{display:inline-flex;align-items:center;gap:8px}
+    .om-legend .ic{width:18px;height:18px}
+    .om-legend .can{color:#1f9d57}
+    .om-legend .see{color:var(--purple)}
+    .om-legend .no{color:var(--faint);font-weight:700}
+
+    /* --- rejected-model rows --- */
+    .om-mc .k small{display:block;font-family:var(--font-display);font-size:11.5px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;margin-bottom:6px}
+    .om-mc .k .out{color:#c0392b}
+    .om-mc .k .in{color:#1f9d57}
+    .om-mc .k strong{display:block;font-family:var(--font-display);font-size:17px;font-weight:600;letter-spacing:-.02em;color:var(--ink-strong)}
+    .om-mc .is-ship{background:rgba(31,157,87,.05)}
+
+    /* --- template carousel (light surface) --- */
+    .refine-carousel{margin-top:18px;display:grid;grid-template-columns:1fr;gap:18px}
+    @media(min-width:901px){.refine-carousel{grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:18px 34px;align-items:start}}
+    .refine-personas{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:2px}
+    @media(min-width:901px){.refine-personas{grid-column:1 / -1}}
+    .refine-persona{appearance:none;border:1px solid var(--line);background:var(--paper-2);color:var(--muted);border-radius:999px;padding:9px 16px;font-family:inherit;font-weight:600;font-size:var(--sm);cursor:pointer;transition:all .2s var(--ease)}
+    .refine-persona:hover{border-color:var(--purple);color:var(--ink-strong)}
+    .refine-persona.is-active{background:var(--purple);border-color:var(--purple);color:#fff}
+    .refine-viewport{position:relative;overflow:hidden;border:1px solid var(--line);border-radius:var(--radius);background:var(--paper-2)}
+    .refine-track{display:flex;transition:transform .45s cubic-bezier(.2,1,.22,1)}
+    .refine-slide{min-width:100%}
+    .refine-slide img{width:100%;aspect-ratio:16/10;object-fit:contain;background:var(--paper-2);display:block}
+    .refine-arrow{position:absolute;bottom:14px;z-index:2;width:40px;height:40px;border-radius:50%;border:0;background:rgba(34,24,54,.82);color:#fff;display:grid;place-items:center;cursor:pointer}
+    .refine-arrow svg{width:18px;height:18px}
+    .refine-arrow.prev{left:14px}
+    .refine-arrow.next{left:62px}
+    @media(min-width:901px){.refine-arrow{display:none}}
+    .refine-controls{display:flex;flex-direction:column;gap:10px}
+    .refine-item{position:relative;overflow:hidden;appearance:none;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:5px;padding:16px 18px 18px;border:1px solid var(--line);border-radius:14px;background:#fff;transition:background .2s ease,border-color .2s ease}
+    .refine-item:hover{border-color:var(--purple)}
+    .refine-item.is-active{background:var(--paper-2);border-color:var(--purple)}
+    .refine-item-persona{font-family:var(--font-display);font-size:var(--xs);font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--purple)}
+    .refine-item-title{font-family:var(--font-display);font-size:var(--h3);font-weight:600;color:var(--ink-strong);line-height:1.14;letter-spacing:-.02em}
+    .refine-item-desc{font-size:var(--sm);line-height:1.55;color:var(--muted)}
+    .refine-item-bar{position:absolute;left:0;bottom:0;height:3px;width:100%;background:transparent}
+    .refine-item.is-active .refine-item-bar{background:rgba(113,76,182,.18)}
+    .refine-item-bar i{display:block;height:100%;width:0;background:var(--purple);transition:width .12s linear}
+    .refine-item.is-hidden{display:none}
+
+    /* --- dark .md spec cards --- */
+    .md-card{background:var(--d-bg-2);border:1px solid var(--d-line);border-radius:16px;overflow:hidden}
+    .md-file{display:flex;align-items:center;gap:9px;padding:15px 20px;border-bottom:1px solid var(--d-line);font-family:ui-monospace,"JetBrains Mono",monospace;font-size:13px;color:rgba(255,255,255,.6);letter-spacing:.01em}
+    .md-file .dot{width:8px;height:8px;border-radius:50%;background:#9e6ee5;flex:0 0 auto}
+    .md-body{padding:20px}
+    .md-body h3{color:#fff;margin:0}
+    .md-body p{color:rgba(255,255,255,.74);font-size:14.5px;line-height:1.6;margin:12px 0 0}
+
+    /* --- accessibility chips --- */
+    .om-a11y{display:grid;gap:14px;margin-top:clamp(24px,3vw,34px)}
+    .om-a11y-line{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+    .om-a11y-lbl{font-family:var(--font-display);font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--purple);margin-right:4px}
+    .om-chip{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 15px;font-size:13.5px;color:var(--muted)}
+    .om-chip b{font-family:var(--font-display);font-weight:600;font-size:15px;color:var(--purple)}
+    .om-chip i{font-style:normal;font-size:11.5px;font-weight:700;letter-spacing:.07em;color:var(--teal)}
+
+    /* --- outcome grid --- */
+    .om-out{display:grid;grid-template-columns:1fr;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:var(--paper)}
+    @media(min-width:601px){.om-out{grid-template-columns:1fr 1fr}}
+    .om-cell{padding:clamp(24px,2.6vw,34px);border-left:1px solid var(--line);border-top:1px solid var(--line)}
+    .om-cell:first-child{border-top:0}
+    .om-cell:nth-child(odd){border-left:0}
+    @media(min-width:601px){.om-cell:nth-child(-n+2){border-top:0}}
+    @media(max-width:600px){.om-cell{border-left:0}}
+    .om-cell .lbl{font-family:var(--font-display);font-size:12px;font-weight:600;letter-spacing:.06em;color:var(--purple);text-transform:uppercase}
+    .om-cell .rd-h3{margin:12px 0 0}
+    .om-cell p{color:var(--muted);font-size:15px;line-height:1.6;margin:10px 0 0}
+    .om-cell p strong{color:var(--ink);font-weight:600}
+
+    /* --- companion + pager cards --- */
+    .om-companion{display:flex;align-items:center;justify-content:space-between;gap:22px;margin-top:22px;padding:24px 26px;border:1px solid var(--line);border-radius:var(--radius);background:#fff;transition:transform .25s var(--ease),border-color .25s var(--ease),box-shadow .25s var(--ease)}
+    .om-companion:hover{transform:translateY(-1px);border-color:var(--purple);box-shadow:0 18px 40px rgba(41,40,39,.10)}
+    .om-companion small{display:block;font-family:var(--font-display);font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--purple)}
+    .om-companion strong{display:block;font-family:var(--font-display);font-size:var(--h3);font-weight:600;letter-spacing:-.02em;color:var(--ink-strong);margin-top:8px}
+    .om-companion .cc-desc{display:block;color:var(--muted);font-size:var(--sm);line-height:1.6;margin-top:8px}
+    .om-companion .cc-arrow{flex:0 0 auto;font-size:22px;color:var(--purple);transition:transform .25s var(--ease)}
+    .om-companion:hover .cc-arrow{transform:translateX(4px)}
+    .om-pager{display:grid;grid-template-columns:1fr;gap:14px;align-items:center}
+    @media(min-width:761px){.om-pager{grid-template-columns:1fr auto 1fr}}
+    .om-move{display:block;padding:20px 24px;border:1px solid var(--line);border-radius:var(--radius);background:#fff;transition:border-color .2s var(--ease),transform .2s var(--ease)}
+    .om-move:hover{border-color:var(--purple);transform:translateY(-2px)}
+    .om-move .fm-dir{display:block;font-family:var(--font-display);font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--purple)}
+    .om-move .fm-name{display:block;font-family:var(--font-display);font-size:17px;font-weight:600;letter-spacing:-.02em;color:var(--ink-strong);margin-top:6px}
+    .om-move.next{text-align:right}
+    .om-pager-mid{display:flex;justify-content:center}
+    .om-companion .cc-copy{display:block;min-width:0}
+
+    /* --- misc helpers --- */
+    .om-list{margin:14px 0 0;padding-left:20px;color:var(--muted);font-size:var(--sm);line-height:1.75}
+    .om-list li{margin-top:6px}
+    .om-list li::marker{color:var(--purple)}
+    .om-list strong{color:var(--ink);font-weight:600}
+    .om-mono{font-family:ui-monospace,"JetBrains Mono",monospace;letter-spacing:.08em;font-size:12px}
+    .om-impact .rd-status{margin-top:0}
+    .om-impact .rd-card--dark p{margin-top:10px}
+  </style>
+</head>
+<body>
+  <div class="rd-progress" id="progress" aria-hidden="true"></div>
+
+  <nav class="rd-nav" id="nav">
+    <div class="rd-container rd-nav-inner">
+      <a class="rd-brand" href="redesign.html"><span class="dot"></span>Ivan Jose</a>
+      <div class="rd-nav-links" id="spy">
+        <a href="#summary">Summary</a>
+        <a href="#model">Org Model</a>
+        <a href="#automations">Safety</a>
+        <a href="#templates">Templates</a>
+        <a href="#ai-process">Process</a>
+        <a href="#outcome">Results</a>
+      </div>
+      <a class="rd-nav-cta" href="design-system-case-study-redesign.html">Read design system ↗</a>
+    </div>
+  </nav>
+
+  <main>
+    <section class="rd-section rd-hero" id="summary">
+      <div class="rd-container">
+        <div class="rd-badges rd-reveal in">
+          <span class="rd-kicker">Org Management · LettrLabs</span>
+          <span class="rd-badge rd-badge--status"><span class="dot"></span>Shipped Product</span>
+        </div>
+        <h1 class="rd-h1 rd-reveal in d1" style="margin-top:20px">Giving enterprise teams one place to manage roles, permissions, and shared templates.</h1>
+        <p class="rd-lead rd-reveal in d2">LettrLabs' biggest customers had outgrown group management. This is the organization layer above the groups—shared roles, permissions, and centrally-governed templates—built to meet the named requirements of a high-value enterprise prospect, with CEO and CTO sponsorship.</p>
+        <div class="rd-hero-actions rd-reveal in d3">
+          <a class="rd-btn rd-btn--primary" href="#model">See the org model <svg class="arw" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <a class="rd-btn rd-btn--outline" href="https://www.lettrlabs.com/" target="_blank" rel="noreferrer">Visit LettrLabs</a>
+        </div>
+        <p class="om-note-inline rd-reveal in d3">Led the template system end-to-end; org-level actions built closely with engineering, alongside a PM and a Staff Designer.</p>
+        <figure class="om-shot rd-reveal" style="margin-top:clamp(40px,5vw,64px)">
+          <div class="rd-frame">
+            <div class="rd-frame-stage">
+              <span class="om-ph"><strong>Manage Members — org tree, roles, and the nested scope selector</strong></span>
+              <img src="images/org-manage-members.webp" alt="Manage members with org tree, roles, and the nested scope selector" onerror="this.remove()">
+            </div>
+          </div>
+          <figcaption class="rd-cap">The whole organization in one view: members, admins, and users read against the org tree; scopes are chosen from the nested hierarchy so access always matches the structure.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="rd-section rd-section--tight">
+      <div class="rd-container rd-hero-grid" style="margin-top:0">
+        <div class="rd-panel">
+          <h3 class="rd-h3">Executive summary</h3>
+          <p>We shipped organization management—members, roles, a nested permission model, governed templates, and partner—so the product can support structural actions in-product rather than routing every one through ops. Built to meet a high-revenue account's named requirements to sign.</p>
+        </div>
+        <dl class="rd-meta om-meta">
+          <div class="rd-meta-row"><dt>My role</dt><dd>Led the Template system end-to-end; contributed to Members, Groups &amp; Billing; reused the system for Partner. With a PM, a Staff Designer, and engineering.</dd></div>
+          <div class="rd-meta-row"><dt>Scope (this study)</dt><dd>Members · Roles · Permission model · Templates · Partner</dd></div>
+          <div class="rd-meta-row"><dt>The hard part</dt><dd>Every structural change can affect a live automation, so the flow has to surface its impact before commit</dd></div>
+          <div class="rd-meta-row"><dt>AI in the work</dt><dd>Design system, validations, UX stories, first-draft prototype, and UX copy</dd></div>
+          <div class="rd-meta-row"><dt>Status</dt><dd>Evaluated and shipped</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="rd-section rd-section--tight">
+      <div class="rd-container">
+        <div class="rd-head rd-reveal"><span class="rd-kicker">At a glance</span><h2 class="rd-h2">One permission system, five surfaces, designed for self-service.</h2></div>
+        <div class="rd-stats rd-reveal">
+          <div class="rd-stat"><div class="n">1</div><div class="l">high-value enterprise account named org management a requirement to sign—one of several must-haves it was built to meet</div></div>
+          <div class="rd-stat"><div class="n">5 surfaces</div><div class="l">designed on one backbone: members, roles, the permission model, templates, and partner (billing is a companion study)</div></div>
+          <div class="rd-stat"><div class="n">3 → self-serve</div><div class="l">structural changes used to need Customer Success, the CTO, and the Director of Engineering; the shipped system was designed to move those actions in-product</div></div>
+          <div class="rd-stat"><div class="n">5 levels</div><div class="l">groups nest up to five deep, with permission that follows the hierarchy</div></div>
+          <div class="rd-stat"><div class="n">~75%</div><div class="l">of revenue sits with the 3 largest clients this org layer had to serve</div></div>
+          <div class="rd-stat"><div class="n">1 system</div><div class="l">one permission model reused across members, templates, and partner—not four separate builds</div></div>
+        </div>
+        <p class="rd-note rd-reveal">Account and revenue figures come from internal reporting, rounded.</p>
+      </div>
+    </section>
+
+    <section class="rd-section">
+      <div class="rd-container">
+        <div class="rd-cols rd-reveal" style="border-top:0;padding-top:0">
+          <div><span class="rd-kicker">The problem</span><p>LettrLabs' biggest customers had outgrown group management: many teams and budgets, but no <b>organization layer</b> above the groups—no shared roles, pooled billing, or centrally-governed templates. Every <b>structural change</b> had to route through <b>Customer Success, the CTO, and the Director of Engineering</b>, and a paused automation is lost revenue.</p></div>
+          <div><span class="rd-kicker">What I did</span><p>Led the <b>Template system end-to-end</b>, then contributed its shared permission model and patterns across members, roles, billing, and partner with a PM, a Staff Designer, and engineering.</p></div>
+          <div><span class="rd-kicker">The outcome</span><p>The shipped pattern moves structural actions into the product; adoption and completion time are <b>launch measures</b>. Org management also sits on the <b>must-have list of a major enterprise prospect</b> whose named requirements it was built to meet.</p></div>
+        </div>
+      </div>
+    </section>
+    <section class="rd-section" id="model">
+      <div class="rd-container">
+        <div class="rd-head rd-reveal">
+          <span class="rd-kicker">Main UX</span>
+          <h2 class="rd-h2">The real design problem was permission that follows the hierarchy.</h2>
+          <p class="rd-lead">Before any screen, I had to get the model right: how organizations, groups, users, and partners relate—and exactly who can see and do what.</p>
+        </div>
+
+        <div class="om-tree rd-reveal" role="img" aria-label="Organization hierarchy: the Organization sits at the top and owns billing, templates, and analytics. It branches down to nestable Groups/teams (up to five levels deep) and, on a separate external branch, to Partners (walled off). Inside a group, users are either an Admin (modify) or a Member (view).">
+          <div class="om-trow">
+            <div class="om-spacer" aria-hidden="true"></div>
+            <div class="otn otn-org"><small>Top</small><strong>Organization</strong><span class="otn-desc">Owns billing, templates, and analytics for everything beneath it.</span></div>
+            <div class="om-ext">
+              <span class="om-ext-line" aria-hidden="true"></span>
+              <div class="otn otn-partner"><small>External</small><strong>Partner</strong><span class="otn-desc">An outside party the org pays for—limited template use, isolated analytics, walled off.</span></div>
+            </div>
+          </div>
+          <div class="om-stem" aria-hidden="true"></div>
+          <div class="otn otn-mid"><small>Nestable</small><strong>Groups / teams</strong><span class="otn-desc">Independent teams—each with its own budget, campaigns, and people.</span><span class="otn-chip">Nests up to 5 levels deep</span></div>
+          <div class="om-stem" aria-hidden="true"></div>
+          <div class="om-fork">
+            <div class="om-branch"><div class="otn ot-leaf"><small>User · modify</small><strong>Admin</strong><span class="otn-desc">Changes within their branch of the tree.</span></div></div>
+            <div class="om-branch"><div class="otn ot-leaf"><small>User · view</small><strong>Member</strong><span class="otn-desc">Sees their org and groups—no changes.</span></div></div>
+          </div>
+        </div>
+
+        <div class="rd-compare om-perm rd-reveal" style="margin-top:clamp(30px,4vw,44px)">
+          <div class="rd-crow is-head"><span>Capability</span><span>Owner</span><span>Admin</span><span>Member</span></div>
+          <div class="rd-crow">
+            <div class="stage">See their org &amp; the groups they belong to</div>
+            <div class="side can" data-l="Owner" aria-label="Can do"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="side can" data-l="Admin" aria-label="Can do"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="side see" data-l="Member" aria-label="View only"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M1.5 12S5.5 5 12 5s10.5 7 10.5 7-4 7-10.5 7S1.5 12 1.5 12Z" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3.2" fill="currentColor"/></svg></div>
+          </div>
+          <div class="rd-crow">
+            <div class="stage">Invite people, set roles &amp; scopes</div>
+            <div class="side can" data-l="Owner" aria-label="Can do"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="side can" data-l="Admin" aria-label="Can do"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="side no" data-l="Member" aria-label="No access">–</div>
+          </div>
+          <div class="rd-crow">
+            <div class="stage">Manage billing</div>
+            <div class="side can" data-l="Owner" aria-label="Can do"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="side can" data-l="Admin" aria-label="Can do"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="side no" data-l="Member" aria-label="No access">–</div>
+          </div>
+          <div class="rd-crow">
+            <div class="stage">Create &amp; govern templates</div>
+            <div class="side can" data-l="Owner" aria-label="Can do"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="side can" data-l="Admin" aria-label="Can do"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="side no" data-l="Member" aria-label="No access">–</div>
+          </div>
+          <div class="rd-crow">
+            <div class="stage">Transfer ownership or delete the org</div>
+            <div class="side can" data-l="Owner" aria-label="Can do"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="side no" data-l="Admin" aria-label="No access">–</div>
+            <div class="side no" data-l="Member" aria-label="No access">–</div>
+          </div>
+        </div>
+        <p class="om-legend rd-reveal">
+          <span class="can"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg> Can do</span>
+          <span class="see"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M1.5 12S5.5 5 12 5s10.5 7 10.5 7-4 7-10.5 7S1.5 12 1.5 12Z" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3.2" fill="currentColor"/></svg> View only</span>
+          <span><span class="no">–</span> No access</span>
+        </p>
+        <p class="rd-p rd-reveal">Groups are independent: a member of Group A can't see Group B—only someone in the <strong>umbrella group above both</strong> can. Permission inherits down the tree, never sideways, and an admin's reach stays bounded to the highest group they administer.</p>
+      </div>
+    </section>
+
+    <section class="rd-section rd-section--tight" style="background:var(--paper-2)">
+      <div class="rd-container">
+        <div class="rd-head rd-reveal">
+          <span class="rd-kicker">Before nesting — models I ruled out</span>
+          <h3 class="rd-h3" style="margin-top:16px">Three simpler permission models, and why each broke at enterprise scale.</h3>
+          <p class="rd-lead">Nested inheritance wasn't the obvious first choice—it was what survived after the simpler options failed against real, multi-level org charts.</p>
+        </div>
+        <div class="rd-rows om-mc rd-reveal">
+          <div class="rd-row is-head"><span>Permission model</span><span>Why it broke — or survived</span></div>
+          <div class="rd-row"><div class="k"><small class="out">Ruled out</small><strong>Flat org-wide roles&nbsp;✕</strong></div><div class="v">Easiest to build, but it can't bound reach—a regional lead could edit another region's billing and templates. No way to say "admin here, not there."</div></div>
+          <div class="rd-row"><div class="k"><small class="out">Ruled out</small><strong>Access-list per resource&nbsp;✕</strong></div><div class="v">Maximally flexible, but it doesn't scale: every new hire or template means re-granting across the tree, and "who can see what" drifts out of anyone's head within a quarter.</div></div>
+          <div class="rd-row"><div class="k"><small class="out">Ruled out</small><strong>Two levels only (org → team)&nbsp;✕</strong></div><div class="v">Enough for a small company, but enterprises run region → county → office—deeper than two. A hard cap forced customers to flatten their real structure.</div></div>
+          <div class="rd-row is-ship"><div class="k"><small class="in">Shipped</small><strong>Nested inheritance&nbsp;✓</strong></div><div class="v">Reach is automatically bounded to a branch, it scales as the tree grows, and it matches how the enterprise is organized. Its one cost—resolving which live automations a change touches—became the "show the blast radius before you commit" flow.</div></div>
+        </div>
+      </div>
+    </section>
+    <section class="rd-section rd-section--dark" id="automations">
+      <div class="rd-container">
+        <div class="rd-head rd-reveal">
+          <span class="rd-kicker">The problem behind every screen</span>
+          <h2 class="rd-h2">Almost every structural change can pause a live automation.</h2>
+          <p class="rd-lead">Moving a team, deleting a payment method, removing a template scope, editing a locked design—each can silently break a running campaign, and a paused automation is lost revenue. The through-line of the whole project: never let an admin make a structural change without first showing exactly what it breaks.</p>
+        </div>
+
+        <div class="rd-grid-2 om-impact rd-reveal">
+          <div class="rd-card rd-card--dark"><span class="rd-status rd-status--bad" style="margin-top:0">Before you commit — who loses access</span><p>Move a team to a new parent and some admins lose their reach. The move dialog names each person and why—"admin of previous parent group"—before anything changes.</p></div>
+          <div class="rd-card rd-card--dark"><span class="rd-status rd-status--good" style="margin-top:0">Before you commit — who gains access</span><p>The same dialog shows who gains access under the new parent, so the person making the move sees the full blast radius, both directions.</p></div>
+        </div>
+
+        <div class="rd-grid-2 rd-reveal" style="margin-top:clamp(28px,4vw,44px)">
+          <figure class="om-shot">
+            <div class="rd-frame">
+              <div class="rd-frame-stage">
+                <span class="om-ph"><strong>Move a team — members who lose vs gain access</strong></span>
+                <img src="images/new%20org/Modal-container.webp" alt="Move office dialog showing members who lose and gain access" onerror="this.remove()">
+              </div>
+            </div>
+            <figcaption class="rd-cap">Structural moves show the human impact—lose and gain—before you confirm.</figcaption>
+          </figure>
+          <figure class="om-shot">
+            <div class="rd-frame">
+              <div class="rd-frame-stage">
+                <span class="om-ph"><strong>Delete a region — who loses access, and where the sub-groups go</strong></span>
+                <img src="images/new%20org/Modal-container-1.webp" alt="Delete a region warning listing members who lose access and their roles" onerror="this.remove()">
+              </div>
+            </div>
+            <figcaption class="rd-cap">Destructive structural changes name each member who loses access and why, re-home the sub-groups to the parent, and hold behind a deliberate delete delay.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="rd-section" id="templates">
+      <div class="rd-container">
+        <div class="rd-head rd-reveal">
+          <span class="rd-kicker">Templates · my end-to-end area</span>
+          <h2 class="rd-h2">Govern centrally, use locally—without touching live campaigns.</h2>
+          <p class="rd-lead">A top-level admin creates a template once; any group can use it, as long as a <strong>scope</strong> (the shared group) is set. It's how an org sends one campaign across many teams—while keeping control of the design.</p>
+        </div>
+
+        <h3 class="rd-h3 rd-reveal">Every template control, one surface—filter by the job.</h3>
+        <p class="rd-p rd-reveal">Pick a job to filter the controls, then click any row to open that screen.</p>
+
+        <div class="refine-carousel rd-reveal" id="refine-carousel">
+          <div class="refine-personas" role="tablist" aria-label="Filter template features by job">
+            <button class="refine-persona is-active" type="button" data-persona="scope">Share &amp; scope</button>
+            <button class="refine-persona" type="button" data-persona="lock">Lock &amp; personalize</button>
+            <button class="refine-persona" type="button" data-persona="protect">Govern &amp; protect</button>
+          </div>
+          <div class="refine-viewport">
+            <button class="refine-arrow prev" type="button" aria-label="Previous feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+            <button class="refine-arrow next" type="button" aria-label="Next feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
+            <div class="refine-track">
+              <article class="refine-slide"><img src="images/new%20org/edit%20scope.webp" alt="Edit template scope tree — choose which groups a template reaches and surface the automations affected by a removed account" onerror="this.closest('.refine-slide').style.display='none'"></article>
+              <article class="refine-slide"><img src="images/org-update-automation.webp" alt="Removing a scope surfaces the active automations that need attention" onerror="this.closest('.refine-slide').style.display='none'"></article>
+              <article class="refine-slide"><img src="images/org-template-variable.webp" alt="A locked mail-merge variable image — personalization stays, layout is fixed" onerror="this.closest('.refine-slide').style.display='none'"></article>
+              <article class="refine-slide"><img src="images/new%20org/grid%20templates.webp" alt="Templates across the organization with scope filtering, shared use, locks, and live-automation counts" onerror="this.closest('.refine-slide').style.display='none'"></article>
+              <article class="refine-slide"><img src="images/org-manage-members.webp" alt="Inherited organization members are marked read-only while locally scoped members remain manageable" onerror="this.closest('.refine-slide').style.display='none'"></article>
+              <article class="refine-slide"><img src="images/org-update-automation.webp" alt="Updating a template reveals every active automation that needs review before the change is committed" onerror="this.closest('.refine-slide').style.display='none'"></article>
+            </div>
+          </div>
+          <div class="refine-controls" role="tablist" aria-label="Template features">
+            <button class="refine-item is-active" type="button" role="tab" data-persona="scope">
+              <span class="refine-item-persona">Share &amp; scope</span>
+              <span class="refine-item-title">Scopes decide who can use it</span>
+              <span class="refine-item-desc">A template only reaches a group when its scope includes that group—chosen from the same nested tree as everything else.</span>
+              <span class="refine-item-bar" aria-hidden="true"><i></i></span>
+            </button>
+            <button class="refine-item is-hidden" type="button" role="tab" data-persona="scope">
+              <span class="refine-item-persona">Share &amp; scope</span>
+              <span class="refine-item-title">Removing a scope is a careful act</span>
+              <span class="refine-item-desc">Drop a group from a template's scope and its active automations need attention—we surface them so income isn't quietly paused.</span>
+              <span class="refine-item-bar" aria-hidden="true"><i></i></span>
+            </button>
+            <button class="refine-item is-hidden" type="button" role="tab" data-persona="lock">
+              <span class="refine-item-persona">Lock &amp; personalize</span>
+              <span class="refine-item-title">Locked layers</span>
+              <span class="refine-item-desc">Admins lock specific variables, images, or placements. Lower-group members can still personalize—mail-merge data—but can't touch the locked design.</span>
+              <span class="refine-item-bar" aria-hidden="true"><i></i></span>
+            </button>
+            <button class="refine-item is-hidden" type="button" role="tab" data-persona="lock">
+              <span class="refine-item-persona">Lock &amp; personalize</span>
+              <span class="refine-item-title">Separate editing domains</span>
+              <span class="refine-item-desc">Name, design, scope, and tags are edited independently—each in its own modal—because they carry different permissions and different risks.</span>
+              <span class="refine-item-bar" aria-hidden="true"><i></i></span>
+            </button>
+            <button class="refine-item is-hidden" type="button" role="tab" data-persona="protect">
+              <span class="refine-item-persona">Govern &amp; protect</span>
+              <span class="refine-item-title">Higher-level templates are read-mostly</span>
+              <span class="refine-item-desc">If a template was created above you, you can push data merges but not edit the design—so central control holds.</span>
+              <span class="refine-item-bar" aria-hidden="true"><i></i></span>
+            </button>
+            <button class="refine-item is-hidden" type="button" role="tab" data-persona="protect">
+              <span class="refine-item-persona">Govern &amp; protect</span>
+              <span class="refine-item-title">Editing a design ripples out</span>
+              <span class="refine-item-desc">Change a locked design and every automation using it has to be re-checked; the flow makes that impact visible rather than silent.</span>
+              <span class="refine-item-bar" aria-hidden="true"><i></i></span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="rd-section rd-section--tight" style="background:var(--paper-2)">
+      <div class="rd-container">
+        <div class="rd-head rd-reveal" style="margin-bottom:0">
+          <span class="rd-kicker">How I worked</span>
+          <p class="rd-lead">Templates were my end-to-end area. Working with a PM, a Staff Designer, and engineering, I owned the <strong>template system in full</strong>—its scopes, locked layers, and affected-automations flow became the patterns reused across Groups, Billing, and Partner. <a href="#ai-process" style="color:var(--purple);font-weight:600">How I drove AI through the work →</a></p>
+        </div>
+      </div>
+    </section>
+    <section class="rd-section rd-section--dark" id="ai-process">
+      <div class="rd-container">
+        <div class="rd-head rd-reveal">
+          <span class="rd-kicker">AI in the process</span>
+          <h2 class="rd-h2">AI prototyped org states from the shared Figma system—keeping drafts aligned with the product.</h2>
+        </div>
+        <p class="rd-p rd-reveal">The org surface has a lot of states—empty groups, deeply nested scopes, locked templates, affected-automation warnings. The key move: <strong>AI drafted those states from the design system's own components and our shared Markdown (.md) specs</strong>—the same components and voice-and-tone docs behind the Figma system. So drafts stayed aligned with that system instead of becoming one-off mocks. (These ran as HTML prototypes; the coded React version came later, on my own, after I was let go—that's the design-system case study.)</p>
+        <p class="rd-p rd-reveal">That freed the team for the flows that carried real risk—the structural, automation-touching ones. I'm usually the one bringing AI into the workflow—testing Figma Make, Codex, Claude's design tooling, and MCP, pushing them past production output into usability, research, and discovery, then documenting what works. I taught the approach to our Staff Designer and we learned it together; our <strong>Senior PM built three of his own prototypes</strong> from the same specs. Still a workflow we're refining.</p>
+        <div class="rd-hero-actions rd-reveal" style="margin-bottom:clamp(28px,4vw,44px)">
+          <a class="rd-btn rd-btn--outline" href="design-system-case-study-redesign.html">Read the design system case study →</a>
+        </div>
+        <div class="rd-tags rd-reveal" style="margin-bottom:16px"><span class="rd-tag om-mono">AI-READY SYSTEM</span></div>
+        <div class="rd-grid-3 rd-reveal">
+          <article class="md-card">
+            <div class="md-file"><span class="dot"></span>component-specs.md</div>
+            <div class="md-body"><h3 class="rd-h3">One source of truth</h3><p>Components, tokens, and rules authored once in the Figma system—so every AI-drafted org state used the real components, not a one-off mock that would drift from that source of truth.</p></div>
+          </article>
+          <article class="md-card">
+            <div class="md-file"><span class="dot"></span>validations-branches.md</div>
+            <div class="md-body"><h3 class="rd-h3">States &amp; logic</h3><p>Relevancy checks, validations, and conditional branches—empty, nested-scope, locked-template, affected-automation—drafted with AI from the same specs behind the design system.</p></div>
+          </article>
+          <article class="md-card">
+            <div class="md-file"><span class="dot"></span>ux-copy.md</div>
+            <div class="md-body"><h3 class="rd-h3">First-draft copy</h3><p>A machine-readable voice-and-tone reference produced first-draft UX copy for each org state that already sounded like the product—so the AI passes stayed aligned with the Figma system.</p></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="rd-section rd-section--tight" id="accessibility" style="background:var(--paper-2)">
+      <div class="rd-container">
+        <div class="rd-head rd-reveal">
+          <span class="rd-kicker">Accessibility</span>
+          <h3 class="rd-h3" style="margin-top:16px">The same system made accessibility a spec, not a cleanup.</h3>
+          <p class="rd-lead">Permission and structure screens are exactly where accessibility gets skipped—but because the rules live in that system, it was a constraint from the start; the org UI met <strong>WCAG 2.1 AA</strong>. Here's what it held to on the shipped UI. <span style="color:var(--faint)">(Ratios sampled from the shipped LettrLabs UI.)</span></p>
+        </div>
+        <div class="om-a11y rd-reveal" style="margin-top:0">
+          <div class="om-a11y-line">
+            <span class="om-a11y-lbl">Contrast</span>
+            <span class="om-chip"><b>13.1:1</b> primary text <i>AAA</i></span>
+            <span class="om-chip"><b>15.6:1</b> nav on dark <i>AAA</i></span>
+            <span class="om-chip"><b>6.8:1</b> muted text <i>AA</i></span>
+            <span class="om-chip"><b>4.9:1</b> button label <i>AA</i></span>
+          </div>
+          <div class="om-a11y-line">
+            <span class="om-a11y-lbl">Built in</span>
+            <span class="rd-tag">Keyboard-operable</span>
+            <span class="rd-tag">Visible focus</span>
+            <span class="rd-tag">Never color alone</span>
+            <span class="rd-tag">Errors tied to the field</span>
+            <span class="rd-tag">Screen-reader checked</span>
+          </div>
+        </div>
+        <div class="rd-grid-2 rd-reveal" style="margin-top:clamp(24px,3vw,34px)">
+          <div class="rd-card">
+            <span class="rd-card-label">How it was tested</span>
+            <h4 class="rd-h3" style="margin-top:14px">Automated + manual, not just a scan</h4>
+            <p>Automated checks ran in <strong>axe DevTools</strong> against WCAG rules. Those catch only a fraction of real issues, so that pass was the floor—the manual one is where the org flows became usable.</p>
+          </div>
+          <div class="rd-card">
+            <span class="rd-card-label">Manual pass — every flow</span>
+            <ul class="om-list">
+              <li>Everything runs on <strong>Tab, Shift+Tab, Enter, Space, arrows</strong></li>
+              <li>Focus <strong>visible</strong>, in a <strong>logical order</strong></li>
+              <li>Modals <strong>trap focus</strong> and return it on close</li>
+              <li>Holds at <strong>200–400% zoom</strong> and narrow widths</li>
+              <li>Meaning never carried by <strong>color alone</strong></li>
+              <li>Error, empty, loading and success states read clearly</li>
+              <li>The org tree, scope selectors and destructive dialogs have <strong>accessible alternatives</strong></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="rd-section" id="outcome">
+      <div class="rd-container">
+        <div class="rd-head rd-reveal">
+          <span class="rd-kicker">Outcome</span>
+          <h2 class="rd-h2">One shared org model, ready for customer self-management.</h2>
+          <p class="rd-lead">Org management and billing shipped as <strong>one system on a shared permission backbone</strong>, so the two studies report the same outcome—told here from the org side, and from the money side in the companion study.</p>
+        </div>
+        <div class="om-out rd-reveal">
+          <div class="om-cell"><span class="lbl">01 / SELF-SERVE · PROJECTED</span><h3 class="rd-h3">Designed for self-management</h3><p>The shipped pattern moves structural actions—access, roles, billing edits, and template sharing—into the product. All four enterprise accounts are expected to self-manage at launch; adoption and completion time remain pre-launch measures to validate with live accounts.</p></div>
+          <div class="om-cell"><span class="lbl">02 / REVENUE · PROJECTED</span><h3 class="rd-h3">Built for the base—and on the next deal's must-have list</h3><p>These surfaces serve the three accounts behind ~75% of revenue—and the prospect we're pursuing, <strong>~$2M in potential revenue if it signs</strong>, named org management and org billing as requirements to join. A named requirement, not a nice-to-have.</p></div>
+          <div class="om-cell"><span class="lbl">03 / SAFETY</span><h3 class="rd-h3">A pattern that protects revenue</h3><p>The shipped pattern shows the blast radius before a structural change, so admins can assess risk to the <strong>95 live automations</strong> each account runs. The same protection is reused across billing edits, roles, scopes, and templates.</p></div>
+          <div class="om-cell"><span class="lbl">04 / GOVERNANCE · SHIPPED MODEL</span><h3 class="rd-h3">One model for enterprise governance</h3><p>Teams, budgets, and centrally governed templates share one organization model, with permission following the hierarchy up to five levels deep. Live self-management is the launch behavior to validate.</p></div>
+          <div class="om-cell"><span class="lbl">05 / DESIGN SYSTEM</span><h3 class="rd-h3">0 → 45 components, 3 md specs</h3><p>The org surface drew from a Figma design system taken from 0 to 45 components with 3 Markdown spec files—the same components and specs AI prototyped from—cutting roughly <strong>~30% off design time</strong> (internal estimate) and keeping drafts aligned with the Figma system.</p></div>
+          <div class="om-cell"><span class="lbl">06 / REUSE</span><h3 class="rd-h3">One backbone, five surfaces</h3><p>The scope model and the show-the-impact-before-you-commit flow are reused across members, roles, templates, billing, and partner—systems thinking applied structurally, rather than solving one surface at a time.</p></div>
+        </div>
+        <a class="om-companion rd-reveal" href="billing-case-study-redesign.html">
+          <span class="cc-copy">
+            <small>Companion case study</small>
+            <strong>Org-wide billing &amp; spend</strong>
+            <span class="cc-desc">Pooled balances, per-group caps, transfers, and disbursement—on the same permission backbone. Complex enough to stand on its own.</span>
+          </span>
+          <span class="cc-arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="rd-section rd-section--dark" id="reflection">
+      <div class="rd-container">
+        <div class="rd-head rd-reveal">
+          <span class="rd-kicker">Reflection</span>
+          <h2 class="rd-h2">The automation-protection flow is crucial—and still my biggest open question.</h2>
+        </div>
+        <p class="rd-p rd-reveal">The hardest, most important part was making structural changes safer by surfacing their impact before commit. We shipped that safeguard, but there's a cleaner flow than checking affected automations one modal at a time; it's the first thing I'd revisit.</p>
+        <blockquote class="rd-quote rd-reveal" style="margin-top:clamp(32px,4vw,48px)"><span class="q">"The screens were the easy part. The real work was a permission model that keeps central control and local use legible—and surfaces campaign impact before a structural change is committed."</span></blockquote>
+      </div>
+    </section>
+
+    <section class="rd-section rd-section--tight">
+      <div class="rd-container">
+        <div class="om-pager rd-reveal">
+          <a class="om-move prev" href="integration-case-study-redesign.html"><span class="fm-dir">← Previous</span><span class="fm-name">A reusable integration flow</span></a>
+          <div class="om-pager-mid"><a class="rd-btn rd-btn--outline" href="redesign.html">All work</a></div>
+          <a class="om-move next" href="billing-case-study-redesign.html"><span class="fm-dir">Next →</span><span class="fm-name">Org billing &amp; spend</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="rd-section rd-section--tight">
+      <div class="rd-container">
+        <div class="rd-panel rd-reveal" style="text-align:center;padding:clamp(44px,6vw,80px) clamp(28px,5vw,64px);background:var(--purple)">
+          <span class="rd-kicker" style="color:#e6dbff">Next case study</span>
+          <h2 class="rd-h2" style="color:#fff;margin-top:16px">Self-serve enterprise billing →</h2>
+          <p style="color:rgba(255,255,255,.86);max-width:52ch;margin:16px auto 0">A billing model that lets enterprises move their own money without risking live campaigns.</p>
+          <div class="rd-hero-actions" style="justify-content:center;margin-top:28px">
+            <a class="rd-btn" style="background:#fff;color:var(--purple)" href="billing-case-study-redesign.html">Read it <svg class="arw" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            <a class="rd-btn rd-btn--outline" href="redesign.html#work">All work</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="rd-footer">
+    <div class="rd-container">
+      <div class="rd-footer-top">
+        <a class="rd-brand" href="redesign.html"><span class="dot"></span>Ivan Jose</a>
+        <nav class="rd-footer-links" aria-label="Footer"><a href="redesign.html#work">Case Studies</a><a href="redesign.html#other-work">Other Works</a><a href="redesign.html#approach">Approach</a></nav>
+        <div style="display:flex;gap:10px" aria-label="Social links">
+          <a class="rd-ico" href="https://www.behance.net/ivancreatives" target="_blank" rel="noreferrer" aria-label="Behance" title="Behance"><span class="be">Bē</span></a>
+          <a class="rd-ico" href="https://www.linkedin.com/in/ivancreatives/" target="_blank" rel="noreferrer" aria-label="LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24"><path d="M5.37 3.1A2.37 2.37 0 1 1 5.4 7.84 2.37 2.37 0 0 1 5.37 3.1ZM3.3 9.7h4.14V21H3.3V9.7ZM10.04 9.7H14v1.54h.06c.55-1.04 1.9-2.14 3.9-2.14 4.18 0 4.95 2.75 4.95 6.32V21h-4.13v-4.96c0-1.18-.02-2.7-1.64-2.7-1.65 0-1.9 1.29-1.9 2.62V21h-4.14V9.7Z"/></svg></a>
+          <a class="rd-ico" href="https://wa.me/639679223947" target="_blank" rel="noopener" aria-label="WhatsApp" title="WhatsApp"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-3-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.6-6.1c-.25-.13-1.5-.74-1.7-.82-.23-.08-.4-.13-.56.13-.17.25-.64.82-.79.99-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.02-1.25-.75-.66-1.25-1.48-1.4-1.73-.14-.25-.01-.39.11-.51.11-.11.25-.29.38-.44.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.42h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1s.9 2.44 1.03 2.61c.13.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.43.53.6.19 1.15.16 1.58.1.48-.07 1.5-.61 1.71-1.2.21-.59.21-1.1.15-1.2-.06-.11-.23-.17-.48-.29z"/></svg></a>
+        </div>
+      </div>
+      <div class="rd-footer-bottom"><span>© 2026 Ivan Jose · Senior Product Designer</span><a href="mailto:helloivanjose@gmail.com">helloivanjose@gmail.com</a></div>
+    </div>
+  </footer>
+
+  <script>
+    var progress=document.getElementById("progress"),nav=document.getElementById("nav");
+    function ui(){var h=document.documentElement,sc=h.scrollTop||document.body.scrollTop,max=(h.scrollHeight-h.clientHeight)||1;progress.style.width=(sc/max*100)+"%";nav.classList.toggle("is-stuck",sc>16);}
+    window.addEventListener("scroll",ui,{passive:true});ui();
+    var spy=document.getElementById("spy"),links=[].slice.call(spy.querySelectorAll("a")),ids=links.map(function(a){return a.getAttribute("href").slice(1);});
+    var secs=ids.map(function(id){return document.getElementById(id);}).filter(Boolean);
+    var so=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){var i=ids.indexOf(e.target.id);links.forEach(function(l){l.classList.remove("is-active");});if(links[i])links[i].classList.add("is-active");}});},{rootMargin:"-45% 0px -50% 0px"});
+    secs.forEach(function(s){so.observe(s);});
+    var reduced=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if(!reduced){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target);}});},{threshold:.12});document.querySelectorAll(".rd-reveal:not(.in)").forEach(function(n){io.observe(n);});}
+    else{document.querySelectorAll(".rd-reveal").forEach(function(n){n.classList.add("in");});}
+    /* template carousel: persona filter + click-to-open, one slide per control row */
+    (function () {
+      var root = document.getElementById("refine-carousel");
+      if (!root) return;
+      var track = root.querySelector(".refine-track");
+      var slides = Array.prototype.slice.call(root.querySelectorAll(".refine-slide"));
+      var items = Array.prototype.slice.call(root.querySelectorAll(".refine-item"));
+      var badges = Array.prototype.slice.call(root.querySelectorAll(".refine-persona"));
+      if (!track || slides.length !== items.length) {
+        console.warn("Refinement carousel requires one preview per feature.", { slides: slides.length, items: items.length });
+        return;
+      }
+      var personaOf = items.map(function (it) { return it.getAttribute("data-persona"); });
+      var activePersona = badges.length ? badges[0].getAttribute("data-persona") : null;
+      var index = 0;
+      function listFor(persona) {
+        var out = [];
+        personaOf.forEach(function (p, i) { if (p === persona) out.push(i); });
+        return out;
+      }
+      function go(i) {
+        index = (i + slides.length) % slides.length;
+        activePersona = personaOf[index] || activePersona;
+        track.style.transform = "translateX(-" + (index * 100) + "%)";
+        badges.forEach(function (b) {
+          var activeBadge = b.getAttribute("data-persona") === activePersona;
+          b.classList.toggle("is-active", activeBadge);
+          b.setAttribute("aria-selected", activeBadge ? "true" : "false");
+        });
+        items.forEach(function (item, n) {
+          item.classList.toggle("is-hidden", personaOf[n] !== activePersona);
+          var active = n === index;
+          item.classList.toggle("is-active", active);
+          item.setAttribute("aria-selected", active ? "true" : "false");
+          var bar = item.querySelector(".refine-item-bar i");
+          if (bar) bar.style.width = active ? "100%" : "0";
+        });
+        slides.forEach(function (slide, n) { slide.setAttribute("aria-hidden", n === index ? "false" : "true"); });
+      }
+      function step(dir) {
+        var list = listFor(activePersona);
+        var pos = list.indexOf(index);
+        if (pos === -1) { if (list.length) go(list[0]); return; }
+        go(list[(pos + dir + list.length) % list.length]);
+      }
+      items.forEach(function (item, n) { item.addEventListener("click", function () { go(n); }); });
+      badges.forEach(function (b) {
+        b.addEventListener("click", function () {
+          var list = listFor(b.getAttribute("data-persona"));
+          if (list.length) go(list[0]);
+        });
+      });
+      var prevBtn = root.querySelector(".refine-arrow.prev");
+      var nextBtn = root.querySelector(".refine-arrow.next");
+      if (prevBtn) prevBtn.addEventListener("click", function () { step(-1); });
+      if (nextBtn) nextBtn.addEventListener("click", function () { step(1); });
+      var first = listFor(activePersona);
+      go(first.length ? first[0] : 0);
+    })();
+  </script>
+
+  <script>
+    /* Home -> case-study funnel: tag this case-study view for Microsoft Clarity so
+       the dashboard can build a funnel (which case study, and whether the visit
+       arrived from the homepage). Top window only — embeds are gated out elsewhere. */
+    (function () {
+      if (window.self !== window.top) return;
+      if (typeof window.clarity !== "function") return;
+      var slug = (location.pathname.split("/").pop() || "").replace(/\.html$/, "") || "case-study";
+      var ref = document.referrer || "";
+      var fromHome = /\/portfolio\/(index\.html)?($|[?#])/.test(ref) || /\/portfolio\/?$/.test(ref);
+      clarity("set", "case_study", slug);
+      clarity("set", "entry_from_home", fromHome ? "yes" : "no");
+      clarity("event", "case_study_view");
+    })();
+  </script>
+</body>
+</html>

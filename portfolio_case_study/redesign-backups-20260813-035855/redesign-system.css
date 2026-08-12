@@ -1,0 +1,181 @@
+/* =============================================================================
+   REDESIGN SYSTEM OVERLAY — inner (case-study) pages
+   Applies the Superhuman-palette / Uber-layout *concept*, not just color.
+   Loaded after style.css and the page's own inline <style>, so it wins.
+   Scope: body.case-study-page. Colors were already remapped in-page; this file
+   changes TYPE, RHYTHM, COMPONENTS, and section treatment.
+   Deliberately conservative around divider-based layouts (metric rows, compare
+   tables, result grids) so their structure is enhanced, not broken.
+   ============================================================================= */
+
+:root, body.case-study-page{
+  --rd-purple:#714cb6;
+  --rd-purple-2:#5f3da0;
+  --rd-bright:#9e6ee5;
+  --rd-lav:#d4c7ff;
+  --rd-lav-bg:#f1ecfb;
+  --rd-ink:#111110;
+  --rd-ease:cubic-bezier(.22,.61,.24,1);
+  --hair:rgba(41,40,39,.12);
+}
+
+/* ---- display type everywhere it matters ---- */
+body.case-study-page,
+.case-study-page p, .case-study-page li{
+  font-family:"Inter",ui-sans-serif,system-ui,sans-serif;
+}
+.case-study-page h1,.case-study-page h2,.case-study-page h3,
+.case-study-page h4,.case-study-page .section-head h2,
+.case-study-page .metric-tile strong,.case-study-page .result-idx,
+.case-study-page [class*="-title"]{
+  font-family:"Space Grotesk","Inter",sans-serif;
+  letter-spacing:-.03em;
+}
+
+/* ---- Uber-generous section rhythm (desktop) ---- */
+@media(min-width:761px){
+  .case-study-page .section{padding:clamp(84px,9vw,136px) 0}
+  .case-study-page .section-head{margin-bottom:clamp(40px,5vw,64px)}
+}
+
+/* ---- kicker concept: purple, Space Grotesk, dot marker ---- */
+.case-study-page .eyebrow{
+  display:inline-flex !important;align-items:center;gap:9px;
+  font-family:"Space Grotesk",sans-serif !important;
+  font-size:13px !important;font-weight:600 !important;
+  letter-spacing:.03em !important;text-transform:none !important;
+  color:var(--rd-purple) !important;line-height:1.2;
+}
+.case-study-page .eyebrow::before{
+  content:"";width:8px;height:8px;border-radius:50%;
+  background:var(--rd-bright);flex:0 0 auto;
+}
+.case-study-page .section-dark .eyebrow,
+.case-study-page .section-dark-soft .eyebrow,
+.case-study-page .dark-copy .eyebrow{color:var(--rd-bright) !important}
+
+/* ---- section headers: tighter, larger presence ---- */
+.case-study-page .section-head h2{letter-spacing:-.04em;line-height:1.02}
+
+/* ---- flat Uber-black "alternate" dark surfaces ---- */
+.case-study-page .section-dark{background:var(--rd-ink) !important}
+.case-study-page .section-dark-soft{background:#1a1a19 !important}
+.case-study-page .section-dark .metric-tile strong{color:var(--rd-bright) !important}
+
+/* ---- bold Space-Grotesk stat numbers (Uber) ---- */
+.case-study-page .metric-tile strong{
+  font-weight:600 !important;letter-spacing:-.045em !important;
+}
+
+/* ---- genuine card components: flat paper + lift on hover ---- */
+.case-study-page .persona-card,
+.case-study-page .choice-card,
+.case-study-page .refine-item,
+.case-study-page .roadmap-phase{
+  border-radius:18px !important;
+  border:1px solid var(--hair) !important;
+  background:#fff !important;
+  box-shadow:0 1px 2px rgba(41,40,39,.05) !important;
+  transition:transform .3s var(--rd-ease),box-shadow .3s var(--rd-ease),border-color .3s var(--rd-ease) !important;
+}
+.case-study-page .persona-card:hover,
+.case-study-page .choice-card:hover,
+.case-study-page .refine-item:hover,
+.case-study-page .roadmap-phase:hover{
+  transform:translateY(-4px);
+  box-shadow:0 22px 50px rgba(41,40,39,.10) !important;
+  border-color:rgba(41,40,39,.2) !important;
+}
+
+/* ---- lavender pill tags/chips ---- */
+.case-study-page .a11y-chip,
+.case-study-page .a11y-tag{
+  background:var(--rd-lav-bg) !important;
+  border:1px solid var(--rd-lav) !important;
+  color:var(--rd-purple-2) !important;
+  border-radius:999px !important;
+  font-weight:500 !important;
+}
+.case-study-page .section-dark .a11y-chip,
+.case-study-page .section-dark .a11y-tag{
+  background:rgba(158,110,229,.16) !important;
+  border-color:rgba(158,110,229,.34) !important;
+  color:#cbb6f2 !important;
+}
+
+/* ---- framed media: rounded, hairline border ---- */
+.case-study-page .vid-frame,
+.case-study-page .visual-scene,
+.case-study-page figure img,
+.case-study-page .shot,
+.case-study-page .frame{
+  border-radius:16px !important;
+  overflow:hidden;
+}
+.case-study-page .vid-frame,
+.case-study-page .visual-scene{
+  border:1px solid var(--hair) !important;
+  box-shadow:0 20px 50px rgba(41,40,39,.08);
+}
+
+/* ---- pill buttons ---- */
+.case-study-page .button{
+  border-radius:999px !important;
+  font-family:"Inter",sans-serif;font-weight:600 !important;
+}
+
+/* ---- scroll progress / nav underline accent stays purple (from tokens) ---- */
+.case-study-page ::selection{background:var(--rd-lav);color:var(--rd-ink)}
+
+/* ===== NEW-THEME OVERRIDES (flat · dark-purple · white-on-dark) ===== */
+.case-study-page .section-dark,.case-study-page .section-dark-soft{background:#221836!important;background-image:none!important}
+.case-study-page [class*="section-dark"]{background-image:none!important}
+/* white text on dark, keep accent labels bright */
+.case-study-page .section-dark :where(p,li,dd,td,figcaption){color:rgba(255,255,255,.92)!important}
+.case-study-page .section-dark :where(h1,h2,h3,h4,strong){color:#fff!important}
+.case-study-page .section-dark .eyebrow{color:#9e6ee5!important}
+/* kill any gradient anywhere -> flat */
+.case-study-page [style*="linear-gradient"]{background-image:none!important}
+.case-study-page .metric-tile strong{color:#714cb6!important}
+.case-study-page .section-dark .metric-tile strong{color:#9e6ee5!important}
+/* red / green status parity */
+.case-study-page .good,.case-study-page [class*="--good"]{color:#1f9d57!important}
+.case-study-page .bad,.case-study-page [class*="--bad"]{color:#c0392b!important}
+
+/* ===== FORCE ALL house-pattern dark surfaces -> dark purple (flat) ===== */
+.case-study-page :is(.callout,.dark-copy,.section-dark,.section-dark-soft,.harness-grid,.code,.term,.quote-dark,.stat-dark,.dark,.panel-dark){background-color:#221836!important;background-image:none!important}
+.case-study-page .site-footer{background-color:#1a1230!important;background-image:none!important;color:#fff}
+.case-study-page .site-footer a{color:rgba(255,255,255,.8)!important}
+.case-study-page .read-progress{background-color:rgba(34,24,54,.95)!important}
+/* text inside dark surfaces stays light */
+.case-study-page :is(.callout,.dark-copy,.section-dark,.harness-grid) :where(p,li,td,span,dd,dt,strong,h2,h3,h4){color:#fff}
+.case-study-page :is(.callout,.dark-copy,.section-dark) .eyebrow,
+.case-study-page :is(.callout,.dark-copy,.section-dark) [class*="label"]{color:#9e6ee5!important}
+
+/* ===== MATCH THE CLEAN LANDING-PAGE STYLE (no bg grid, no decorative gradient) ===== */
+.case-study-page .landing-grid,
+.case-study-page .landing-blob,
+.case-study-page .glow-zone::before{display:none!important}
+.case-study-page::before,.case-study-page::after{background:none!important;background-image:none!important;content:none!important}
+body.case-study-page{background:#ffffff!important;font-family:"Inter",ui-sans-serif,system-ui,-apple-system,sans-serif!important}
+/* nav clean/white like landing */
+.case-study-page .nav{background:rgba(255,255,255,.82)!important;border-bottom:1px solid rgba(41,40,39,.10)!important;backdrop-filter:saturate(160%) blur(16px)}
+/* flatten any leftover section gradients to paper */
+.case-study-page .section{background-image:none!important}
+
+/* ===== comparison / matrix tables: keep readable, theme accents only ===== */
+.case-study-page .comparison-head span,.case-study-page .perm-matrix thead th{letter-spacing:.06em}
+/* if a comparison table was designed dark (white/near-white text), give it the dark-purple bg so text stays readable; light ones keep their light bg */
+.case-study-page .comparison-table{background-image:none!important}
+
+/* ===== feedback: single eyebrow, badge padding, purple next-case CTA ===== */
+/* remove the redundant secondary eyebrow/badge (keep just the .eyebrow) */
+.case-study-page .ai-badge,.case-study-page .pattern-head .ai-badge{display:none!important}
+/* badge / chip padding fix (was 0) */
+.case-study-page .a11y-chip,.case-study-page .a11y-tag{padding:6px 13px!important;min-height:0!important;line-height:1.2!important}
+.case-study-page .a11y-line{gap:10px!important;flex-wrap:wrap}
+/* next-case-study card -> flat purple, white text, like the map */
+.case-study-page .companion-card{background:#714cb6!important;background-image:none!important;border:0!important;color:#fff!important;border-radius:28px!important}
+.case-study-page .companion-card :where(h2,h3,p,span,a,.companion-copy){color:#fff!important}
+.case-study-page .companion-card .eyebrow{color:#e6dbff!important}
+.case-study-page .companion-arrow,.case-study-page .companion-card svg{color:#fff!important;stroke:#fff!important}
