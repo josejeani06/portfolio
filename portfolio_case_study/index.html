@@ -47,7 +47,7 @@
       --maxw:1240px;
     }
     *,*::before,*::after{box-sizing:border-box}
-    html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+    html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:92px}
     @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
     body{
       margin:0;background:var(--paper);color:var(--ink);
@@ -258,9 +258,38 @@
     .reveal.in{opacity:1;transform:none}
     .reveal.d1{transition-delay:.07s}.reveal.d2{transition-delay:.14s}.reveal.d3{transition-delay:.21s}
     @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+
+    /* ---------- scroll cue: nudges the reader down to the case studies ------ */
+    .scroll-cue{
+      position:fixed;right:22px;bottom:22px;z-index:55;
+      display:inline-flex;align-items:center;gap:10px;
+      min-height:44px;padding:0 18px;border-radius:999px;
+      background:var(--purple);color:#fff;
+      font-family:"Space Grotesk","Inter",sans-serif;font-size:13.5px;font-weight:600;
+      letter-spacing:.01em;white-space:nowrap;cursor:pointer;
+      box-shadow:0 10px 30px rgba(113,76,182,.38);
+      transition:opacity .35s var(--ease),transform .35s var(--ease),background .2s var(--ease);
+    }
+    .scroll-cue:hover{background:#5f3da0;transform:translateY(-2px)}
+    .scroll-cue svg{width:15px;height:15px;flex:0 0 auto;animation:cueBob 1.6s ease-in-out infinite}
+    /* once the work section is on screen the cue has done its job */
+    .scroll-cue.is-hidden{opacity:0;transform:translateY(10px);pointer-events:none}
+    @keyframes cueBob{0%,100%{transform:translateY(0)}50%{transform:translateY(3px)}}
+    @media(max-width:520px){
+      .scroll-cue{right:14px;bottom:14px;font-size:12.5px;padding:0 14px;gap:8px}
+    }
+    @media(prefers-reduced-motion:reduce){
+      .scroll-cue svg{animation:none}
+      .scroll-cue{transition:opacity .2s linear}
+    }
   </style>
 </head>
 <body>
+  <a class="scroll-cue" id="scrollCue" href="#work" aria-label="Scroll to case studies">
+    Scroll for case studies
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
+  </a>
+
   <div class="progress" id="progress" aria-hidden="true"></div>
 
   <nav class="nav" id="nav">
@@ -500,6 +529,35 @@
     var prefersReduced=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if(!prefersReduced){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target);}});},{threshold:0.1});document.querySelectorAll(".reveal:not(.in)").forEach(function(n){io.observe(n);});}
     else{document.querySelectorAll(".reveal").forEach(function(n){n.classList.add("in");});}
+
+    /* scroll cue: hide it once the work section is actually on screen */
+    (function(){
+      var cue=document.getElementById("scrollCue"), work=document.getElementById("work");
+      if(!cue||!work) return;
+      /* No preventDefault: the native anchor jump is what actually moves the
+         page. html{scroll-behavior:smooth} animates it, and unlike a scripted
+         scrollIntoView it still works when rAF is throttled. */
+      function sync(){
+        var de=document.documentElement;
+        /* `a || b` is wrong here: at a genuine scrollTop of 0 it falls through
+           to whichever other property is stale. Only one node is the real
+           scroller, so the largest value is the true offset. */
+        var top=Math.max(de.scrollTop||0, document.body.scrollTop||0, window.pageYOffset||0);
+        /* vh can report 0 in embedded/headless contexts, which silently made the
+           old `r.top < vh*0.75` test never fire. Scroll distance always works,
+           and the viewport test just refines it when vh is real. */
+        /* NOT document.body.clientHeight — that is the whole document height
+           (~19500px here), which made every element look "in view". */
+        var vh=window.innerHeight||de.clientHeight||0;
+        var scrolledOff = top > 240;
+        var workInView = vh > 0 && work.getBoundingClientRect().top < vh*0.75;
+        cue.classList.toggle("is-hidden", scrolledOff || workInView);
+      }
+      window.addEventListener("scroll",sync,{passive:true});
+      window.addEventListener("resize",sync,{passive:true});
+      sync();
+    })();
+
 
     document.querySelectorAll("[data-copy-email]").forEach(function(button){
       button.addEventListener("click",async function(){
