@@ -12,6 +12,7 @@
     'org-management-case-study.html',
     'billing-case-study.html',
     'design-system-case-study.html',
+    'uledger-case-study.html',
   ];
   const WIDTHS = [375, 768, 1280];
 
@@ -23,6 +24,7 @@
     'integration-case-study.html':    { sel: '.scroll-story-step',  min: 5  },
     'org-management-case-study.html': { sel: '.refine-slide',       min: 6  },
     'billing-case-study.html':        { sel: '.refine-slide',       min: 12 },
+    'uledger-case-study.html':        { sel: '.refine-slide',       min: 16 },
   };
 
   const APPROVED_BUTTONS = [

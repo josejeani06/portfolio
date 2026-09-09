@@ -159,10 +159,27 @@
 
     // 2. anything else only gets clipped when it genuinely overruns
     if (!mobile) {
-      document.querySelectorAll('.refine-slide.is-clipped').forEach(unclip);
+      document.querySelectorAll('.refine-slide.is-clipped, .shot-img.is-clipped').forEach(unclip);
       return;
     }
     var limit = Math.round(vh * MAX_H);
+
+    // 2a. standalone panel screenshots (.shot) — same treatment as a slide, so a
+    // 1,300px-tall add-in panel doesn't own a whole phone screen. Full-width on
+    // mobile, clipped, with the same "Show full" lightbox.
+    document.querySelectorAll('.shot-img').forEach(function (host) {
+      var img = host.querySelector('img');
+      if (!img || !img.naturalHeight) return;
+      if (host.dataset.clipped === '1') return;
+      if (img.getBoundingClientRect().height <= limit + 8) return;
+      host.dataset.clipped = '1';
+      host.classList.add('is-clipped');
+      host.style.position = 'relative';
+      host.style.maxHeight = limit + 'px';
+      host.style.overflow = 'hidden';
+      addShowFull(host, img);
+    });
+
     document.querySelectorAll('.refine-slide').forEach(function (slide) {
       var img = slide.querySelector('img');
       if (!img || !img.naturalHeight) return;
@@ -216,7 +233,7 @@
     window.addEventListener('resize', function () { setTimeout(conceptArrows, 160); }, { passive: true });
     watchHeights();
     [400, 1000, 1800].forEach(function (d) { setTimeout(clipTall, d); });
-    document.querySelectorAll('.concept-carousel img, .refine-slide img').forEach(function (im) {
+    document.querySelectorAll('.concept-carousel img, .refine-slide img, .shot-img img').forEach(function (im) {
       if (!im.complete) im.addEventListener('load', function () { setTimeout(clipTall, 60); }, { once: true });
     });
     window.addEventListener('resize', function () { setTimeout(clipTall, 200); }, { passive: true });

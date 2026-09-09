@@ -165,11 +165,11 @@
     .tile-cta .arw{transition:transform .25s var(--ease)}
     .tile:hover .tile-cta .arw{transform:translateX(4px)}
     /* spans */
-    .t-map{grid-column:span 2}
+    .t-map,.t-uled{grid-column:span 2}
     .t-int,.t-ds,.t-org,.t-bill{grid-column:span 1}
     /* featured map: full-width, 16:9, fills the container edge-to-edge */
-    .t-map .tile-media{aspect-ratio:16/9}
-    @media(max-width:640px){.bento{grid-template-columns:1fr}.t-map{grid-column:span 1}}
+    .t-map .tile-media,.t-uled .tile-media{aspect-ratio:16/9}
+    @media(max-width:640px){.bento{grid-template-columns:1fr}.t-map,.t-uled{grid-column:span 1}}
 
     /* ===================== BENTO — why me ===================== */
     .why{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
@@ -310,8 +310,8 @@
     <section class="hero">
       <div class="container">
         <span class="hero-status reveal in"><span class="dot"></span>Open to Remote | Relocation</span>
-        <h1 class="reveal in d1">Your next<br><span class="alt">Senior Product Designer.</span></h1>
-        <p class="hero-sub reveal in d2">I take something complex, simplify it, and turn it into a flow people can actually understand. <b>6 years shipping end-to-end B2B SaaS.</b> Integrations, enterprise org management, billing, and design systems.</p>
+        <h1 class="reveal in d1">Your next <span class="alt">B2B<br>Senior Product Designer.</span></h1>
+        <p class="hero-sub reveal in d2">I take something complex, simplify it, and turn it into a flow people can actually understand. <b>6 years shipping end-to-end B2B SaaS, Health App and Blockchain.</b> Integrations, enterprise org management, billing, and design systems.</p>
         <div class="hero-actions reveal in d3">
           <a class="btn btn-primary" href="mailto:helloivanjose@gmail.com">Email me <svg class="arw" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
           <a class="btn btn-outline" href="#other">View web designs</a>
@@ -386,6 +386,19 @@
               <p>I owned the Figma system at LettrLabs, then built the packaged React library, machine-readable specs, and an agent audit against a written standard.</p>
             </div>
           </a>
+
+          <a class="tile t-uled reveal" href="uledger-case-study.html" target="_blank" rel="noopener">
+            <div class="tile-media">
+              <img width="1622" height="1073" src="images/uledger/v2-outlook-wide.webp" alt="The ULedger Verify add-in open beside a draft in Outlook, showing verified email counts, top contacts, and recent activity" loading="lazy" onerror="this.closest('.tile-media').classList.add('ph');this.innerHTML='ULedger Verify'">
+            </div>
+            <div class="tile-body">
+              <span class="tile-ix">06 &middot; Email security add-in &middot; Client work</span>
+              <h3>ULedger Verify: turning a one-button Outlook add-in into somewhere people go back to.</h3>
+              <p>Version 1 sent a verified email and said nothing else. I redesigned it around three customer requests: reactivity, contact verification, and email history.</p>
+              <div class="tile-tags"><span>Outlook add-in</span><span>Trust &amp; verification</span><span>Client work</span></div>
+              <span class="tile-cta">Read case study <span class="arw">&rarr;</span></span>
+            </div>
+          </a>
         </div>
       </div>
     </section>
@@ -395,7 +408,7 @@
       <div class="container">
         <div class="band-grid">
           <div class="band-cell"><div class="n">06</div><div class="l">Years shipping<br>end-to-end B2B SaaS</div></div>
-          <div class="band-cell"><div class="n">05</div><div class="l">In-depth case studies<br>of real product work</div></div>
+          <div class="band-cell"><div class="n">06</div><div class="l">In-depth case studies<br>of real product work</div></div>
           <div class="band-cell"><div class="n">~75%</div><div class="l">Of revenue served by<br>surfaces I designed</div></div>
           <div class="band-cell"><div class="n">AA</div><div class="l">WCAG 2.1 held across<br>every surface</div></div>
         </div>
@@ -475,12 +488,11 @@
         <div class="section-head reveal">
           <span class="kicker">Selected other work</span>
           <h2>Shipped client &amp; product work, in brief.</h2>
-          <p>Supporting work, not full case studies. Two blockchain products from my time with ULedger, plus CMS-driven marketing sites. Each opens in a new tab.</p>
+          <p>Supporting work, not full case studies. The blockchain explorer from my time with ULedger, plus CMS-driven marketing sites. Each opens in a new tab.</p>
         </div>
         <div class="other-grid">
           <div class="other reveal"><a href="https://www.behance.net/gallery/202614057/ULedgerNet-Blockchain-Explorer" target="_blank" rel="noopener noreferrer"><div class="other-cover"><img src="images/uledger.jpg" alt="ULedgerNet blockchain explorer" loading="lazy"></div><div class="other-body"><span class="other-kicker">Blockchain · ULedger</span><h3>ULedgerNet, Blockchain Explorer</h3><p>A data-dense explorer for searching blocks, transactions, and hashes on the ULedger network.</p><span class="other-link">View on Behance ↗</span></div></a></div>
-          <div class="other reveal d1"><a href="https://www.behance.net/gallery/202614095/Outlook-Uledger-Verify-for-Email" target="_blank" rel="noopener noreferrer"><div class="other-cover"><img src="images/verifyemail.jpg" alt="Uledger Verify for Email" loading="lazy"></div><div class="other-body"><span class="other-kicker">Blockchain · ULedger</span><h3>Uledger Verify for Outlook</h3><p>An email add-in using blockchain to prove a message is authentic and untampered.</p><span class="other-link">View on Behance ↗</span></div></a></div>
-          <div class="other reveal d2"><a href="https://www.ajlatelier.com/" target="_blank" rel="noopener noreferrer"><div class="other-cover"><img src="images/ajl thumbnail new.webp" alt="AJL Atelier Webflow CMS site" loading="lazy"></div><div class="other-body"><span class="other-kicker">Webflow CMS · Live site</span><h3>AJL Atelier, consultancy + podcast</h3><p>Dynamic CMS pages, podcast episodes, blog, and service pages for a short-term-rental consultancy.</p><span class="other-link">Visit live site ↗</span></div></a></div>
+          <div class="other reveal d1"><a href="https://www.ajlatelier.com/" target="_blank" rel="noopener noreferrer"><div class="other-cover"><img src="images/ajl thumbnail new.webp" alt="AJL Atelier Webflow CMS site" loading="lazy"></div><div class="other-body"><span class="other-kicker">Webflow CMS · Live site</span><h3>AJL Atelier, consultancy + podcast</h3><p>Dynamic CMS pages, podcast episodes, blog, and service pages for a short-term-rental consultancy.</p><span class="other-link">Visit live site ↗</span></div></a></div>
           <div class="other reveal"><a href="https://asymmetry.vc/portfolio/" target="_blank" rel="noopener noreferrer"><div class="other-cover"><img src="images/asymmetry vc.webp" alt="Asymmetry Ventures site" loading="lazy"></div><div class="other-body"><span class="other-kicker">WordPress · Elementor</span><h3>Asymmetry VC, portfolio site</h3><p>A CMS-driven portfolio grid built from dynamic custom fields, so new investments publish without touching the layout.</p><span class="other-link">Visit live site ↗</span></div></a></div>
           <div class="other reveal d1"><a href="https://www.hypervestor.com/" target="_blank" rel="noopener noreferrer"><div class="other-cover"><img src="images/hypervestor.webp" alt="Hypervestor investor platform site" loading="lazy"></div><div class="other-body"><span class="other-kicker">WordPress · Live site</span><h3>Hypervestor, investor platform</h3><p>A marketing site for an early-stage investment platform, with dynamic deal listings and domain-driven sections.</p><span class="other-link">Visit live site ↗</span></div></a></div>
         </div>
