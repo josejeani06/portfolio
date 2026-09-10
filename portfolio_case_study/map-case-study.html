@@ -1,129 +1,74 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="en" class="v3">
 <head>
-  <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){if(window.self!==window.top)return;
-      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "xu2es8f588");
-  </script>
-
-
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-  <title>Redesigning a Map Workflow into an Audience Builder | Ivan Jose</title>
-  <meta name="description" content="How I modernized LettrLabs' geographic audience builder, shifting the brief from fixing map bugs to helping different users build audiences without getting blocked." />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://unpkg.com" crossorigin>
-  <link rel="preconnect" href="https://esm.sh" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="redesign.css?v=51" />
-  <style>
-    /* map-specific: Uber bento + tabs + play-prototype + outcome grid */
-    .out-grid{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:var(--paper)}
-    .out-cell{padding:clamp(24px,2.6vw,34px);border-left:1px solid var(--line);border-top:1px solid var(--line)}
-    .out-cell:nth-child(-n+2){border-top:0}.out-cell:nth-child(odd){border-left:0}
-    .out-cell .lbl{font-family:var(--font-display);font-size:12px;font-weight:600;letter-spacing:.06em;color:var(--purple);text-transform:uppercase}
-    .out-cell h3{font-family:var(--font-display);font-weight:600;font-size:clamp(18px,1.8vw,21px);letter-spacing:-.02em;margin:12px 0 0;color:var(--ink-strong)}
-    .out-cell p{color:var(--muted);font-size:15px;line-height:1.6;margin:10px 0 0}
-    .out-cell .note{font-size:13px;font-style:italic;color:var(--faint);margin-top:10px}
-    @media(max-width:640px){.out-grid{grid-template-columns:1fr}.out-cell{border-left:0!important}}
-    .ps-tabs{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:22px}
-    .ps-tab{font-size:14px;font-weight:600;color:var(--muted);background:var(--paper-2);border:1px solid var(--line);padding:9px 16px;border-radius:999px;cursor:pointer;transition:all .2s var(--ease)}
-    .ps-tab.on{background:var(--purple);border-color:var(--purple);color:#fff}
-    .ps-pane{display:none}.ps-pane.on{display:block}
-    /* product-strategy: map on the left, tab cards on the right */
-    .ps-layout{display:grid;grid-template-columns:1.15fr .85fr;gap:22px;align-items:start}
-    .ps-layout .rd-frame{position:sticky;top:92px}
-    @media(max-width:900px){.ps-layout{grid-template-columns:1fr}.ps-layout .rd-frame{position:static}}
-    /* 4-column decision table: ratios only above the stacking breakpoint,
-       so the stylesheet's mobile stacking is never overridden (never inline this) */
-    /* 4 prose columns need real width — stack (with labels) up to tablet */
-    @media(min-width:901px){
-      .dec-table .rd-crow{grid-template-columns:1fr 1.2fr 1.5fr 1fr}
-    }
-    @media(max-width:900px){
-      .dec-table .rd-crow{grid-template-columns:1fr!important;gap:10px}
-      .dec-table .rd-crow.is-head{display:none!important}
-      .dec-table .rd-crow .side::before{content:attr(data-l);display:block;font-family:var(--font-display);font-size:11.5px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--purple);margin-bottom:5px}
-    }
-    .play-wrap{position:relative}
-    .init-frame{width:100%}
-    .init-frame iframe{display:block;width:100%;height:clamp(560px,82vh,900px);border:0;background:#fff}
-    .play-btn{position:absolute;inset:0;display:grid;place-items:center;border:0;background:rgba(34,24,54,.28);cursor:pointer;z-index:3;transition:background .2s var(--ease)}
-    .play-btn:hover{background:rgba(34,24,54,.14)}
-    .play-btn span{display:inline-flex;align-items:center;gap:10px;background:var(--purple);color:#fff;font-family:var(--font-display);font-weight:600;font-size:15px;padding:13px 22px;border-radius:999px;box-shadow:0 12px 30px rgba(113,76,182,.4)}
-    .fut{display:grid;gap:0;border-top:1px solid var(--d-line)}
-    .fut > div{padding:24px 0;border-top:1px solid var(--d-line)}
-    .fut > div:first-child{border-top:0}
-    .fut b{color:#fff;font-weight:600}
-    .fut p{color:rgba(255,255,255,.82);margin:6px 0 0;line-height:1.6}
-    /* ported product-strategy carousel (recolored purple, dark) */
-    .refine-carousel{margin-top:14px;display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:14px 36px;align-items:start}
-    .refine-viewport{position:relative;overflow:hidden;border-radius:16px}
-    .refine-track{display:flex;transition:transform .45s cubic-bezier(.2,1,.22,1)}
-    .refine-slide{min-width:100%}
-    .refine-slide .vid-frame{aspect-ratio:1/1;width:100%;margin:0;border-radius:16px;overflow:hidden;border:1px solid var(--d-line);background:#0f0a1e}
-    .refine-slide .vid-media{width:100%;height:100%;object-fit:cover;display:block}
-    .refine-controls{display:flex;flex-direction:column;gap:10px}
-    .refine-item{position:relative;overflow:hidden;appearance:none;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:5px;padding:16px 18px 18px;border:1px solid rgba(255,255,255,.14);border-radius:14px;background:transparent;transition:background .2s ease,border-color .2s ease}
-    .refine-item:hover{border-color:rgba(158,110,229,.5)}
-    .refine-item.is-active{background:rgba(255,255,255,.06);border-color:rgba(158,110,229,.55)}
-    .refine-item-persona{font-family:var(--font-display);font-size:var(--xs);font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#9e6ee5}
-    .refine-item-title{font-family:var(--font-display);font-size:var(--h3);font-weight:600;color:#fff;line-height:1.14}
-    .refine-item-desc{font-size:var(--sm);line-height:1.5;color:rgba(255,255,255,.74)}
-    .refine-item-bar{position:absolute;left:0;bottom:0;height:3px;width:100%;background:transparent}
-    .refine-item.is-active .refine-item-bar{background:rgba(158,110,229,.22)}
-    .refine-item-bar i{display:block;height:100%;width:0;background:#9e6ee5;transition:width .12s linear}
-    .refine-personas{grid-column:1 / -1;display:flex;flex-wrap:wrap;gap:10px;margin-bottom:6px}
-    .refine-persona{appearance:none;border:1px solid rgba(255,255,255,.2);background:transparent;color:rgba(255,255,255,.72);border-radius:999px;padding:9px 16px;font-family:inherit;font-weight:600;font-size:var(--sm);cursor:pointer;transition:all .2s ease}
-    .refine-persona:hover{border-color:#9e6ee5;color:#fff}
-    .refine-persona.is-active{background:var(--purple);border-color:var(--purple);color:#fff}
-    .refine-item.is-hidden{display:none}
-    .refine-arrow{position:absolute;bottom:14px;z-index:2;width:40px;height:40px;border-radius:50%;border:0;background:rgba(34,24,54,.82);color:#fff;display:grid;place-items:center;cursor:pointer}
-    .refine-arrow svg{width:18px;height:18px}
-    .refine-arrow.prev{left:14px}.refine-arrow.next{left:62px}
-    @media(max-width:900px){.refine-carousel{grid-template-columns:1fr;gap:22px}}
-    /* dark .md spec cards (filename banner + heading) */
-    .md-card{background:var(--d-bg-2);border:1px solid var(--d-line);border-radius:16px;overflow:hidden}
-    .md-file{display:flex;align-items:center;gap:9px;padding:15px 20px;border-bottom:1px solid var(--d-line);font-family:ui-monospace,"JetBrains Mono",monospace;font-size:13px;color:rgba(255,255,255,.6);letter-spacing:.01em}
-    .md-file .dot{width:8px;height:8px;border-radius:50%;background:#9e6ee5;flex:0 0 auto}
-    .md-body{padding:20px}
-    .md-body h3{color:#fff;margin:0}
-    .md-body p{color:rgba(255,255,255,.74);font-size:14.5px;line-height:1.6;margin:12px 0 0}
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Audience Map Builder | Ivan Jose</title>
+<meta name="description" content="How I modernized LettrLabs' geographic audience builder, shifting the brief from fixing map bugs to helping different users build audiences without getting blocked.">
+<link rel="icon" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;700&family=Istok+Web:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="v3/tokens.css?v=79">
+<link rel="stylesheet" href="redesign.css?v=79">
+<link rel="stylesheet" href="v3-bridge.css?v=79">
+<link rel="stylesheet" href="v3/v3.css?v=79">
+<link rel="stylesheet" href="case-study.css?v=79">
 </head>
 <body>
-  <div class="rd-progress" id="progress" aria-hidden="true"></div>
 
-  <nav class="rd-nav" id="nav">
-    <div class="rd-container rd-nav-inner">
-      <a class="rd-brand" href="index.html"><span class="dot"></span>Ivan Jose</a>
-      <div class="rd-nav-links" id="spy">
-        <a href="#summary">Summary</a>
-        <a href="#discovery">Discovery</a>
-        <a href="#product">Product Design</a>
-        <a href="#prototype">AI Prototype</a>
-        <a href="#outcome">Outcome</a>
-      </div>
-      <a class="rd-nav-cta" href="audience-builder-prototype/index.html" target="_blank" rel="noreferrer">Open prototype ↗</a>
+<a class="skip-link t-p-medium" href="#content">Skip to content</a>
+
+<!-- Nav: transparent with white text over the dark banner, solid after it -->
+<header class="cs-nav" data-cs-nav>
+  <nav class="cs-nav__inner" aria-label="Primary">
+    <a class="nav__logo" href="v3/index.html#top">
+      <span class="nav__logo-avatar">
+        <img width="400" height="480" src="images/ivan-jose-shot.png" alt="">
+      </span>
+      <span class="nav__logo-name"><strong>Ivan</strong>Jose</span>
+    </a>
+    <div class="cs-nav__links">
+        <a class="cs-nav__link" href="#quick-summary">Summary</a>
+        <a class="cs-nav__link" href="#process">Process</a>
+        <a class="cs-nav__link" href="#product-strategy">Product</a>
+        <a class="cs-nav__link" href="#ai-workflow">AI Workflow</a>
+        <a class="cs-nav__link" href="#outcome">Outcome</a>
     </div>
+    <a class="btn btn--accent-2 btn--sm cs-nav__cta" href="audience-builder-prototype/index.html" target="_blank" rel="noopener">Open Prototype</a>
   </nav>
+</header>
 
-  <main>
-    <section class="rd-section rd-hero" id="summary">
-      <div class="rd-container">
-        <div class="rd-badges rd-reveal in"><span class="rd-kicker">Flagship case study · LettrLabs</span></div>
-        <h1 class="rd-h1 rd-reveal in d1" style="margin-top:20px">Redesigning LettrLabs' map workflow into an audience builder.</h1>
-        <p class="rd-lead rd-reveal in d2">I modernized a two-year-old geographic audience builder inside LettrLabs' automation flow. The ask was to fix map bugs. What I kept running into was bigger than that. Customers often needed Customer Success just to create an automation, so I moved the work from <b>"make the map better"</b> to <b>"help different users build audiences without getting blocked."</b></p>
-        <div class="rd-hero-actions rd-reveal in d3">
-          <a class="rd-btn rd-btn--primary" href="audience-builder-prototype/index.html" target="_blank" rel="noreferrer">Open map prototype <svg class="arw" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-          <a class="rd-btn rd-btn--outline" href="https://www.lettrlabs.com/" target="_blank" rel="noreferrer">Visit LettrLabs</a>
+<!-- Green banner, height hugs its content -->
+<header class="cs-banner">
+  <div class="cs-banner__inner">
+    <h1 class="cs-banner__title">Audience Map Builder</h1>
+    <p class="cs-banner__lead">I modernized a two-year-old geographic audience builder inside <a class="cs-banner__link" href="https://www.lettrlabs.com/" target="_blank" rel="noopener">LettrLabs</a>&rsquo; automation flow. The ask was to fix map bugs. What I kept running into was bigger than that. Customers often needed Customer Success just to create an automation, so I moved the work from <b>&ldquo;make the map better&rdquo;</b> to <span class="cs-hl">&ldquo;help different users build audiences without getting blocked.&rdquo;</span></p>
+    <dl class="cs-meta">
+        <div class="cs-meta__row">
+          <dt class="cs-meta__label">My role</dt>
+          <dd class="cs-meta__value">Led the audience-builder (map) design end-to-end. Another designer owned the automation around it</dd>
         </div>
-        <div class="rd-ba rd-reveal" id="mapBA" style="--pos:75%;margin-top:clamp(40px,5vw,64px)">
+        <div class="cs-meta__row">
+          <dt class="cs-meta__label">Outcome</dt>
+          <dd class="cs-meta__value">Turned a pile of scattered bug-fixes into one audience model, with a phased path from map-first use to five entry points</dd>
+        </div>
+        <div class="cs-meta__row">
+          <dt class="cs-meta__label">Timeline</dt>
+          <dd class="cs-meta__value">6 weeks, from audit to shipped redesign</dd>
+        </div>
+        <div class="cs-meta__row">
+          <dt class="cs-meta__label">Process</dt>
+          <dd class="cs-meta__value">AI-assisted prototype, built in Codex</dd>
+        </div>
+    </dl>
+  </div>
+</header>
+
+<!-- Before / after, directly below the banner -->
+<section class="cs-ba" aria-label="Before and after">
+  <div class="cs-ba__inner">
+    <div class="rd-ba rd-reveal-done" id="mapBA" style="--pos:75%;margin-top:0">
           <img src="images/map-compare-new.webp" alt="After, the new audience builder with clear entry points">
           <img class="rd-ba-clip" src="images/map-compare-old.webp" alt="Before, the old map that assumes you'll draw">
           <div class="rd-ba-line"></div>
@@ -131,31 +76,66 @@
           <span class="rd-ba-tag old">Before</span>
           <span class="rd-ba-tag new">After</span>
         </div>
-      </div>
+  </div>
+</section>
+
+<!-- Two columns: sticky contents + the reading column -->
+<div class="cs-layout" id="content">
+  <aside class="cs-toc" aria-label="Contents">
+    <p class="cs-toc__title">Contents</p>
+    <ol>
+        <li class="cs-toc__group">Quick Summary</li>
+        <li><a href="#the-problem">The problem</a></li>
+        <li><a href="#my-part">My part</a></li>
+        <li><a href="#the-outcome">The outcome</a></li>
+        <li class="cs-toc__group">Process</li>
+        <li><a href="#ux-research">Why customers needed CS</a></li>
+        <li><a href="#our-data">Our data</a></li>
+        <li><a href="#ux-audit">UX audit</a></li>
+        <li><a href="#persona-summary">Persona summary</a></li>
+        <li><a href="#user-journey">User journey</a></li>
+        <li><a href="#drafts">Drafts</a></li>
+        <li><a href="#discussion">Discussion with the team</a></li>
+        <li class="cs-toc__group">Product Strategy</li>
+        <li><a href="#strategy">Strategy</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#trade-offs">Trade offs</a></li>
+        <li class="cs-toc__group">AI Workflow</li>
+        <li><a href="#first-ai-prototype">First AI prototype</a></li>
+        <li><a href="#ai-design-system">AI design system</a></li>
+        <li class="cs-toc__group">Outcome</li>
+        <li><a href="#outcome">Outcome</a></li>
+        <li class="cs-toc__group">Reflection</li>
+        <li><a href="#reflection">Reflection</a></li>
+        <li class="cs-toc__group">Future update</li>
+        <li><a href="#future-update">Future update</a></li>
+    </ol>
+  </aside>
+
+  <main class="cs-content">
+
+    <section class="cs-summary" aria-labelledby="quick-summary">
+    <h2 id="quick-summary">Quick Summary</h2>
+
+    <h3 id="the-problem">The problem</h3>
+    <p>An old audience builder buried in the automation flow, with <strong>one way in</strong>. Open the map, draw a shape. If you thought in ZIP codes, already had a CSV, or wanted last month&rsquo;s area again, there was <strong>no way in for you</strong>. So people called <strong>Customer Success</strong> or filed a ticket, and the same blockers showed up in both.</p>
+
+    <h3 id="my-part">My part</h3>
+    <p>I led the audience-builder design end-to-end and changed the brief from &ldquo;fix the map&rdquo; to &ldquo;help different people build an audience without getting stuck.&rdquo; <span class="cs-em">~20 customer interviews</span> sorted into <span class="cs-em">4 user mental models</span>. I turned those into <strong>one audience model with five entry points</strong>.</p>
+
+    <h3 id="the-outcome">The outcome</h3>
+    <p><strong>Phase one</strong> shipped the map-first workflow and the core targeting controls. I defined the full five-entry-point model up front for phased delivery, so later releases could add CSV upload, saved areas, and exclusions without reopening the interaction model.</p>
     </section>
 
-    <section class="rd-section rd-section--tight">
-      <div class="rd-container">
-        <div class="rd-exec rd-reveal">
-          <div class="rd-exec-star">
-            <span class="rd-kicker">Executive summary</span>
-            <h3 class="rd-h3" style="margin-top:14px">North Star</h3>
-            <p>The redesign is live. It cleared the blockers I'd audited on the primary targeting path and addressed the first phase of the tracked map-and-automation tickets. I defined <strong style="color:#fff">one audience model for five entry points</strong>, and CSV upload, saved areas, and exclusions were held for later releases on purpose.</p>
-          </div>
-          <dl class="rd-exec-facts">
-            <div class="rd-fact"><dt>My role</dt><dd>Led the audience-builder (map) design end-to-end. Another designer owned the automation around it</dd></div>
-            <div class="rd-fact"><dt>Outcome</dt><dd>Turned a pile of scattered bug-fixes into one audience model, with a phased path from map-first use to five entry points</dd></div>
-            <div class="rd-fact"><dt>Timeline</dt><dd>6 weeks, from audit to shipped redesign</dd></div>
-            <div class="rd-fact"><dt>Process</dt><dd>AI-assisted prototype, built in Codex</dd></div>
-          </dl>
-        </div>
-      </div>
-    </section>
+    <h2 id="process">Process</h2>
 
-    <section class="rd-section rd-section--tight" style="background:var(--paper-3)">
-      <div class="rd-container">
-        <div class="rd-head rd-reveal"><span class="rd-kicker">At a glance</span><h2 class="rd-h2">The short version.</h2></div>
-        <div class="rd-stats rd-reveal">
+    <h3 id="ux-research">Why do customers need Customer Success just to create an audience?</h3>
+    <p>On paper it was a bug-fix pass on an old map. The map wasn't the problem though. <strong>The workflow around it was.</strong> There were setup gates, dead clicks, missing controls, and work people kept having to redo. The real job was the way people already think about building an audience. Before I bet the redesign on that hunch, I checked it against every source I could get.</p>
+
+
+    <h3 id="our-data">Our data</h3>
+    <p>Before I bet a redesign on a hunch, I checked it against every source I could get. Usage and revenue numbers come from internal analytics, rounded.</p>
+    <div class="rd-stats rd-reveal-done">
           <div class="rd-stat"><div class="n">~95%</div><div class="l">of the product's automations are built on a map. It's the core surface here, not a side feature</div></div>
           <div class="rd-stat"><div class="n">~75%</div><div class="l">of revenue rides on just 3 enterprise customers, so the risk sits on this one surface</div></div>
           <div class="rd-stat"><div class="n">~1,500</div><div class="l">automation users are the affected base this redesign had to hold up for</div></div>
@@ -163,66 +143,47 @@
           <div class="rd-stat"><div class="n">15 / 31</div><div class="l">tracked map-and-automation tickets addressed in phase one</div></div>
           <div class="rd-stat"><div class="n">6 wks</div><div class="l">from audit to shipped redesign</div></div>
         </div>
-        <p class="rd-note rd-reveal">Usage and revenue numbers come from internal analytics, rounded.</p>
-        <div class="rd-cols rd-reveal" id="discovery" style="margin-top:clamp(32px,4vw,48px)">
-          <div><span class="rd-kicker">The problem</span><p>An old audience builder buried in the automation flow, with one way in. Open the map, draw a shape. If you thought in ZIP codes, already had a CSV, or wanted last month's area again, there was no way in for you. So people called Customer Success or filed a ticket, and the same blockers showed up in both.</p></div>
-          <div><span class="rd-kicker">What I did</span><p>I led the audience-builder design end-to-end and changed the brief from "fix the map" to "help different people build an audience without getting stuck." ~20 customer interviews sorted into 4 user mental models. I turned those into one audience model with five entry points.</p></div>
-          <div><span class="rd-kicker">The outcome</span><p>Phase one shipped the map-first workflow and the core targeting controls. I defined the full five-entry-point model up front for phased delivery, so later releases could add CSV upload, saved areas, and exclusions without reopening the interaction model.</p></div>
-        </div>
-      </div>
-    </section>
 
-    <section class="rd-section rd-section--dark">
-      <div class="rd-container">
-        <div class="rd-reveal" style="max-width:900px">
-          <span class="rd-kicker">The question that changed the project</span>
-          <blockquote class="rd-quote" style="margin-top:24px"><span class="q">Why do customers need Customer Success just to create an audience?</span></blockquote>
-          <p class="rd-p" style="margin-top:24px">On paper it was a bug-fix pass on an old map. The map wasn't the problem though. The workflow around it was. There were setup gates, dead clicks, missing controls, and work people kept having to redo. The real job was the way people already think about building an audience. Before I bet the redesign on that hunch, I checked it against every source I could get.</p>
-        </div>
-        <div class="rd-rows rd-reveal d1" style="margin-top:36px;background:var(--d-bg-2);border-color:var(--d-line)">
-          <div class="rd-crow is-head"><span>Source</span><span>Evidence</span></div>
-          <div class="rd-row" style="border-color:var(--d-line)"><div class="k" style="color:#fff">Active users</div><div class="v" style="color:rgba(255,255,255,.85)">~1,500 automation users</div></div>
-          <div class="rd-row" style="border-color:var(--d-line)"><div class="k" style="color:#fff">Product research</div><div class="v" style="color:rgba(255,255,255,.85)">~20 interviews gathered by PM and CS, then sorted into recurring patterns and personas</div></div>
-          <div class="rd-row" style="border-color:var(--d-line)"><div class="k" style="color:#fff">Behavioral data (Hotjar)</div><div class="v" style="color:rgba(255,255,255,.85)">Heatmaps, drop-offs, and rage clicks, each tied back to a specific broken action, validation, or edge case</div></div>
-          <div class="rd-row" style="border-color:var(--d-line)"><div class="k" style="color:#fff">Customer Success</div><div class="v" style="color:rgba(255,255,255,.85)">31 map-related support tickets logged in Asana</div></div>
-          <div class="rd-row" style="border-color:var(--d-line)"><div class="k" style="color:#fff">UX audit</div><div class="v" style="color:rgba(255,255,255,.85)">My own end-to-end walk through the existing targeting experience</div></div>
-          <div class="rd-row" style="border-color:var(--d-line)"><div class="k" style="color:#fff">AI evaluation</div><div class="v" style="color:rgba(255,255,255,.85)">An AI "user" and Playwright walkthroughs found the broken paths and summed up the pattern</div></div>
-        </div>
-      </div>
-    </section>
+    <h3 id="ux-audit">UX audit</h3>
+    <p>The loudest signal wasn't that the UI looked old. It was that the product kept saying <strong>"not yet"</strong> and <strong>never showed customers a way forward</strong>.</p>
+    <div class="cs-scroller" data-cs-scroller><div class="rd-rows rd-reveal-done d1">
+          <div class="rd-row is-head"><span>Source</span><span>Evidence</span></div>
+          <div class="rd-row"><div class="k">Active users</div><div class="v">~1,500 automation users</div></div>
+          <div class="rd-row"><div class="k">Product research</div><div class="v">~20 interviews gathered by PM and CS, then sorted into recurring patterns and personas</div></div>
+          <div class="rd-row"><div class="k">Behavioral data (Hotjar)</div><div class="v">Heatmaps, drop-offs, and rage clicks, each tied back to a specific broken action, validation, or edge case</div></div>
+          <div class="rd-row"><div class="k">Customer Success</div><div class="v">31 map-related support tickets logged in Asana</div></div>
+          <div class="rd-row"><div class="k">UX audit</div><div class="v">My own end-to-end walk through the existing targeting experience</div></div>
+          <div class="rd-row"><div class="k">AI evaluation</div><div class="v">An AI "user" and Playwright walkthroughs found the broken paths and summed up the pattern</div></div>
+        </div></div>
 
-    <section class="rd-section">
-      <div class="rd-container">
-        <div class="rd-head rd-reveal"><span class="rd-kicker">UX audit</span><h2 class="rd-h2">I used the audit to move the conversation from "bugs" to blockers.</h2><p class="rd-lead">The loudest signal wasn't that the UI looked old. It was that the product kept saying "not yet" and never showed customers a way forward.</p></div>
-        <div class="rd-rows rd-reveal">
-          <div class="rd-crow is-head"><span>Blocker</span><span>Fix</span></div>
-          <div class="rd-row"><div class="k">You had to name the automation before you could add a single location.</div><div class="v">Let people explore and build an audience first, with no unrelated setup gate cutting in.</div></div>
-          <div class="rd-row"><div class="k">Returning users had to rebuild locations they'd already made.</div><div class="v">Saved locations gave repeat users a faster way to pick up earlier work.</div></div>
-          <div class="rd-row"><div class="k">ZIP / county / state targeting only worked through drawing and radius tools.</div><div class="v">Geographic selection now covers ZIP, city, county, state, and wider targeting models.</div></div>
-          <div class="rd-row"><div class="k">Some clicks did nothing, or gave feedback so weak you'd miss it.</div><div class="v">Loading, success, warning, empty, validation, and recovery states replaced the dead-ends, and they read clearly without leaning on color alone.</div></div>
-          <div class="rd-row"><div class="k">People got stuck when they only wanted part of a larger location.</div><div class="v">Inclusion controls shipped in the core path. I specified exclusions for the later refinement phase.</div></div>
-          <div class="rd-row"><div class="k">Filtering was slow enough that the primary path felt broken.</div><div class="v">Engineering sped up filtering so the path stayed usable inside the data constraints we had.</div></div>
-          <div class="rd-row"><div class="k">Support had become part of the setup process.</div><div class="v">The redesign cut that dependency by making the primary path explain itself and stop blocking people.</div></div>
-        </div>
+    <h3 id="persona-summary">Persona summary</h3>
+    <p>None of these personas needed a different product. They needed <strong>one audience-building workflow</strong> that could bend to how they already thought about the task.</p>
+    <div class="cs-models">
+      <div class="cs-model">
+        <div class="cs-model__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2 4.5 13.5H10L9 22l8.5-11.5H12L13 2Z"/></svg></div>
+        <h4 class="cs-model__name">Power users</h4>
+        <p class="cs-model__desc">They're at home with audience controls and refinement logic. They start from CSV upload, include / exclude rules, and filtering, so import has to be fast and complex edits have to hold up.</p>
       </div>
-    </section>
-
-    <section class="rd-section rd-section--tight" style="background:var(--paper-2)">
-      <div class="rd-container">
-        <div class="rd-head rd-reveal"><span class="rd-kicker">Persona summary</span><h2 class="rd-h2">One workflow for four user mental models.</h2><p class="rd-lead">None of these personas needed a different product. They needed one audience-building workflow that could bend to how they already thought about the task.</p></div>
-        <div class="rd-grid-4">
-          <div class="rd-card rd-reveal"><div class="rd-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg></div><h3 class="rd-h3">Power users</h3><p>They're at home with audience controls and refinement logic. They start from CSV upload, include / exclude rules, and filtering, so import has to be fast and complex edits have to hold up.</p></div>
-          <div class="rd-card rd-reveal d1"><div class="rd-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.3-7-11a7 7 0 0 1 14 0c0 4.7-7 11-7 11Z"/><circle cx="12" cy="10" r="2.4"/></svg></div><h3 class="rd-h3">Local marketers</h3><p>They already know the geography they want, a ZIP, city, county, or state. Geographic selection has to work directly, instead of making drawing tools the default.</p></div>
-          <div class="rd-card rd-reveal d2"><div class="rd-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg></div><h3 class="rd-h3">Repeat users</h3><p>They come back to a workflow they've set up before. They start from saved, reusable locations, so reuse has to be quick and carry over from earlier campaigns.</p></div>
-          <div class="rd-card rd-reveal d3"><div class="rd-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m3 7 6-3 6 3 6-3v13l-6 3-6-3-6 3Z"/></svg></div><h3 class="rd-h3">New users</h3><p>They still need to see the map to get their bearings. They start map-first, so the product needs clear entry actions, guidance they can see, and feedback that teaches the workflow as they go.</p></div>
-        </div>
+      <div class="cs-model">
+        <div class="cs-model__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 4.9 7 12 7 12s7-7.1 7-12a7 7 0 0 0-7-7Zm0 9.6A2.6 2.6 0 1 1 12 6.4a2.6 2.6 0 0 1 0 5.2Z"/></svg></div>
+        <h4 class="cs-model__name">Local marketers</h4>
+        <p class="cs-model__desc">They already know the geography they want, a ZIP, city, county, or state. Geographic selection has to work directly, instead of making drawing tools the default.</p>
       </div>
-    </section>
+      <div class="cs-model">
+        <div class="cs-model__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 4V1L7.5 5.5 12 10V7a5 5 0 1 1-4.9 6H4.05A8 8 0 1 0 12 4Z"/></svg></div>
+        <h4 class="cs-model__name">Repeat users</h4>
+        <p class="cs-model__desc">They come back to a workflow they've set up before. They start from saved, reusable locations, so reuse has to be quick and carry over from earlier campaigns.</p>
+      </div>
+      <div class="cs-model">
+        <div class="cs-model__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m3 6.6 6-2.6 6 2.6 6-2.6v12.8l-6 2.6-6-2.6-6 2.6V6.6Zm7 .9v11.1l4 1.7V9.2L10 7.5Z"/></svg></div>
+        <h4 class="cs-model__name">New users</h4>
+        <p class="cs-model__desc">They still need to see the map to get their bearings. They start map-first, so the product needs clear entry actions, guidance they can see, and feedback that teaches the workflow as they go.</p>
+      </div>
+    </div>
 
-    <section class="rd-section" id="product">
-      <div class="rd-container">
-        <div class="rd-head rd-reveal"><span class="rd-kicker">Journey · before &amp; after</span><h2 class="rd-h2">Every stage had a clear path forward.</h2><p class="rd-lead">I rebuilt each stage from the audit and the behavioral data. The phase-one improvements sit next to the full phased model that guided later releases.</p></div>
-        <div class="rd-compare rd-reveal">
+    <h3 id="user-journey">User journey</h3>
+    <p>I rebuilt each stage from the audit and the behavioral data. The phase-one improvements sit next to the full phased model that guided later releases.</p>
+    <div class="cs-scroller" data-hint="Scroll to view"><div class="rd-compare rd-reveal-done">
           <div class="rd-crow is-head"><span>Stage</span><span>Before (old map)</span><span>After (shipped core + phased model)</span></div>
           <div class="rd-crow"><div class="stage"><span class="ix">01</span>Start automation</div><div class="side">You had to name the automation before adding any location. That's a setup gate.<div class="rd-status rd-status--bad">Mild friction</div></div><div class="side after">Go straight into building the audience. The setup gates are gone.<div class="rd-status rd-status--good">At ease</div></div></div>
           <div class="rd-crow"><div class="stage"><span class="ix">02</span>Build from any entry point</div><div class="side">A blank map that assumes you'll draw. No path for ZIP, CSV, or saved areas.<div class="rd-status rd-status--bad">Confused</div></div><div class="side after">Phase one made map-first search and geographic selection usable. CSV and saved areas are specified for later.<div class="rd-status rd-status--good">Clearer start</div></div></div>
@@ -230,39 +191,57 @@
           <div class="rd-crow"><div class="stage"><span class="ix">04</span>Filter the audience</div><div class="side">Filtering was slow enough that the primary path felt broken.<div class="rd-status rd-status--bad">Impatient</div></div><div class="side after">Filtering got optimized so it holds up at scale.<div class="rd-status rd-status--good">Kept moving</div></div></div>
           <div class="rd-crow"><div class="stage"><span class="ix">05</span>Review reach &amp; cost</div><div class="side">Overlapping selections are hard to read, with no clear total.<div class="rd-status rd-status--bad">Unsure</div></div><div class="side after">One consolidated audience, with clear reach and cost.<div class="rd-status rd-status--good">Reassured</div></div></div>
           <div class="rd-crow"><div class="stage"><span class="ix">06</span>Launch</div><div class="side">Support becomes part of setup. 31 map-related tickets logged.<div class="rd-status rd-status--bad">Blocked</div></div><div class="side after">A clearer self-serve core reduced setup friction.<div class="rd-status rd-status--good">Ready to launch</div></div></div>
-        </div>
-      </div>
-    </section>
+        </div></div>
 
-    <section class="rd-section rd-section--tight" style="background:var(--paper-2)">
-      <div class="rd-container">
-        <div class="rd-head rd-reveal"><span class="rd-kicker">Concept shift</span><h2 class="rd-h2">The first concept wasn't what shipped.</h2><p class="rd-lead">The fork was task-first against map-first. Task-first lets people pick how to start before they touch the map. Map-first was the proven behavior. I shipped map-first to keep the launch low-risk and wrote task-first up as an A/B hypothesis. The version I'd design and the version that's safe to ship aren't always the same one.</p></div>
-        <figure class="rd-figure rd-reveal" style="margin:0 0 20px">
-          <img src="images/map-concept-task-first-cards.jpeg" alt="The task-first concept: 'Start targeting your service area' with clear entry points. Define Area on Map, Use Saved Area, Upload CSV, before any map interaction." loading="lazy">
-        </figure>
-        <div class="rd-reveal" style="max-width:820px;margin-bottom:clamp(28px,4vw,44px)">
-          <h3 class="rd-h3">Start from the customer's job, not the map control.</h3>
-          <p class="rd-p">My first proposal put clear entry points before any map interaction. Search a place, define an area, reuse a saved area, or upload a CSV. Not everyone showed up ready to draw, so the way in had to match how they already thought about the task.</p>
-        </div>
-        <div class="rd-grid-2 rd-reveal" style="margin-bottom:18px">
-          <div class="rd-card"><span class="rd-card-label rd-label--bad">Product view<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></span><p style="margin-top:14px">Start with the customer's job. Make CSV, saved areas, search, and map tools equal entry points, and lean on support less by matching how the different personas already think.</p></div>
-          <div class="rd-card"><span class="rd-card-label rd-label--good">Business view<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><p style="margin-top:14px">Keep the map visible, because it's central to the product experience. Make it feel more capable before people move into targeting details, so they keep the visual trust and take fewer steps.</p></div>
-        </div>
-        <div class="rd-head rd-reveal" style="margin-bottom:18px"><span class="rd-kicker">Why the concept changed</span></div>
-        <div class="rd-grid-3 rd-reveal">
-          <div class="rd-card rd-card--flat"><span class="rd-card-label">Why PM agreed</span><p>Their research showed customers approached audience creation in different ways. One rigid map-first path didn't fit the clustered personas.</p></div>
-          <div class="rd-card rd-card--flat"><span class="rd-card-label">Why engineering agreed</span><p>Several entry points could still resolve into one audience model, which is easier to reason about than a set of separate one-off workflows.</p></div>
-          <div class="rd-card rd-card--flat"><span class="rd-card-label">Why CS agreed</span><p>Most of their support work was helping customers reach an audience they already had in mind, not teaching more map interaction.</p></div>
-        </div>
-      </div>
-    </section>
+    <h3 id="drafts">Drafts</h3>
+    <p>The fork was task-first against map-first. Task-first lets people pick how to start before they touch the map. Map-first was the proven behavior. I shipped map-first to keep the launch low-risk and wrote task-first up as an A/B hypothesis. The version I&rsquo;d design and the version that&rsquo;s safe to ship aren&rsquo;t always the same one.</p>
+    <figure class="cs-figure">
+      <img src="images/map-concept-task-first-cards.jpeg" alt="The task-first concept, where you pick how to start before the map opens" width="1600" height="900" loading="lazy">
+      <figcaption>The task-first draft: pick how you want to start, before the map opens.</figcaption>
+    </figure>
+    <div class="cs-note">
+      <h4>Start from the customer&rsquo;s job, not the map control.</h4>
+      <p>My first proposal put clear entry points before any map interaction. Search a place, define an area, reuse a saved area, or upload a CSV. Not everyone showed up ready to draw, so the way in had to match how they already thought about the task.</p>
+    </div>
+    <div class="cs-fork">
+      <div class="cs-fork__cell"><h4 class="cs-label">Product view</h4><p>Start with the customer&rsquo;s job. Make CSV, saved areas, search, and map tools equal entry points, and lean on support less by matching how the different personas already think.</p></div>
+      <div class="cs-fork__cell cs-fork__cell--lead"><h4 class="cs-label">Business view</h4><p>Keep the map visible, because it&rsquo;s central to the product experience. Make it feel more capable before people move into targeting details, so they keep the visual trust and take fewer steps.</p></div>
+    </div>
+    <h4 class="cs-subhead">Why the concept changed</h4>
+    <div class="cs-grid-3">
+      <div class="cs-card"><h4 class="cs-label">Why PM agreed</h4><p>Their research showed customers approached audience creation in different ways. One rigid map-first path didn&rsquo;t fit the clustered personas.</p></div>
+      <div class="cs-card"><h4 class="cs-label">Why engineering agreed</h4><p>Several entry points could still resolve into one audience model, which is easier to reason about than a set of separate one-off workflows.</p></div>
+      <div class="cs-card"><h4 class="cs-label">Why CS agreed</h4><p>Most of their support work was helping customers reach an audience they already had in mind, not teaching more map interaction.</p></div>
+    </div>
 
-    <section class="rd-section rd-section--dark">
-      <div class="rd-container">
-        <div class="rd-head rd-reveal"><span class="rd-kicker">Product strategy</span><h2 class="rd-h2">I reframed the map as an audience builder.</h2><p class="rd-lead">That shift told me what belonged in the experience and what stayed secondary. I specified search or region selection, CSV upload, saved areas, radius, and polygon as paths into the same model. Every entry point lands in one audience, so people can look at total reach and cost instead of the tool they used to get there.</p></div>
-        <h3 class="rd-h3 rd-reveal" style="margin-bottom:6px;color:#fff">One model that bends to the job at hand.</h3>
-        <p class="rd-p rd-reveal" style="margin-top:0;margin-bottom:20px;color:rgba(255,255,255,.8)">These prototype walkthroughs show three paths through the shipped core and the planned refinements.</p>
-        <div class="refine-carousel rd-reveal" id="refine-carousel">
+    <h3 id="discussion">Discussion with PM, Business and Dev</h3>
+    <p>Each side wanted a different thing from the same release, so I put the views next to each other rather than arguing them one at a time.</p>
+    <div class="cs-views">
+      <div class="cs-view">
+        <h4 class="cs-view__who">PM</h4>
+        <p class="cs-view__what">Wanted the ticket backlog cleared without slipping the automation release.</p>
+      </div>
+      <div class="cs-view is-highlight">
+        <h4 class="cs-view__who">Business</h4>
+        <p class="cs-view__what">~75% of revenue rides on three enterprise accounts, all on this one surface. A regression here is a revenue event, so the phased path mattered more than the elegant one.</p>
+      </div>
+      <div class="cs-view">
+        <h4 class="cs-view__who">Engineering</h4>
+        <p class="cs-view__what">Needed one interaction model to build against, not five special cases.</p>
+      </div>
+    </div>
+
+    <h2 id="product-strategy">Product Strategy</h2>
+
+    <h3 id="strategy">Strategy</h3>
+    <p>I reframed the map as <strong>an audience builder</strong>. That shift told me what belonged in the experience and what stayed secondary. I specified search or region selection, CSV upload, saved areas, radius, and polygon as paths into the same model. <strong>Every entry point lands in one audience</strong>, so people can look at total reach and cost instead of the tool they used to get there.</p>
+
+
+    <h3 id="features">Features</h3>
+    <p>The interaction model pulls search or region selection, CSV upload, saved areas, radius, and polygon into one audience-building context. Phase one shipped the map-first path. The rest of the entry points are designed and waiting for the later phases.</p>
+    <p class="cs-note-inline">These prototype walkthroughs show three paths through the shipped core and the planned refinements.</p>
+    <div class="cs-card--dark">
+<div class="refine-carousel rd-reveal-done" id="refine-carousel">
           <div class="refine-personas" role="tablist" aria-label="Filter features by persona">
             <button class="refine-persona is-active" type="button" data-persona="new">New users</button>
             <button class="refine-persona" type="button" data-persona="local">Local marketers</button>
@@ -291,127 +270,173 @@
             <button class="refine-item is-hidden" type="button" role="tab" data-persona="repeat"><span class="refine-item-persona">For repeat users</span><span class="refine-item-title">Start from a saved map</span><span class="refine-item-desc">They come back every month, so they reuse a saved audience instead of rebuilding it.</span><span class="refine-item-bar" aria-hidden="true"><i></i></span></button>
           </div>
         </div>
-      </div>
-    </section>
+</div>
+    
 
-    <section class="rd-section rd-section--tight" style="background:var(--paper-2)">
-      <div class="rd-container">
-        <div class="rd-head rd-reveal"><span class="rd-kicker">Decision making</span><h2 class="rd-h2">The hardest parts weren't UI decisions. They were trade-offs.</h2><p class="rd-lead">I put the cost of each decision on the table so PM, business, design, and engineering could agree faster.</p></div>
-        <div class="rd-rows rd-reveal dec-table">
+    <h3 id="trade-offs">Trade offs</h3>
+    <p>I put the cost of each decision on the table so PM, business, design, and engineering could <strong>agree faster</strong>.</p>
+    <div class="cs-scroller" data-hint="Scroll to view"><div class="rd-rows rd-reveal-done dec-table">
           <div class="rd-crow is-head"><span>Question</span><span>Trade-off</span><span>Decision</span><span>Future</span></div>
           <div class="rd-crow"><div class="stage">Was ~20 interviews enough to design from?</div><div class="side" data-l="Trade-off">A confident sample is closer to 50. PM/CS ran these as conversations, not as a structured study.</div><div class="side" data-l="Decision">Six weeks left no room for a proper round, so I checked them against Hotjar, tickets, my audit, and the AI walkthroughs. I only called something a blocker when it showed up in more than one source.</div><div class="side" data-l="Future">Run a structured round at ~50, with a researcher.</div></div>
           <div class="rd-crow"><div class="stage">Start with tasks or start with the map?</div><div class="side" data-l="Trade-off">Task-first was clearer for CSV and saved-area users.</div><div class="side" data-l="Decision">I shipped map-first. It was the proven, lower-risk choice on a surface almost every automation depends on.</div><div class="side" data-l="Future">I'd still A/B test task-first.</div></div>
           <div class="rd-crow"><div class="stage">Should clicking the map be the main interaction?</div><div class="side" data-l="Trade-off">One-click was powerful, but folding radius, polygon, and place selection into one control would overload it.</div><div class="side" data-l="Decision">I kept radius and polygon as the primary CTAs, and made place selection available through clearer map controls.</div><div class="side" data-l="Future">Test a combined select mode with more data.</div></div>
           <div class="rd-crow"><div class="stage">Ship everything at once, or phase it?</div><div class="side" data-l="Trade-off">A full release would be cleaner, but the scope touched targeting, filtering, saved locations, CSV, exclusions, QA.</div><div class="side" data-l="Decision">I scoped it so useful improvements shipped inside the window, instead of waiting for one all-at-once rollout.</div><div class="side" data-l="Future">Use faster feedback loops between phases.</div></div>
-        </div>
-      </div>
-    </section>
+        </div></div>
 
-    <section class="rd-section rd-section--dark" id="prototype">
-      <div class="rd-container">
-        <div class="rd-head rd-reveal"><span class="rd-kicker">AI prototype</span><h2 class="rd-h2">The prototype changed how the team talked about the problem.</h2><p class="rd-lead">I built the first interactive prototype in Codex, AI-assisted, so PM, business, and engineering could click a running product instead of imagining static Figma screens. That's where the validation happened, and it gave engineering something real to pressure-test.</p></div>
-        <div class="rd-grid-2 rd-reveal">
-          <div class="rd-card rd-card--dark"><span class="rd-card-label">Before</span><p style="margin-top:14px">Problem → PRD → UX strategy → Design → Engineering. Feedback showed up late, on static screens.</p></div>
-          <div class="rd-card rd-card--dark"><span class="rd-card-label">With prototype</span><p style="margin-top:14px">Problem → working prototype → PM + CS feedback → business review → engineering feasibility → design refinement. Review turned into a product conversation.</p></div>
-        </div>
-        <p class="rd-p rd-reveal" style="color:rgba(255,255,255,.9)">It also taught me to design with the constraints instead of around them. The prototype changed the map-provider call and moved engineering from Google Maps to MapTiler, with the edge cases and the interaction model settled before anyone wrote production code.</p>
-        <div class="rd-hero-actions rd-reveal" style="margin:clamp(28px,3.5vw,44px) 0 16px"><a class="rd-btn rd-btn--outline" href="https://josejeani06.github.io/lettrlabs-service-area-map-builder/" target="_blank" rel="noreferrer">Open initial prototype ↗</a></div>
-        <div class="rd-frame rd-reveal play-wrap init-frame has-poster" id="initWrap">
-          <img class="proto-poster" src="images/map-audience-builder.webp" alt="Preview of the initial service-area map prototype" loading="lazy">
-          <button class="play-btn" id="initPlayBtn" type="button" aria-label="Play the initial prototype"><span>▶ Play initial prototype</span></button>
-          <iframe id="initFrame" title="Initial AI-assisted service-area map prototype" tabindex="-1" loading="lazy"></iframe>
-        </div>
-        <p class="rd-note rd-reveal" style="color:rgba(255,255,255,.62)">The first interactive build in Codex. Press play to load it live.</p>
-      </div>
-    </section>
+    <h2 id="ai-workflow">AI Workflow</h2>
 
-    <section class="rd-section rd-section--dark rd-section--tight" id="design-system">
-      <div class="rd-container">
-        <div class="rd-head rd-reveal"><span class="rd-kicker">Design system · AI-ready</span><h2 class="rd-h2">Every state drafted from the design system's own specs.</h2><p class="rd-lead">The map has a lot of states. Empty, radius, polygon, county include, ZIP exclude, loading, validation. AI drafted them from the design system's components and the shared Markdown specs, so the drafts stayed in line instead of turning into one-off mocks.</p></div>
-        <div class="rd-grid-3 rd-reveal">
-          <div class="md-card"><div class="md-file"><span class="dot"></span>component-specs.md</div><div class="md-body"><h3 class="rd-h3">One source of truth</h3><p>Components, tokens, and rules written once, so every AI-drafted map state used the real components instead of a mock that drifts.</p></div></div>
-          <div class="md-card"><div class="md-file"><span class="dot"></span>validations-branches.md</div><div class="md-body"><h3 class="rd-h3">States &amp; logic</h3><p>Relevancy checks, validations, and conditional branches for empty, radius, polygon, and exclusion, all drafted from the same specs.</p></div></div>
-          <div class="md-card"><div class="md-file"><span class="dot"></span>ux-copy.md</div><div class="md-body"><h3 class="rd-h3">First-draft copy</h3><p>A machine-readable voice-and-tone reference gave me first-draft UX copy that already sounded like the product.</p></div></div>
-        </div>
-        <div class="rd-hero-actions rd-reveal"><a class="rd-btn rd-btn--outline" href="design-system-case-study.html">Read the design-system case study <svg class="arw" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
-      </div>
-    </section>
-
-    <section class="rd-section" id="builder">
-      <div class="rd-container">
-        <div class="rd-head rd-reveal"><span class="rd-kicker">Map audience builder</span><h2 class="rd-h2">The final direction turned targeting into a workspace, not a one-path map tool.</h2><p class="rd-lead">The interaction model pulls search or region selection, CSV upload, saved areas, radius, and polygon into one audience-building context. Phase one shipped the map-first path. The rest of the entry points are designed and waiting for the later phases.</p></div>
-        <div class="rd-hero-actions rd-reveal" style="margin:0 0 18px"><a class="rd-btn rd-btn--outline" href="https://josejeani06.github.io/portfolio/audience-builder-prototype/index.html" target="_blank" rel="noreferrer">Open in new window ↗</a></div>
-        <div class="rd-frame rd-reveal play-wrap init-frame has-poster" id="playWrap">
-          <img class="proto-poster" src="images/map-audience-builder.webp" alt="Preview of the shipped audience-builder prototype" loading="lazy">
-          <button class="play-btn" id="playBtn" type="button" aria-label="Play the interactive prototype"><span>▶ Play prototype</span></button>
+    <h3 id="first-ai-prototype">First AI prototype</h3>
+    <p>I built the first interactive prototype in Codex, AI-assisted, so PM, business, and engineering could click a running product instead of imagining static Figma screens. <strong>That's where the validation happened</strong>, and it gave engineering something real to pressure-test.</p>
+    <div class="cs-grid-2">
+      <div class="cs-card"><h4 class="cs-label">Before</h4><p>Problem &rarr; PRD &rarr; UX strategy &rarr; Design &rarr; Engineering. Feedback showed up late, on static screens.</p></div>
+      <div class="cs-card"><h4 class="cs-label">With prototype</h4><p>Problem &rarr; working prototype &rarr; PM + CS feedback &rarr; business review &rarr; engineering feasibility &rarr; design refinement. Review turned into a product conversation.</p></div>
+    </div>
+    <p>It also taught me to design with the constraints instead of around them. The prototype changed the map-provider call and moved engineering from <strong>Google Maps to MapTiler</strong>, with the edge cases and the interaction model settled <strong>before anyone wrote production code</strong>.</p>
+    <div class="rd-frame rd-reveal-done play-wrap init-frame has-poster" id="playWrap">
+          <img class="proto-poster" width="1600" height="724" src="images/map-audience-builder.webp" alt="Preview of the shipped audience-builder prototype" loading="lazy">
+          <button class="play-btn" id="playBtn" type="button" aria-label="Play the interactive prototype"><span>▶ Play prototype</span><span class="play-btn__mobile">Play prototype on desktop</span></button>
           <iframe id="builderFrame" title="Interactive audience-builder prototype" tabindex="-1" loading="lazy"></iframe>
         </div>
-        <p class="rd-note rd-reveal">The interactive prototype loads only when you press play.</p>
-      </div>
-    </section>
 
-    <section class="rd-section" id="outcome">
-      <div class="rd-container">
-        <div class="rd-head rd-reveal"><span class="rd-kicker">Outcome</span><h2 class="rd-h2">The redesign shipped and turned the map into a stronger automation foundation.</h2><p class="rd-lead">The real win wasn't a cleaner interface. It was a workflow that matches how customers actually build audiences.</p></div>
-        <div class="out-grid rd-reveal">
-          <div class="out-cell"><span class="lbl">01 / Customer · designed + phased</span><h3>From one rigid path to a five-entry-point model</h3><p>The audit and the observed sessions showed 6 steps before anyone drew a single area, with roughly 3 of them repeated for every extra location. I defined search or region selection, CSV upload, saved area, radius, and polygon as one model. Phase one shipped the map-first path and the core targeting controls.</p><p class="note">Step counts from the UX audit and 20 observed customer sessions.</p></div>
-          <div class="out-cell"><span class="lbl">02 / Business · shipped</span><h3>De-risked a revenue-critical path</h3><p>The redesigned audience builder shipped on the surface behind <strong style="color:var(--ink)">~95% of automations</strong>, the same one serving the <strong style="color:var(--ink)">3 enterprise accounts</strong> that carry <strong style="color:var(--ink)">~75% of revenue</strong>.</p></div>
-          <div class="out-cell"><span class="lbl">03 / Engineering · defined before build</span><h3>One interaction model, ready for build</h3><p>I evaluated <strong style="color:var(--ink)">4 map providers</strong> and specified the interaction model across <strong style="color:var(--ink)">~55 states spanning 13 flows</strong>, with entry methods, calculation states, and failure cases written out for QA.</p></div>
-          <div class="out-cell"><span class="lbl">04 / Support · phased</span><h3>15 of 31 tickets addressed in phase one</h3><p>I scoped the remaining <strong style="color:var(--ink)">16 issues</strong> across later releases covering CSV upload, saved maps, and exclusions. Ticket deflection and completion are the next things to measure as those phases ship.</p></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="rd-section rd-section--dark">
-      <div class="rd-container">
-        <div class="rd-head rd-reveal" style="max-width:900px"><span class="rd-kicker">Reflection &amp; what's next</span><h2 class="rd-h2">The task-first idea deserved a test, but the compromise was right.</h2><p class="rd-lead">My strongest rejected idea was a task-first entry, where you pick the map, a CSV, or saved locations up front. It would have helped people who arrive with a clear job in mind. Other customers need the map first to get oriented and trust the flow.</p></div>
-        <p class="rd-p rd-reveal" style="color:rgba(255,255,255,.9);max-width:72ch"><strong style="color:#fff">What I'd do with more time:</strong> A/B the task-first entry against the shipped map-first flow, one persona at a time, and track time to first audience, map CS tickets, completion, filtering abandonment, saved-location reuse, and paid-filter conversion.</p>
-        <h3 class="rd-h3 rd-reveal" style="color:#fff;margin-top:clamp(32px,4vw,48px)">Future opportunities</h3>
-        <div class="fut rd-reveal" style="margin-top:18px">
-          <div><b>Audience creation outside automation.</b><p>Build an audience once, save it, and reuse it across automations. It didn't fit the first release, but it's the better architecture, because it narrows the on-screen job to one thing.</p></div>
-          <div><b>Live insight on the map.</b><p>A real structure or household count as you select an area. Today that takes a separate pass on USDA-backed sources. Once the data is self-hosted, the map can show it while you draw.</p></div>
-          <div><b>Paid audience insight.</b><p>The same audience model could carry LettrLabs-owned data, premium filters, and ROI-based recommendations. These are future product directions, not revenue anyone has booked.</p></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="rd-section rd-section--tight">
-      <div class="rd-container">
-        <div class="rd-panel rd-reveal" style="text-align:center;padding:clamp(44px,6vw,80px) clamp(28px,5vw,64px);background:var(--purple)">
-          <span class="rd-kicker" style="color:#e6dbff">Next case study</span>
-          <h2 class="rd-h2" style="color:#fff;margin-top:16px">Reusable integration flow</h2>
-          <p style="color:rgba(255,255,255,.86);max-width:52ch;margin:16px auto 0">One connection pattern for client credentials, validation, and account management, built to hold up across many apps.</p>
-          <div class="rd-hero-actions" style="justify-content:center;margin-top:28px">
-            <a class="rd-btn" style="background:#fff;color:var(--purple)" href="integration-case-study.html">Read it <svg class="arw" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-            <a class="rd-btn rd-btn--outline" href="index.html#work">All work</a>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer class="rd-footer">
-    <div class="rd-container">
-      <div class="rd-footer-top">
-        <a class="rd-brand" href="index.html"><span class="dot"></span>Ivan Jose</a>
-        <nav class="rd-footer-links" aria-label="Footer"><a href="index.html#work">Work</a><a href="index.html#capabilities">Capabilities</a><a href="index.html#approach">Approach</a></nav>
-        <div style="display:flex;gap:10px">
-          <a class="rd-ico" href="https://www.behance.net/ivancreatives" target="_blank" rel="noreferrer" aria-label="Behance"><span class="be">Bē</span></a>
-          <a class="rd-ico" href="https://www.linkedin.com/in/ivancreatives/" target="_blank" rel="noreferrer" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M5.37 3.1A2.37 2.37 0 1 1 5.4 7.84 2.37 2.37 0 0 1 5.37 3.1ZM3.3 9.7h4.14V21H3.3V9.7ZM10.04 9.7H14v1.54h.06c.55-1.04 1.9-2.14 3.9-2.14 4.18 0 4.95 2.75 4.95 6.32V21h-4.13v-4.96c0-1.18-.02-2.7-1.64-2.7-1.65 0-1.9 1.29-1.9 2.62V21h-4.14V9.7Z"/></svg></a>
-        </div>
-      </div>
-      <div class="rd-footer-bottom"><span>© 2026 Ivan Jose · Senior Product Designer</span><a href="mailto:helloivanjose@gmail.com">helloivanjose@gmail.com</a></div>
+    <h3 id="ai-design-system">AI design system</h3>
+    <p>The map has a lot of states. Empty, radius, polygon, county include, ZIP exclude, loading, validation. AI drafted them from the design system's components and the shared Markdown specs, so the drafts stayed in line instead of turning into one-off mocks.</p>
+    <div class="cs-grid-3">
+      <div class="cs-md"><div class="cs-md__file"><span class="dot"></span>component-specs.md</div><div class="cs-md__body"><h4>One source of truth</h4><p>Components, tokens, and rules written once, so every AI-drafted map state used the real components instead of a mock that drifts.</p></div></div>
+      <div class="cs-md"><div class="cs-md__file"><span class="dot"></span>validations-branches.md</div><div class="cs-md__body"><h4>States &amp; logic</h4><p>Relevancy checks, validations, and conditional branches for empty, radius, polygon, and exclusion, all drafted from the same specs.</p></div></div>
+      <div class="cs-md"><div class="cs-md__file"><span class="dot"></span>ux-copy.md</div><div class="cs-md__body"><h4>First-draft copy</h4><p>A machine-readable voice-and-tone reference gave me first-draft UX copy that already sounded like the product.</p></div></div>
     </div>
-  </footer>
 
-  <script>
-    var progress=document.getElementById("progress"),nav=document.getElementById("nav");
-    function ui(){var h=document.documentElement,sc=h.scrollTop||document.body.scrollTop,max=(h.scrollHeight-h.clientHeight)||1;progress.style.width=(sc/max*100)+"%";nav.classList.toggle("is-stuck",sc>16);}
-    window.addEventListener("scroll",ui,{passive:true});ui();
-    var spy=document.getElementById("spy"),links=[].slice.call(spy.querySelectorAll("a")),ids=links.map(function(a){return a.getAttribute("href").slice(1);});
-    var secs=ids.map(function(id){return document.getElementById(id);}).filter(Boolean);
-    var so=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){var i=ids.indexOf(e.target.id);links.forEach(function(l){l.classList.remove("is-active");});if(links[i])links[i].classList.add("is-active");}});},{rootMargin:"-45% 0px -50% 0px"});
-    secs.forEach(function(s){so.observe(s);});
+
+    <h2 id="outcome">Outcome</h2>
+    <p>The real win wasn't a cleaner interface. It was <strong>a workflow that matches how customers actually build audiences</strong>.</p>
+        <div class="cs-outcomes">
+      <ol class="cs-outcomes__list">
+      <li>
+        <span class="cs-outcomes__label">Customer · designed + phased</span>
+        <h4>From one rigid path to a five-entry-point model</h4>
+        <p>The audit and the observed sessions showed 6 steps before anyone drew a single area, with roughly 3 of them repeated for every extra location. I defined search or region selection, CSV upload, saved area, radius, and polygon as one model. Phase one shipped the map-first path and the core targeting controls.</p>
+        <p>Step counts from the UX audit and 20 observed customer sessions.</p>
+      </li>
+      <li>
+        <span class="cs-outcomes__label">Business · shipped</span>
+        <h4>De-risked a revenue-critical path</h4>
+        <p>The redesigned audience builder shipped on the surface behind <strong style="color:var(--ink)">~95% of automations</strong>, the same one serving the <strong style="color:var(--ink)">3 enterprise accounts</strong> that carry <strong style="color:var(--ink)">~75% of revenue</strong>.</p>
+      </li>
+      <li>
+        <span class="cs-outcomes__label">Engineering · defined before build</span>
+        <h4>One interaction model, ready for build</h4>
+        <p>I evaluated <strong style="color:var(--ink)">4 map providers</strong> and specified the interaction model across <strong style="color:var(--ink)">~55 states spanning 13 flows</strong>, with entry methods, calculation states, and failure cases written out for QA.</p>
+      </li>
+      <li>
+        <span class="cs-outcomes__label">Support · phased</span>
+        <h4>15 of 31 tickets addressed in phase one</h4>
+        <p>I scoped the remaining <strong style="color:var(--ink)">16 issues</strong> across later releases covering CSV upload, saved maps, and exclusions. Ticket deflection and completion are the next things to measure as those phases ship.</p>
+      </li>
+      </ol>
+    </div>
+    <div class="cs-scroller" data-cs-scroller><div class="rd-rows rd-reveal-done">
+          <div class="rd-row is-head"><span>Blocker</span><span>Fix</span></div>
+          <div class="rd-row"><div class="k">You had to name the automation before you could add a single location.</div><div class="v">Let people explore and build an audience first, with no unrelated setup gate cutting in.</div></div>
+          <div class="rd-row"><div class="k">Returning users had to rebuild locations they'd already made.</div><div class="v">Saved locations gave repeat users a faster way to pick up earlier work.</div></div>
+          <div class="rd-row"><div class="k">ZIP / county / state targeting only worked through drawing and radius tools.</div><div class="v">Geographic selection now covers ZIP, city, county, state, and wider targeting models.</div></div>
+          <div class="rd-row"><div class="k">Some clicks did nothing, or gave feedback so weak you'd miss it.</div><div class="v">Loading, success, warning, empty, validation, and recovery states replaced the dead-ends, and they read clearly without leaning on color alone.</div></div>
+          <div class="rd-row"><div class="k">People got stuck when they only wanted part of a larger location.</div><div class="v">Inclusion controls shipped in the core path. I specified exclusions for the later refinement phase.</div></div>
+          <div class="rd-row"><div class="k">Filtering was slow enough that the primary path felt broken.</div><div class="v">Engineering sped up filtering so the path stayed usable inside the data constraints we had.</div></div>
+          <div class="rd-row"><div class="k">Support had become part of the setup process.</div><div class="v">The redesign cut that dependency by making the primary path explain itself and stop blocking people.</div></div>
+        </div></div>
+
+    <h2 id="reflection">Reflection</h2>
+    <p>My strongest rejected idea was <strong>a task-first entry</strong>, where you pick the map, a CSV, or saved locations up front. It would have helped people who arrive with a clear job in mind. Other customers need the map first to get oriented and trust the flow.</p>
+    <p class="cs-callout"><strong>What I&rsquo;d do with more time:</strong> A/B the task-first entry against the shipped map-first flow, one persona at a time, and track time to first audience, map CS tickets, completion, filtering abandonment, saved-location reuse, and paid-filter conversion.</p>
+
+    <h2 id="future-update">Future update</h2>
+    <p>One connection pattern for client credentials, validation, and account management, built to hold up across many apps.</p>
+    <h3 id="future-opportunities">Future opportunities</h3>
+    <div class="cs-fut">
+      <div><b>Audience creation outside automation.</b><p>Build an audience once, save it, and reuse it across automations. It didn&rsquo;t fit the first release, but it&rsquo;s the better architecture, because it narrows the on-screen job to one thing.</p></div>
+      <div><b>Live insight on the map.</b><p>A real structure or household count as you select an area. Today that takes a separate pass on USDA-backed sources. Once the data is self-hosted, the map can show it while you draw.</p></div>
+      <div><b>Paid audience insight.</b><p>The same audience model could carry LettrLabs-owned data, premium filters, and ROI-based recommendations. These are future product directions, not revenue anyone has booked.</p></div>
+    </div>
+
+
+  <nav class="cs-prevnext" aria-label="More case studies">
+    <a class="cs-prevnext__card" href="design-system-case-study.html">
+      <span class="cs-prevnext__dir">&larr; Previous</span>
+      <span class="cs-prevnext__title">Design system</span>
+      <span class="cs-prevnext__desc">One source of truth for components, tokens, and the rules that keep them honest.</span>
+    </a>
+    <a class="cs-prevnext__card" href="integration-case-study.html">
+      <span class="cs-prevnext__dir">Next &rarr;</span>
+      <span class="cs-prevnext__title">Reusable integration flow</span>
+      <span class="cs-prevnext__desc">One connection pattern for client credentials, validation, and account management, built to hold up across many apps.</span>
+    </a>
+  </nav>
+  </main>
+</div>
+
+<footer class="marquee-band">
+
+    <h2 class="sr-only">Let&rsquo;s design your product</h2>
+    <p class="sr-only">Product, UI/UX, Web, Wordpress, Marketing Design.</p>
+
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__track">
+          <span class="marquee__item">Let&rsquo;s design your product!</span>
+          <span class="marquee__item">Let&rsquo;s design your product!</span>
+          <span class="marquee__item">Let&rsquo;s design your product!</span>
+          <span class="marquee__item">Let&rsquo;s design your product!</span>
+      </div>
+      <div class="marquee__track">
+          <span class="marquee__item">Let&rsquo;s design your product!</span>
+          <span class="marquee__item">Let&rsquo;s design your product!</span>
+          <span class="marquee__item">Let&rsquo;s design your product!</span>
+          <span class="marquee__item">Let&rsquo;s design your product!</span>
+      </div>
+    </div>
+
+    <div class="marquee marquee--reverse" aria-hidden="true">
+      <div class="marquee__track">
+          <span class="marquee__item">Product | UI/UX | Web | Wordpress | Marketing Design |</span>
+          <span class="marquee__item">Product | UI/UX | Web | Wordpress | Marketing Design |</span>
+          <span class="marquee__item">Product | UI/UX | Web | Wordpress | Marketing Design |</span>
+          <span class="marquee__item">Product | UI/UX | Web | Wordpress | Marketing Design |</span>
+      </div>
+      <div class="marquee__track">
+          <span class="marquee__item">Product | UI/UX | Web | Wordpress | Marketing Design |</span>
+          <span class="marquee__item">Product | UI/UX | Web | Wordpress | Marketing Design |</span>
+          <span class="marquee__item">Product | UI/UX | Web | Wordpress | Marketing Design |</span>
+          <span class="marquee__item">Product | UI/UX | Web | Wordpress | Marketing Design |</span>
+      </div>
+    </div>
+
+  <div class="container footer__bottom">
+    <div class="footer__contact">
+      <div class="footer__social">
+        <a class="icon-btn" href="https://www.linkedin.com/in/ivancreatives" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <svg viewBox="0 0 40 40" aria-hidden="true" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"> <g clip-path="url(#clip0_40000281_14203)"> <path d="M20 0C8.95312 0 0 8.95312 0 20C0 31.0469 8.95312 40 20 40C31.0469 40 40 31.0469 40 20C40 8.95312 31.0469 0 20 0ZM14.4062 28.3672H10.5078V15.8906H14.4062V28.3672ZM12.3516 14.3281H12.3203C10.9062 14.3281 9.99219 13.375 9.99219 12.1641C9.99219 10.9297 10.9375 10 12.375 10C13.8125 10 14.6953 10.9297 14.7266 12.1641C14.7344 13.3672 13.8203 14.3281 12.3516 14.3281ZM30 28.3672H25.5781V21.9141C25.5781 20.2266 24.8906 19.0703 23.3672 19.0703C22.2031 19.0703 21.5547 19.8516 21.2578 20.6016C21.1484 20.8672 21.1641 21.2422 21.1641 21.625V28.3672H16.7812C16.7812 28.3672 16.8359 16.9297 16.7812 15.8906H21.1641V17.8516C21.4219 16.9922 22.8203 15.7734 25.0547 15.7734C27.8281 15.7734 30 17.5703 30 21.4297V28.3672Z" fill="currentColor"/> </g> <defs> <clipPath id="clip0_40000281_14203"> <rect width="40" height="40" fill="white"/> </clipPath> </defs> </svg>
+          </a>
+          <a class="icon-btn" href="https://www.behance.net/ivancreatives" target="_blank" rel="noopener" aria-label="Behance">
+            <svg viewBox="0 0 40 40" aria-hidden="true" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"> <g clip-path="url(#clip0_40000281_14205)"> <path d="M26.8828 19.1016C26.5 18.7734 26.0234 18.6094 25.4609 18.6094C24.8516 18.6094 24.375 18.7812 24.0313 19.1328C23.6953 19.4844 23.4844 19.9531 23.3906 20.5469H27.5078C27.4766 19.9141 27.2578 19.4375 26.8828 19.1016Z" fill="currentColor"/> <path d="M16.7422 20.7891C16.4453 20.6563 16.0391 20.5859 15.5078 20.5781H12.4609V23.875H15.4688C16.0078 23.875 16.4219 23.8047 16.7188 23.6562C17.2656 23.3828 17.5312 22.875 17.5312 22.1172C17.5312 21.4766 17.2656 21.0313 16.7422 20.7891Z" fill="currentColor"/> <path d="M20 0C8.95312 0 0 8.95312 0 20C0 31.0469 8.95312 40 20 40C31.0469 40 40 31.0469 40 20C40 8.95312 31.0469 0 20 0ZM22.7812 14.2422H28.0781V15.7812H22.7812V14.2422ZM19.5859 24.2656C19.3516 24.6484 19.0625 24.9766 18.7109 25.2344C18.3203 25.5391 17.8516 25.7422 17.3125 25.8594C16.7734 25.9688 16.1953 26.0234 15.5625 26.0234H10V13.6641H15.9766C17.4844 13.6875 18.5547 14.125 19.1797 14.9844C19.5547 15.5078 19.7422 16.1406 19.7422 16.875C19.7422 17.625 19.5547 18.2344 19.1719 18.6953C18.9609 18.9531 18.6406 19.1875 18.2266 19.3984C18.8594 19.6328 19.3359 19.9922 19.6562 20.4922C19.9766 20.9922 20.1406 21.5938 20.1406 22.3047C20.1406 23.0234 19.9531 23.6797 19.5859 24.2656ZM30 22.125H23.3438C23.3828 23.0391 23.6953 23.6875 24.2969 24.0547C24.6641 24.2812 25.1016 24.3984 25.6172 24.3984C26.1562 24.3984 26.6016 24.2578 26.9453 23.9766C27.1328 23.8281 27.2969 23.6172 27.4375 23.3438H29.875C29.8125 23.8828 29.5156 24.4375 28.9922 25C28.1719 25.8906 27.0312 26.3359 25.5547 26.3359C24.3359 26.3359 23.2656 25.9609 22.3359 25.2109C21.4062 24.4609 20.9375 23.2422 20.9375 21.5547C20.9375 19.9688 21.3594 18.7578 22.1953 17.9141C23.0391 17.0703 24.125 16.6484 25.4609 16.6484C26.2578 16.6484 26.9766 16.7891 27.6094 17.0781C28.25 17.3594 28.7734 17.8125 29.1875 18.4297C29.5625 18.9688 29.8047 19.6016 29.9141 20.3203C29.9844 20.7344 30.0078 21.3359 30 22.125Z" fill="currentColor"/> <path d="M16.7812 18.2266C17.1172 18.0234 17.2812 17.6562 17.2812 17.1406C17.2812 16.5625 17.0625 16.1875 16.6172 16C16.2344 15.875 15.75 15.8047 15.1562 15.8047H12.4688V18.5312H15.4687C16.0078 18.5391 16.4375 18.4375 16.7812 18.2266Z" fill="currentColor"/> </g> <defs> <clipPath id="clip0_40000281_14205"> <rect width="40" height="40" fill="white"/> </clipPath> </defs> </svg>
+          </a>
+          <a class="icon-btn" href="https://wa.me/639679223947" data-copy="+639679223947" data-copy-toast="Number copied" target="_blank" rel="noopener" aria-label="WhatsApp">
+            <svg viewBox="0 0 40 40" aria-hidden="true" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"> <g clip-path="url(#clip0_40000281_14211)"> <path fill-rule="evenodd" clip-rule="evenodd" d="M31.642 28.2422C31.16 29.6066 29.244 30.7353 27.716 31.0654C26.67 31.2875 25.306 31.4632 20.71 29.5586C15.548 27.42 8.38 19.8019 8.38 14.7324C8.38 12.1516 9.868 9.14648 12.47 9.14648C13.722 9.14648 13.998 9.1709 14.41 10.1592C14.892 11.3235 16.068 14.1922 16.208 14.4863C16.786 15.6927 15.62 16.3989 14.774 17.4492C14.504 17.7653 14.198 18.1072 14.54 18.6953C14.88 19.2715 16.056 21.1881 17.784 22.7266C20.016 24.7152 21.826 25.35 22.474 25.6201C22.956 25.8202 23.532 25.7736 23.884 25.3975C24.33 24.9153 24.884 24.1154 25.448 23.3271C25.846 22.763 26.352 22.6925 26.882 22.8926C27.24 23.0166 31.79 25.1297 31.982 25.4678C32.124 25.7139 32.124 26.8778 31.642 28.2422ZM20.004 0H19.994C8.96799 0 0 8.9707 0 20C0 24.3733 1.41001 28.4307 3.80801 31.7217L1.31601 39.1533L9.00201 36.6973C12.164 38.7899 15.938 40 20.004 40C31.03 40 40 31.0293 40 20C40 8.9707 31.03 0 20.004 0Z" fill="currentColor"/> </g> <defs> <clipPath id="clip0_40000281_14211"> <rect width="40" height="40" fill="white"/> </clipPath> </defs> </svg>
+          </a>
+      </div>
+      <a class="t-p-medium footer__email" href="mailto:helloivanjose@gmail.com"
+         data-copy="helloivanjose@gmail.com" data-copy-toast="Email copied">helloivanjose@gmail.com</a>
+    </div>
+    <p class="t-p-small footer__copy">&copy; Designed by Ivan Jose</p>
+  </div>
+</footer>
+
+<script src="v3/v3.js?v=79"></script>
+<!-- Carried over from the previous build: drives the before/after slider,
+     the persona filter carousel and the reveal states. -->
+<script>
+    /* The previous build's progress bar, sticky-nav and scroll-spy were
+       removed here: #progress, #nav and #spy no longer exist, and
+       case-study.js owns the nav state and contents highlighting now. */
+
     var reduced=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if(!reduced){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target);}});},{threshold:.12});document.querySelectorAll(".rd-reveal:not(.in)").forEach(function(n){io.observe(n);});}
     else{document.querySelectorAll(".rd-reveal").forEach(function(n){n.classList.add("in");});}
@@ -455,16 +480,22 @@
     /* product-strategy video carousel: persona filter + timer auto-next */
     (function(){var root=document.getElementById("refine-carousel");if(!root)return;var track=root.querySelector(".refine-track");var slides=[].slice.call(root.querySelectorAll(".refine-slide"));var items=[].slice.call(root.querySelectorAll(".refine-item"));var badges=[].slice.call(root.querySelectorAll(".refine-persona"));if(!track||slides.length!==items.length)return;var personaOf=items.map(function(it){return it.getAttribute("data-persona");});var activePersona=badges.length?badges[0].getAttribute("data-persona"):null;var index=0;function setBar(n,pct){var bar=items[n]&&items[n].querySelector(".refine-item-bar i");if(bar)bar.style.width=pct+"%";}function listFor(p){var out=[];personaOf.forEach(function(x,i){if(x===p)out.push(i);});return out;}function go(i){index=(i+slides.length)%slides.length;activePersona=personaOf[index]||activePersona;track.style.transform="translateX(-"+(index*100)+"%)";badges.forEach(function(b){var a=b.getAttribute("data-persona")===activePersona;b.classList.toggle("is-active",a);b.setAttribute("aria-selected",a?"true":"false");});items.forEach(function(item,n){item.classList.toggle("is-hidden",personaOf[n]!==activePersona);var a=n===index;item.classList.toggle("is-active",a);if(!a)setBar(n,0);});slides.forEach(function(s,n){var v=s.querySelector("video");if(!v)return;if(n===index){try{v.currentTime=0;}catch(e){}var pr=v.play();if(pr&&pr.catch)pr.catch(function(){});}else{v.pause();}});}function step(dir){var list=listFor(activePersona);var pos=list.indexOf(index);if(pos===-1){if(list.length)go(list[0]);return;}go(list[(pos+dir+list.length)%list.length]);}slides.forEach(function(s,n){var v=s.querySelector("video");if(!v)return;v.addEventListener("timeupdate",function(){if(n===index&&v.duration)setBar(n,(v.currentTime/v.duration)*100);});v.addEventListener("ended",function(){if(n===index)step(1);});});items.forEach(function(item,n){item.addEventListener("click",function(){go(n);});});badges.forEach(function(b){b.addEventListener("click",function(){var list=listFor(b.getAttribute("data-persona"));if(list.length)go(list[0]);});});var pv=root.querySelector(".refine-arrow.prev"),nx=root.querySelector(".refine-arrow.next");if(pv)pv.addEventListener("click",function(){step(-1);});if(nx)nx.addEventListener("click",function(){step(1);});var f=listFor(activePersona);go(f.length?f[0]:0);})();
   </script>
-  <script>
-    (function(){
-      (function(){var pending=[].slice.call(document.querySelectorAll(".case-live[data-src]"));if(!pending.length)return;function reveal(){var vh=window.innerHeight||document.documentElement.clientHeight;pending=pending.filter(function(f){var box=f.parentElement||f,r=box.getBoundingClientRect();if(r.top<vh+800&&r.bottom>-800){f.src=f.dataset.src;return false;}return true;});if(!pending.length){window.removeEventListener("scroll",onS);window.removeEventListener("resize",onS);}}var t;function onS(){if(t)return;t=setTimeout(function(){t=0;reveal();},120);}window.addEventListener("scroll",onS,{passive:true});window.addEventListener("resize",onS,{passive:true});reveal();})();
-      function fit(){document.querySelectorAll(".case-live").forEach(function(f){try{var c=f.parentElement;if(!c)return;var cw=c.clientWidth,ch=c.clientHeight,natW=+(f.dataset.w||1280),natH=+(f.dataset.h||720);f.style.width=natW+"px";f.style.height=natH+"px";var s=Math.min(cw/natW,ch/natH);f.style.transform="translate(-50%,-50%) scale("+s.toFixed(3)+")";}catch(e){}});}
-      fit();
-      document.querySelectorAll("iframe.case-hover").forEach(function(f){var card=f.closest(".rd-frame")||f.parentElement;if(!card)return;var base=(f.getAttribute("src")||f.dataset.src||"").split("#")[0];var pp=f.dataset.playParam||"play";var playSrc=base+(base.indexOf("?")>=0?"&":"?")+pp+"=1";var swapOnly=f.dataset.playMode==="swap";var fileMode=location.protocol==="file:";var st="";var set=function(m){if(st===m)return;st=m;if(fileMode||swapOnly){f.src=(m==="play"?playSrc:base);return;}try{f.contentWindow.postMessage(m==="play"?"play":"stop","*");}catch(e){f.src=(m==="play"?playSrc:base);}};card.addEventListener("mouseenter",function(){set("play");});card.addEventListener("mouseleave",function(){set("stop");});card.addEventListener("focusin",function(){set("play");});card.addEventListener("focusout",function(){set("stop");});});
-      window.addEventListener("resize",fit);window.addEventListener("load",fit);var n=0,iv=setInterval(function(){fit();if(++n>14)clearInterval(iv);},300);
-    })();
-  </script>
-  <script defer src="carousel-swipe.js?v=7"></script>
-  <script defer src="scroll-hint.js?v=1"></script>
+<script src="carousel-swipe.js?v=79"></script>
+<script src="case-study.js?v=79"></script>
+
+<!-- Shared image lightbox: click any content image to see it larger -->
+<div class="cs-lightbox" id="cs-lightbox" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-label="Enlarged image">
+  <div class="cs-lightbox__shell">
+    <button class="cs-lightbox__close" id="cs-lightbox-close" type="button" aria-label="Close">&times;</button>
+    <figure class="cs-lightbox__media">
+      <img id="cs-lightbox-image" src="" alt="">
+      <video id="cs-lightbox-video" hidden muted loop playsinline controls></video>
+      <figcaption class="cs-lightbox__caption">
+        <strong id="cs-lightbox-title"></strong>
+        <span id="cs-lightbox-text"></span>
+      </figcaption>
+    </figure>
+  </div>
+</div>
 </body>
 </html>

@@ -1,0 +1,93 @@
+/* ============================================================================
+   v3 BRIDGE #2 — for the case studies built on style.css + redesign-system.css
+   --------------------------------------------------------------------------
+   Load order:  v3/tokens.css -> style.css -> redesign-system.css -> THIS FILE
+                -> v3/v3.css -> case-study.css
+   --------------------------------------------------------------------------
+   Same technique as v3-bridge.css: those two stylesheets expose their whole
+   visual language through a couple of :root blocks, so remapping the names
+   onto v3 tokens restyles four pages without touching their rules or the
+   36-82KB of per-page inline component CSS that carries their designs.
+
+   Nothing here invents a colour. Every value resolves to a v3 token.
+   ============================================================================ */
+
+:root {
+  /* ---------- Surfaces ----------
+     style.css uses --bg for the page and --surface for cards. v3 splits those
+     the same way: page = bg-main, cards = bg-white. */
+  --bg:        var(--bg-main);
+  --surface:   var(--bg-white);
+  --surface-2: var(--bg-main);
+
+  /* ---------- Text ---------- */
+  --text:  var(--text-secondary);
+  --muted: var(--text-tertiary);
+  --ink:   var(--text-main);
+
+  /* ---------- Lines ---------- */
+  --line: var(--stroke-main);
+  --hair: var(--stroke-main);
+
+  /* ---------- Accent ----------
+     Both sheets funnel their accent through --blue (warm red in style.css,
+     purple in redesign-system.css). Point it at the v3 accent. */
+  --blue:      var(--text-accent-2);
+  --blue-2:    var(--text-accent-1);
+  --blue-soft: color-mix(in srgb, var(--text-accent-2) 10%, transparent);
+
+  /* ---------- redesign-system.css's own namespace ---------- */
+  --rd-purple:      var(--text-accent-2);
+  --rd-purple-2:    var(--text-accent-1);
+  --rd-bright:      var(--text-accent-2);
+  --rd-bright-text: var(--text-accent-2);
+  --rd-lav:         color-mix(in srgb, var(--text-accent-2) 35%, var(--bg-white));
+  --rd-lav-bg:      color-mix(in srgb, var(--text-accent-2) 8%, var(--bg-white));
+  --rd-ink:         var(--text-main);
+  --rd-dark:        var(--bg-accent-2);
+  --rd-dark-2:      color-mix(in srgb, var(--bg-accent-2) 92%, var(--bg-white));
+  --rd-dline:       color-mix(in srgb, var(--text-invert) 18%, transparent);
+
+  /* ---------- Radius: the v3 ladder, not a separate 12px scale ---------- */
+  --radius-xl:      var(--radius-xlarge);
+  --radius-lg:      var(--radius-large);
+  --radius-md:      var(--radius-medium);
+  --surface-radius: var(--radius-large);
+  --surface-border: var(--cs-rule, 1px) solid var(--stroke-main);
+
+  /* ---------- Effects: v3 is flat, so drop the warm drop-shadows ---------- */
+  --shadow:         none;
+  --surface-shadow: none;
+
+  /* Deliberately NOT changed: --max and --rd-ease. The page inset now comes
+     from --page-gutter on the layout, and the easing is motion the per-page
+     carousels are tuned against. */
+}
+
+/* The page ground is the v3 page colour; cards keep --surface (white). */
+.v3 body { background: var(--bg-main); color: var(--text-secondary); }
+
+/* style.css centres its own .container at --max with its own padding. Inside
+   the reading column that would double up on .cs-content's inset, so let the
+   carried-over markup run the full column width. */
+.cs-content .container {
+  max-width: none;
+  width: 100%;
+  margin-inline: 0;
+  padding-inline: 0;
+}
+
+/* Typeface: both sheets set their own stacks on body and headings. */
+.v3 body,
+.cs-content .container,
+.cs-content p,
+.cs-content li,
+.cs-content span,
+.cs-content small,
+.cs-content strong,
+.cs-content td,
+.cs-content th { font-family: var(--font-body); }
+.cs-content h2,
+.cs-content h3,
+.cs-content h4,
+.cs-content h5 { font-family: var(--font-display); }

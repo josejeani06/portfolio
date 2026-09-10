@@ -1,0 +1,3438 @@
+/* ============================================================================
+   CRITICAL: redesign.css sets `overflow-x: hidden` on body and v3.css sets it
+   on html. Either one makes an ancestor a scroll container, which silently
+   breaks `position: sticky` for the contents rail. `clip` gives the same
+   overflow protection WITHOUT establishing a scroll container.
+   ============================================================================ */
+html.v3 { overflow-x: clip; }
+.v3 body { overflow-x: clip; }
+
+/* ============================================================================
+   CASE STUDY — v3 blog layout
+   Built on v3 tokens. Nav goes light over the dark banner and solid after it,
+   then a sticky contents rail beside a single reading column.
+   ============================================================================ */
+
+/* ---------- Nav ---------- */
+.cs-nav {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 60;
+  height: var(--nav-height);
+  transition: background-color .3s ease, border-color .3s ease;
+  border-bottom: var(--cs-rule) solid transparent;
+}
+.cs-nav__inner {
+  height: var(--nav-height);
+  max-width: calc(var(--cs-toc-w) + var(--cs-read-w) + var(--space-xlarge) + var(--gutter) * 2);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+  display: flex;
+  align-items: center;
+  gap: var(--gap-xlarge);
+}
+.cs-nav .nav__logo { margin-right: auto; }
+.cs-nav__links { display: flex; gap: var(--gap-large); }
+.cs-nav__link {
+  font-family: var(--font-body);
+  font-size: var(--fs-p-medium);
+  color: inherit;
+  padding-block: var(--space-small);
+}
+.cs-nav__link:hover { text-decoration: underline; text-underline-offset: 0.25em; }
+
+/* Over the dark banner */
+.cs-nav { color: var(--text-invert); }
+.cs-nav .nav__logo { color: var(--text-invert); }
+.cs-nav .cs-nav__cta { background: var(--bg-white); color: var(--text-accent-1); }
+
+/* Past the banner: solid surface, dark text */
+.cs-nav.is-solid {
+  background: var(--bg-main-veil);
+  -webkit-backdrop-filter: blur(var(--cs-veil-blur));
+  backdrop-filter: blur(var(--cs-veil-blur));
+  border-bottom-color: var(--stroke-main);
+  color: var(--text-main);
+}
+.cs-nav.is-solid .nav__logo { color: var(--text-main); }
+.cs-nav.is-solid .cs-nav__cta { background: var(--bg-accent-2); color: var(--text-invert); }
+
+@media (max-width: 1023px) { .cs-nav__links { display: none; } }
+
+/* ---------- Green banner: height hugs its content ---------- */
+.cs-banner {
+  background: var(--bg-accent-3);
+  color: var(--text-invert);
+  padding-block: calc(var(--nav-height) + var(--margin-large)) var(--margin-large);
+}
+.cs-banner__inner {
+  max-width: calc(var(--cs-toc-w) + var(--cs-read-w) + var(--space-xlarge) + var(--gutter) * 2);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+  position: relative;
+}
+.cs-banner__title {
+  font-family: var(--font-display);
+  font-size: var(--fs-display-large);
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 0;
+  color: var(--text-invert);
+  margin: 0;
+}
+.cs-banner__lead {
+  font-family: var(--font-body);
+  font-size: var(--fs-p-large);
+  line-height: 1.55;
+  color: var(--text-invert);
+  margin: var(--gap-large) 0 0;
+  max-width: 90ch;
+}
+.cs-hl { color: var(--text-accent-3); }
+.cs-banner__cta { position: absolute; top: 0; right: var(--gutter); }
+
+/* Role / outcome / timeline / process */
+.cs-meta {
+  margin: var(--margin-medium) 0 0;
+  padding-top: var(--padding-xlarge);
+  border-top: var(--cs-rule) solid color-mix(in srgb, var(--text-invert) 28%, transparent);
+  display: grid;
+  gap: var(--gap-medium);
+}
+.cs-meta__row {
+  display: grid;
+  grid-template-columns: minmax(0, var(--cs-label-w)) minmax(0, 1fr);
+  gap: var(--gap-large);
+  align-items: baseline;
+}
+.cs-meta__label {
+  font-family: var(--font-body);
+  font-size: var(--fs-p-medium);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: color-mix(in srgb, var(--text-invert) 62%, transparent);
+  margin: 0;
+}
+.cs-meta__value {
+  font-family: var(--font-body);
+  font-size: var(--fs-p-medium);
+  color: var(--text-invert);
+  margin: 0;
+}
+
+/* ---------- Before / after band ---------- */
+.cs-ba { padding-block: var(--margin-large); background: var(--bg-main); }
+.cs-ba__inner {
+  max-width: calc(var(--cs-toc-w) + var(--cs-read-w) + var(--space-xlarge) + var(--gutter) * 2);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* ---------- Two-column layout ---------- */
+:root {
+  /* Spec'd component dimensions for this page — named, not scattered inline.
+     Everything else comes off the v3 ladders. */
+  --cs-toc-w:      400px;   /* contents rail */
+  --cs-read-w:    1200px;   /* reading column */
+  --cs-toc-h:      600px;   /* rail height, clipped and scrollable */
+  --cs-label-w:    220px;   /* banner meta label column */
+  --cs-rule:         1px;   /* hairline stroke */
+  --cs-marker:       2px;   /* active/quote indicator bar */
+  --cs-veil-blur:   18px;   /* matches the v3 nav blur */
+  --cs-card-min:   220px;   /* min track for the mental-model cards */
+}
+
+.cs-layout {
+  max-width: calc(var(--cs-toc-w) + var(--cs-read-w) + var(--space-xlarge) + var(--gutter) * 2);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+  padding-bottom: var(--margin-large);
+  background: var(--bg-main);
+}
+
+@media (min-width: 1024px) {
+  .cs-layout {
+    display: grid;
+    grid-template-columns: var(--cs-toc-w) minmax(0, 1fr);
+    gap: var(--space-xlarge);
+    align-items: start;
+  }
+}
+
+/* ---------- Sticky contents ---------- */
+.cs-toc {
+  position: sticky;
+  top: calc(var(--nav-height) + var(--space-large));
+  height: var(--cs-toc-h);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  padding: var(--padding-large);
+  border: var(--cs-rule) solid var(--stroke-main);
+  border-radius: var(--radius-large);
+  background: var(--bg-main);
+  /* A full-width coloured band will always travel past a sticky rail, so the
+     rail sits above it on its own surface rather than trying to avoid it. */
+  z-index: 30;
+  box-shadow: var(--floating-shadow);
+}
+.cs-toc__title {
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  color: var(--text-main);
+  margin: 0 0 var(--gap-medium);
+}
+.cs-toc ol { list-style: none; margin: 0; padding: 0; }
+.cs-toc__group {
+  font-family: var(--font-body);
+  font-size: var(--fs-p-small);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+  margin: var(--gap-medium) 0 var(--space-small);
+  padding-top: var(--space-small);
+  border-top: var(--cs-rule) solid var(--stroke-main);
+}
+.cs-toc__group:first-of-type { margin-top: 0; padding-top: 0; border-top: 0; }
+.cs-toc a {
+  display: block;
+  font-family: var(--font-body);
+  font-size: var(--fs-p-medium);
+  color: var(--text-secondary);
+  padding: var(--space-small) 0 var(--space-small) var(--padding-medium);
+  border-left: var(--cs-marker) solid transparent;
+  transition: color .18s ease, border-color .18s ease;
+}
+.cs-toc a:hover { color: var(--text-main); }
+.cs-toc a.is-active {
+  color: var(--text-accent-2);
+  border-left-color: var(--text-accent-2);
+}
+
+@media (max-width: 1023px) {
+  .cs-toc { position: static; height: auto; max-height: 340px; margin-bottom: var(--margin-medium); }
+}
+
+/* ---------- Reading column: top-to-bottom blog rhythm ---------- */
+.cs-content { min-width: 0; }
+.cs-content h2 {
+  font-family: var(--font-display);
+  font-size: var(--fs-h2);
+  font-weight: 400;
+  line-height: normal;
+  color: var(--text-main);
+  margin: var(--margin-large) 0 var(--gap-large);
+  scroll-margin-top: calc(var(--nav-height) + var(--space-large));
+}
+.cs-content > h2:first-child { margin-top: 0; }
+.cs-content h3 {
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  font-weight: 400;
+  line-height: normal;
+  color: var(--text-main);
+  margin: var(--margin-medium) 0 var(--gap-small);
+  scroll-margin-top: calc(var(--nav-height) + var(--space-large));
+}
+.cs-content p {
+  font-family: var(--font-body);
+  font-size: var(--fs-p-medium);
+  line-height: 1.65;
+  color: var(--text-secondary);
+  margin: 0 0 var(--gap-medium);
+  max-width: none;                               /* full column width */
+}
+.cs-content > *:not(h2):not(h3):not(p) { margin-block: var(--margin-medium); }
+
+/* ---------- Figures ---------- */
+.cs-figure { margin: var(--margin-medium) 0; }
+.cs-figure img {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-large);
+  border: var(--cs-rule) solid var(--stroke-main);
+}
+.cs-figure figcaption {
+  font-family: var(--font-body);
+  font-size: var(--fs-p-small);
+  color: var(--text-secondary);
+  margin-top: var(--gap-small);
+}
+
+/* ---------- Four mental models ---------- */
+.cs-models {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(var(--cs-card-min), 1fr));
+  gap: var(--gap-large);
+}
+.cs-model {
+  padding: var(--padding-large);
+  border: var(--cs-rule) solid var(--stroke-main);
+  border-radius: var(--radius-large);
+  background: var(--bg-main);
+}
+.cs-model__name {
+  font-family: var(--font-display);
+  font-size: var(--fs-p-large);
+  font-weight: 400;
+  color: var(--text-main);
+  margin: 0 0 var(--gap-small);
+}
+.cs-model__desc {
+  font-family: var(--font-body);
+  font-size: var(--fs-p-small);
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* ---------- Stakeholder views, business one highlighted ---------- */
+.cs-views { display: grid; gap: var(--gap-medium); }
+.cs-view {
+  padding: var(--padding-large);
+  border-left: var(--cs-marker) solid var(--stroke-main);
+}
+.cs-view__who {
+  font-family: var(--font-body);
+  font-size: var(--fs-p-small);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+  margin: 0 0 var(--gap-small);
+}
+.cs-view__what {
+  font-family: var(--font-body);
+  font-size: var(--fs-p-medium);
+  color: var(--text-secondary);
+  margin: 0;
+}
+.cs-view.is-highlight {
+  border-left-color: var(--text-accent-2);
+  background: color-mix(in srgb, var(--text-accent-2) 7%, var(--bg-white));
+  border-radius: 0 var(--radius-medium) var(--radius-medium) 0;
+}
+.cs-view.is-highlight .cs-view__who { color: var(--text-accent-2); }
+.cs-view.is-highlight .cs-view__what { color: var(--text-main); }
+
+/* ---------- Content from the previous build must not start hidden ----------
+   Those blocks were authored with an opacity-0 reveal class driven by JS this
+   page does not load, so they are pinned visible here. */
+.cs-content [class*="rd-reveal"],
+.cs-ba [class*="rd-reveal"] {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* ============================================================================
+   Full-bleed escape for wide interactive blocks
+   The persona carousel and the live prototype frame were authored against a
+   full-width section. Inside the reading column their internal layout breaks,
+   so they break out to the layout width instead of being squeezed.
+   ============================================================================ */
+.cs-content .rd-frame { overflow: hidden; border-radius: var(--radius-large); }
+
+/* ============================================================================
+   Dark panel — for blocks whose design was authored on a dark surface
+   ============================================================================ */
+.cs-card--dark {
+  background: var(--bg-accent-2);
+  color: var(--text-invert);
+  padding: var(--padding-xlarge);
+  border-radius: var(--radius-large);
+  margin-block: var(--margin-medium);
+}
+.cs-card--dark p,
+.cs-card--dark h4 { color: var(--text-invert); }
+
+/* ============================================================================
+   Media, tables and text width
+   ============================================================================ */
+
+/* Text uses the whole column and is never clamped */
+.cs-content p,
+.cs-content li,
+.cs-toc a {
+  max-width: none;
+  overflow: visible;
+  -webkit-line-clamp: none;
+  display: block;
+}
+
+
+/* Figures get a sane, consistent height */
+.cs-figure img {
+  max-height: 560px;
+  object-fit: cover;
+  object-position: top center;
+}
+.cs-content .rd-frame { max-height: 620px; overflow: hidden; }
+.cs-content .rd-frame img,
+.cs-content .rd-frame iframe { width: 100%; height: 100%; object-fit: cover; }
+
+/* ---------- Tables ---------- */
+.cs-content .rd-rows,
+.cs-content .rd-compare {
+  width: 100%;
+  border: var(--cs-rule) solid var(--stroke-main);
+  border-radius: var(--radius-large);
+  background: var(--bg-white);
+  overflow: hidden;
+}
+.cs-content .rd-row,
+.cs-content .rd-crow {
+  border-top: var(--cs-rule) solid var(--stroke-main);
+  padding: var(--padding-large);
+  gap: var(--gap-large);
+  align-items: start;
+}
+.cs-content .rd-row:first-child,
+.cs-content .rd-crow:first-child { border-top: 0; }
+.cs-content .rd-row.is-head,
+.cs-content .rd-crow.is-head {
+  background: var(--bg-main);
+  padding-block: var(--padding-medium);
+  font-family: var(--font-body);
+  font-size: var(--fs-p-small);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+}
+.cs-content .rd-row > *,
+.cs-content .rd-crow > * {
+  font-family: var(--font-body);
+  font-size: var(--fs-p-medium);
+  line-height: 1.55;
+  color: var(--text-secondary);
+  max-width: none;
+}
+.cs-content .rd-row > *:first-child,
+.cs-content .rd-crow > *:first-child { color: var(--text-main); }
+
+/* ============================================================================
+   Tables authored for dark sections must not keep their dark rows on a light
+   page — the container was light while every row stayed near-black.
+   ============================================================================ */
+.cs-content .rd-row,
+.cs-content .rd-crow,
+.cs-content .rd-rows > *,
+.cs-content .rd-compare > * {
+  background: transparent !important;
+  color: var(--text-secondary);
+}
+.cs-content .rd-row.is-head,
+.cs-content .rd-crow.is-head { background: var(--bg-main) !important; }
+.cs-content .rd-rows b,
+.cs-content .rd-rows strong,
+.cs-content .rd-compare b,
+.cs-content .rd-compare strong { color: var(--text-main); }
+
+/* ============================================================================
+   Colored bands run the full viewport width
+   The TOC is an addition to the reading column, not a reason to box in a
+   coloured section — so these break out of the grid to the screen edges.
+   ============================================================================ */
+/* The carousel keeps a dark card because its styles were authored on a dark
+   ground; the page itself stays a plain bg-main throughout. */
+.cs-card--dark {
+  background: var(--bg-accent-2);
+  color: var(--text-invert);
+  padding: var(--padding-xlarge);
+  border-radius: var(--radius-large);
+  margin-block: var(--margin-medium);
+  overflow: hidden;
+}
+
+/* Copy inside the dark card */
+.cs-card--dark h2,
+.cs-card--dark h3,
+.cs-card--dark h4 { color: var(--text-invert); }
+.cs-card--dark p { color: color-mix(in srgb, var(--text-invert) 82%, transparent); }
+.cs-card--dark strong,
+.cs-card--dark b { color: var(--text-invert); }
+
+/* Tables sitting on a dark band keep a light card so they stay readable */
+.cs-card--dark .rd-rows,
+.cs-card--dark .rd-compare {
+  background: color-mix(in srgb, var(--text-invert) 6%, transparent);
+  border-color: color-mix(in srgb, var(--text-invert) 16%, transparent);
+}
+.cs-card--dark .rd-row,
+.cs-card--dark .rd-crow { border-color: color-mix(in srgb, var(--text-invert) 12%, transparent); }
+.cs-card--dark .rd-row > *,
+.cs-card--dark .rd-crow > * { color: color-mix(in srgb, var(--text-invert) 82%, transparent); }
+.cs-card--dark .rd-row.is-head,
+.cs-card--dark .rd-crow.is-head {
+  background: color-mix(in srgb, var(--text-invert) 8%, transparent) !important;
+  color: color-mix(in srgb, var(--text-invert) 70%, transparent);
+}
+
+/* Mental-model cards on a dark band */
+.cs-card--dark .cs-model {
+  background: color-mix(in srgb, var(--text-invert) 6%, transparent);
+  border-color: color-mix(in srgb, var(--text-invert) 16%, transparent);
+}
+
+/* ---------- Persona carousel: original CSS, verbatim ----------
+   Colours arrive via --d-bg / --d-line / --purple / --bright, which
+   v3-bridge.css already maps onto v3 tokens. Hand-substituting those
+   is what broke this the first time, so nothing is rewritten here. */
+.cs-card--dark .refine-carousel { margin-top:14px;display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:14px 36px;align-items:start }
+.cs-card--dark .refine-viewport { position:relative;overflow:hidden;border-radius:16px }
+.cs-card--dark .refine-track { display:flex;transition:transform .45s cubic-bezier(.2,1,.22,1) }
+.cs-card--dark .refine-slide { min-width:100% }
+.cs-card--dark .refine-slide .vid-frame { aspect-ratio:1/1;width:100%;margin:0;border-radius:16px;overflow:hidden;border:1px solid var(--d-line);background:#0f0a1e }
+.cs-card--dark .refine-slide .vid-media { width:100%;height:100%;object-fit:cover;display:block }
+.cs-card--dark .refine-controls { display:flex;flex-direction:column;gap:10px }
+.cs-card--dark .refine-item { position:relative;overflow:hidden;appearance:none;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:5px;padding:16px 18px 18px;border:1px solid rgba(255,255,255,.14);border-radius:14px;background:transparent;transition:background .2s ease,border-color .2s ease }
+.cs-card--dark .refine-item:hover { border-color:rgba(158,110,229,.5) }
+.cs-card--dark .refine-item.is-active { background:rgba(255,255,255,.06);border-color:rgba(158,110,229,.55) }
+.cs-card--dark .refine-item-persona { font-family:var(--font-display);font-size:var(--xs);font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#9e6ee5 }
+.cs-card--dark .refine-item-title { font-family:var(--font-display);font-size:var(--h3);font-weight:600;color:#fff;line-height:1.14 }
+.cs-card--dark .refine-item-desc { font-size:var(--sm);line-height:1.5;color:rgba(255,255,255,.74) }
+.cs-card--dark .refine-item-bar { position:absolute;left:0;bottom:0;height:3px;width:100%;background:transparent }
+.cs-card--dark .refine-item.is-active .refine-item-bar { background:rgba(158,110,229,.22) }
+.cs-card--dark .refine-item-bar i { display:block;height:100%;width:0;background:#9e6ee5;transition:width .12s linear }
+.cs-card--dark .refine-personas { grid-column:1 / -1;display:flex;flex-wrap:wrap;gap:10px;margin-bottom:6px }
+.cs-card--dark .refine-persona { appearance:none;border:1px solid rgba(255,255,255,.2);background:transparent;color:rgba(255,255,255,.72);border-radius:999px;padding:9px 16px;font-family:inherit;font-weight:600;font-size:var(--sm);cursor:pointer;transition:all .2s ease }
+.cs-card--dark .refine-persona:hover { border-color:#9e6ee5;color:#fff }
+.cs-card--dark .refine-persona.is-active { background:var(--purple);border-color:var(--purple);color:#fff }
+.cs-card--dark .refine-item.is-hidden { display:none }
+.cs-card--dark .refine-arrow { position:absolute;bottom:14px;z-index:2;width:40px;height:40px;border-radius:50%;border:0;background:rgba(34,24,54,.82);color:#fff;display:grid;place-items:center;cursor:pointer }
+.cs-card--dark .refine-arrow svg { width:18px;height:18px }
+.cs-card--dark .refine-arrow.prev { left:14px }
+.cs-card--dark .refine-arrow.next { left:62px }
+@media(max-width:900px) {
+  .cs-card--dark .refine-carousel { grid-template-columns:1fr;gap:22px }
+}
+
+/* Cap the 1:1 media so it cannot run to 1100px inside this column */
+.cs-card--dark .refine-viewport { max-height: 620px; }
+.cs-card--dark .refine-slide .vid-frame { max-height: 620px; }
+
+/* ============================================================================
+   PASS 2 — heading colour ramp, group rhythm, one page max-width,
+   uncropped figures, deterministic table grids, and the restored components.
+   Appended rather than merged: region-replacing this file has silently eaten
+   the verbatim carousel rules three times.
+   ============================================================================ */
+
+/* ---------- One max-width for every page (landing included) ---------- */
+.cs-layout,
+.cs-nav__inner,
+.cs-banner__inner {
+  max-width: calc(var(--container-max) + var(--gutter) * 2);
+}
+.cs-layout { grid-template-columns: var(--cs-toc-w) minmax(0, 1fr); }
+
+/* ---------- Colour ramp: h2 main, h3 secondary, copy tertiary ---------- */
+.cs-content h2 { color: var(--text-main); }
+.cs-content h3 { color: var(--text-secondary); }
+.cs-content p,
+.cs-content li,
+.cs-content .cs-fut p,
+.cs-content .cs-card p,
+.cs-content .cs-out__cell p { color: var(--text-tertiary); }
+
+/* Normal running text is p-large */
+.cs-content p,
+.cs-content li { font-size: var(--fs-p-large); }
+
+/* ---------- Group rhythm: 80px between H2 groups, 40px from H2 to its H3 --- */
+.cs-content h2 {
+  margin-top: var(--margin-group);
+  margin-bottom: var(--margin-medium);
+}
+.cs-content > h2:first-child { margin-top: 0; }
+.cs-content h3 {
+  margin-top: var(--margin-medium);
+  margin-bottom: var(--gap-small);
+}
+.cs-content h2 + h3 { margin-top: 0; }   /* the 40px already came from the h2 */
+
+/* ---------- Figures are never cropped ---------- */
+.cs-figure img {
+  max-height: none;
+  height: auto;
+  object-fit: contain;
+}
+.cs-content .rd-frame { max-height: none; }
+.cs-content .rd-frame img { height: auto; object-fit: contain; }
+
+/* ---------- Tables: white, and heads share their body's grid exactly -------- */
+.cs-content .rd-rows,
+.cs-content .rd-compare { background: var(--bg-white); }
+.cs-content .rd-row.is-head,
+.cs-content .rd-crow.is-head {
+  background: var(--bg-white) !important;
+  border-bottom: var(--cs-rule) solid var(--stroke-main);
+}
+.cs-content .rd-row.is-head span,
+.cs-content .rd-crow.is-head span {
+  font-family: var(--font-body);
+  font-size: var(--fs-p-small);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+/* One explicit grid per table shape, forced onto head and body alike, so a
+   header can never drift out of line with the column it labels. */
+.cs-content .rd-rows > .rd-row,
+.cs-content .rd-rows > .rd-row.is-head {
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.6fr) !important;
+}
+.cs-content .rd-compare > .rd-crow,
+.cs-content .rd-compare > .rd-crow.is-head {
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.1fr) minmax(0, 1.1fr) !important;
+}
+.cs-content .dec-table > .rd-crow,
+.cs-content .dec-table > .rd-crow.is-head {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.25fr) minmax(0, .85fr) !important;
+}
+
+/* ---------- Wide tables scroll, with a hint ---------- */
+.cs-scroller {
+  position: relative;
+  margin-block: var(--margin-medium);
+}
+.cs-scroller > * { margin-block: 0 !important; }
+.cs-scroller::after {
+  content: attr(data-hint);
+  display: none;
+  margin-top: var(--space-medium);
+  font-family: var(--font-body);
+  font-size: var(--fs-p-small);
+  color: var(--text-tertiary);
+}
+@media (max-width: 1199px) {
+  .cs-scroller {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+  }
+  .cs-scroller > * { min-width: 900px; }
+  .cs-scroller::after { display: block; }
+}
+
+/* ---------- Persona / mental models: white cards, 2 x 2 ---------- */
+.cs-models {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--gap-large);
+}
+.cs-model {
+  background: var(--bg-white);
+  border: var(--cs-rule) solid var(--stroke-main);
+  border-radius: var(--radius-large);
+  padding: var(--padding-large);
+}
+.cs-model__name {
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  font-weight: 400;
+  color: var(--text-main);
+  margin: 0 0 var(--gap-small);
+}
+.cs-model__desc { margin: 0; }
+@media (max-width: 767px) { .cs-models { grid-template-columns: 1fr; } }
+
+/* ---------- PM / Business / Engineering views ---------- */
+.cs-views { display: grid; gap: var(--gap-medium); }
+.cs-view {
+  border-left: var(--cs-marker) solid var(--stroke-main);
+  padding: var(--padding-medium) var(--padding-large);
+  border-radius: 0 var(--radius-medium) var(--radius-medium) 0;
+}
+.cs-view__who {
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  font-weight: 700;
+  color: var(--text-main);
+  text-transform: none;
+  letter-spacing: 0;
+  margin: 0 0 var(--gap-small);
+}
+.cs-view__what { margin: 0; }
+.cs-view.is-highlight {
+  background: var(--bg-white);
+  border-left-color: var(--text-accent-2);
+}
+.cs-view.is-highlight .cs-view__who { color: var(--text-accent-2); }
+
+/* ---------- Restored blocks ---------- */
+.cs-note,
+.cs-callout {
+  background: var(--bg-white);
+  border: var(--cs-rule) solid var(--stroke-main);
+  border-radius: var(--radius-large);
+  padding: var(--padding-large);
+}
+.cs-note h4 {
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  font-weight: 400;
+  color: var(--text-main);
+  margin: 0 0 var(--gap-small);
+}
+.cs-note p:last-child,
+.cs-callout { margin-bottom: 0; }
+.cs-callout strong { color: var(--text-main); }
+
+.cs-subhead {
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  font-weight: 400;
+  color: var(--text-secondary);
+  margin: var(--margin-medium) 0 var(--gap-small);
+}
+
+.cs-fork,
+.cs-grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--gap-large); }
+.cs-grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap-large); }
+@media (max-width: 1023px) {
+  .cs-fork, .cs-grid-2, .cs-grid-3 { grid-template-columns: 1fr; }
+}
+
+.cs-fork__cell,
+.cs-card,
+.cs-md {
+  background: var(--bg-white);
+  border: var(--cs-rule) solid var(--stroke-main);
+  border-radius: var(--radius-large);
+  padding: var(--padding-large);
+}
+.cs-fork__cell--lead {
+  background: var(--bg-white);
+  border-color: var(--text-accent-2);
+}
+.cs-fork__label,
+.cs-card__label {
+  display: block;
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: var(--gap-small);
+}
+.cs-fork__cell p,
+.cs-card p,
+.cs-md p { margin-bottom: 0; }
+
+.cs-md { padding: 0; overflow: hidden; }
+.cs-md__file {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-small);
+  padding: var(--padding-medium) var(--padding-large);
+  border-bottom: var(--cs-rule) solid var(--stroke-main);
+  font-family: var(--font-body);
+  font-size: var(--fs-p-small);
+  color: var(--text-secondary);
+}
+.cs-md__file .dot {
+  width: var(--space-medium);
+  height: var(--space-medium);
+  border-radius: 50%;
+  background: var(--text-accent-2);
+  flex: none;
+}
+.cs-md__body { padding: var(--padding-large); }
+.cs-md__body h4 {
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  font-weight: 400;
+  color: var(--text-main);
+  margin: 0 0 var(--gap-small);
+}
+
+/* Outcome cells */
+.cs-out { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--gap-large); }
+@media (max-width: 1023px) { .cs-out { grid-template-columns: 1fr; } }
+.cs-out__cell {
+  background: var(--bg-white);
+  border: var(--cs-rule) solid var(--stroke-main);
+  border-radius: var(--radius-large);
+  padding: var(--padding-large);
+}
+.cs-out__cell .lbl {
+  display: block;
+  font-family: var(--font-body);
+  font-size: var(--fs-p-small);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-accent-2);
+  margin-bottom: var(--gap-small);
+}
+.cs-out__cell h4 {
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  font-weight: 400;
+  color: var(--text-main);
+  margin: 0 0 var(--gap-small);
+}
+.cs-out__cell p:last-child { margin-bottom: 0; }
+.cs-out__cell .note { font-size: var(--fs-p-small); color: var(--text-tertiary); }
+
+/* Future opportunities */
+.cs-fut { display: grid; gap: 0; }
+.cs-fut > div {
+  padding: var(--padding-large) 0;
+  border-top: var(--cs-rule) solid var(--stroke-main);
+}
+.cs-fut > div:first-child { border-top: 0; padding-top: 0; }
+.cs-fut b {
+  display: block;
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: var(--gap-small);
+}
+.cs-fut p { margin: 0; }
+
+.cs-note-inline { font-size: var(--fs-p-small) !important; color: var(--text-tertiary); }
+
+/* ---------- Previous / next case study ---------- */
+.cs-prevnext {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--gap-large);
+  margin-top: var(--margin-group);
+  padding-top: var(--margin-medium);
+  border-top: var(--cs-rule) solid var(--stroke-main);
+}
+.cs-prevnext__card {
+  display: block;
+  background: var(--bg-white);
+  border: var(--cs-rule) solid var(--stroke-main);
+  border-radius: var(--radius-large);
+  padding: var(--padding-large);
+  text-decoration: none;
+  transition: border-color .18s ease, transform .18s ease;
+}
+.cs-prevnext__card:hover {
+  border-color: var(--text-accent-2);
+  transform: translateY(calc(var(--space-medium) * -0.5));
+}
+.cs-prevnext__card:last-child { text-align: right; }
+.cs-prevnext__dir {
+  display: block;
+  font-family: var(--font-body);
+  font-size: var(--fs-p-small);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-accent-2);
+  margin-bottom: var(--gap-small);
+}
+.cs-prevnext__title {
+  display: block;
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  color: var(--text-main);
+  margin-bottom: var(--gap-small);
+}
+.cs-prevnext__desc {
+  display: block;
+  font-family: var(--font-body);
+  font-size: var(--fs-p-medium);
+  line-height: 1.65;
+  color: var(--text-tertiary);
+}
+@media (max-width: 767px) {
+  .cs-prevnext { grid-template-columns: 1fr; }
+  .cs-prevnext__card:last-child { text-align: left; }
+}
+
+/* Mobile step-down for the 80px group rhythm */
+@media (max-width: 767px) {
+  .cs-content h2 { margin-top: var(--margin-medium); }
+}
+
+/* ---------- H4: the labelled sub-heads (Product view, Why PM agreed, PM ...)
+   Smaller than h3, heavier than the p-large it sits above. ---------- */
+.cs-content h4,
+.cs-content .cs-label,
+.cs-content .cs-view__who {
+  font-family: var(--font-display);
+  font-size: var(--fs-p-large);
+  font-weight: 700;
+  line-height: normal;
+  color: var(--text-main);
+  margin: 0 0 var(--gap-small);
+  text-transform: none;
+  letter-spacing: 0;
+}
+.cs-content .cs-label { display: block; }
+.cs-view.is-highlight .cs-view__who { color: var(--text-accent-2); }
+
+/* ---------- Persona card icons (restored) ---------- */
+.cs-model__icon {
+  width: var(--btn-sm-height, 40px);
+  height: var(--btn-sm-height, 40px);
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-medium);
+  background: var(--bg-main);
+  border: var(--cs-rule) solid var(--stroke-main);
+  color: var(--text-accent-2);
+  margin-bottom: var(--gap-medium);
+}
+.cs-model__icon svg { width: 60%; height: 60%; }
+
+/* ============================================================================
+   PASS 3 — one shared page inset, and a proximity ladder.
+   Spacing carries the relationship: the closer two things belong together,
+   the tighter the gap. 8 label-to-text, 16 text-to-its-figure,
+   40 heading-to-subheading, 80 between H2 groups.
+   ============================================================================ */
+.cs-layout,
+.cs-nav__inner,
+.cs-banner__inner {
+  max-width: calc(var(--container-max) + var(--page-gutter) * 2);
+  padding-inline: var(--page-gutter);
+}
+
+/* 8 — a label and the line it introduces */
+.cs-content h3,
+.cs-content h4,
+.cs-content .cs-label,
+.cs-content .cs-view__who,
+.cs-content .cs-model__name,
+.cs-content .cs-fut b,
+.cs-content .cs-out__cell h4,
+.cs-content .cs-md__body h4,
+.cs-content .cs-note h4 { margin-bottom: var(--space-medium); }
+.cs-figure figcaption { margin-top: var(--space-medium); }
+
+/* 16 — a paragraph and the figure, table, or card set that illustrates it */
+.cs-content p { margin-bottom: var(--space-large); }
+.cs-content > *:not(h2):not(h3):not(h4):not(p) {
+  margin-top: var(--space-large);
+  margin-bottom: var(--margin-medium);
+}
+.cs-figure,
+.cs-scroller,
+.cs-content .rd-rows,
+.cs-content .rd-compare,
+.cs-content .rd-frame,
+.cs-content .rd-stats,
+.cs-models,
+.cs-views,
+.cs-fork,
+.cs-grid-2,
+.cs-grid-3,
+.cs-out,
+.cs-fut,
+.cs-note,
+.cs-callout,
+.cs-card--dark {
+  margin-top: var(--space-large) !important;
+  margin-bottom: var(--margin-medium) !important;
+}
+
+/* 40 — a heading and the sub-heading beneath it */
+.cs-content h2 { margin-bottom: var(--margin-medium); }
+.cs-content h3 { margin-top: var(--margin-medium); }
+.cs-content h2 + h3 { margin-top: 0; }
+.cs-subhead { margin-top: var(--margin-medium) !important; }
+
+/* 80 — between whole H2 groups */
+.cs-content h2 { margin-top: var(--margin-group); }
+.cs-content > h2:first-child { margin-top: 0; }
+
+/* A block that leads straight into the next sub-topic keeps its 40; but a
+   heading right after a block should not stack 40 + 40. */
+.cs-content > *:not(h2):not(h3):not(h4):not(p) + h3 { margin-top: 0; }
+
+@media (max-width: 767px) {
+  .cs-content h2 { margin-top: var(--margin-medium); }
+}
+
+/* ============================================================================
+   PASS 4 — proximity, corrected one rung down the ladder
+   (space-small 8 / space-medium 16 / space-large 24), the Quick Summary
+   container, and shared emphasis styling.
+   ============================================================================ */
+
+/* 8 — a label and the line it introduces */
+.cs-content h3,
+.cs-content h4,
+.cs-content .cs-label,
+.cs-content .cs-view__who,
+.cs-content .cs-model__name,
+.cs-content .cs-fut b,
+.cs-content .cs-out__cell h4,
+.cs-content .cs-md__body h4,
+.cs-content .cs-note h4 { margin-bottom: var(--space-small); }
+.cs-figure figcaption { margin-top: var(--space-small); }
+
+/* 16 — a paragraph and the block that illustrates it */
+.cs-content p { margin-bottom: var(--space-medium); }
+.cs-content > *:not(h2):not(h3):not(h4):not(p) {
+  margin-top: var(--space-medium);
+  margin-bottom: var(--margin-medium);
+}
+.cs-figure,
+.cs-scroller,
+.cs-content .rd-rows,
+.cs-content .rd-compare,
+.cs-content .rd-frame,
+.cs-content .rd-stats,
+.cs-models,
+.cs-views,
+.cs-fork,
+.cs-grid-2,
+.cs-grid-3,
+.cs-out,
+.cs-fut,
+.cs-note,
+.cs-callout,
+.cs-card--dark {
+  margin-top: var(--space-medium) !important;
+  margin-bottom: var(--margin-medium) !important;
+}
+.cs-content p:last-child { margin-bottom: 0; }
+
+/* ---------- Quick Summary: the page's opening panel ---------- */
+.cs-summary {
+  background: var(--bg-white);
+  border: var(--cs-rule) solid var(--stroke-main);
+  border-radius: var(--radius-xlarge);
+  padding: var(--padding-xlarge);
+  margin-bottom: var(--margin-group) !important;
+}
+.cs-summary > h2 {
+  margin-top: 0 !important;
+  padding-bottom: var(--space-medium);
+  border-bottom: var(--cs-rule) solid var(--stroke-main);
+}
+.cs-summary > h3 { margin-top: var(--space-large); }
+.cs-summary > h3:first-of-type { margin-top: var(--margin-medium); }
+.cs-summary > p:last-child { margin-bottom: 0; }
+@media (max-width: 767px) { .cs-summary { padding: var(--padding-large); } }
+
+/* ---------- Emphasis: bold pulls the eye, accent marks the numbers ---------- */
+.cs-content strong,
+.cs-content b {
+  font-weight: 700;
+  color: var(--text-main);
+}
+.cs-content .cs-em {
+  font-weight: 700;
+  color: var(--text-accent-2);
+}
+.cs-card--dark strong,
+.cs-card--dark b,
+.cs-card--dark .cs-em { color: var(--text-invert); }
+
+/* ============================================================================
+   PASS 5 — shared across every case study
+   ============================================================================ */
+
+/* The hero band below the banner shares the page inset like everything else */
+.cs-ba__inner {
+  max-width: calc(var(--container-max) + var(--page-gutter) * 2);
+  padding-inline: var(--page-gutter);
+}
+.cs-ba { padding-block: var(--margin-medium); }
+.cs-ba .cs-figure { margin: 0 !important; }
+
+/* Banner variants — the three accent surfaces we already have, nothing new */
+.cs-banner--accent-2 { background: var(--bg-accent-2); }
+.cs-banner--accent-1 { background: var(--text-accent-1); }
+.cs-banner--dark     { background: var(--bg-dark); }
+
+/* These pages carry statement headings rather than short labels, so a contents
+   entry can run long. Clamp it instead of rewriting anyone's heading. */
+.cs-toc a {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ============================================================================
+   PASS 6 — bands that must keep their own ground
+   A section authored on a dark surface keeps that surface as a contained band
+   inside the reading column. Without it, every `.section-dark .foo` rule in
+   the page's own CSS stops matching and the copy goes invisible.
+   ============================================================================ */
+.cs-band {
+  border-radius: var(--radius-large);
+  padding: var(--padding-xlarge);
+  margin-top: var(--space-medium) !important;
+  margin-bottom: var(--margin-medium) !important;
+  overflow: hidden;
+}
+.cs-band.section-dark,
+.cs-band.rd-section--dark { background: var(--bg-accent-2); color: var(--text-invert); }
+.cs-band.section-dark-soft { background: var(--text-accent-1); color: var(--text-invert); }
+.cs-band.at-glance-band,
+.cs-band.showcase { background: var(--bg-white); border: var(--cs-rule) solid var(--stroke-main); }
+
+/* Headings and copy on a dark band read light, matching the map carousel card */
+.cs-band.section-dark h2, .cs-band.section-dark h3, .cs-band.section-dark h4,
+.cs-band.section-dark-soft h2, .cs-band.section-dark-soft h3, .cs-band.section-dark-soft h4,
+.cs-band.rd-section--dark h2, .cs-band.rd-section--dark h3, .cs-band.rd-section--dark h4 {
+  color: var(--text-invert);
+}
+.cs-band.section-dark p, .cs-band.section-dark li,
+.cs-band.section-dark-soft p, .cs-band.section-dark-soft li,
+.cs-band.rd-section--dark p, .cs-band.rd-section--dark li {
+  color: color-mix(in srgb, var(--text-invert) 86%, transparent);
+}
+.cs-band.section-dark strong, .cs-band.section-dark b,
+.cs-band.section-dark-soft strong, .cs-band.section-dark-soft b,
+.cs-band.rd-section--dark strong, .cs-band.rd-section--dark b { color: var(--text-invert); }
+
+/* A band spans the reading column, so its first child must not add its own top gap */
+.cs-band > *:first-child { margin-top: 0 !important; }
+.cs-band > *:last-child  { margin-bottom: 0 !important; }
+@media (max-width: 767px) { .cs-band { padding: var(--padding-large); } }
+
+/* ============================================================================
+   PASS 7 — the map page's treatment, applied to every case study
+   These four pages were authored with dark section grounds. The v3 page is a
+   plain bg-main throughout, so the copy is re-inked dark and the components
+   that carried those grounds become the same light surfaces the map page uses.
+   `!important` is needed because each page's own <style> block loads after
+   this file.
+   ============================================================================ */
+
+/* ---------- Bands: no dark ground, they are just flow now ---------- */
+.cs-band {
+  background: none !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  overflow: visible;
+  margin-top: var(--space-medium) !important;
+  margin-bottom: var(--margin-medium) !important;
+}
+.cs-band > *:first-child { margin-top: 0 !important; }
+
+/* ---------- Dark text, everywhere in the reading column ---------- */
+.cs-content h2,
+.cs-content .section-dark h2, .cs-content .section-dark-soft h2,
+.cs-content .rd-section--dark h2 { color: var(--text-main) !important; }
+
+.cs-content h3, .cs-content h5,
+.cs-content .section-dark h3, .cs-content .section-dark-soft h3,
+.cs-content .rd-section--dark h3 { color: var(--text-secondary) !important; }
+
+.cs-content h4,
+.cs-content .section-dark h4, .cs-content .section-dark-soft h4 { color: var(--text-main) !important; }
+
+.cs-content p, .cs-content li, .cs-content dd, .cs-content em, .cs-content small,
+.cs-content .section-dark p, .cs-content .section-dark li,
+.cs-content .section-dark-soft p, .cs-content .section-dark-soft li,
+.cs-content .rd-section--dark p, .cs-content .rd-section--dark li,
+.cs-content .dark-copy p, .cs-content .quote,
+.cs-content .diagram-title, .cs-content .journey-group-head,
+.cs-content .harness-file, .cs-content .harness-card p,
+.cs-content .at-glance-item p { color: var(--text-tertiary) !important; }
+
+.cs-content strong, .cs-content b,
+.cs-content .section-dark strong, .cs-content .section-dark-soft strong { color: var(--text-main) !important; }
+
+.cs-content a:not(.button):not(.btn):not(.cs-prevnext__card):not(.storybook-cta) { color: var(--text-accent-2) !important; }
+
+/* Components that carried a dark ground become light surfaces */
+.cs-content .harness-card,
+.cs-content .note-box,
+.cs-content .callout,
+.cs-content .panel,
+.cs-content .story-diagram,
+.cs-content .stack-item,
+.cs-content .at-glance-item,
+.cs-content .om-node,
+.cs-content .result-item {
+  background: var(--bg-white) !important;
+  border: var(--cs-rule) solid var(--stroke-main) !important;
+  border-radius: var(--radius-large) !important;
+  box-shadow: none !important;
+  color: var(--text-tertiary) !important;
+}
+.cs-content .harness-file {
+  background: var(--bg-main) !important;
+  border-bottom: var(--cs-rule) solid var(--stroke-main) !important;
+  color: var(--text-secondary) !important;
+}
+
+/* Kept deliberately dark, exactly as on the map page: the design-evolution
+   carousel, the terminal snippet, and video frames. */
+.cs-content .cs-card--dark,
+.cs-content .term,
+.cs-content .vid-frame,
+.cs-content [class*="refine-"] { color: unset; }
+.cs-content .term,
+.cs-content .term code,
+.cs-content .term span { color: var(--text-invert) !important; }
+.cs-content .term { background: var(--bg-accent-2) !important; border-radius: var(--radius-large); padding: var(--padding-large); }
+
+/* ---------- Numbers reuse the map's stat grid ---------- */
+.cs-content .metric-strip,
+.cs-content .rd-stats {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 0 !important;
+  border: var(--cs-rule) solid var(--stroke-main) !important;
+  border-radius: var(--radius-large) !important;
+  overflow: hidden !important;
+  background: var(--bg-white) !important;
+}
+.cs-content .metric-tile,
+.cs-content .rd-stat {
+  padding: var(--padding-large) !important;
+  border-left: var(--cs-rule) solid var(--stroke-main) !important;
+  border-top: var(--cs-rule) solid var(--stroke-main) !important;
+  background: none !important;
+  border-radius: 0 !important;
+  display: block !important;
+}
+.cs-content .metric-tile:nth-child(-n+3),
+.cs-content .rd-stat:nth-child(-n+3) { border-top: 0 !important; }
+.cs-content .metric-tile:nth-child(3n+1),
+.cs-content .rd-stat:nth-child(3n+1) { border-left: 0 !important; }
+.cs-content .metric-tile > strong,
+.cs-content .rd-stat .n {
+  display: block !important;
+  font-family: var(--font-display) !important;
+  font-size: var(--fs-h1) !important;
+  font-weight: 400 !important;
+  line-height: 1 !important;
+  letter-spacing: 0 !important;
+  color: var(--text-accent-1) !important;
+  margin-bottom: var(--space-medium) !important;
+}
+.cs-content .metric-tile > span,
+.cs-content .rd-stat .l {
+  display: block !important;
+  font-family: var(--font-body) !important;
+  font-size: var(--fs-p-small) !important;
+  line-height: 1.5 !important;
+  color: var(--text-tertiary) !important;
+  margin-top: 0 !important;
+}
+@media (max-width: 1023px) {
+  .cs-content .metric-strip, .cs-content .rd-stats { grid-template-columns: repeat(2, minmax(0,1fr)) !important; }
+  .cs-content .metric-tile:nth-child(3n+1), .cs-content .rd-stat:nth-child(3n+1) { border-left: var(--cs-rule) solid var(--stroke-main) !important; }
+  .cs-content .metric-tile:nth-child(2n+1), .cs-content .rd-stat:nth-child(2n+1) { border-left: 0 !important; }
+  .cs-content .metric-tile:nth-child(3), .cs-content .rd-stat:nth-child(3) { border-top: var(--cs-rule) solid var(--stroke-main) !important; }
+}
+@media (max-width: 640px) {
+  .cs-content .metric-strip, .cs-content .rd-stats { grid-template-columns: 1fr !important; }
+  .cs-content .metric-tile, .cs-content .rd-stat { border-left: 0 !important; border-top: var(--cs-rule) solid var(--stroke-main) !important; }
+  .cs-content .metric-tile:first-child, .cs-content .rd-stat:first-child { border-top: 0 !important; }
+}
+
+/* ---------- Tables reuse the map's white treatment ---------- */
+.cs-content table,
+.cs-content .itable,
+.cs-content .model-comparison-table,
+.cs-content .results-table {
+  width: 100% !important;
+  border-collapse: collapse !important;
+  background: var(--bg-white) !important;
+  border: var(--cs-rule) solid var(--stroke-main) !important;
+  border-radius: var(--radius-large) !important;
+  overflow: hidden !important;
+}
+.cs-content thead th,
+.cs-content .comparison-head,
+.cs-content .results-row.head {
+  background: var(--bg-white) !important;
+  color: var(--text-secondary) !important;
+  font-family: var(--font-body) !important;
+  font-size: var(--fs-p-small) !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  text-align: left !important;
+  border-bottom: var(--cs-rule) solid var(--stroke-main) !important;
+}
+.cs-content th,
+.cs-content td {
+  padding: var(--padding-large) !important;
+  border-top: var(--cs-rule) solid var(--stroke-main) !important;
+  color: var(--text-tertiary) !important;
+  font-size: var(--fs-p-medium) !important;
+  line-height: 1.55 !important;
+  vertical-align: top !important;
+}
+.cs-content thead th { border-top: 0 !important; }
+.cs-content tbody td:first-child { color: var(--text-main) !important; }
+
+/* ---------- Text is never clipped: 100% of the column, always ---------- */
+.cs-content p,
+.cs-content li,
+.cs-content h2,
+.cs-content h3,
+.cs-content h4,
+.cs-content dd,
+.cs-content .lead,
+.cs-content .dark-copy p,
+.cs-content .at-glance-item p { max-width: none !important; width: auto !important; }
+.cs-content .split,
+.cs-content .container.split { display: block !important; }
+
+/* ============================================================================
+   PASS 8 — the last of the dark-ground leftovers, re-inked dark
+   These come from rules keyed on the old dark section ids (#audit,
+   #accessibility) or on comparison tables that were dark by design. On a
+   bg-main page they become the same white table + dark text the map page uses.
+   ============================================================================ */
+
+/* Comparison tables: white surface, dark copy, accent only on the labels */
+.cs-content .comparison-table,
+.cs-content .model-comparison-table {
+  background: var(--bg-white) !important;
+  border: var(--cs-rule) solid var(--stroke-main) !important;
+  border-radius: var(--radius-large) !important;
+  overflow: hidden !important;
+}
+.cs-content .comparison-head,
+.cs-content .model-comparison-table .comparison-head {
+  background: var(--bg-white) !important;
+  border-bottom: var(--cs-rule) solid var(--stroke-main) !important;
+}
+.cs-content .comparison-head div,
+.cs-content .comparison-head div:first-child,
+.cs-content .comparison-head div:last-child {
+  color: var(--text-secondary) !important;
+  font-family: var(--font-body) !important;
+  font-size: var(--fs-p-small) !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+}
+.cs-content .comparison-table .cell,
+.cs-content .model-comparison-table .cell,
+.cs-content .comparison-table .cell:first-child,
+.cs-content .comparison-table .cell:last-child,
+.cs-content .model-comparison-table .row.model-shipped .cell {
+  background: none !important;
+  color: var(--text-tertiary) !important;
+  border-left-color: var(--stroke-main) !important;
+}
+.cs-content .model-comparison-table .cell strong,
+.cs-content .comparison-table .cell strong { color: var(--text-main) !important; }
+.cs-content .model-comparison-table .cell small,
+.cs-content .comparison-table .cell small { color: var(--text-accent-2) !important; }
+.cs-content .comparison-table .row,
+.cs-content .model-comparison-table .row { border-top: var(--cs-rule) solid var(--stroke-main) !important; }
+
+/* Accessibility chips */
+.cs-content .a11y-chip,
+.cs-content #accessibility .a11y-chip { color: var(--text-tertiary) !important; }
+.cs-content .a11y-chip b,
+.cs-content #accessibility .a11y-chip b { color: var(--text-main) !important; }
+.cs-content .a11y-chip i,
+.cs-content #accessibility .a11y-chip i { color: var(--text-accent-2) !important; }
+.cs-content .a11y-tag {
+  background: var(--bg-white) !important;
+  border: var(--cs-rule) solid var(--stroke-main) !important;
+  color: var(--text-secondary) !important;
+}
+
+/* Org bridge labels */
+.cs-content .om-bridge-label { color: var(--text-main) !important; }
+.cs-content .om-bridge-sub { color: var(--text-tertiary) !important; }
+
+/* Buttons keep light text because they keep their accent fill */
+.cs-content .storybook-cta,
+.cs-content .button,
+.cs-content a.button {
+  background: var(--bg-accent-2) !important;
+  color: var(--text-invert) !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+.cs-content .button.secondary,
+.cs-content a.button.secondary {
+  background: var(--bg-white) !important;
+  color: var(--text-main) !important;
+  border: var(--cs-rule) solid var(--stroke-main) !important;
+}
+
+/* Inline code reads on its own faint surface */
+.cs-content code:not(.term code) {
+  background: color-mix(in srgb, var(--text-accent-2) 8%, var(--bg-white)) !important;
+  color: var(--text-accent-1) !important;
+  border-radius: var(--radius-small);
+  padding: 0.1em 0.35em;
+}
+
+/* Quote marks and pull quotes */
+.cs-content .q,
+.cs-content .quote,
+.cs-content blockquote { color: var(--text-secondary) !important; }
+.cs-content .quote,
+.cs-content blockquote {
+  background: var(--bg-white) !important;
+  border: var(--cs-rule) solid var(--stroke-main) !important;
+  border-left: var(--cs-marker) solid var(--text-accent-2) !important;
+  border-radius: var(--radius-large) !important;
+  padding: var(--padding-large) !important;
+}
+
+/* ============================================================================
+   PASS 9 — final contrast sweep
+   ============================================================================ */
+
+/* Captions were light because the shots sat on dark grounds */
+.cs-content figcaption,
+.cs-content .shot-cap,
+.cs-content .rd-cap,
+.cs-content .caption { color: var(--text-tertiary) !important; }
+
+/* Inline code (the .term terminal keeps its own dark surface) */
+.cs-content code:not(.term code),
+.cs-content .inline-code,
+.cs-content pre:not(.term) code {
+  background: color-mix(in srgb, var(--text-accent-2) 8%, var(--bg-white)) !important;
+  color: var(--text-accent-1) !important;
+}
+
+/* Copy inside panels that used to be dark */
+.cs-content .panel p,
+.cs-content .panel strong,
+.cs-content .panel b,
+.cs-content .dark-copy strong,
+.cs-content .dark-copy b { color: var(--text-main) !important; }
+.cs-content .panel p,
+.cs-content .dark-copy p { color: var(--text-tertiary) !important; }
+
+/* Small structural labels: text-secondary reads on bg-main where a 62%-alpha
+   invert did not */
+.cs-content .om-bridge-label,
+.cs-content .om-node-label,
+.cs-content .jc-stage,
+.cs-content .stack-label,
+.cs-content .diagram-label { color: var(--text-secondary) !important; }
+.cs-content .om-bridge-sub,
+.cs-content .om-node-sub { color: var(--text-secondary) !important; }
+
+/* ============================================================================
+   PASS 10 — the last two dark grounds
+   ============================================================================ */
+
+/* The AI-process "approach" card kept a dark fill from its old section, which
+   left the now-dark copy sitting on a dark surface. */
+.cs-content .approach,
+.cs-content .approach-body,
+.cs-content .approach-head {
+  background: var(--bg-white) !important;
+  border-color: var(--stroke-main) !important;
+}
+.cs-content .approach { border: var(--cs-rule) solid var(--stroke-main) !important; border-radius: var(--radius-large) !important; }
+.cs-content .approach-body p { color: var(--text-tertiary) !important; }
+.cs-content .approach-body strong { color: var(--text-main) !important; }
+.cs-content .approach-head .eyebrow,
+.cs-content .approach-head .ai-badge { color: var(--text-accent-2) !important; border-color: var(--stroke-main) !important; }
+
+/* Billing's org/billing bridge diagram: mid-grey labels go to token colours */
+.cs-content .om-bridge,
+.cs-content .om-bridge > div,
+.cs-content .om-col > div { color: var(--text-secondary) !important; }
+.cs-content .om-bridge-arrow { color: var(--text-accent-2) !important; }
+
+/* ============================================================================
+   PASS 11 — diagram labels and the grade chart
+   ============================================================================ */
+
+/* Billing's org/billing diagram used a mid-grey that only worked on its old
+   warm ground; the column labels move onto the token ramp. */
+.cs-content .om-grid div,
+.cs-content .om-grid > div > div { color: var(--text-secondary) !important; }
+.cs-content .om-grid strong { color: var(--text-main) !important; }
+
+/* The audit grade chart was light-on-dark */
+.cs-content .grade-bars,
+.cs-content .grade-row,
+.cs-content .grade-row span,
+.cs-content .grade-label,
+.cs-content .grade-value { color: var(--text-secondary) !important; }
+.cs-content .grade-row strong { color: var(--text-main) !important; }
+
+/* Nested labels inside a filled button follow the button, not the page */
+.cs-content .button span,
+.cs-content .button b,
+.cs-content .storybook-cta span,
+.cs-content .storybook-cta b { color: inherit !important; }
+
+/* Before / after tags on comparison shots */
+.cs-content .ba-tag,
+.cs-content .rd-ba-tag,
+.cs-content .compare-tag {
+  background: var(--bg-accent-2) !important;
+  color: var(--text-invert) !important;
+}
+
+/* ============================================================================
+   PASS 12 — integration case study components
+   ============================================================================ */
+
+/* ---------- Data: the six figures as a 2 x 3 grid ---------- */
+.cs-content .metric-strip.cs-metrics-2x3 {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+}
+/* ---------- Tickets: same table treatment as everywhere else ---------- */
+.cs-content .discovery-band {
+  padding: 0 !important;
+  background: var(--bg-white) !important;
+  border: var(--cs-rule) solid var(--stroke-main) !important;
+  border-radius: var(--radius-large) !important;
+  box-shadow: none !important;
+  overflow: hidden !important;
+}
+.cs-content .discovery-evidence-head,
+.cs-content .discovery-evidence-row {
+  display: grid !important;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.6fr) !important;
+  gap: var(--gap-large) !important;
+  padding: var(--padding-large) !important;
+  align-items: start !important;
+}
+.cs-content .discovery-evidence-head {
+  background: var(--bg-white) !important;
+  border-bottom: var(--cs-rule) solid var(--stroke-main) !important;
+  padding-block: var(--padding-medium) !important;
+}
+.cs-content .discovery-evidence-head div {
+  padding: 0 !important;
+  border-right: 0 !important;
+  font-family: var(--font-body) !important;
+  font-size: var(--fs-p-small) !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  color: var(--text-secondary) !important;
+}
+.cs-content .discovery-evidence-row {
+  border-top: var(--cs-rule) solid var(--stroke-main) !important;
+}
+.cs-content .discovery-evidence-head + .discovery-evidence-row { border-top: 0 !important; }
+.cs-content .discovery-evidence-row div { padding: 0 !important; border-right: 0 !important; }
+.cs-content .discovery-evidence-row div:first-child {
+  font-family: var(--font-body) !important;
+  font-size: var(--fs-p-medium) !important;
+  font-weight: 700 !important;
+  color: var(--text-main) !important;
+}
+.cs-content .discovery-evidence-row div:last-child {
+  font-size: var(--fs-p-medium) !important;
+  line-height: 1.55 !important;
+  color: var(--text-tertiary) !important;
+}
+@media (max-width: 767px) {
+  .cs-content .discovery-evidence-head { display: none !important; }
+  .cs-content .discovery-evidence-row { grid-template-columns: 1fr !important; gap: var(--gap-small) !important; }
+}
+
+/* ---------- Integration Journey: one plain circle, purple vs green ---------- */
+.cs-content .journey-timeline-item {
+  grid-template-columns: auto minmax(0, 1fr) !important;
+  gap: var(--gap-large) !important;
+}
+.cs-content .journey-timeline-marker {
+  width: var(--space-xlarge) !important;
+  height: var(--space-xlarge) !important;
+  border-radius: 999px !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  background: var(--text-accent-3) !important;
+  color: var(--text-accent-1) !important;
+  font-family: var(--font-body) !important;
+  font-size: var(--fs-p-small) !important;
+  font-weight: 700 !important;
+  display: grid !important;
+  place-items: center !important;
+}
+/* Reality steps take the purple; expected stays green */
+.cs-content .journey-timeline-item.is-risk .journey-timeline-marker {
+  background: var(--text-accent-2) !important;
+  color: var(--text-invert) !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+.cs-content .journey-timeline-item.is-risk .journey-timeline-copy h4,
+.cs-content .journey-timeline-item .journey-timeline-copy h4 { color: var(--text-main) !important; }
+/* the connecting rail sat under a 27px indent that pushed the copy far right */
+.cs-content .journey-group-line { display: none !important; }
+.cs-content .journey-group { padding-left: 0 !important; }
+.cs-content .journey-group-items { gap: var(--gap-large) !important; }
+.cs-content .journey-groups { gap: var(--margin-medium) !important; }
+.cs-content .journey-group-head {
+  font-family: var(--font-body) !important;
+  font-size: var(--fs-p-small) !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  color: var(--text-secondary) !important;
+  margin-bottom: var(--space-medium) !important;
+}
+.cs-content .diagram-title { font-size: var(--fs-p-small) !important; text-transform: uppercase; letter-spacing: 0.05em; }
+
+/* ============================================================================
+   PASS 13 — contents rail: the active H2 group and the active H3 read as two
+   different states, so you can see which section you are in and where in it.
+   H2 = dark and bold on a text-main bar. H3 = accent-2, the existing marker.
+   ============================================================================ */
+.cs-toc__group {
+  transition: color .18s ease, border-color .18s ease;
+  border-left: var(--cs-marker) solid transparent;
+  padding-left: var(--padding-medium);
+  margin-left: calc(var(--padding-medium) * -1);
+}
+.cs-toc__group.is-current {
+  color: var(--text-main);
+  font-weight: 700;
+  border-left-color: var(--text-main);
+}
+/* the first group keeps its flush top edge */
+.cs-toc__group:first-of-type { margin-top: 0; padding-top: 0; border-top: 0; }
+
+/* The H3 marker stays as it was: accent-2 text on an accent-2 bar */
+.cs-toc a.is-active {
+  color: var(--text-accent-2);
+  border-left-color: var(--text-accent-2);
+  font-weight: 700;
+}
+
+/* the rail scrolls itself, so give the motion somewhere to breathe */
+.cs-toc { scroll-behavior: smooth; scroll-padding-block: var(--padding-large); }
+@media (prefers-reduced-motion: reduce) { .cs-toc { scroll-behavior: auto; } }
+
+/* ============================================================================
+   PASS 14 — supported integrations: logos only
+   No card, no border, no marquee. The set is the point, so it just sits there.
+   ============================================================================ */
+.cs-content .cs-logos {
+  list-style: none;
+  margin: var(--space-medium) 0 var(--margin-medium) !important;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--gap-xlarge);
+  align-items: center;
+}
+.cs-content .cs-logos__item {
+  margin: 0 !important;
+  display: grid;
+  place-items: center;
+  min-height: var(--btn-lg-height, 60px);
+}
+.cs-content .cs-logos__item img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  max-height: var(--btn-lg-height, 60px);
+  height: auto;
+  object-fit: contain;
+}
+@media (max-width: 1023px) { .cs-content .cs-logos { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 640px)  { .cs-content .cs-logos { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--gap-large); } }
+
+/* ============================================================================
+   PASS 15 — Outcomes: an enumerated list in one colored container
+   The numbers come from the <ol>, so each item's own "01 /" prefix is dropped.
+   The tint is mixed from text-accent-2 so the copy stays dark and readable.
+   ============================================================================ */
+.cs-content .cs-outcomes {
+  background: color-mix(in srgb, var(--text-accent-2) 7%, var(--bg-white)) !important;
+  border: var(--cs-rule) solid color-mix(in srgb, var(--text-accent-2) 28%, transparent) !important;
+  border-radius: var(--radius-large) !important;
+  padding: var(--padding-xlarge) !important;
+  margin-top: var(--space-medium) !important;
+  margin-bottom: var(--margin-medium) !important;
+}
+.cs-content .cs-outcomes__list {
+  list-style: none;
+  counter-reset: cs-outcome;
+  margin: 0 !important;
+  padding: 0;
+  display: grid;
+  gap: var(--gap-xlarge);
+}
+.cs-content .cs-outcomes__list > li {
+  counter-increment: cs-outcome;
+  position: relative;
+  margin: 0 !important;
+  padding-left: calc(var(--space-xlarge) + var(--space-medium));
+  list-style: none;
+}
+.cs-content .cs-outcomes__list > li::before {
+  content: counter(cs-outcome, decimal-leading-zero);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: var(--space-xlarge);
+  height: var(--space-xlarge);
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: var(--text-accent-2);
+  color: var(--text-invert);
+  font-family: var(--font-body);
+  font-size: var(--fs-p-small);
+  font-weight: 700;
+}
+.cs-content .cs-outcomes__label {
+  display: block;
+  font-family: var(--font-body);
+  font-size: var(--fs-p-small);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-accent-2) !important;
+  margin-bottom: var(--space-small);
+}
+.cs-content .cs-outcomes__list h4 {
+  font-family: var(--font-display);
+  font-size: var(--fs-p-large) !important;
+  font-weight: 700;
+  color: var(--text-main) !important;
+  margin: 0 0 var(--space-small) !important;
+}
+.cs-content .cs-outcomes__list p {
+  color: var(--text-tertiary) !important;
+  margin: 0 0 var(--space-small) !important;
+}
+.cs-content .cs-outcomes__list p:last-child { margin-bottom: 0 !important; }
+@media (max-width: 767px) {
+  .cs-content .cs-outcomes { padding: var(--padding-large) !important; }
+  .cs-content .cs-outcomes__list > li { padding-left: calc(var(--space-large) + var(--space-medium)); }
+  .cs-content .cs-outcomes__list > li::before { width: var(--space-large); height: var(--space-large); }
+}
+
+/* ============================================================================
+   PASS 16 — smaller desktop: a narrower rail, a wider reading column, and the
+   rail's top edge flush with the Quick Summary panel.
+   ============================================================================ */
+@media (min-width: 1024px) and (max-width: 1439px) {
+  :root { --cs-toc-w: 280px; }
+  .cs-layout { gap: var(--space-large); }
+  .cs-toc { padding: var(--padding-medium); }
+  .cs-toc__title { font-size: var(--fs-p-large); }
+  .cs-toc a { font-size: var(--fs-p-small); padding-left: var(--padding-small); }
+  .cs-toc__group { font-size: var(--fs-p-small); padding-left: var(--padding-small); margin-left: calc(var(--padding-small) * -1); }
+}
+
+/* The rail and the reading column both start at the top of the grid, so their
+   first boxes should share a top edge. The rail is sticky with an offset, so
+   the summary gets the same offset as its own scroll-margin reference and the
+   rail drops its extra top margin. */
+@media (min-width: 1024px) {
+  .cs-layout { padding-top: calc(var(--nav-height) + var(--space-large)); }
+  .cs-toc { top: 0; margin-top: 0; }
+  .cs-content > *:first-child { margin-top: 0 !important; }
+  .cs-content > .cs-summary:first-child { margin-top: 0 !important; }
+}
+
+/* ============================================================================
+   PASS 17 — put the light text back on the surfaces that stayed dark
+   PASS 7 re-inked the reading column dark with !important, which also hit the
+   inside of the design-evolution carousel, the terminal snippet and the video
+   frames. Those keep their own dark ground, so their copy has to win back.
+   Declared after PASS 7-16 and with !important so it does.
+   ============================================================================ */
+.cs-content .cs-card--dark h2,
+.cs-content .cs-card--dark h3,
+.cs-content .cs-card--dark h4,
+.cs-content .cs-card--dark h5,
+.cs-content .cs-card--dark .refine-item-title,
+.cs-content .cs-card--dark strong,
+.cs-content .cs-card--dark b { color: var(--text-invert) !important; }
+
+.cs-content .cs-card--dark p,
+.cs-content .cs-card--dark li,
+.cs-content .cs-card--dark span,
+.cs-content .cs-card--dark small,
+.cs-content .cs-card--dark em,
+.cs-content .cs-card--dark figcaption,
+.cs-content .cs-card--dark .refine-item-desc {
+  color: color-mix(in srgb, var(--text-invert) 76%, transparent) !important;
+}
+
+/* Labels and the persona tabs keep the accent they were authored with */
+.cs-content .cs-card--dark .refine-item-persona,
+.cs-content .cs-card--dark .refine-label,
+.cs-content .cs-card--dark .refine-kicker { color: var(--text-accent-2) !important; }
+
+.cs-content .cs-card--dark .refine-persona {
+  color: color-mix(in srgb, var(--text-invert) 72%, transparent) !important;
+  border-color: color-mix(in srgb, var(--text-invert) 20%, transparent) !important;
+}
+.cs-content .cs-card--dark .refine-persona:hover { color: var(--text-invert) !important; }
+.cs-content .cs-card--dark .refine-persona.is-active {
+  color: var(--text-invert) !important;
+  background: var(--text-accent-2) !important;
+  border-color: var(--text-accent-2) !important;
+}
+
+/* The carousel's own cards sit on the dark ground, not on the page */
+.cs-content .cs-card--dark .refine-item {
+  background: color-mix(in srgb, var(--text-invert) 6%, transparent) !important;
+  border-color: color-mix(in srgb, var(--text-invert) 14%, transparent) !important;
+}
+.cs-content .cs-card--dark .refine-item.is-active {
+  border-color: var(--text-accent-2) !important;
+}
+
+/* Same for the terminal snippet and any video frame */
+.cs-content .term,
+.cs-content .term *,
+.cs-content .vid-frame figcaption { color: var(--text-invert) !important; }
+
+/* ============================================================================
+   PASS 18 — the prototype frame hugs its poster
+   The poster was absolutely positioned, so it contributed no height and the
+   frame collapsed to the empty <iframe>'s default ~154px, cropping the image.
+   Putting the poster back in flow lets the frame take the image's own height —
+   no magic number, and it stays correct if the poster is ever swapped.
+   ============================================================================ */
+.cs-content .rd-frame { height: auto !important; max-height: none !important; }
+.cs-content .rd-frame .proto-poster {
+  position: static !important;
+  width: 100% !important;
+  height: auto !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  display: block;
+}
+/* the live prototype fills the frame the poster established */
+.cs-content .rd-frame iframe {
+  position: absolute !important;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+  border: 0;
+}
+/* a frame with no poster falls back to the 16:9 the prototypes are drawn at */
+.cs-content .rd-frame:not(.has-poster) { aspect-ratio: 16 / 9; }
+.cs-content .rd-frame:not(.has-poster) iframe { position: absolute !important; }
+
+/* ============================================================================
+   PASS 19 — number boxes lose the strokes
+   No outer border and no cell dividers; the figures carry the grid on their own.
+   ============================================================================ */
+.cs-content .metric-strip,
+.cs-content .rd-stats {
+  border: 0 !important;
+  gap: var(--gap-large) !important;
+  background: none !important;
+  overflow: visible !important;
+}
+.cs-content .metric-tile,
+.cs-content .rd-stat {
+  border: 0 !important;
+  background: var(--bg-white) !important;
+  border-radius: var(--radius-large) !important;
+}
+.cs-content .metric-strip.cs-metrics-2x3 .metric-tile,
+.cs-content .metric-strip .metric-tile,
+.cs-content .rd-stats .rd-stat {
+  border-top: 0 !important;
+  border-left: 0 !important;
+}
+
+/* ============================================================================
+   PASS 20 — the feature carousel's per-item category label is redundant
+   The selector above already names the category, so repeating "Set up" on
+   every slide inside it just adds noise.
+   ============================================================================ */
+.cs-content .refine-item .refine-item-persona { display: none !important; }
+
+/* ============================================================================
+   PASS 21 — the last two dark-authored spots
+   ============================================================================ */
+
+/* The Storybook CTA keeps light text on its accent fill */
+.cs-content a.storybook-cta,
+.cs-content a.storybook-cta span,
+.cs-content a.storybook-cta b { color: var(--text-invert) !important; }
+
+/* A results table's Before/After column labels read as table headers */
+.cs-content .results-column-label { color: var(--text-secondary) !important; }
+
+/* ============================================================================
+   PASS 22 — one box design across every case study
+   The map page's card is the reference: white ground, hairline stroke,
+   radius-large, padding-large, a bold display h4, tertiary body copy, and the
+   accent reserved for labels and dots. Every box-like component on every page
+   is brought onto it. The three surfaces authored dark stay dark
+   (.refine-item, .term, .vid-frame) and are handled in PASS 17/21.
+   ============================================================================ */
+.cs-content .harness-card,
+.cs-content .note-box,
+.cs-content .callout,
+.cs-content .panel,
+.cs-content .stack-item,
+.cs-content .at-glance-item,
+.cs-content .om-node,
+.cs-content .alignment-card,
+.cs-content .impact-card,
+.cs-content .rd-card,
+.cs-content .md-card,
+.cs-content .a11y-tag,
+.cs-content .cs-card,
+.cs-content .cs-fork__cell,
+.cs-content .cs-model,
+.cs-content .cs-md,
+.cs-content .cs-note,
+.cs-content .cs-callout,
+.cs-content .cs-out__cell,
+.cs-content .cs-prevnext__card,
+.cs-content .story-diagram {
+  background: var(--bg-white) !important;
+  border: var(--cs-rule) solid var(--stroke-main) !important;
+  border-radius: var(--radius-large) !important;
+  padding: var(--padding-large) !important;
+  box-shadow: none !important;
+  color: var(--text-tertiary) !important;
+}
+
+/* A card that carries its own file/label header keeps that header flush.
+   Two shapes exist: .harness-card puts the heading and copy as direct
+   children, while .cs-md / .md-card wrap them in a body element. */
+.cs-content .cs-md,
+.cs-content .md-card,
+.cs-content .harness-card {
+  padding: 0 !important;
+  overflow: hidden;
+}
+
+/* Headings inside a box: one weight, one size, one colour */
+.cs-content .harness-card h3, .cs-content .harness-card h4,
+.cs-content .note-box h3, .cs-content .note-box h4,
+.cs-content .callout h3, .cs-content .callout h4,
+.cs-content .panel h3, .cs-content .panel h4,
+.cs-content .om-node h4, .cs-content .alignment-card h4,
+.cs-content .impact-card h4, .cs-content .rd-card h4,
+.cs-content .md-card h3, .cs-content .md-card h4,
+.cs-content .cs-card h4, .cs-content .cs-model h4,
+.cs-content .cs-md h4, .cs-content .cs-note h4,
+.cs-content .cs-out__cell h4, .cs-content .cs-fork__cell h4 {
+  font-family: var(--font-display) !important;
+  font-size: var(--fs-p-large) !important;
+  font-weight: 700 !important;
+  line-height: normal !important;
+  color: var(--text-main) !important;
+  margin: 0 0 var(--space-small) !important;
+}
+
+/* Body copy and the label/eyebrow inside a box */
+.cs-content .harness-card p, .cs-content .note-box p, .cs-content .callout p,
+.cs-content .panel p, .cs-content .om-node p, .cs-content .alignment-card p,
+.cs-content .impact-card p, .cs-content .rd-card p, .cs-content .md-card p,
+.cs-content .cs-card p, .cs-content .cs-model p, .cs-content .cs-md p,
+.cs-content .cs-note p, .cs-content .cs-out__cell p, .cs-content .cs-fork__cell p,
+.cs-content .story-diagram p {
+  font-size: var(--fs-p-medium) !important;
+  line-height: 1.6 !important;
+  color: var(--text-tertiary) !important;
+}
+.cs-content .harness-card p:last-child, .cs-content .note-box p:last-child,
+.cs-content .callout p:last-child, .cs-content .panel p:last-child,
+.cs-content .cs-card p:last-child, .cs-content .cs-model p:last-child,
+.cs-content .cs-md p:last-child, .cs-content .cs-out__cell p:last-child,
+.cs-content .cs-fork__cell p:last-child { margin-bottom: 0 !important; }
+
+.cs-content .rd-card-label,
+.cs-content .cs-card__label,
+.cs-content .cs-fork__label,
+.cs-content .cs-out__cell .lbl,
+.cs-content .impact-card .lbl,
+.cs-content .om-node small,
+.cs-content .alignment-card small {
+  display: block;
+  font-family: var(--font-body) !important;
+  font-size: var(--fs-p-small) !important;
+  font-weight: 600 !important;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-accent-2) !important;
+  margin-bottom: var(--space-small) !important;
+}
+
+/* The icon chip on a card, as on the persona cards */
+.cs-content .cs-model__icon,
+.cs-content .rd-icon,
+.cs-content .card-icon {
+  width: var(--btn-sm-height, 40px) !important;
+  height: var(--btn-sm-height, 40px) !important;
+  display: grid !important;
+  place-items: center !important;
+  border-radius: var(--radius-medium) !important;
+  background: var(--bg-main) !important;
+  border: var(--cs-rule) solid var(--stroke-main) !important;
+  color: var(--text-accent-2) !important;
+  margin-bottom: var(--gap-medium) !important;
+}
+.cs-content .cs-model__icon svg,
+.cs-content .rd-icon svg { width: 60%; height: 60%; }
+
+/* Cards a highlight was asked for keep the accent edge, nothing more */
+.cs-content .cs-fork__cell--lead,
+.cs-content .cs-view.is-highlight,
+.cs-content .stack-item.good { border-color: var(--text-accent-2) !important; }
+
+@media (max-width: 767px) {
+  .cs-content .harness-card, .cs-content .note-box, .cs-content .callout,
+  .cs-content .panel, .cs-content .cs-card, .cs-content .cs-model,
+  .cs-content .cs-note, .cs-content .cs-out__cell, .cs-content .cs-fork__cell,
+
+}
+
+/* ============================================================================
+   PASS 23 — 80px of air between the nav and the contents rail
+   The rail's sticky offset clears the fixed nav plus an 80px gap, and the
+   layout's top padding matches it so the rail and the summary panel still
+   start on the same line at rest.
+   ============================================================================ */
+@media (min-width: 1024px) {
+  .cs-layout { padding-top: calc(var(--nav-height) + var(--margin-group)); }
+  .cs-toc { top: calc(var(--nav-height) + var(--margin-group)); }
+}
+@media (max-width: 1023px) {
+  .cs-layout { padding-top: calc(var(--nav-height) + var(--margin-medium)); }
+}
+
+/* ============================================================================
+   PASS 24 — the carousel follows its ground
+   On every page but the map, the design-evolution carousel now sits on the
+   light page, so it takes the same box design as everything else. The map's
+   copy of it lives inside .cs-card--dark, and those rules (PASS 17) out-specify
+   these, so it keeps its dark treatment.
+   ============================================================================ */
+.cs-content .refine-item {
+  background: var(--bg-white) !important;
+  border: var(--cs-rule) solid var(--stroke-main) !important;
+  border-radius: var(--radius-large) !important;
+  color: var(--text-tertiary) !important;
+}
+.cs-content .refine-item.is-active { border-color: var(--text-accent-2) !important; }
+.cs-content .refine-item-title { color: var(--text-main) !important; }
+.cs-content .refine-item-desc { color: var(--text-tertiary) !important; }
+.cs-content .refine-item-persona,
+.cs-content .refine-kicker { color: var(--text-accent-2) !important; }
+.cs-content .refine-item-bar { background: color-mix(in srgb, var(--text-accent-2) 18%, transparent) !important; }
+
+.cs-content .refine-persona {
+  background: var(--bg-white) !important;
+  border: var(--cs-rule) solid var(--stroke-main) !important;
+  color: var(--text-secondary) !important;
+}
+.cs-content .refine-persona:hover { border-color: var(--text-accent-2) !important; color: var(--text-main) !important; }
+.cs-content .refine-persona.is-active {
+  background: var(--text-accent-2) !important;
+  border-color: var(--text-accent-2) !important;
+  color: var(--text-invert) !important;
+}
+
+/* One more results-table label that kept its light green */
+.cs-content .results-check-label,
+.cs-content .results-column-label { color: var(--text-secondary) !important; }
+
+/* ============================================================================
+   PASS 25 — tables stay tables
+   PASS 22's box design reached table cells and turned each one into a rounded
+   card. A cell is a cell: no fill of its own, no border box, no radius. Only
+   hairline rules between rows and columns.
+   ============================================================================ */
+.cs-content .decision-log-cell,
+.cs-content .comparison-table .cell,
+.cs-content .model-comparison-table .cell,
+.cs-content .cell,
+.cs-content .rd-row > *,
+.cs-content .rd-crow > *,
+.cs-content .discovery-evidence-row > *,
+.cs-content td,
+.cs-content th {
+  background: none !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+/* the row carries the rule, not the cell */
+.cs-content .decision-log-table .row,
+.cs-content .comparison-table .row,
+.cs-content .model-comparison-table .row,
+.cs-content .rd-rows > .rd-row,
+.cs-content .rd-rows > .rd-crow,
+.cs-content .rd-compare > .rd-crow,
+.cs-content .discovery-evidence-row {
+  border-top: var(--cs-rule) solid var(--stroke-main) !important;
+}
+.cs-content .rd-rows > *:first-child,
+.cs-content .rd-compare > *:first-child,
+.cs-content .decision-log-head,
+.cs-content .comparison-head,
+.cs-content .discovery-evidence-head { border-top: 0 !important; }
+
+/* padding lives on the cell so the columns line up */
+.cs-content .decision-log-cell,
+.cs-content .comparison-table .cell,
+.cs-content .model-comparison-table .cell,
+.cs-content .cell { padding: var(--padding-large) !important; }
+
+/* the table itself keeps the one card frame */
+.cs-content .decision-log-table {
+  background: var(--bg-white) !important;
+  border: var(--cs-rule) solid var(--stroke-main) !important;
+  border-radius: var(--radius-large) !important;
+  overflow: hidden !important;
+}
+.cs-content .decision-log-head {
+  background: var(--bg-white) !important;
+  border-bottom: var(--cs-rule) solid var(--stroke-main) !important;
+}
+.cs-content .decision-log-head > * {
+  font-family: var(--font-body) !important;
+  font-size: var(--fs-p-small) !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  color: var(--text-secondary) !important;
+  padding: var(--padding-medium) var(--padding-large) !important;
+}
+.cs-content .decision-log-cell,
+.cs-content .cell { color: var(--text-tertiary) !important; }
+.cs-content .decision-log-cell:first-child,
+.cs-content .row > .cell:first-child { color: var(--text-main) !important; }
+
+/* ============================================================================
+   PASS 26 — the prototype play overlay
+   These rules lived in the map page's old inline <style> and were not carried
+   into the rebuild, so the button rendered as a bare <button> under the poster.
+   Restored here in v3 tokens, which covers every page that has a prototype.
+   ============================================================================ */
+.cs-content .play-btn {
+  position: absolute !important;
+  inset: 0;
+  display: grid !important;
+  place-items: center;
+  border: 0 !important;
+  background: color-mix(in srgb, var(--bg-accent-2) 28%, transparent) !important;
+  cursor: pointer;
+  z-index: 3;
+  padding: 0 !important;
+  transition: background .2s ease;
+}
+.cs-content .play-btn:hover { background: color-mix(in srgb, var(--bg-accent-2) 14%, transparent) !important; }
+.cs-content .play-btn span {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--gap-small);
+  background: var(--text-accent-2) !important;
+  color: var(--text-invert) !important;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--fs-p-medium);
+  padding: var(--padding-medium) var(--padding-large);
+  border-radius: 999px;
+}
+.cs-content .rd-frame.is-playing .play-btn,
+.cs-content .rd-frame.is-playing .proto-poster { display: none !important; }
+
+/* ============================================================================
+   PASS 27 — the V1 concept carousel
+   It keeps its own dark ground, so its copy stays light. The arrows move to the
+   bottom and float over the media, and the shot gets more room.
+   ============================================================================ */
+.cs-content .concept-carousel-copy h3,
+.cs-content .concept-carousel-copy h4,
+.cs-content .concept-carousel-copy strong { color: var(--text-invert) !important; }
+.cs-content .concept-carousel-copy p,
+.cs-content .concept-carousel-copy li {
+  color: color-mix(in srgb, var(--text-invert) 82%, transparent) !important;
+}
+.cs-content .concept-carousel-label { color: var(--text-accent-2) !important; }
+
+/* the shell no longer reserves side gutters for the arrows */
+.cs-content .concept-carousel-shell { padding: 0 !important; position: relative; }
+.cs-content .concept-carousel-media { position: relative; }
+
+/* arrows: bottom-left, floating on the shot */
+.cs-content .concept-carousel-btn {
+  position: absolute !important;
+  top: auto !important;
+  bottom: var(--space-large) !important;
+  transform: none !important;
+  width: var(--btn-sm-height, 40px) !important;
+  height: var(--btn-sm-height, 40px) !important;
+  border-radius: 999px !important;
+  border: var(--cs-rule) solid color-mix(in srgb, var(--text-invert) 24%, transparent) !important;
+  background: color-mix(in srgb, var(--bg-accent-2) 72%, transparent) !important;
+  color: var(--text-invert) !important;
+  display: grid !important;
+  place-items: center !important;
+  z-index: 4;
+  cursor: pointer;
+}
+.cs-content .concept-carousel-btn:hover {
+  background: var(--text-accent-2) !important;
+  border-color: var(--text-accent-2) !important;
+}
+.cs-content .concept-carousel-btn.prev { left: var(--space-large) !important; right: auto !important; }
+.cs-content .concept-carousel-btn.next { left: calc(var(--space-large) + var(--btn-sm-height, 40px) + var(--space-medium)) !important; right: auto !important; }
+.cs-content .concept-carousel-btn svg { width: 60%; height: 60%; }
+
+/* a bigger shot for the version that did not ship */
+.cs-content .concept-carousel-media img {
+  max-height: 720px !important;
+  width: 100% !important;
+  height: auto !important;
+  object-fit: contain !important;
+}
+.cs-content .concept-carousel-slide {
+  grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr) !important;
+  align-items: center !important;
+}
+@media (max-width: 1023px) {
+  .cs-content .concept-carousel-slide { grid-template-columns: 1fr !important; }
+  .cs-content .concept-carousel-media img { max-height: none !important; }
+}
+
+/* Anchor jumps clear the fixed nav plus the rail's gap */
+.cs-content h2,
+.cs-content h3,
+.cs-content h4 { scroll-margin-top: calc(var(--nav-height) + var(--margin-medium)); }
+
+/* ============================================================================
+   PASS 28 — inactive persona pills inside the dark carousel
+   PASS 24 gives the pills a white ground for the light pages, but it never had
+   a counterpart inside .cs-card--dark, so the map's inactive pills went white
+   while keeping light text. Give the dark card's pills their own transparent
+   ground at a specificity that wins.
+   ============================================================================ */
+.cs-content .cs-card--dark .refine-persona {
+  background: transparent !important;
+  border-color: color-mix(in srgb, var(--text-invert) 24%, transparent) !important;
+  color: color-mix(in srgb, var(--text-invert) 78%, transparent) !important;
+}
+.cs-content .cs-card--dark .refine-persona:hover {
+  background: color-mix(in srgb, var(--text-invert) 8%, transparent) !important;
+  border-color: var(--text-accent-2) !important;
+  color: var(--text-invert) !important;
+}
+.cs-content .cs-card--dark .refine-persona.is-active {
+  background: var(--text-accent-2) !important;
+  border-color: var(--text-accent-2) !important;
+  color: var(--text-invert) !important;
+}
+
+/* ============================================================================
+   PASS 29 — persona cards
+   A white card with no stroke, a filled dark-green icon disc in the top-right,
+   and a lavender gradient rising out of the bottom edge. Declared after the
+   shared box design (PASS 22) so it wins for this one component.
+   ============================================================================ */
+:root { --cs-persona-icon: 88px; }   /* the icon disc on a persona card */
+
+.cs-content .cs-models {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--gap-large);
+}
+.cs-content .cs-model {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--bg-white) !important;
+  border: 0 !important;
+  border-radius: var(--radius-large) !important;
+  padding: var(--padding-xlarge) !important;
+  display: flex;
+  flex-direction: column;
+}
+/* the gradient sits behind the copy and fades up out of the bottom edge */
+.cs-content .cs-model::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 46%;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    color-mix(in srgb, var(--text-accent-2) 14%, transparent) 42%,
+    color-mix(in srgb, var(--text-accent-2) 52%, transparent) 100%);
+}
+
+/* the icon disc: filled accent-3, white glyph, pinned to the top-right */
+.cs-content .cs-model .cs-model__icon {
+  width: var(--cs-persona-icon) !important;
+  height: var(--cs-persona-icon) !important;
+  border-radius: 999px !important;
+  background: var(--bg-accent-3) !important;
+  border: 0 !important;
+  color: var(--text-invert) !important;
+  display: grid !important;
+  place-items: center !important;
+  margin: 0 0 var(--gap-xlarge) auto !important;
+  flex: none;
+}
+.cs-content .cs-model .cs-model__icon svg {
+  width: 42% !important;
+  height: 42% !important;
+  fill: currentColor;
+  stroke: none;
+}
+
+.cs-content .cs-model .cs-model__name {
+  font-family: var(--font-display) !important;
+  font-size: var(--fs-h3) !important;
+  font-weight: 400 !important;
+  line-height: normal !important;
+  color: var(--text-main) !important;
+  margin: 0 0 var(--space-medium) !important;
+}
+.cs-content .cs-model .cs-model__desc {
+  font-family: var(--font-body) !important;
+  font-size: var(--fs-p-large) !important;
+  line-height: 1.55 !important;
+  color: var(--text-secondary) !important;
+  margin: 0 !important;
+}
+
+@media (max-width: 1023px) { :root { --cs-persona-icon: 72px; } }
+@media (max-width: 767px) {
+  .cs-content .cs-models { grid-template-columns: 1fr; }
+  :root { --cs-persona-icon: 64px; }
+  .cs-content .cs-model { padding: var(--padding-large) !important; }
+  .cs-content .cs-model .cs-model__icon { margin-bottom: var(--gap-large) !important; }
+}
+
+/* ============================================================================
+   PASS 30 — headings never carry a surface
+   A lifted heading can land where a legacy rule paints a panel gradient (the
+   billing Strategy h3 was picking up a 158deg purple fill). A heading in the
+   reading column is text, so it gets no background, no ring, no padding box.
+   ============================================================================ */
+.cs-content h2,
+.cs-content h3,
+.cs-content h4,
+.cs-content h5 {
+  background: none !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  outline: 0 !important;
+  border: 0 !important;
+  /* The reorganised headings reuse the old section ids (#discovery, #outcome,
+     #accessibility ...), so legacy `#id { padding: clamp(...) }` section rules
+     were landing on the heading itself — billing's Discovery h2 was 219px tall
+     instead of 35. A heading in the reading column carries no padding box. */
+  padding: 0 !important;
+  min-height: 0 !important;
+  -webkit-text-fill-color: currentColor;
+}
+
+/* ---------- Number tiles: no line of any kind ---------- */
+.cs-content .metric-strip,
+.cs-content .rd-stats,
+.cs-content .metric-tile,
+.cs-content .rd-stat {
+  border: 0 !important;
+  border-top: 0 !important;
+  border-right: 0 !important;
+  border-bottom: 0 !important;
+  border-left: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+}
+
+/* ---------- Requests donut: keep the legend inside the card ---------- */
+.cs-content .req-donut {
+  display: grid !important;
+  grid-template-columns: minmax(0, auto) minmax(0, 1fr) !important;
+  gap: var(--gap-xlarge) !important;
+  align-items: center !important;
+  padding: var(--padding-xlarge) !important;
+  overflow: hidden !important;
+}
+.cs-content .req-donut > * { min-width: 0 !important; max-width: 100% !important; }
+.cs-content .req-donut p,
+.cs-content .req-donut li,
+.cs-content .req-donut span { overflow-wrap: anywhere; }
+@media (max-width: 1023px) {
+  .cs-content .req-donut { grid-template-columns: 1fr !important; justify-items: center; }
+}
+
+/* ---------- Integrations: two rows, tighter ---------- */
+.cs-content .cs-logos {
+  grid-template-columns: repeat(8, minmax(0, 1fr)) !important;
+  gap: var(--gap-large) !important;
+}
+.cs-content .cs-logos__item { min-height: var(--btn-md-height, 48px) !important; }
+.cs-content .cs-logos__item img { max-height: var(--btn-md-height, 48px) !important; }
+@media (max-width: 1023px) { .cs-content .cs-logos { grid-template-columns: repeat(4, minmax(0, 1fr)) !important; } }
+@media (max-width: 640px)  { .cs-content .cs-logos { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; } }
+
+/* ============================================================================
+   PASS 31 — no stroke on any box
+   The hairline read as inconsistent once some components lost it, so every
+   card-like box now sits on white with no outline at all, the way the persona
+   cards do. Tables keep their frame: there the boundary is doing real work.
+   ============================================================================ */
+.cs-content .harness-card,
+.cs-content .note-box,
+.cs-content .callout,
+.cs-content .panel,
+.cs-content .stack-item,
+.cs-content .at-glance-item,
+.cs-content .om-node,
+.cs-content .alignment-card,
+.cs-content .impact-card,
+.cs-content .rd-card,
+.cs-content .md-card,
+.cs-content .a11y-tag,
+.cs-content .cs-card,
+.cs-content .cs-fork__cell,
+.cs-content .cs-model,
+.cs-content .cs-md,
+.cs-content .cs-note,
+.cs-content .cs-callout,
+.cs-content .cs-out__cell,
+.cs-content .cs-prevnext__card,
+.cs-content .story-diagram,
+.cs-content .metric-tile,
+.cs-content .rd-stat,
+.cs-content .req-donut,
+.cs-content .cs-outcomes {
+  border: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+}
+/* the two that carry meaning keep a coloured edge, not a grey one */
+.cs-content .cs-fork__cell--lead,
+.cs-content .stack-item.good {
+  border-left: var(--cs-marker) solid var(--text-accent-2) !important;
+}
+.cs-content .cs-prevnext__card:hover { border: 0 !important; }
+
+/* ============================================================================
+   PASS 32 — org management components
+   ============================================================================ */
+
+/* ---------- Capability matrix: headers centred over their own column ----------
+   A reset's `th { text-align: left }` was winning for the role headers while the
+   cells under them stayed centred, so every header sat ~80px left of its marks. */
+.cs-content .perm-matrix { width: 100%; border-collapse: collapse; }
+.cs-content .perm-matrix thead th,
+.cs-content .perm-matrix tbody td {
+  text-align: center !important;
+  vertical-align: middle !important;
+}
+.cs-content .perm-matrix thead th:first-child,
+.cs-content .perm-matrix tbody th {
+  text-align: left !important;
+  vertical-align: middle !important;
+}
+/* one width for the three role columns so the marks sit on a true centre line */
+.cs-content .perm-matrix thead th:first-child { width: 46%; }
+.cs-content .perm-matrix thead th:not(:first-child) { width: 18%; }
+.cs-content .perm-matrix thead th {
+  font-family: var(--font-body) !important;
+  font-size: var(--fs-p-small) !important;
+  font-weight: 600 !important;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary) !important;
+  background: var(--bg-white) !important;
+  padding: var(--padding-medium) var(--padding-large) !important;
+  border-bottom: var(--cs-rule) solid var(--stroke-main) !important;
+}
+.cs-content .perm-matrix tbody th,
+.cs-content .perm-matrix tbody td {
+  padding: var(--padding-large) !important;
+  border-top: var(--cs-rule) solid var(--stroke-main) !important;
+  border-left: 0 !important;
+  border-right: 0 !important;
+  border-bottom: 0 !important;
+}
+.cs-content .perm-matrix tbody tr:first-child th,
+.cs-content .perm-matrix tbody tr:first-child td { border-top: 0 !important; }
+.cs-content .perm-matrix tbody th {
+  font-size: var(--fs-p-medium) !important;
+  font-weight: 700 !important;
+  color: var(--text-main) !important;
+}
+.cs-content .perm-matrix .can { color: var(--bg-accent-3) !important; }
+.cs-content .perm-matrix .see { color: var(--text-accent-2) !important; }
+.cs-content .perm-matrix .no  { color: var(--text-tertiary) !important; font-weight: 700; }
+.cs-content .perm-matrix .ic  { width: var(--space-large); height: var(--space-large); vertical-align: middle; }
+
+/* the legend reads as three labelled keys, not a run-on line */
+.cs-content .matrix-legend {
+  display: flex !important;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--gap-large) !important;
+  margin: var(--space-medium) 0 0 !important;
+  font-size: var(--fs-p-small) !important;
+  color: var(--text-secondary) !important;
+}
+.cs-content .matrix-legend > span {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-small);
+}
+.cs-content .matrix-legend .ic { width: var(--space-medium); height: var(--space-medium); }
+.cs-content .matrix-legend .can { color: var(--bg-accent-3) !important; }
+.cs-content .matrix-legend .see { color: var(--text-accent-2) !important; }
+.cs-content .matrix-legend .no  { color: var(--text-tertiary) !important; font-weight: 700; }
+
+/* ---------- Figures: no tint, no shadow, caption close to its image ---------- */
+.cs-content .shot,
+.cs-content .shot-frame,
+.cs-content .shot-media,
+.cs-content .visual-image-frame,
+.cs-content .fitframe,
+.cs-content .recframe,
+.cs-content .flowframe {
+  background: none !important;
+  box-shadow: none !important;
+  border: 0 !important;
+}
+.cs-content .shot-frame,
+.cs-content .shot-media { border-radius: var(--radius-large) !important; overflow: hidden; }
+.cs-content .shot { margin-top: var(--space-medium) !important; margin-bottom: var(--margin-medium) !important; }
+.cs-content .shot-cap,
+.cs-content figcaption {
+  margin-top: var(--space-small) !important;
+  font-family: var(--font-body) !important;
+  font-size: var(--fs-p-small) !important;
+  color: var(--text-tertiary) !important;
+}
+
+/* ---------- "Built in" badges: small, with a green check ---------- */
+.cs-content .a11y-tag.cs-badge-check {
+  display: inline-flex !important;
+  align-items: center;
+  gap: var(--space-small);
+  padding: var(--space-small) var(--space-medium) !important;
+  border-radius: 999px !important;
+  background: var(--bg-white) !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  font-family: var(--font-body) !important;
+  font-size: var(--fs-p-small) !important;
+  color: var(--text-secondary) !important;
+}
+.cs-content .a11y-tag.cs-badge-check::before {
+  content: "\2713";           /* a plain green tick reads better than a masked disc */
+  color: var(--bg-accent-3);
+  font-weight: 700;
+  font-size: 1.05em;
+  line-height: 1;
+  flex: none;
+}
+.cs-content .a11y-line { display: flex !important; flex-wrap: wrap; align-items: center; gap: var(--space-medium) !important; }
+.cs-content .a11y-lbl {
+  font-family: var(--font-body) !important;
+  font-size: var(--fs-p-small) !important;
+  font-weight: 600 !important;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-accent-2) !important;
+}
+.cs-content .a11y-chip {
+  display: inline-flex !important;
+  align-items: center;
+  gap: var(--space-small);
+  padding: var(--space-small) var(--space-medium) !important;
+  border-radius: 999px !important;
+  background: var(--bg-white) !important;
+  border: 0 !important;
+  font-size: var(--fs-p-small) !important;
+}
+
+/* ---------- "How it was tested": both halves get a surface ---------- */
+.cs-content .split-2-wrap {
+  border: 0 !important;
+  border-radius: var(--radius-large) !important;
+  overflow: hidden !important;
+  background: var(--bg-white) !important;
+}
+.cs-content .split-2 > div:first-child {
+  background: color-mix(in srgb, var(--text-accent-2) 7%, var(--bg-white)) !important;
+}
+.cs-content .split-2 > div { padding: var(--padding-large) !important; }
+@media (max-width: 767px) { .cs-content .split-2 { grid-template-columns: 1fr !important; } }
+
+/* the matrix keeps only horizontal rules; the legacy column dividers go */
+.cs-content .perm-matrix thead th,
+.cs-content .perm-matrix thead th + th {
+  border-left: 0 !important;
+  border-right: 0 !important;
+}
+
+/* ============================================================================
+   PASS 33 — one consistent rule in every table, no column dividers
+   Audited across all six studies. These carried vertical dividers, usually on
+   the header only, so the head looked split while the body did not:
+     .comparison-head div:first-child        (style.css)
+     .cell:first-child                       (style.css)
+     .decision-log-head div / .decision-log-cell
+     .discovery-evidence-head div:first-child
+     .itable th + th / .itable td + td
+     .perm-matrix thead th + th / tbody td
+     .model-comparison-table .cell:first-child
+     .jc-row > div
+   Every table now shows horizontal rules only, all the same weight and colour.
+   ============================================================================ */
+.cs-content .comparison-head > *,
+.cs-content .comparison-table .cell,
+.cs-content .decision-log-head > *,
+.cs-content .decision-log-cell,
+.cs-content .discovery-evidence-head > *,
+.cs-content .discovery-evidence-row > *,
+.cs-content .itable th,
+.cs-content .itable td,
+.cs-content .perm-matrix thead th,
+.cs-content .perm-matrix tbody th,
+.cs-content .perm-matrix tbody td,
+.cs-content .model-comparison-table .cell,
+.cs-content .results-row > *,
+.cs-content .jc-row > *,
+.cs-content .rd-row > *,
+.cs-content .rd-crow > *,
+.cs-content .cell,
+.cs-content td,
+.cs-content th {
+  border-left: 0 !important;
+  border-right: 0 !important;
+}
+
+/* one horizontal rule, same weight and colour everywhere */
+.cs-content .comparison-table .row,
+.cs-content .decision-log-table .row,
+.cs-content .model-comparison-table .row,
+.cs-content .discovery-evidence-row,
+.cs-content .results-row,
+.cs-content .jc-row,
+.cs-content .rd-rows > .rd-row,
+.cs-content .rd-rows > .rd-crow,
+.cs-content .rd-compare > .rd-crow,
+.cs-content .itable tbody tr > *,
+.cs-content .perm-matrix tbody tr > * {
+  border-top: var(--cs-rule) solid var(--stroke-main) !important;
+  border-bottom: 0 !important;
+}
+/* the header carries the only heavier edge: the one under it */
+.cs-content .comparison-head,
+.cs-content .decision-log-head,
+.cs-content .discovery-evidence-head,
+.cs-content .results-row.head,
+.cs-content .itable thead tr > *,
+.cs-content .perm-matrix thead th {
+  border-top: 0 !important;
+  border-bottom: var(--cs-rule) solid var(--stroke-main) !important;
+}
+/* and the first body row does not double up on it */
+.cs-content .comparison-head + .row,
+.cs-content .decision-log-head + .row,
+.cs-content .discovery-evidence-head + .discovery-evidence-row,
+.cs-content .rd-rows > *:first-child,
+.cs-content .rd-compare > *:first-child,
+.cs-content .itable tbody tr:first-child > *,
+.cs-content .perm-matrix tbody tr:first-child > * {
+  border-top: 0 !important;
+}
+
+/* card grids that faked a table with nth-child edges */
+.cs-content .result-item,
+.cs-content .fitem,
+.cs-content .skill,
+.cs-content .break-item,
+.cs-content .formula-cell {
+  border-left: 0 !important;
+  border-right: 0 !important;
+}
+
+/* ============================================================================
+   PASS 34 — the Drafts carousel loses its container
+   No dark ground and no padding, so the slides sit directly on the page. With
+   the dark surface gone the copy has to come back to dark text, which reverses
+   PASS 27's light treatment for this component.
+   ============================================================================ */
+.cs-content .concept-carousel {
+  background: none !important;
+  background-image: none !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  margin-top: var(--space-medium) !important;
+  margin-bottom: var(--margin-medium) !important;
+}
+.cs-content .concept-carousel-copy h3,
+.cs-content .concept-carousel-copy h4,
+.cs-content .concept-carousel-copy strong { color: var(--text-main) !important; }
+.cs-content .concept-carousel-copy p,
+.cs-content .concept-carousel-copy li { color: var(--text-tertiary) !important; }
+.cs-content .concept-carousel-label { color: var(--text-accent-2) !important; }
+
+/* arrows now sit on the page, so give them a light treatment */
+.cs-content .concept-carousel-btn {
+  background: var(--bg-white) !important;
+  border: 0 !important;
+  color: var(--text-main) !important;
+  box-shadow: none !important;
+}
+.cs-content .concept-carousel-btn:hover {
+  background: var(--text-accent-2) !important;
+  color: var(--text-invert) !important;
+}
+.cs-content .concept-carousel-dot { background: var(--stroke-main) !important; }
+.cs-content .concept-carousel-dot.is-active { background: var(--text-accent-2) !important; }
+
+/* ============================================================================
+   PASS 35 — the last round of component corrections
+   ============================================================================ */
+
+/* ---------- Banner lead runs the full column ---------- */
+.cs-banner__lead { max-width: none !important; }
+
+/* ---------- Before / after figures: dark enough to read ----------
+   These were near-white text sitting on a pale tint, so the numbers vanished. */
+.cs-content .results-row .r-before,
+.cs-content .result-value.r-before {
+  background: color-mix(in srgb, var(--text-accent-2) 10%, transparent) !important;
+  color: var(--text-accent-1) !important;
+  font-weight: 700 !important;
+}
+.cs-content .results-row .r-after,
+.cs-content .result-value.r-after {
+  background: color-mix(in srgb, var(--bg-accent-3) 10%, transparent) !important;
+  color: var(--bg-accent-3) !important;
+  font-weight: 700 !important;
+}
+.cs-content .r-arrow { color: var(--text-tertiary) !important; }
+.cs-content .results-row.head span:nth-child(2),
+.cs-content .results-row.head span:last-child { color: var(--text-secondary) !important; }
+
+/* ---------- Grade bars: a white track under the fill ---------- */
+.cs-content .grade-track {
+  background: var(--bg-white) !important;
+  height: var(--space-medium) !important;
+}
+.cs-content .grade-row b { color: var(--text-main) !important; }
+.cs-content .grade-row span { color: var(--text-tertiary) !important; }
+.cs-content .grade-bars { border-top: 0 !important; }
+.cs-content .grade-note { color: var(--text-tertiary) !important; }
+
+/* ---------- Badges: one component, one size ----------
+   The page's own .a11y-tag::before painted a purple dot and loaded after this
+   sheet, so the tick needs to be declared !important to land. */
+.cs-content .a11y-chip,
+.cs-content .a11y-tag {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: var(--space-small) !important;
+  padding: var(--padding-small) var(--padding-medium) !important;
+  border-radius: var(--radius-xlarge) !important;
+  background: var(--bg-white) !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  font-family: var(--font-body) !important;
+  font-size: var(--fs-p-small) !important;
+  line-height: 1.4 !important;
+  color: var(--text-secondary) !important;
+  white-space: nowrap;
+}
+.cs-content .a11y-chip b { color: var(--text-main) !important; font-weight: 700 !important; }
+.cs-content .a11y-chip i { color: var(--text-accent-2) !important; font-style: normal; font-weight: 700; }
+.cs-content .a11y-tag::before {
+  content: "\2713" !important;
+  display: inline-block !important;
+  width: auto !important;
+  height: auto !important;
+  border-radius: 0 !important;
+  background: none !important;
+  color: var(--bg-accent-3) !important;
+  font-weight: 700 !important;
+  margin-right: 0 !important;
+  vertical-align: baseline !important;
+}
+.cs-content .a11y-line { border-color: var(--stroke-main) !important; padding-block: var(--padding-medium) !important; }
+
+/* ---------- Tables: white box, no outer stroke ---------- */
+.cs-content .rd-rows,
+.cs-content .rd-compare,
+.cs-content .comparison-table,
+.cs-content .decision-log-table,
+.cs-content .model-comparison-table,
+.cs-content .results-table,
+.cs-content .discovery-band,
+.cs-content .itable {
+  border: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+  background: var(--bg-white) !important;
+  border-radius: var(--radius-large) !important;
+  overflow: hidden !important;
+}
+.cs-content .results-table { border-top: 0 !important; }
+
+/* ============================================================================
+   PASS 36 — the client link replaces the banner CTA
+   The "Visit Lettrlabs" button was overlapping the h1, so the client's name is
+   the link now: underlined on the banner, accent-coloured in the body.
+   ============================================================================ */
+.cs-banner__link {
+  color: var(--text-invert);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+  transition: color .18s ease, text-decoration-color .18s ease;
+}
+.cs-banner__link:hover,
+.cs-banner__link:focus-visible {
+  color: var(--text-accent-3);
+  text-decoration-thickness: 2px;
+}
+/* the same link used inside the reading column follows the body link colour */
+.cs-content .cs-banner__link {
+  color: var(--text-accent-2) !important;
+  font-weight: 700;
+}
+.cs-content .cs-banner__link:hover { color: var(--text-accent-1) !important; }
+
+/* ============================================================================
+   PASS 37 — carousel arrows, and the dark card goes full-bleed on mobile
+   ============================================================================ */
+
+/* the chevrons read white on their dark disc, on every page */
+.cs-content .refine-arrow,
+.cs-content .refine-arrow svg,
+.cs-content .refine-arrow path {
+  color: var(--text-invert) !important;
+  stroke: currentColor !important;
+}
+.cs-content .refine-arrow {
+  background: color-mix(in srgb, var(--bg-accent-2) 78%, transparent) !important;
+  border: 0 !important;
+}
+.cs-content .refine-arrow:hover {
+  background: var(--text-accent-2) !important;
+  color: var(--text-invert) !important;
+}
+.cs-content .concept-carousel-btn,
+.cs-content .concept-carousel-btn svg,
+.cs-content .concept-carousel-btn path { stroke: currentColor !important; }
+
+/* On a phone the dark card spans the screen: no radius, no edge, no side pad */
+@media (max-width: 767px) {
+  .cs-content .cs-card--dark {
+    border: 0 !important;
+    border-radius: 0 !important;
+    margin-inline: calc(var(--page-gutter) * -1) !important;
+    padding-inline: var(--page-gutter) !important;
+    width: auto !important;
+  }
+}
+
+/* ============================================================================
+   PASS 38 — the prototype can't run on a phone
+   The embedded prototype needs a pointer and a wide viewport, so on mobile the
+   play control states that plainly and stops being interactive rather than
+   loading an iframe that cannot be used.
+   ============================================================================ */
+.cs-content .play-btn__mobile { display: none; }
+@media (max-width: 767px) {
+  .cs-content .play-btn {
+    pointer-events: none !important;
+    cursor: default !important;
+    background: color-mix(in srgb, var(--bg-accent-2) 40%, transparent) !important;
+  }
+  .cs-content .play-btn > span:not(.play-btn__mobile) { display: none !important; }
+  .cs-content .play-btn__mobile {
+    display: inline-flex !important;
+    align-items: center;
+    gap: var(--gap-small);
+    background: var(--bg-white) !important;
+    color: var(--text-tertiary) !important;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: var(--fs-p-small);
+    padding: var(--padding-medium) var(--padding-large);
+    border-radius: 999px;
+  }
+}
+
+/* ============================================================================
+   PASS 39 — table headers stay on mobile
+   redesign.css / style.css hide `.is-head` below 640-760px because the old
+   design stacked each row and repeated the column name per cell. These tables
+   keep their two columns on a phone, so hiding the head left the columns
+   unlabelled. Show it, at the same grid as the body rows.
+   ============================================================================ */
+@media (max-width: 767px) {
+  .cs-content .rd-row.is-head,
+  .cs-content .rd-crow.is-head,
+  .cs-content .comparison-head,
+  .cs-content .decision-log-head,
+  .cs-content .discovery-evidence-head,
+  .cs-content .results-row.head {
+    display: grid !important;
+  }
+  .cs-content .rd-rows > .rd-row.is-head { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.6fr) !important; }
+  .cs-content .rd-compare > .rd-crow.is-head { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.1fr) minmax(0, 1.1fr) !important; }
+  .cs-content .dec-table > .rd-crow.is-head { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.25fr) minmax(0, .85fr) !important; }
+  .cs-content .discovery-evidence-head { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.6fr) !important; }
+  /* the head's own cells shrink to fit a narrow column */
+  .cs-content .rd-row.is-head span,
+  .cs-content .rd-crow.is-head span,
+  .cs-content .comparison-head > *,
+  .cs-content .decision-log-head > *,
+  .cs-content .discovery-evidence-head > * {
+    font-size: var(--fs-p-small) !important;
+    white-space: normal !important;
+  }
+  /* with a real header back, the per-cell repeat is redundant */
+  .cs-content .cell[data-label]::before,
+  .cs-content .side[data-l]::before { content: none !important; }
+}
+
+/* ============================================================================
+   PASS 40 — the nav gets out of the way while reading
+   Matches the landing page: it slides away on downward scroll past the banner
+   and returns on any upward scroll. The contents rail keeps its own offset, so
+   it does not jump when the nav leaves.
+   ============================================================================ */
+.cs-nav { transform: translateY(0); transition: background-color .3s ease, border-color .3s ease, transform .3s ease; }
+.cs-nav.is-hidden { transform: translateY(-100%); }
+@media (prefers-reduced-motion: reduce) { .cs-nav { transition: none; } }
+
+/* ============================================================================
+   PASS 41 — the swipe hint on horizontally scrollable tables
+   One pill for both the CSS hint and the scroll-hint.js one: dark ground,
+   white label, a chevron pair, centred under the table it belongs to.
+   ============================================================================ */
+/* every wide table becomes a scroller on a phone, with the same hint */
+@media (max-width: 767px) {
+  .cs-content .rd-compare,
+  .cs-content .dec-table,
+  .cs-content .decision-log-table,
+  .cs-content .comparison-table,
+  .cs-content .model-comparison-table,
+  .cs-content .results-table,
+  .cs-content .itable,
+  .cs-content .discovery-band {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+  }
+}
+
+/* the JS hint that some pages already ship gets the same treatment */
+.cs-content .scroll-hint,
+.scroll-hint {
+  background: var(--text-main) !important;
+  color: var(--text-invert) !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+  padding: var(--space-small) var(--padding-medium) !important;
+  font-family: var(--font-body) !important;
+  font-size: var(--fs-p-small) !important;
+  font-weight: 700 !important;
+  box-shadow: none !important;
+}
+.cs-content .scroll-hint svg,
+.scroll-hint svg { color: var(--text-invert) !important; stroke: currentColor !important; }
+
+/* Tighter logo grid on a phone — the rows were carrying far more air than the
+   marks inside them needed. */
+@media (max-width: 767px) {
+  .cs-content .cs-logos {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: var(--space-small) var(--space-medium) !important;
+  }
+  .cs-content .cs-logos__item { min-height: var(--btn-sm-height, 40px) !important; }
+  .cs-content .cs-logos__item img { max-height: var(--space-xlarge) !important; }
+}
+
+/* ============================================================================
+   PASS 42 — mobile flow steps show their still, and one scroll helper only
+   The step images were revealed by `#connection .scroll-story-mobile-media`,
+   and the reorg moved the flow out of that section, so they went missing.
+   Reveal them on their own, and drop the live animated frames on a phone —
+   they need a pointer and a wide viewport, and the still says the same thing.
+   ============================================================================ */
+@media (max-width: 767px) {
+  .cs-content .scroll-story-mobile-media {
+    display: block !important;
+    margin: 0 0 var(--space-medium) !important;
+    width: auto !important;
+    max-width: 100% !important;
+  }
+  .cs-content .scroll-story-mobile-media img {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    border: 0 !important;
+    border-radius: var(--radius-large) !important;
+    object-fit: contain !important;
+  }
+  /* every step reads as its own image + heading + paragraph, none held back */
+  .cs-content .scroll-story-step {
+    display: block !important;
+    opacity: 1 !important;
+    transform: none !important;
+    pointer-events: auto !important;
+  }
+  .cs-content .scroll-story-media,
+  .cs-content .scroll-story-stage,
+  .cs-content .liveframe-stage { display: none !important; }
+  .cs-content .scroll-story-copy { display: block !important; }
+}
+
+/* One helper per scrollable table: keep "Swipe to scroll", drop the JS one. */
+.cs-content .scroll-hint,
+.cs-content [data-scroll-hint],
+.cs-scroller .scroll-hint { display: none !important; }
+
+/* ============================================================================
+   PASS 43 — the features carousel items lose their frame
+   No border and no radius; the active item is carried by its fill and the
+   progress bar underneath it instead of an outline.
+   ============================================================================ */
+.cs-content .refine-item,
+.cs-content .refine-item.is-active {
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+.cs-content .refine-item { background: none !important; }
+.cs-content .refine-item.is-active {
+  background: var(--bg-white) !important;
+}
+.cs-content .cs-card--dark .refine-item { background: none !important; }
+.cs-content .cs-card--dark .refine-item.is-active {
+  background: color-mix(in srgb, var(--text-invert) 8%, transparent) !important;
+}
+
+/* ============================================================================
+   PASS 44 — rejected vs shipped reads as two containers
+   The two-column table collapsed its head onto one line and stacked its cells
+   with dead space. Two cards side by side say the same thing far more clearly,
+   and they stack on a phone.
+   ============================================================================ */
+.cs-content .cs-vs { align-items: start; }
+.cs-content .cs-vs .cs-card { background: var(--bg-white) !important; padding: var(--padding-large) !important; }
+.cs-content .cs-vs .cs-card--lead { background: color-mix(in srgb, var(--bg-accent-3) 6%, var(--bg-white)) !important; }
+.cs-content .cs-vs .cs-label { color: var(--text-main) !important; margin-bottom: var(--space-medium) !important; }
+.cs-content .cs-vs .cs-card--lead .cs-label { color: var(--bg-accent-3) !important; }
+.cs-content .cs-points {
+  list-style: none;
+  margin: 0 !important;
+  padding: 0;
+  display: grid;
+  gap: var(--space-medium);
+}
+.cs-content .cs-points > li {
+  position: relative;
+  margin: 0 !important;
+  padding-left: var(--padding-medium);
+  font-size: var(--fs-p-medium) !important;
+  line-height: 1.6;
+  color: var(--text-tertiary) !important;
+}
+.cs-content .cs-points > li::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0.6em;
+  width: var(--space-small); height: var(--space-small);
+  border-radius: 999px;
+  background: var(--stroke-main);
+}
+.cs-content .cs-vs .cs-card--lead .cs-points > li::before { background: var(--bg-accent-3); }
+@media (max-width: 767px) { .cs-content .cs-vs { grid-template-columns: 1fr !important; } }
+
+/* ============================================================================
+   PASS 45 — the spec cards: a coloured header, one inset for the body
+   The header band was set to --bg-main, which is the page colour, so it read
+   as if it sat outside the card. It now carries an accent tint. And the body
+   inset is declared on the actual children of each shape rather than through a
+   :not() selector, so the heading and the copy line up.
+   ============================================================================ */
+.cs-content .cs-md,
+.cs-content .md-card,
+.cs-content .harness-card {
+  background: var(--bg-white) !important;
+  border: 0 !important;
+  border-radius: var(--radius-large) !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  box-shadow: none !important;
+}
+
+/* ---- the header band ---- */
+.cs-content .cs-md__file,
+.cs-content .md-file,
+.cs-content .harness-file {
+  display: flex !important;
+  align-items: center !important;
+  gap: var(--space-small) !important;
+  margin: 0 !important;
+  padding: var(--padding-medium) var(--padding-large) !important;
+  background: color-mix(in srgb, var(--text-accent-2) 12%, var(--bg-white)) !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  font-family: var(--font-body) !important;
+  font-size: var(--fs-p-small) !important;
+  font-weight: 600 !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+  color: var(--text-accent-1) !important;
+}
+/* .harness-file has no dot element of its own, so it gets one */
+.cs-content .harness-file::before {
+  content: "";
+  width: var(--space-medium);
+  height: var(--space-medium);
+  border-radius: 999px;
+  background: var(--text-accent-2);
+  flex: none;
+}
+.cs-content .cs-md__file .dot,
+.cs-content .md-file .dot {
+  width: var(--space-medium);
+  height: var(--space-medium);
+  border-radius: 999px;
+  background: var(--text-accent-2);
+  flex: none;
+}
+
+/* ---- the body: one inset, tight heading-to-copy ---- */
+.cs-content .cs-md__body,
+.cs-content .md-body {
+  padding: var(--padding-large) !important;
+}
+.cs-content .harness-card > h4,
+.cs-content .harness-card > p,
+.cs-content .harness-card > ul,
+.cs-content .harness-card > ol {
+  padding-inline: var(--padding-large) !important;
+}
+.cs-content .harness-card > h4 { padding-top: var(--padding-large) !important; }
+.cs-content .harness-card > *:last-child { padding-bottom: var(--padding-large) !important; }
+
+.cs-content .cs-md__body h4,
+.cs-content .md-body h4,
+.cs-content .harness-card > h4 {
+  font-family: var(--font-display) !important;
+  font-size: var(--fs-p-large) !important;
+  font-weight: 700 !important;
+  color: var(--text-main) !important;
+  margin: 0 0 var(--space-small) !important;
+}
+.cs-content .cs-md__body p,
+.cs-content .md-body p,
+.cs-content .harness-card > p {
+  font-size: var(--fs-p-medium) !important;
+  line-height: 1.6 !important;
+  color: var(--text-tertiary) !important;
+  margin: 0 !important;
+}
+
+/* ============================================================================
+   PASS 46 — reflection quotes take the highlighted-view treatment
+   The same shape as the highlighted Business card: white surface, an accent
+   bar on the leading edge, square on that edge and rounded on the other.
+   ============================================================================ */
+.cs-content .quote {
+  background: var(--bg-white) !important;
+  border: 0 !important;
+  border-left: var(--cs-marker) solid var(--text-accent-2) !important;
+  border-radius: 0 var(--radius-large) var(--radius-large) 0 !important;
+  padding: var(--padding-large) var(--padding-xlarge) !important;
+  margin-top: var(--space-medium) !important;
+  margin-bottom: var(--margin-medium) !important;
+  box-shadow: none !important;
+  font-family: var(--font-body) !important;
+  font-size: var(--fs-p-large) !important;
+  font-style: normal !important;
+  /* each page's own stylesheet loads after this one and sets .quote to
+     600-700 weight at a display size, so these need to be explicit too */
+  font-weight: 400 !important;
+  letter-spacing: 0 !important;
+  line-height: 1.6 !important;
+  max-width: none !important;
+  color: var(--text-secondary) !important;
+  quotes: none;
+}
+.cs-content .quote::before,
+.cs-content .quote::after { content: none !important; }
+@media (max-width: 767px) {
+  .cs-content .quote { padding: var(--padding-medium) var(--padding-large) !important; }
+}
+
+/* ============================================================================
+   PASS 47 — no rule between flow steps
+   `.scroll-story-step + .scroll-story-step` draws a top border, and the only
+   thing suppressing it was `#connection ...`. The reorg moved the flow out of
+   that section, so the line came back above every step.
+   ============================================================================ */
+.cs-content .scroll-story-step + .scroll-story-step {
+  border-top: 0 !important;
+  padding-top: var(--margin-medium) !important;
+}
+
+/* ============================================================================
+   PASS 48 — shared image lightbox
+   The billing page already had this behaviour but the rebuild dropped its
+   markup, so the script was binding to nothing. Promoted to the shared layer
+   in v3 tokens, and wired to every content image including the carousels.
+   ============================================================================ */
+.cs-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 140;
+  background: color-mix(in srgb, var(--text-main) 92%, transparent);
+  -webkit-backdrop-filter: blur(var(--cs-veil-blur));
+  backdrop-filter: blur(var(--cs-veil-blur));
+  padding: var(--padding-xlarge);
+  display: grid;
+  place-items: center;
+}
+.cs-lightbox[hidden] { display: none; }
+.cs-lightbox__shell {
+  position: relative;
+  width: min(1400px, 100%);
+  max-height: 100%;
+  display: grid;
+  gap: var(--gap-medium);
+}
+.cs-lightbox__close {
+  position: absolute;
+  right: 0;
+  top: calc(var(--space-xlarge) * -1);
+  width: var(--btn-sm-height, 40px);
+  height: var(--btn-sm-height, 40px);
+  border: 0;
+  border-radius: 999px;
+  background: var(--bg-white);
+  color: var(--text-main);
+  font-size: var(--fs-h3);
+  line-height: 1;
+  cursor: pointer;
+}
+.cs-lightbox__close:hover { background: var(--text-accent-2); color: var(--text-invert); }
+.cs-lightbox__media { margin: 0; display: grid; gap: var(--gap-small); }
+.cs-lightbox__media img {
+  width: 100%;
+  max-height: 80vh;
+  object-fit: contain;
+  border-radius: var(--radius-large);
+  background: var(--bg-white);
+}
+.cs-lightbox__caption { display: grid; gap: var(--space-small); }
+.cs-lightbox__caption strong {
+  font-family: var(--font-display);
+  font-size: var(--fs-p-large);
+  color: var(--text-invert);
+}
+.cs-lightbox__caption strong:empty { display: none; }
+.cs-lightbox__caption span {
+  font-family: var(--font-body);
+  font-size: var(--fs-p-medium);
+  line-height: 1.6;
+  color: color-mix(in srgb, var(--text-invert) 78%, transparent);
+}
+.cs-lightbox__caption span:empty { display: none; }
+
+/* anything clickable to zoom says so */
+.cs-content [data-cs-zoom] { cursor: zoom-in; }
+@media (max-width: 767px) {
+  .cs-lightbox { padding: var(--padding-medium); }
+  .cs-lightbox__close { top: calc(var(--space-large) * -1); }
+}
+
+/* the lightbox shows either a still or a clip */
+.cs-lightbox__media video {
+  width: 100%;
+  max-height: 80vh;
+  object-fit: contain;
+  border-radius: var(--radius-large);
+  background: var(--text-main);
+}
+.cs-lightbox__media video[hidden],
+.cs-lightbox__media img[hidden] { display: none !important; }
+/* a clip in the carousel is zoomable too */
+.cs-content .vid-frame[data-cs-zoom] { cursor: zoom-in; }
+
+/* ============================================================================
+   PASS 49 — highlighted cards carry an accent fill, not an edge
+   The purple leading border is replaced by a light accent-2 wash, so the
+   emphasis comes from the surface. The reflection quote keeps its bar, since
+   that shape was asked for explicitly.
+   ============================================================================ */
+.cs-content .cs-fork__cell--lead,
+.cs-content .cs-view.is-highlight,
+.cs-content .stack-item.good {
+  border: 0 !important;
+  border-left: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+  background: color-mix(in srgb, var(--text-accent-2) 10%, var(--bg-white)) !important;
+  border-radius: var(--radius-large) !important;
+}
+.cs-content .cs-fork__cell--lead .cs-fork__label,
+.cs-content .cs-view.is-highlight .cs-view__who { color: var(--text-accent-1) !important; }
+.cs-content .cs-fork__cell--lead p,
+.cs-content .cs-view.is-highlight p { color: var(--text-secondary) !important; }
+
+/* ============================================================================
+   PASS 50 — every long table scrolls sideways, and says so
+   Each table is wrapped in a .cs-scroller. The wrapper does the scrolling, so
+   the table keeps its rounded frame and its own minimum width. The hint only
+   appears when the content actually overflows — case-study.js measures that
+   and sets .is-scrollable, since CSS cannot detect it.
+   ============================================================================ */
+.cs-scroller {
+  position: relative;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  margin-top: var(--space-medium) !important;
+  margin-bottom: var(--margin-medium) !important;
+}
+.cs-scroller > * { margin-top: 0 !important; margin-bottom: 0 !important; }
+
+.cs-scroller::after {
+  content: "\2039\203A\00a0 Swipe to scroll";
+  display: none;
+  width: max-content;
+  margin: var(--space-medium) auto 0;
+  padding: var(--space-small) var(--padding-medium);
+  border-radius: 999px;
+  background: var(--text-main);
+  color: var(--text-invert);
+  font-family: var(--font-body);
+  font-size: var(--fs-p-small);
+  font-weight: 700;
+  white-space: nowrap;
+  pointer-events: none;
+  position: sticky;
+  left: 0;
+}
+.cs-scroller.is-scrollable::after { display: block; }
+
+/* the capability matrix carries its own minimum width; let it, and scroll */
+.cs-content .perm-matrix { min-width: 620px; }
+.cs-scroller .comparison-table,
+.cs-scroller .decision-log-table,
+.cs-scroller .results-table,
+.cs-scroller .itable,
+.cs-scroller .rd-rows,
+.cs-scroller .rd-compare,
+.cs-scroller .discovery-band { width: max-content; min-width: 100%; }
+
+/* ---------- Banner meta stacks on a phone: label, then value ---------- */
+@media (max-width: 767px) {
+  .cs-meta__row {
+    grid-template-columns: 1fr !important;
+    gap: var(--space-small) !important;
+  }
+  .cs-meta { gap: var(--gap-large) !important; }
+  .cs-meta__label { font-size: var(--fs-p-small) !important; }
+}
+
+/* ---------- Number boxes stack one per row on a phone ---------- */
+@media (max-width: 767px) {
+  .cs-content .metric-strip,
+  .cs-content .metric-strip.cs-metrics-2x3,
+  .cs-content .rd-stats {
+    grid-template-columns: 1fr !important;
+    gap: var(--space-medium) !important;
+  }
+}
+
+/* ============================================================================
+   PASS 51 — on a phone a table stays a table
+   The legacy sheets collapse every row to one column below 640-1024px and
+   repeat the column name per cell. Now that the tables live in a scroller,
+   they keep their columns and move sideways instead. `grid-auto-flow: column`
+   with a minimum track width does this without needing each table's own
+   column count.
+   ============================================================================ */
+@media (max-width: 767px) {
+  .cs-content .rd-row,
+  .cs-content .rd-crow,
+  .cs-content .comparison-head,
+  .cs-content .comparison-table .row,
+  .cs-content .decision-log-head,
+  .cs-content .decision-log-body,
+  .cs-content .discovery-evidence-head,
+  .cs-content .discovery-evidence-row,
+  .cs-content .model-comparison-table .comparison-head,
+  .cs-content .model-comparison-table .row,
+  .cs-content .results-row,
+  .cs-content .jc-row,
+  .cs-content .vs-row,
+  .cs-content .formula-row,
+  .cs-content .evidence-grid {
+    display: grid !important;
+    grid-template-columns: none !important;
+    grid-auto-flow: column !important;
+    grid-auto-columns: minmax(190px, 1fr) !important;
+    gap: var(--gap-large) !important;
+    min-width: 0 !important;
+    padding: var(--padding-large) !important;
+  }
+
+  /* header rows come back, so the per-cell label repeats are redundant */
+  .cs-content .rd-row.is-head,
+  .cs-content .rd-crow.is-head,
+  .cs-content .comparison-head,
+  .cs-content .decision-log-head,
+  .cs-content .discovery-evidence-head,
+  .cs-content .results-row.head,
+  .cs-content .persona-table thead { display: grid !important; }
+  .cs-content .persona-table thead { display: table-header-group !important; }
+  .cs-content .cell[data-label]::before,
+  .cs-content .side[data-l]::before,
+  .cs-content .decision-log-cell[data-label]::before,
+  .cs-content .persona-table td::before { content: none !important; display: none !important; }
+
+  /* a real <table> stays one */
+  .cs-content .persona-table,
+  .cs-content .itable,
+  .cs-content .perm-matrix { display: table !important; width: auto !important; min-width: 620px !important; }
+  .cs-content .persona-table tbody,
+  .cs-content .itable tbody,
+  .cs-content .perm-matrix tbody { display: table-row-group !important; }
+  .cs-content .persona-table tr,
+  .cs-content .itable tr,
+  .cs-content .perm-matrix tr { display: table-row !important; }
+  .cs-content .persona-table td,
+  .cs-content .persona-table th,
+  .cs-content .itable td,
+  .cs-content .itable th,
+  .cs-content .perm-matrix td,
+  .cs-content .perm-matrix th {
+    display: table-cell !important;
+    width: auto !important;
+    padding: var(--padding-medium) var(--padding-large) !important;
+  }
+}
+
+/* ============================================================================
+   PASS 52 — feature carousel items carry no chrome
+   No fill, no padding box, no radius, no edge. The active one is marked by its
+   progress bar alone.
+   ============================================================================ */
+.cs-content .refine-item,
+.cs-content .refine-item.is-active,
+.cs-content .cs-card--dark .refine-item,
+.cs-content .cs-card--dark .refine-item.is-active {
+  background: none !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+.cs-content .refine-item { padding-block: var(--space-medium) !important; }

@@ -1,0 +1,213 @@
+/* ============================================================================
+   v3 DESIGN TOKENS
+   The only place raw values live. Everything else references these.
+
+   Spacing:  ONE 4-step ladder (8 / 16 / 24 / 40) reused as
+             padding · spacing · radius · gap.
+   Margin:   its own 3-step ladder (16 / 40 / 100) for section rhythm.
+   Type:     Lexend  -> Display Large 96 / H1 64 / H2 48 / H3 28   (one style, 4 sizes)
+             Istok   -> P-large 20 / P-medium 16 / P-small 14      (one style, 3 sizes)
+             line-height: normal + letter-spacing: 0 == Figma "Auto" / "0%".
+   ============================================================================ */
+
+:root {
+  /* ---------- Color ---------- */
+  --text-main:        #1E1818;
+  --bg-main:          #F5F2F6;
+  --text-secondary:   #393535;
+  --text-tertiary:    #545050;   /* body copy - one step past secondary */
+  --stroke-main:      #B7B7B7;
+  --bg-white:         #FFFFFF;
+  --text-invert:      #F7F5F5;
+  --text-accent-1:    #312038;
+  --bg-accent-2:      #241736;
+  --bg-accent-3:      #003C31;
+  --text-accent-2:    #9A65D9;
+  --text-accent-3:    #42F39F;
+
+  /* Surface colour built on Text-main — the 4th button/section background
+     alongside bg-accent-2, bg-accent-3 and bg-main. */
+  --bg-dark:          #1E1818;   /* == --text-main, used as a surface */
+  --bg-main-veil:     rgba(245, 242, 246, 0.82);   /* == --bg-main @ 82%, for
+                                                      the blurred nav */
+
+  /* ---------- Color styles ---------- */
+  --bg-gradient-default: linear-gradient(118deg, #4B45F0 0%, #7434C9 48%, #A32473 100%);
+  --bg-gradient-weak:    linear-gradient(118deg, #F1EFFC 0%, #F8F0F6 100%);
+
+  /* ---------- Effect styles ---------- */
+  --bg-overlay:                 rgba(30, 24, 24, 0.48);
+  --table-shadow:               0 1px 0 rgba(183, 183, 183, 0.9);
+  --table-shadow-first-column:  8px 0 12px -8px rgba(30, 24, 24, 0.16);
+  --floating-shadow:            0 18px 48px rgba(36, 23, 54, 0.16);
+  --scroll-overflow:            inset -24px 0 24px -24px rgba(30, 24, 24, 0.14);
+  --scroll-overflow-bottom:     inset 0 -24px 24px -24px rgba(30, 24, 24, 0.14);
+
+  /* ---------- Spacing ladder (single source) ---------- */
+  --space-small:    8px;
+  --space-medium:  16px;
+  --space-large:   24px;
+  --space-xlarge:  40px;
+
+  /* padding / gap / radius are the same ladder, named for intent */
+  --padding-small:  var(--space-small);
+  --padding-medium: var(--space-medium);
+  --padding-large:  var(--space-large);
+  --padding-xlarge: var(--space-xlarge);
+
+  --gap-small:  var(--space-small);
+  --gap-medium: var(--space-medium);
+  --gap-large:  var(--space-large);
+  --gap-xlarge: var(--space-xlarge);
+
+  --radius-small:  var(--space-small);
+  --radius-medium: var(--space-medium);
+  --radius-large:  var(--space-large);
+  --radius-xlarge: var(--space-xlarge);
+
+  /* ---------- Margin ladder (section rhythm) ---------- */
+  --margin-small:   16px;
+  --margin-medium:  40px;
+  --margin-group:   80px;      /* gap between H2 groups in a long-form page */
+  --margin-large:  100px;
+
+  /* ---------- Type ---------- */
+  --font-display: "Lexend", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-body:    "Istok Web", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --fs-display-large: 96px;
+  --fs-h1:            64px;
+  --fs-h2:            28px;
+  --fs-h3:            24px;
+  --fs-p-large:       20px;
+  --fs-p-medium:      16px;
+  --fs-p-small:       14px;
+
+  /* Buttons carry their own spec'd text size at every breakpoint — they are
+     not part of the responsive type scale. */
+  --fs-btn:           20px;
+
+  /* ---------- Layout ---------- */
+  --focus-ring-width:  4px;
+  --focus-ring-offset: 2px;
+
+  /* Mobile browsers grow/shrink the viewport as the toolbar hides. svh is the
+     *smallest* height, so a pinned element always fits. */
+  --viewport-h: 100vh;
+
+  --container-max: 1680px;   /* the single page max-width, all pages */
+  --gutter:        var(--margin-large);   /* 100 desktop -> stepped down below */
+  --page-gutter:   var(--margin-large);   /* outer page inset, shared by every page */
+  --nav-height:    80px;
+  --nav-avatar:    40px;   /* fixed component dimension, not a ladder step */
+
+  /* Custom cursor — fixed component dimensions */
+  --cursor-ring:  132px;
+  --cursor-dot:    16px;
+  --loader-avatar:  90px;  /* circular headshot on the loader */
+  --fs-loader-name: 40px;  /* loader wordmark — its own spec'd size */
+}
+
+@supports (height: 100svh) {
+  :root { --viewport-h: 100svh; }
+}
+
+/* ---------- SMALLER DESKTOP / TABLET (<= 1199px) ----------
+   The wide end of every ladder tightens one step. small/medium hold, so
+   --gutter (which aliases --margin-medium) stays a comfortable 40. */
+@media (max-width: 1199px) {
+  :root {
+    --gutter: var(--margin-medium);              /* 40 */
+    --page-gutter: var(--margin-medium);         /* 40 */
+
+    --space-large:   16px;      /* 24 -> 16 */
+    --space-xlarge:  24px;      /* 40 -> 24 */
+
+    --radius-large:  16px;      /* 24 -> 16 */
+    --radius-xlarge: 24px;      /* 40 -> 24, still a pill */
+
+    --margin-large:  40px;      /* 100 -> 40 */
+  }
+}
+
+/* ---------- 768-1023px ----------
+   Display Large at 96px overflows a 768 viewport, so in this band alone it
+   borrows the H1 size. No separate tablet scale — just this one guard. */
+@media (max-width: 1023px) {
+  :root { --fs-display-large: var(--fs-h1); }    /* 64 */
+}
+
+/* ---------- MOBILE TYPE SCALE (<= 767px) ----------
+   Same two styles, one smaller set of sizes. */
+@media (max-width: 767px) {
+  :root {
+    --fs-display-large: 32px;
+    --fs-h1:            22px;
+    --fs-h2:            18px;
+    --fs-h3:            16px;
+    --fs-p-large:       16px;
+    --fs-p-medium:      14px;
+    --fs-p-small:       12px;
+
+    /* ---- The spacing ladders shift down one step ----
+       Every component references these by name, so nothing needs a
+       per-section mobile override. 8 is the floor. */
+    --space-small:    8px;      /* 8  -> 8  (floor) */
+    --space-medium:   8px;      /* 16 -> 8  */
+    --space-large:   16px;      /* 24 -> 16 */
+    --space-xlarge:  24px;      /* 40 -> 24 */
+
+    --radius-small:   8px;
+    --radius-medium:  8px;
+    --radius-large:  16px;
+    --radius-xlarge: 24px;      /* still a pill at badge/button heights */
+
+    --margin-small:   8px;      /* 16  -> 8  */
+    --margin-medium: 16px;      /* 40  -> 16 */
+    --margin-large:  40px;      /* 100 -> 40 */
+
+    /* padding-* and gap-* alias space-*, so they follow automatically */
+
+    --gutter: var(--margin-medium);              /* 16 — page inset stays 16 */
+    --page-gutter: var(--margin-medium);         /* 16 */
+  }
+}
+
+/* ============================================================================
+   TEXT STYLES
+   Classes, not tags. Display Large is a STYLE — it is not <h1>, and <h1> does
+   not imply it. Use exactly one semantic <h1> per page.
+   ============================================================================ */
+
+.t-display-large,
+.t-h1, .t-h2, .t-h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 0;
+  margin: 0;
+}
+
+.t-p-large, .t-p-medium, .t-p-small {
+  font-family: var(--font-body);
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 0;
+  margin: 0;
+}
+
+.t-display-large { font-size: var(--fs-display-large); }
+.t-h1            { font-size: var(--fs-h1); }
+.t-h2            { font-size: var(--fs-h2); }
+.t-h3            { font-size: var(--fs-h3); }
+.t-p-large       { font-size: var(--fs-p-large); }
+.t-p-medium      { font-size: var(--fs-p-medium); }
+.t-p-small       { font-size: var(--fs-p-small); }
+
+/* Colour helpers */
+.c-text-main      { color: var(--text-main); }
+.c-text-secondary { color: var(--text-secondary); }
+.c-text-invert    { color: var(--text-invert); }
+.c-accent-1       { color: var(--text-accent-1); }
+.c-accent-2       { color: var(--text-accent-2); }
+.c-accent-3       { color: var(--text-accent-3); }

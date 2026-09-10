@@ -1,0 +1,96 @@
+/* ============================================================================
+   v3 BRIDGE for the redesigned case-study pages
+   --------------------------------------------------------------------------
+   Load order matters:  redesign.css  ->  v3/tokens.css  ->  this file
+   --------------------------------------------------------------------------
+   redesign.css exposes its whole visual language through one :root block, so
+   remapping those names onto v3 tokens restyles the page without touching its
+   441 lines of rules or the per-page inline CSS.
+
+   Deliberately NOT changed: --maxw, --gutter and --ease. Those are layout and
+   motion metrics the case-study scroll-spy / preview machinery is tuned
+   against; swapping them risks breaking behaviour, not just looks.
+   ============================================================================ */
+
+:root {
+  /* v3 tokens.css sets --gutter to the homepage's 100px. The case studies use
+     their own fluid gutter, so put it back. */
+  --gutter: clamp(20px, 4vw, 40px);
+
+  /* ---------- Surfaces ----------
+     redesign.css uses --paper for BOTH the page background and card/panel
+     fills. v3 separates those (page = bg-main, cards = bg-white), so --paper
+     stays white for panels and the page gets its own override below. */
+  --paper:   var(--bg-white);
+  --paper-2: var(--bg-main);
+  /* Two faint steps above the page, mixed from tokens rather than new hexes */
+  --paper-3: color-mix(in srgb, var(--bg-main) 94%, var(--stroke-main));
+  --paper-4: color-mix(in srgb, var(--bg-main) 88%, var(--stroke-main));
+
+  /* ---------- Type ----------
+     redesign.css hard-codes Space Grotesk / Inter. The v3 pages are
+     Lexend / Istok Web, so point the legacy names at the v3 faces. */
+  --font-display: "Lexend", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-body:    "Istok Web", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* ---------- Text ---------- */
+  --ink:        var(--text-main);
+  --ink-strong: var(--text-main);
+  --muted:      var(--text-secondary);
+  --faint:      var(--text-secondary);
+
+  /* ---------- Rules ---------- */
+  --line:   color-mix(in srgb, var(--stroke-main) 70%, transparent);
+  --line-2: var(--stroke-main);
+
+  /* ---------- Accents ----------
+     accent-1 is the dark purple that carries text; accent-2 is the bright one. */
+  --purple:      var(--text-accent-1);
+  --purple-2:    var(--bg-accent-2);
+  --bright:      var(--text-accent-2);
+  --bright-text: var(--text-accent-2);
+  --lavender:    color-mix(in srgb, var(--text-accent-2) 40%, var(--bg-white));
+  --lavender-bg: color-mix(in srgb, var(--text-accent-2) 12%, var(--bg-main));
+  --teal:        var(--bg-accent-3);
+
+  /* ---------- Dark sections ---------- */
+  --d-bg:    var(--bg-accent-2);
+  --d-bg-2:  color-mix(in srgb, var(--bg-accent-2) 92%, var(--bg-white));
+  --d-text:  var(--text-invert);
+  --d-muted: color-mix(in srgb, var(--text-invert) 92%, transparent);
+  --d-line:  color-mix(in srgb, var(--text-invert) 18%, transparent);
+
+  /* ---------- Type ----------
+     Fixed sizes from the v3 scale, which already steps down responsively,
+     replacing redesign.css's clamp()s. */
+  --h1:   var(--fs-h1);
+  --h2:   var(--fs-h2);
+  --h3:   var(--fs-h3);
+  --lead: var(--fs-p-large);
+  --body: var(--fs-p-medium);
+  --sm:   var(--fs-p-small);
+  --xs:   var(--fs-p-small);
+
+  /* ---------- Shape ---------- */
+  --radius:    var(--radius-large);
+  --radius-sm: var(--radius-medium);
+  --radius-lg: var(--radius-xlarge);
+}
+
+/* The page surface is v3's bg-main; --paper is left white so cards, tables and
+   panels still lift off it. */
+body { background: var(--bg-main); }
+
+/* Istok Web and Lexend have different metrics to Inter / Space Grotesk, so
+   normalise the two things redesign.css assumed about them. */
+body { letter-spacing: 0; }
+h1, h2, h3, h4, h5, h6 { letter-spacing: 0; }
+
+/* The reading column already supplies the page inset, so the legacy container
+   must not centre or pad again inside it. */
+.cs-content .rd-container {
+  max-width: none;
+  width: 100%;
+  margin-inline: 0;
+  padding-inline: 0;
+}

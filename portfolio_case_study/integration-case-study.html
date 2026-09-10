@@ -1,47 +1,601 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="en" class="v3">
 <head>
-  <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){if(window.self!==window.top)return;
-      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "xu2es8f588");
-  </script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Building a Reusable Integration Flow for Supported API Connections | Ivan Jose</title>
+<meta name="description" content="How I turned one-off API integrations into a single reusable connection flow, so adding a connector became routine instead of a month-long project.">
+<link rel="icon" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;700&family=Istok+Web:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="v3/tokens.css?v=79">
+<link rel="stylesheet" href="style.css?v=79">
+<link rel="stylesheet" href="redesign-system.css?v=79">
+<link rel="stylesheet" href="v3-bridge-2.css?v=79">
+<link rel="stylesheet" href="v3/v3.css?v=79">
+<link rel="stylesheet" href="case-study.css?v=79">
+</head>
+<body>
 
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-  <title>Building a Reusable Integration Flow for Supported API Connections | Ivan Jose</title>
-  <meta name="description" content="Senior Product Designer case study: one reusable integration framework, client credentials, validation states, attribution, and account management, so every new connector ships as configuration, not a redesign. Built cross-functionally with PM and engineering. By Ivan Jose." />
-  <link rel="canonical" href="https://josejeani06.github.io/portfolio/integration-case-study.html" />
-  <meta name="author" content="Jean Ivan Jose" />
-  <meta property="og:type" content="article" />
-  <meta property="og:site_name" content="Ivan Jose" />
-  <meta property="og:url" content="https://josejeani06.github.io/portfolio/integration-case-study.html" />
-  <meta property="og:title" content="Building a Reusable Integration Flow for Supported API Connections" />
-  <meta property="og:description" content="One reusable integration framework, credentials, validation states, attribution, and account management, so every new connector ships as configuration, not a redesign." />
-  <meta property="og:image" content="https://josejeani06.github.io/portfolio/images/integration-manage-connections.png" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Building a Reusable Integration Flow for Supported API Connections" />
-  <meta name="twitter:description" content="A reusable B2B SaaS integration framework, by Senior Product Designer Ivan Jose." />
-  <meta name="twitter:image" content="https://josejeani06.github.io/portfolio/images/integration-manage-connections.png" />
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "CreativeWork",
-    "headline": "Building a reusable integration flow for supported API connections",
-    "about": "B2B SaaS product design case study — a reusable integration framework with validation states and attribution",
-    "keywords": ["product design","B2B SaaS","integrations","design systems","validation states","attribution","UX"],
-    "url": "https://josejeani06.github.io/portfolio/integration-case-study.html",
-    "author": { "@type": "Person", "name": "Jean Ivan Jose", "alternateName": "Ivan Jose", "jobTitle": "Senior Product Designer", "url": "https://josejeani06.github.io/portfolio/" }
-  }
-  </script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css" />
-  <style>
+<a class="skip-link t-p-medium" href="#content">Skip to content</a>
+
+<!-- Nav: transparent with white text over the dark banner, solid after it -->
+<header class="cs-nav" data-cs-nav>
+  <nav class="cs-nav__inner" aria-label="Primary">
+    <a class="nav__logo" href="v3/index.html#top">
+      <span class="nav__logo-avatar">
+        <img width="400" height="480" src="images/ivan-jose-shot.png" alt="">
+      </span>
+      <span class="nav__logo-name"><strong>Ivan</strong>Jose</span>
+    </a>
+    <div class="cs-nav__links">
+        <a class="cs-nav__link" href="#quick-summary">Summary</a>
+        <a class="cs-nav__link" href="#discovery">Discovery</a>
+        <a class="cs-nav__link" href="#process">Process</a>
+        <a class="cs-nav__link" href="#product-strategy">Product</a>
+        <a class="cs-nav__link" href="#outcome">Outcome</a>
+    </div>
+  </nav>
+</header>
+
+<!-- Banner, height hugs its content -->
+<header class="cs-banner cs-banner--dark">
+  <div class="cs-banner__inner">
+    <h1 class="cs-banner__title">Integration Framework</h1>
+    <p class="cs-banner__lead">Building a reusable integration flow for supported API connections. Connecting one app is easy. The hard part is a system that holds up across CRMs, ecommerce tools, webhooks, custom APIs, attribution, automation triggers, and whatever gets added next, without redesigning everything each time. That's the part I wanted to solve.</p>
+    <dl class="cs-meta">
+        <div class="cs-meta__row">
+          <dt class="cs-meta__label">My role</dt>
+          <dd class="cs-meta__value">Led UX strategy and the end-to-end design. Flows, states, validations, UI, QA</dd>
+        </div>
+        <div class="cs-meta__row">
+          <dt class="cs-meta__label">Team</dt>
+          <dd class="cs-meta__value">Cross-functional. A PM, a developer, and me on design and UX strategy</dd>
+        </div>
+        <div class="cs-meta__row">
+          <dt class="cs-meta__label">Challenge</dt>
+          <dd class="cs-meta__value">Turn many different API setups into one product experience</dd>
+        </div>
+        <div class="cs-meta__row">
+          <dt class="cs-meta__label">Outcome</dt>
+          <dd class="cs-meta__value">A connector used to take 3 to 4 weeks. It now takes ~2, and the first parallel batch shipped 4 new connectors in 3 weeks</dd>
+        </div>
+    </dl>
+  </div>
+</header>
+
+<!-- Hero, directly below the banner -->
+<section class="cs-ba" aria-label="Overview">
+  <div class="cs-ba__inner">
+    <figure class="shot shot-wide" style="margin-top:0">
+          <div class="shot-frame">
+            <div class="shot-media" data-lightbox-src="images/hero/h-integration-2880.webp">
+              <img width="2880" height="1620" src="images/hero/h-integration-1440.webp" srcset="images/hero/h-integration-1440.webp 1440w, images/hero/h-integration-2880.webp 2880w" sizes="(max-width: 1023px) 100vw, 1060px" fetchpriority="high" decoding="async" alt="Manage Integration: connected accounts with status and sync details, plus add-account, automation, and attribution actions" onerror="this.remove()">
+              <span class="shot-ph"><strong>Manage Integration. Connected accounts with status and sync details, plus add-account, automation, and attribution actions</strong></span>
+            </div>
+          </div>
+          <figcaption class="shot-cap">The final management screen. Connected accounts, status, attribution setup, and next actions.</figcaption>
+        </figure>
+  </div>
+</section>
+
+<!-- Two columns: sticky contents + the reading column -->
+<div class="cs-layout" id="content">
+  <aside class="cs-toc" aria-label="Contents">
+    <p class="cs-toc__title">Contents</p>
+    <ol>
+        <li class="cs-toc__group">Summary</li>
+        <li><a href="#the-problem">The problem</a></li>
+        <li><a href="#my-part">My part</a></li>
+        <li><a href="#the-outcome">The outcome</a></li>
+        <li class="cs-toc__group">Discovery</li>
+        <li><a href="#integration-development-problem">Integration Development Problem</a></li>
+        <li><a href="#data">Data</a></li>
+        <li><a href="#tickets">Tickets</a></li>
+        <li><a href="#integration-journey">Integration Journey</a></li>
+        <li><a href="#blocker">Blocker</a></li>
+        <li class="cs-toc__group">Process</li>
+        <li><a href="#drafts">Drafts</a></li>
+        <li><a href="#what-shipped">What shipped</a></li>
+        <li><a href="#comparison">Comparison</a></li>
+        <li class="cs-toc__group">Product Strategy</li>
+        <li><a href="#integrations">Integrations</a></li>
+        <li><a href="#flow">Flow</a></li>
+        <li><a href="#validations">Validations</a></li>
+        <li><a href="#trade-offs">Trade offs</a></li>
+        <li class="cs-toc__group">Outcome</li>
+        <li class="cs-toc__group">Reflection</li>
+        <li><a href="#reflection">Reflection</a></li>
+        <li class="cs-toc__group">Future update</li>
+        <li><a href="#future-update">Future update</a></li>
+    </ol>
+  </aside>
+
+  <main class="cs-content">
+    <section class="cs-summary" aria-labelledby="quick-summary">
+    <h2 id="quick-summary">Summary</h2>
+
+    <h3 id="the-problem">The problem</h3>
+    <p>Customer data lived across <b>6 separate tools</b> and every connector was a one-off build. <b>32%</b> of customers already automate from an integration and <b>~$350K of mail/month</b> runs on that data. Even so, <b>12 tickets/month</b> asked for new connectors and <b>16/month</b> came from people stuck setting one up (<b>3 in 10</b> couldn't finish). Each of those pulled in CS, Sales, and engineering. <span style="opacity:.65">(Figures from internal product analytics, rounded.)</span></p>
+
+    <h3 id="my-part">My part</h3>
+    <p>Led the <b>UX strategy and end-to-end design</b> for one reusable integration framework. I built it as a system around a shared <b>connect → test → attribute → manage</b> lifecycle, so a new connector ships as configuration, not a redesign. Worked with a PM and a developer.</p>
+
+    <h3 id="the-outcome">The outcome</h3>
+    <p>A connector used to take <b>3 to 4 weeks</b>. It now takes <b>~2</b>. In the first <b>3-week parallel batch</b> we shipped <b>4 new connectors</b>. One of them was <b>Salesforce</b>, asked for by a client worth <b>~500K mails</b>.</p>
+    </section>
+
+    <p>Build one integration framework we could reuse, so connecting a third-party app feels familiar, quick, and safe even when the APIs, fields, and business logic underneath are nothing alike.</p>
+<p>One management screen holds connected accounts, their status and sync details, attribution setup, and the next action. Every connector lives in the same place.</p>
+        
+      
+    
+
+    <h2 id="discovery">Discovery</h2>
+
+    <h3 id="integration-development-problem">Integration Development Problem</h3>
+
+        
+        <div class="question-copy">
+          <p><a class="cs-banner__link" href="https://www.lettrlabs.com/" target="_blank" rel="noopener">LettrLabs</a> wants to be the one-stop shop for direct mail. Customers keep their leads, purchases, jobs, and CRM activity spread across many platforms though. Every new connector had been its own build, so the same slow, expensive path repeated each time.</p>
+          <p>So I reframed it. The job wasn't "add one more app." It was the gap between how a new integration <em>should</em> reach a customer and how it actually did.</p>
+        </div>
+      
+      
+    <h3 id="data">Data</h3>
+
+        
+      
+    
+
+      <div class="metric-strip cs-metrics-2x3" style="margin-top:0;margin-bottom:40px">
+          <div class="metric-tile"><strong>$350K/mo</strong><span>of direct mail already runs on customer-integration data</span></div>
+          <div class="metric-tile"><strong>32%</strong><span>of customers build automations from a connected integration</span></div>
+          <div class="metric-tile"><strong>28/mo</strong><span>support tickets. 12 asking for a new connector, 16 stuck setting one up. Every one pulled in CS, Sales, and engineering</span></div>
+          <div class="metric-tile"><strong>3 to 4 → 2 wks</strong><span>per-connector lead time after the reusable pattern replaced one-off flows</span></div>
+          <div class="metric-tile"><strong>4 in 3 wks</strong><span>new connectors on the first run. Salesforce, ServiceTitan, HubSpot, Housecall Pro</span></div>
+          <div class="metric-tile"><strong>1 pattern</strong><span>one lifecycle that new connectors slot into as configuration, not a redesign</span></div>
+        </div>
+    <h3 id="tickets">Tickets</h3>
+<p>The support queue and the analytics agreed. Integrations were already central to how customers got value, but the way we built and set them up didn't scale. Before I drew a screen, I let the evidence point at the pattern.</p>
+        
+      
+    
+<div class="cs-scroller" data-cs-scroller><div class="discovery-band">
+          <div class="discovery-evidence-head"><div>What we saw</div><div>What it told us</div></div>
+          <div class="discovery-evidence-row"><div>12 tickets / mo</div><div>Customers were actively asking for connectors we didn't have yet. That's unmet demand, not a hypothesis. The queue was telling us where to expand.</div></div>
+          <div class="discovery-evidence-row"><div>16 tickets / mo</div><div>The setup itself was the blocker. Every one pulled in Customer Success, Sales, and engineering just to get a customer connected.</div></div>
+          <div class="discovery-evidence-row"><div>3 in 10 users</div><div>Couldn't add their account and trigger an automation on their own. The flow was failing before anyone got anything out of it.</div></div>
+          <div class="discovery-evidence-row"><div>32% · $350K/mo</div><div>A third of customers already automate from an integration, and ~$350K of mail a month rides on that data. Integrations were core infrastructure, not a nice-to-have.</div></div>
+          <div class="discovery-evidence-row"><div>6 one-off builds</div><div>Each connector had been designed and built separately, 3 to 4 weeks each, so the roadmap couldn't add sources fast enough to keep up with demand.</div></div>
+          <div class="discovery-evidence-row"><div>1 key client</div><div>One client worth ~500K mails asked for Salesforce. That put a number on what it cost us <em>not</em> to have a pattern that scaled, and made it urgent.</div></div>
+        </div></div>
+    <h3 id="integration-journey">Integration Journey</h3>
+<div class="container question-journey">
+        <div class="journey-groups" aria-label="Expected vs actual integration journey timeline">
+          <div class="journey-group">
+            <div class="journey-group-line" aria-hidden="true"></div>
+            <p class="journey-group-head">Expected</p>
+            <div class="journey-group-items">
+              <div class="journey-timeline-item">
+                <div class="journey-timeline-marker">1</div>
+                <div class="journey-timeline-copy">
+                  <h4>The business picks what to connect</h4>
+                  <p>Customers, engineering, and the business agree on which integrations are worth building, guided by what customers actually ask for.</p>
+                </div>
+              </div>
+              <div class="journey-timeline-item">
+                <div class="journey-timeline-marker">2</div>
+                <div class="journey-timeline-copy">
+                  <h4>Engineering builds it once, consistently</h4>
+                  <p>Devs put their time into a proper data pipeline and reuse the same workflow for every integration instead of rebuilding the setup.</p>
+                </div>
+              </div>
+              <div class="journey-timeline-item">
+                <div class="journey-timeline-marker">3</div>
+                <div class="journey-timeline-copy">
+                  <h4>The customer uses it within a week</h4>
+                  <p>Once it's released, the connector is familiar and self-serve, so the customer connects and starts automating within a week.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="journey-group">
+            <div class="journey-group-line" aria-hidden="true"></div>
+            <p class="journey-group-head">Reality</p>
+            <div class="journey-group-items">
+              <div class="journey-timeline-item is-risk">
+                <div class="journey-timeline-marker">1</div>
+                <div class="journey-timeline-copy">
+                  <h4>The request waits a month to be heard</h4>
+                  <p>A customer asks for an integration. It takes at least a month just to reach management and get prioritized, and that's before any design or build starts.</p>
+                </div>
+              </div>
+              <div class="journey-timeline-item is-risk">
+                <div class="journey-timeline-marker">2</div>
+                <div class="journey-timeline-copy">
+                  <h4>Every build is researched from scratch</h4>
+                  <p>Devs research the data pipeline, then work with product to design the data model and handle each API's quirks. A fresh custom effort every time.</p>
+                </div>
+              </div>
+              <div class="journey-timeline-item is-risk">
+                <div class="journey-timeline-marker">3</div>
+                <div class="journey-timeline-copy">
+                  <h4>The customer hits a brand-new flow</h4>
+                  <p>They finally use it, but it's another unfamiliar process. They hit problems or get stuck, and support gets pulled right back in.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <h3 id="blocker">Blocker</h3>
+<p>No single screen looked wrong. Connecting an app just kept stalling. So I listed every blocker and paired it with the fix the reusable pattern shipped.</p>
+        
+      
+    
+
+      <div class="cs-scroller" data-cs-scroller><div class="comparison-table">
+          <div class="comparison-head"><div>Blocker</div><div>Fix</div></div>
+          <div class="row"><div class="cell" data-label="Blocker">A request waited ~a month just to get prioritized. Then every connector was built from scratch, 3 to 4 weeks each.</div><div class="cell" data-label="Fix">One reusable lifecycle turns a new connector into configuration. Logo, name, fields, attributes. It ships as setup, not a project.</div></div>
+          <div class="row"><div class="cell" data-label="Blocker">16 tickets a month came from users stuck in setup, and 3 in 10 couldn't finish connecting on their own.</div><div class="cell" data-label="Fix">A guided connect → test → confirm → manage flow that tests credentials before it saves and explains every wait, so users can do it themselves.</div></div>
+          <div class="row"><div class="cell" data-label="Blocker">Attribution was buried in a heavy, data-engineering setup marketers couldn't finish.</div><div class="cell" data-label="Fix">Attribution became its own short, explicit step. You confirm which statuses count as a Lead or Conversion, and a live warning fires if nothing would attribute.</div></div>
+          <div class="row"><div class="cell" data-label="Blocker">Every API has its own quirks, like custom objects, renamed fields, and multiple pipelines. They broke any one-size-fits-all guess.</div><div class="cell" data-label="Fix">A checkbox-grid mapping handles multiple pipelines and non-linear stages out in the open, in the marketer's own language.</div></div>
+          <div class="row"><div class="cell" data-label="Blocker">Success and failure states lived on one screen, so users lost track of what was active, syncing, or failed.</div><div class="cell" data-label="Fix">Status shows in the account list and in-app notifications, whether that's active, sync-in-progress, failed, or ready for the next step.</div></div>
+          <div class="row"><div class="cell" data-label="Blocker">Every connector was designed and maintained separately across product and engineering.</div><div class="cell" data-label="Fix">One pattern devs reuse and the product team scales. New sources slot in as configuration, not a redesign.</div></div>
+        </div></div>
+    <h2 id="process">Process</h2>
+
+    <h3 id="drafts">Drafts</h3>
+<p>The first design was far more powerful. To connect a CRM like Salesforce, you'd browse the entire schema, hand-map every object and field to the attribution model, define conversion/lead/exclude rules, then run a full extract-and-load pipeline into SQL. It could model almost anything, and that was exactly the problem.</p>
+
+        <div class="concept-carousel" id="concept-carousel">
+          <div class="concept-carousel-shell">
+            <button class="concept-carousel-btn prev" type="button" aria-label="Previous V1 step">
+              <span class="concept-carousel-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></span>
+            </button>
+            <div class="concept-carousel-viewport">
+              <div class="concept-carousel-track">
+                <article class="concept-carousel-slide is-active">
+                  <div class="concept-carousel-copy">
+                    <span class="concept-carousel-label">Not shipped · V1 · step 01</span>
+                    <h4>Browse the CRM schema.</h4>
+                    <p>The advanced path opened with the whole Salesforce object model and asked the user to pick what mattered. Opportunity, Lead, Case, Order, Campaign, Contact, Account.</p>
+                  </div>
+                  <figure class="concept-carousel-media"><img src="images/integration-v1-schema.webp" alt="V1: browse the Salesforce schema and pick objects" onerror="this.style.display='none'"></figure>
+                </article>
+                <article class="concept-carousel-slide">
+                  <div class="concept-carousel-copy">
+                    <span class="concept-carousel-label">Not shipped · V1 · step 02</span>
+                    <h4>Hand-map every field.</h4>
+                    <p>Event object, customer object, and every field mapped by hand, plus the relationship between them. Precise, and a lot to ask before anything useful comes back.</p>
+                  </div>
+                  <figure class="concept-carousel-media"><img src="images/integration-v1-mapping.webp" alt="V1: hand-map event and customer objects and every field" onerror="this.style.display='none'"></figure>
+                </article>
+                <article class="concept-carousel-slide">
+                  <div class="concept-carousel-copy">
+                    <span class="concept-carousel-label">Not shipped · V1 · step 03</span>
+                    <h4>Build the attribution rules.</h4>
+                    <p>Conversion, lead, and exclude criteria. Each one a rule builder the user had to reason about up front, before they'd seen a single result.</p>
+                  </div>
+                  <figure class="concept-carousel-media"><img src="images/integration-v1-criteria.webp" alt="V1: conversion, lead, and exclude rule builders" onerror="this.style.display='none'"></figure>
+                </article>
+                <article class="concept-carousel-slide">
+                  <div class="concept-carousel-copy">
+                    <span class="concept-carousel-label">Not shipped · V1 · step 04</span>
+                    <h4>Run a data pipeline.</h4>
+                    <p>Then run an extract-and-load pipeline into SQL, with a "skip dbt" toggle. Powerful, and plainly a data-engineering task.</p>
+                  </div>
+                  <figure class="concept-carousel-media"><img src="images/integration-v1-pipeline.webp" alt="V1: run an extract-and-load pipeline into SQL" onerror="this.style.display='none'"></figure>
+                </article>
+                <article class="concept-carousel-slide">
+                  <div class="concept-carousel-copy">
+                    <span class="concept-carousel-label">Not shipped · explored</span>
+                    <h4>Auto-infer the field mappings.</h4>
+                    <p>Guess every mapping on connect and read it back as a filled-in review. It was elegant until custom objects and renamed fields showed up. Then guessing for people quietly guessed wrong on real Salesforce orgs.</p>
+                  </div>
+                  <figure class="concept-carousel-media"><img src="images/integration-v2-attribution.webp" alt="Explored, not shipped: auto-inferred field mappings shown as a plain-language review" onerror="this.style.display='none'"></figure>
+                </article>
+                <article class="concept-carousel-slide">
+                  <div class="concept-carousel-copy">
+                    <span class="concept-carousel-label">Not shipped · explored</span>
+                    <h4>Attribution as one slider.</h4>
+                    <p>Drag a single handle across your Salesforce stages to say "a Lead starts here, a Conversion here." Lovely for one linear pipeline. Real orgs run several, across two objects, so it couldn't stretch to cover them.</p>
+                  </div>
+                  <figure class="concept-carousel-media"><img src="images/integration-v2-review.webp" alt="Explored, not shipped: a single slider maps Salesforce lead and opportunity stages to Lead and Conversion" onerror="this.style.display='none'"></figure>
+                </article>
+              </div>
+            </div>
+            <button class="concept-carousel-btn next" type="button" aria-label="Next V1 step">
+              <span class="concept-carousel-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></span>
+            </button>
+          </div>
+          <div class="concept-carousel-meta" aria-label="V1 step navigation">
+            <button class="concept-carousel-dot is-active" type="button" aria-label="Show V1 step 1"></button>
+            <button class="concept-carousel-dot" type="button" aria-label="Show V1 step 2"></button>
+            <button class="concept-carousel-dot" type="button" aria-label="Show V1 step 3"></button>
+            <button class="concept-carousel-dot" type="button" aria-label="Show V1 step 4"></button>
+            <button class="concept-carousel-dot" type="button" aria-label="Show explored concept 5"></button>
+            <button class="concept-carousel-dot" type="button" aria-label="Show explored concept 6"></button>
+          </div>
+        </div>
+
+        
+    <h3 id="what-shipped">What shipped</h3>
+<p>The least clever version held up. You connect with credentials, and attribution becomes its own explicit step. You <strong>confirm which statuses count as a Lead, a Conversion, or Job Complete</strong>, and a live warning fires if the choice would attribute nothing. A checkbox grid handles the pipelines and non-linear stages the slider couldn't.</p>
+          
+        
+
+        
+        <p class="subcopy" style="margin:18px 0 0">That's the through-line of the whole project. The reusable pattern below is what's left <em>after</em> deciding what the user should never have to care about.</p>
+      
+    
+
+      
+    <h3 id="comparison">Comparison</h3>
+<div class="cs-scroller" data-cs-scroller><div class="itable comparison-itable">
+          <table>
+            <thead>
+              <tr><th style="width:26%">The job</th><th>V1, powerful and complex</th><th>Shipped, simple and explicit</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="k">Find the data</td><td>Browse the full CRM schema and pick objects</td><td>Connect with credentials, and the connection exposes what's needed</td></tr>
+              <tr><td class="k">Map it</td><td>Hand-map event/customer objects + every field</td><td>Confirm which statuses count, a few clicks</td></tr>
+              <tr><td class="k">Attribution</td><td>Define conversion/lead/exclude rules up front</td><td>Confirm Lead / Conversion stages, warned if nothing would attribute</td></tr>
+              <tr><td class="k">Move the data</td><td>Configure and run an extract-load (dbt/SQL) pipeline</td><td>The connection tests and syncs on its own</td></tr>
+              <tr><td class="k">How it felt</td><td>Like data engineering</td><td>Like signing in</td></tr>
+            </tbody>
+          </table>
+        </div></div>
+    <h2 id="product-strategy">Product Strategy</h2>
+
+    <h3 id="integrations">Integrations</h3>
+<p>Six connectors already existed as one-off builds. The reusable pattern let us add four more in a single three-week run, Salesforce among them, asked for by a client worth ~500K mails. Each one is the same card and the same flow with a different source.</p>
+
+        <ul class="cs-logos" aria-label="Supported integrations">
+      <li class="cs-logos__item"><img src="images/logos/klaviyo.webp" alt="Klaviyo" width="292" height="150" loading="lazy" decoding="async"></li>
+      <li class="cs-logos__item"><img src="images/logos/shopify.webp" alt="Shopify" width="292" height="150" loading="lazy" decoding="async"></li>
+      <li class="cs-logos__item"><img src="images/logos/salesforce.webp" alt="Salesforce" width="292" height="150" loading="lazy" decoding="async"></li>
+      <li class="cs-logos__item"><img src="images/logos/zapier.webp" alt="Zapier" width="292" height="150" loading="lazy" decoding="async"></li>
+      <li class="cs-logos__item"><img src="images/logos/leadreveal.webp" alt="LeadReveal" width="292" height="150" loading="lazy" decoding="async"></li>
+      <li class="cs-logos__item"><img src="images/logos/hailtrace.webp" alt="Storm Automation" width="292" height="150" loading="lazy" decoding="async"></li>
+      <li class="cs-logos__item"><img src="images/logos/hubspot.webp" alt="HubSpot" width="292" height="150" loading="lazy" decoding="async"></li>
+      <li class="cs-logos__item"><img src="images/logos/movermail.webp" alt="MoverMail" width="292" height="150" loading="lazy" decoding="async"></li>
+      <li class="cs-logos__item"><img src="images/logos/openapi.webp" alt="Open API" width="292" height="150" loading="lazy" decoding="async"></li>
+      <li class="cs-logos__item"><img src="images/logos/housecall-pro.webp" alt="Housecall Pro" width="292" height="150" loading="lazy" decoding="async"></li>
+      <li class="cs-logos__item"><img src="images/logos/servicetitan.webp" alt="ServiceTitan" width="292" height="150" loading="lazy" decoding="async"></li>
+      <li class="cs-logos__item"><img src="images/logos/webhooks.webp" alt="Webhooks" width="292" height="150" loading="lazy" decoding="async"></li>
+      <li class="cs-logos__item"><img src="images/logos/recipient-search.webp" alt="Recipient Search" width="292" height="150" loading="lazy" decoding="async"></li>
+      <li class="cs-logos__item"><img src="images/logos/csv-upload.webp" alt="CSV Upload" width="292" height="150" loading="lazy" decoding="async"></li>
+      <li class="cs-logos__item"><img src="images/logos/permits.webp" alt="Permits" width="292" height="150" loading="lazy" decoding="async"></li>
+      <li class="cs-logos__item"><img src="images/logos/acculynx.webp" alt="AccuLynx" width="292" height="150" loading="lazy" decoding="async"></li>
+    </ul>
+
+        <p class="eco-legend"><span class="eco-dot"></span>The <b>four “New”</b> connectors were added in the first 3-week run on the reusable pattern. The rest already existed as separate one-off builds.</p>
+      
+    
+<div class="cs-band section-dark">
+      <div class="container">
+
+    <h3 id="flow">Flow</h3>
+    <p>Here's the reusable pattern on a real connector, Housecall Pro. One entry point, a connect step that tests credentials before it moves on, clear connecting and connected states, a management list for multiple accounts, and attribution setup as its own job.</p>
+        <div class="scroll-story" data-scroll-gallery>
+          <div class="scroll-story-copy">
+            <article class="scroll-story-step is-active" data-scroll-step="cf-connect">
+              <figure class="scroll-story-mobile-media"><img src="images/integration-connect.webp" alt="Connect Housecall Pro: connection name, client ID, client secret, test and continue" onerror="this.closest('.scroll-story-mobile-media').remove()"></figure>
+              <span class="scroll-story-label">Final output · step 01</span>
+              <h4>Create a new connection.</h4>
+              <p>Only the essentials. Name, Client ID, masked Client Secret. Then <em>Test and Continue</em> before anything is saved.</p>
+              <figure class="liveframe-stage" style="--frame-w:760px;--frame-h:840px;--frame-ratio:760 / 840"><iframe class="fitframe" data-w="760" data-h="840" width="760" height="840" src="recreations/integration-connect.html?auto&amp;v=20260729" scrolling="no" title="Live animated connection flow" loading="eager"></iframe></figure>
+            </article>
+            <article class="scroll-story-step" data-scroll-step="cf-connecting">
+              <figure class="scroll-story-mobile-media"><img src="images/integration-connecting.webp" alt="Connecting loading state while credentials are validated and objects discovered" onerror="this.closest('.scroll-story-mobile-media').remove()"></figure>
+              <span class="scroll-story-label">Final output · step 02</span>
+              <h4>Connecting…</h4>
+              <p>The wait says what it's doing. Credentials are being verified and objects and fields discovered, so it isn't a dead spinner.</p>
+            </article>
+            <article class="scroll-story-step" data-scroll-step="cf-connected">
+              <figure class="scroll-story-mobile-media"><img src="images/integration-connected.webp" alt="You are connected, now finish setup with a clear next action" onerror="this.closest('.scroll-story-mobile-media').remove()"></figure>
+              <span class="scroll-story-label">Final output · step 03</span>
+              <h4>Connected → finish setup.</h4>
+              <p>Success isn't the end. It routes straight to the next action (Customize Attribution).</p>
+            </article>
+            <article class="scroll-story-step" data-scroll-step="cf-attribution">
+              <figure class="scroll-story-mobile-media"><img src="images/integration-attribution-setup.webp" alt="Attribution setup: name the automation and pick a trigger before saving" onerror="this.closest('.scroll-story-mobile-media').remove()"></figure>
+              <span class="scroll-story-label">Final output · step 04</span>
+              <h4>Attribution setup.</h4>
+              <p>Configuration is its own step. Name the automation, pick a trigger, then Save &amp; Continue.</p>
+              <figure class="liveframe-stage" style="--frame-w:940px;--frame-h:440px;--frame-ratio:940 / 440"><iframe class="fitframe" data-w="940" data-h="440" data-replay="__replayAttribution" width="940" height="440" src="recreations/integration-attribution-setup.html?v=20260729" scrolling="no" title="Live attribution setup" loading="eager"></iframe></figure>
+            </article>
+            <article class="scroll-story-step" data-scroll-step="cf-manage">
+              <figure class="scroll-story-mobile-media"><img src="images/integration-accounts.webp" alt="Manage Integration: connected accounts with active status, sync progress, finish setup, and remove" onerror="this.closest('.scroll-story-mobile-media').remove()"></figure>
+              <span class="scroll-story-label">Final output · step 05</span>
+              <h4>Manage your accounts.</h4>
+              <p>Every connected account sits on one surface with its status (Active / Sync in Progress), last sync, Finish Setup, Customize Attribution, Add New Account, and Remove.</p>
+              <figure class="liveframe-stage" style="--frame-w:996px;--frame-h:852px;--frame-ratio:996 / 852"><iframe class="fitframe" data-w="996" data-h="852" data-replay="__replayAccounts" width="996" height="852" src="recreations/integration-accounts.html?v=20260729" scrolling="no" title="Live integration account management" loading="eager"></iframe></figure>
+            </article>
+            <div class="scroll-story-progress" aria-hidden="true"></div>
+          </div>
+          <div class="scroll-story-sticky">
+            <div class="scroll-story-stage">
+              <figure class="scroll-story-media is-active flowmedia" data-scroll-media="cf-connect cf-connecting cf-connected"><iframe class="flowframe fitframe" data-w="760" data-h="840" width="760" height="840" src="recreations/integration-connect.html?v=20260729" scrolling="no" title="Live connection flow that advances with the case-study scroll" loading="eager"></iframe></figure>
+              <figure class="scroll-story-media" data-scroll-media="cf-attribution"><iframe class="fitframe" data-w="940" data-h="440" data-replay="__replayAttribution" width="940" height="440" src="recreations/integration-attribution-setup.html?v=20260729" scrolling="no" title="Live attribution setup that replays when its step is active" loading="eager"></iframe></figure>
+              <figure class="scroll-story-media" data-scroll-media="cf-manage"><iframe class="fitframe" data-w="996" data-h="852" data-replay="__replayAccounts" width="996" height="852" src="recreations/integration-accounts.html?v=20260729" scrolling="no" title="Live integration account management that replays when its step is active" loading="eager"></iframe></figure>
+            </div>
+          </div>
+        </div>
+
+        </div></div>
+
+    <h3 id="validations">Validations</h3>
+<p class="subcopy">The same pattern has to hold across very different APIs, so the safety lives in validation. It catches problems at entry instead of after a sync has already broken.</p>
+        <div class="cs-scroller" data-cs-scroller><div class="itable validation-table">
+          <table>
+            <thead>
+              <tr><th>Field / step</th><th>Validation added</th><th>Why it matters</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="k">Connection identity &amp; credentials</td><td>Name, format-checked Client ID, and a masked Client Secret are all required. The secret is never shown again after save.</td><td>Accounts stay easy to tell apart, and bad or exposed credentials get caught at entry.</td></tr>
+              <tr><td class="k">Test before save</td><td>A live connection test plus object and field discovery have to pass before the user can continue.</td><td>No half-connected accounts, and failures show up early enough to recover.</td></tr>
+              <tr><td class="k">Account identity &amp; status</td><td>Tenant IDs are unique, duplicates are blocked, and every account shows its sync state with a last-updated time.</td><td>People can trust which source is connected and how fresh its data is.</td></tr>
+              <tr><td class="k">Setup completion</td><td>Attribution is required before activation, and the automation has to be named and tied to a valid trigger.</td><td>Nothing launches on undefined, half-configured data.</td></tr>
+              <tr><td class="k">Destructive change</td><td>Removing a connected account takes an explicit confirmation.</td><td>Changes that could hit live automations stay deliberate.</td></tr>
+            </tbody>
+          </table>
+        </div></div>
+      
+    
+      
+    <h3 id="trade-offs">Trade offs</h3>
+<p>I wrote down what each call cost us, so the PM, engineering, and I could agree faster.</p>
+        <div class="cs-scroller" data-cs-scroller><div class="decision-log-table">
+          <div class="decision-log-head">
+            <div>Question</div><div>Trade-off</div><div>Decision</div><div>Future</div>
+          </div>
+          <div class="decision-log-body">
+            <div class="decision-log-cell" data-label="Question"><p>How much should the connect step ask for up front?</p></div>
+            <div class="decision-log-cell" data-label="Trade-off"><p>Exposing every object and field was powerful, but it turned setup into a data-engineering task. 3 in 10 users stalled before finishing.</p></div>
+            <div class="decision-log-cell" data-label="Decision"><p>Cut connect down to the few required inputs, name, Client ID, and masked secret, all tested before anything saves. Deeper mapping became a separate, optional step.</p></div>
+            <div class="decision-log-cell" data-label="Future"><p>Use AI to pre-suggest field mappings so even the optional step gets faster.</p></div>
+          </div>
+          <div class="decision-log-body">
+            <div class="decision-log-cell" data-label="Question"><p>Connect and attribution, one flow or two?</p></div>
+            <div class="decision-log-cell" data-label="Trade-off"><p>One flow felt continuous, but attribution carries different business logic and different risk than authentication.</p></div>
+            <div class="decision-log-cell" data-label="Decision"><p>Split them. Connect stays lightweight and works the same everywhere. Attribution is its own job, shown only to the users who need it.</p></div>
+            <div class="decision-log-cell" data-label="Future"><p>Infer attribution defaults per connector, keeping the explicit step as the override.</p></div>
+          </div>
+          <div class="decision-log-body">
+            <div class="decision-log-cell" data-label="Question"><p>Build each connector custom, or one reusable shell?</p></div>
+            <div class="decision-log-cell" data-label="Trade-off"><p>Custom screens fit each API perfectly, but every new app restarted design and engineering. That was 6 one-off builds at 3 to 4 weeks each.</p></div>
+            <div class="decision-log-cell" data-label="Decision"><p>One reusable lifecycle where logo, name, fields, and attributes are configuration, so a connector ships as setup instead of a redesign. Four shipped in a three-week parallel batch.</p></div>
+            <div class="decision-log-cell" data-label="Future"><p>A connector "manifest" so a new source can be added with no new design at all.</p></div>
+          </div>
+          <div class="decision-log-body">
+            <div class="decision-log-cell" data-label="Question"><p>Where should connection status live?</p></div>
+            <div class="decision-log-cell" data-label="Trade-off"><p>Keeping status on the detail page was simplest, but users lost track of what was active, syncing, or failed across many accounts.</p></div>
+            <div class="decision-log-cell" data-label="Decision"><p>Put status in the account list and in-app notifications, active, sync-in-progress, failed, or ready, instead of on one screen.</p></div>
+            <div class="decision-log-cell" data-label="Future"><p>Proactive alerts when a sync breaks, before it silently pauses an automation.</p></div>
+          </div>
+        </div></div>
+      
+    
+      
+    <h2 id="outcome">Outcome</h2>
+<p>The workflow finally matched how the business, engineering, and customers actually add a source. That mattered more than a prettier connect screen.</p>
+            <div class="cs-outcomes">
+      <ol class="cs-outcomes__list">
+      <li>
+        <span class="cs-outcomes__label">CUSTOMER · SHIPPED FLOW</span>
+        <h4>A clearer path to connection</h4>
+        <p>The shipped connect → test → confirm → manage flow checks credentials before save and spells out each next action. Completion rate and ticket reduction are what we still need to confirm with live usage.</p>
+      </li>
+      <li>
+        <span class="cs-outcomes__label">Business</span>
+        <h4>A routine, not a project</h4>
+        <p>Lead time per connector went from 3 to 4 weeks down to ~2, and the first parallel batch shipped 4 new connectors in three weeks. One of them was the Salesforce connector a ~500K-mail client was waiting on.</p>
+      </li>
+      <li>
+        <span class="cs-outcomes__label">Engineering</span>
+        <h4>One workflow to reuse</h4>
+        <p>Instead of researching and building each connector from scratch, engineering slots new sources into a stable lifecycle where logo, name, fields, and attributes are configuration.</p>
+      </li>
+      <li>
+        <span class="cs-outcomes__label">Platform</span>
+        <h4>A reusable base for the next connectors</h4>
+        <p>The reusable pattern shipped across four new connectors, Salesforce, ServiceTitan, HubSpot, and Housecall Pro. It's built so future sources arrive as configuration rather than a redesign.</p>
+      </li>
+      <li>
+        <span class="cs-outcomes__label">SUPPORT · BASELINE</span>
+        <h4>Setup was the next measure</h4>
+        <p>The baseline was 16 setup tickets a month and 3 in 10 users unable to finish on their own. The new flow has a clear measurement plan behind it. Connection completion, setup tickets, and time to first automation.</p>
+      </li>
+      <li>
+        <span class="cs-outcomes__label">PLATFORM · NEXT</span>
+        <h4>Connection enables the next workflow</h4>
+        <p>The framework links account setup to attribution, automation, and analytics. The chance now is to grow the $350K/month integration-data base with more completed, well-configured connections. I won't claim that growth before it's measured.</p>
+      </li>
+      </ol>
+    </div>
+      
+    
+
+    <h2 id="reflection">Reflection</h2>
+<p style="color:rgba(242,240,230,.86)">I assumed at first that connecting an integration would need a lot of fields and a lot of visible configuration. After working the flow through with the team, the simpler answer turned out to be the better one. Ask for only what's essential, validate it clearly, and let the backend do the hard part.</p><p class="quote">"This project taught me that good platform design isn't about showing all the data. It's about knowing which data matters, hiding the rest, and making the next integration easier than the last."</p>
+    <h2 id="future-update">Future update</h2>
+<p style="color:rgba(242,240,230,.86)">Version 2 would tighten syncing status, add better search for integrations, support more credential types, and use AI to help preselect fields for automation, data merge, and attribution setup.</p>
+<nav class="cs-prevnext" aria-label="More case studies">
+    <a class="cs-prevnext__card" href="map-case-study.html">
+      <span class="cs-prevnext__dir">&larr; Previous</span>
+      <span class="cs-prevnext__title">Audience Map Builder</span>
+      <span class="cs-prevnext__desc">Turning a scattered set of map bug-fixes into one audience model with five entry points.</span>
+    </a>
+    <a class="cs-prevnext__card" href="org-management-case-study.html">
+      <span class="cs-prevnext__dir">Next &rarr;</span>
+      <span class="cs-prevnext__title">Org Management</span>
+      <span class="cs-prevnext__desc">One permission system across five surfaces, built so a structural change never breaks a live automation.</span>
+    </a>
+  </nav>
+
+  </main>
+</div>
+
+<footer class="marquee-band">
+
+    <h2 class="sr-only">Let&rsquo;s design your product</h2>
+    <p class="sr-only">Product, UI/UX, Web, Wordpress, Marketing Design.</p>
+
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__track">
+          <span class="marquee__item">Let&rsquo;s design your product!</span>
+          <span class="marquee__item">Let&rsquo;s design your product!</span>
+          <span class="marquee__item">Let&rsquo;s design your product!</span>
+          <span class="marquee__item">Let&rsquo;s design your product!</span>
+      </div>
+      <div class="marquee__track">
+          <span class="marquee__item">Let&rsquo;s design your product!</span>
+          <span class="marquee__item">Let&rsquo;s design your product!</span>
+          <span class="marquee__item">Let&rsquo;s design your product!</span>
+          <span class="marquee__item">Let&rsquo;s design your product!</span>
+      </div>
+    </div>
+
+    <div class="marquee marquee--reverse" aria-hidden="true">
+      <div class="marquee__track">
+          <span class="marquee__item">Product | UI/UX | Web | Wordpress | Marketing Design |</span>
+          <span class="marquee__item">Product | UI/UX | Web | Wordpress | Marketing Design |</span>
+          <span class="marquee__item">Product | UI/UX | Web | Wordpress | Marketing Design |</span>
+          <span class="marquee__item">Product | UI/UX | Web | Wordpress | Marketing Design |</span>
+      </div>
+      <div class="marquee__track">
+          <span class="marquee__item">Product | UI/UX | Web | Wordpress | Marketing Design |</span>
+          <span class="marquee__item">Product | UI/UX | Web | Wordpress | Marketing Design |</span>
+          <span class="marquee__item">Product | UI/UX | Web | Wordpress | Marketing Design |</span>
+          <span class="marquee__item">Product | UI/UX | Web | Wordpress | Marketing Design |</span>
+      </div>
+    </div>
+
+  <div class="container footer__bottom">
+    <div class="footer__contact">
+      <div class="footer__social">
+        <a class="icon-btn" href="https://www.linkedin.com/in/ivancreatives" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <svg viewBox="0 0 40 40" aria-hidden="true" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"> <g clip-path="url(#clip0_40000281_14203)"> <path d="M20 0C8.95312 0 0 8.95312 0 20C0 31.0469 8.95312 40 20 40C31.0469 40 40 31.0469 40 20C40 8.95312 31.0469 0 20 0ZM14.4062 28.3672H10.5078V15.8906H14.4062V28.3672ZM12.3516 14.3281H12.3203C10.9062 14.3281 9.99219 13.375 9.99219 12.1641C9.99219 10.9297 10.9375 10 12.375 10C13.8125 10 14.6953 10.9297 14.7266 12.1641C14.7344 13.3672 13.8203 14.3281 12.3516 14.3281ZM30 28.3672H25.5781V21.9141C25.5781 20.2266 24.8906 19.0703 23.3672 19.0703C22.2031 19.0703 21.5547 19.8516 21.2578 20.6016C21.1484 20.8672 21.1641 21.2422 21.1641 21.625V28.3672H16.7812C16.7812 28.3672 16.8359 16.9297 16.7812 15.8906H21.1641V17.8516C21.4219 16.9922 22.8203 15.7734 25.0547 15.7734C27.8281 15.7734 30 17.5703 30 21.4297V28.3672Z" fill="currentColor"/> </g> <defs> <clipPath id="clip0_40000281_14203"> <rect width="40" height="40" fill="white"/> </clipPath> </defs> </svg>
+          </a>
+          <a class="icon-btn" href="https://www.behance.net/ivancreatives" target="_blank" rel="noopener" aria-label="Behance">
+            <svg viewBox="0 0 40 40" aria-hidden="true" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"> <g clip-path="url(#clip0_40000281_14205)"> <path d="M26.8828 19.1016C26.5 18.7734 26.0234 18.6094 25.4609 18.6094C24.8516 18.6094 24.375 18.7812 24.0313 19.1328C23.6953 19.4844 23.4844 19.9531 23.3906 20.5469H27.5078C27.4766 19.9141 27.2578 19.4375 26.8828 19.1016Z" fill="currentColor"/> <path d="M16.7422 20.7891C16.4453 20.6563 16.0391 20.5859 15.5078 20.5781H12.4609V23.875H15.4688C16.0078 23.875 16.4219 23.8047 16.7188 23.6562C17.2656 23.3828 17.5312 22.875 17.5312 22.1172C17.5312 21.4766 17.2656 21.0313 16.7422 20.7891Z" fill="currentColor"/> <path d="M20 0C8.95312 0 0 8.95312 0 20C0 31.0469 8.95312 40 20 40C31.0469 40 40 31.0469 40 20C40 8.95312 31.0469 0 20 0ZM22.7812 14.2422H28.0781V15.7812H22.7812V14.2422ZM19.5859 24.2656C19.3516 24.6484 19.0625 24.9766 18.7109 25.2344C18.3203 25.5391 17.8516 25.7422 17.3125 25.8594C16.7734 25.9688 16.1953 26.0234 15.5625 26.0234H10V13.6641H15.9766C17.4844 13.6875 18.5547 14.125 19.1797 14.9844C19.5547 15.5078 19.7422 16.1406 19.7422 16.875C19.7422 17.625 19.5547 18.2344 19.1719 18.6953C18.9609 18.9531 18.6406 19.1875 18.2266 19.3984C18.8594 19.6328 19.3359 19.9922 19.6562 20.4922C19.9766 20.9922 20.1406 21.5938 20.1406 22.3047C20.1406 23.0234 19.9531 23.6797 19.5859 24.2656ZM30 22.125H23.3438C23.3828 23.0391 23.6953 23.6875 24.2969 24.0547C24.6641 24.2812 25.1016 24.3984 25.6172 24.3984C26.1562 24.3984 26.6016 24.2578 26.9453 23.9766C27.1328 23.8281 27.2969 23.6172 27.4375 23.3438H29.875C29.8125 23.8828 29.5156 24.4375 28.9922 25C28.1719 25.8906 27.0312 26.3359 25.5547 26.3359C24.3359 26.3359 23.2656 25.9609 22.3359 25.2109C21.4062 24.4609 20.9375 23.2422 20.9375 21.5547C20.9375 19.9688 21.3594 18.7578 22.1953 17.9141C23.0391 17.0703 24.125 16.6484 25.4609 16.6484C26.2578 16.6484 26.9766 16.7891 27.6094 17.0781C28.25 17.3594 28.7734 17.8125 29.1875 18.4297C29.5625 18.9688 29.8047 19.6016 29.9141 20.3203C29.9844 20.7344 30.0078 21.3359 30 22.125Z" fill="currentColor"/> <path d="M16.7812 18.2266C17.1172 18.0234 17.2812 17.6562 17.2812 17.1406C17.2812 16.5625 17.0625 16.1875 16.6172 16C16.2344 15.875 15.75 15.8047 15.1562 15.8047H12.4688V18.5312H15.4687C16.0078 18.5391 16.4375 18.4375 16.7812 18.2266Z" fill="currentColor"/> </g> <defs> <clipPath id="clip0_40000281_14205"> <rect width="40" height="40" fill="white"/> </clipPath> </defs> </svg>
+          </a>
+          <a class="icon-btn" href="https://wa.me/639679223947" data-copy="+639679223947" data-copy-toast="Number copied" target="_blank" rel="noopener" aria-label="WhatsApp">
+            <svg viewBox="0 0 40 40" aria-hidden="true" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"> <g clip-path="url(#clip0_40000281_14211)"> <path fill-rule="evenodd" clip-rule="evenodd" d="M31.642 28.2422C31.16 29.6066 29.244 30.7353 27.716 31.0654C26.67 31.2875 25.306 31.4632 20.71 29.5586C15.548 27.42 8.38 19.8019 8.38 14.7324C8.38 12.1516 9.868 9.14648 12.47 9.14648C13.722 9.14648 13.998 9.1709 14.41 10.1592C14.892 11.3235 16.068 14.1922 16.208 14.4863C16.786 15.6927 15.62 16.3989 14.774 17.4492C14.504 17.7653 14.198 18.1072 14.54 18.6953C14.88 19.2715 16.056 21.1881 17.784 22.7266C20.016 24.7152 21.826 25.35 22.474 25.6201C22.956 25.8202 23.532 25.7736 23.884 25.3975C24.33 24.9153 24.884 24.1154 25.448 23.3271C25.846 22.763 26.352 22.6925 26.882 22.8926C27.24 23.0166 31.79 25.1297 31.982 25.4678C32.124 25.7139 32.124 26.8778 31.642 28.2422ZM20.004 0H19.994C8.96799 0 0 8.9707 0 20C0 24.3733 1.41001 28.4307 3.80801 31.7217L1.31601 39.1533L9.00201 36.6973C12.164 38.7899 15.938 40 20.004 40C31.03 40 40 31.0293 40 20C40 8.9707 31.03 0 20.004 0Z" fill="currentColor"/> </g> <defs> <clipPath id="clip0_40000281_14211"> <rect width="40" height="40" fill="white"/> </clipPath> </defs> </svg>
+          </a>
+      </div>
+      <a class="t-p-medium footer__email" href="mailto:helloivanjose@gmail.com"
+         data-copy="helloivanjose@gmail.com" data-copy-toast="Email copied">helloivanjose@gmail.com</a>
+    </div>
+    <p class="t-p-small footer__copy">&copy; Designed by Ivan Jose</p>
+  </div>
+</footer>
+
+<style>
     /* ===== Editorial base (palette + scaffolding shared with the map & billing) ===== */
     body.case-study-page{
       --bg:#f7f5f2;--surface:transparent;--surface-2:#ece9e2;--text:#292827;--muted:#6b675f;--ink:#111110;
@@ -389,241 +943,8 @@
     #evolution .itable.comparison-itable td.k{color:#f7f5f2}
     @media(max-width:760px){.itable{overflow-x:auto}.itable table{min-width:640px}}
   </style>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght;500;600;700&family=Inter:wght;500;600;700&display=swap" rel="stylesheet">
-  <style id="rd-fonts">body{font-family:"Inter",ui-sans-serif,system-ui,sans-serif}h1,h2,h3,h4,h5,.eyebrow,[class*="title"],[class*="kicker"],[class*="heading"]{font-family:"Space Grotesk","Inter",sans-serif}</style>
-  <link rel="stylesheet" href="redesign-system.css?v=46">
-</head>
-<body class="case-study-page">
-  <div class="landing-grid" aria-hidden="true"></div>
-  <nav class="nav">
-    <div class="container nav-inner">
-      <a class="brand" href="index.html">Ivan Jose</a>
-      <div class="nav-links">
-        <a href="#overview" data-section-link="summary">Summary</a>
-        <a href="#discovery" data-section-link="discovery">Discovery</a>
-        <a href="#connection" data-section-link="product-design">Product Design</a>
-        <a href="#outcome" data-section-link="result">Result</a>
-        <span class="nav-indicator" aria-hidden="true"></span>
-      </div>
-    </div>
-  </nav>
-
-  <main>
-    <!-- HERO -->
-    <section class="case-hero" id="overview">
-      <div class="container">
-        <div class="hero-meta">
-          <div class="eyebrow">Platform Integrations · LettrLabs</div>
-          <div class="hero-status-tag">Shipped Framework</div>
-        </div>
-        <h1 class="case-title">
-          <button
-            class="hover-preview-trigger title-preview-trigger"
-            type="button"
-            data-preview="integration-manage"
-            aria-label="Preview integration platform"
-            data-hover-hint="Click to view card"
-          >
-            Building a reusable integration flow for supported API connections.
-          </button>
-          <span class="case-title-mobile">Building a reusable integration flow for supported API connections.</span>
-        </h1>
-        <p class="lead">
-          Connecting one app is easy. The hard part is a system that holds up across CRMs, ecommerce tools, webhooks,
-          custom APIs, attribution, automation triggers, and whatever gets added next, without redesigning everything
-          each time. That's the part I wanted to solve.
-        </p>
-        <div class="case-actions">
-          <a class="button" href="#connection">See the framework</a>
-          <a class="button secondary" href="https://www.lettrlabs.com/" target="_blank" rel="noreferrer">Visit LettrLabs</a>
-        </div>
-
-        <div class="case-summary">
-          <div class="callout">
-            <h3>North Star</h3>
-            <p>
-              Build one integration framework we could reuse, so connecting a third-party app feels familiar, quick, and safe
-              even when the APIs, fields, and business logic underneath are nothing alike.
-            </p>
-          </div>
-          <div class="kv">
-            <div class="kv-item"><span>My role</span><strong>Led UX strategy and the end-to-end design. Flows, states, validations, UI, QA</strong></div>
-            <div class="kv-item"><span>Team</span><strong>Cross-functional. A PM, a developer, and me on design and UX strategy</strong></div>
-            <div class="kv-item"><span>Challenge</span><strong>Turn many different API setups into one product experience</strong></div>
-            <div class="kv-item"><span>Outcome</span><strong>A connector used to take 3 to 4 weeks. It now takes ~2, and the first parallel batch shipped 4 new connectors in 3 weeks</strong></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- AT A GLANCE -->
-    <section class="section at-glance-band" style="padding-top:72px;padding-bottom:72px">
-      <div class="container">
-        <div class="section-head" style="margin-bottom:34px">
-          <div class="eyebrow">At a glance</div>
-          <h2>The short version.</h2>
-        </div>
-        <div class="metric-strip" style="margin-top:0;margin-bottom:40px">
-          <div class="metric-tile"><strong>$350K/mo</strong><span>of direct mail already runs on customer-integration data</span></div>
-          <div class="metric-tile"><strong>32%</strong><span>of customers build automations from a connected integration</span></div>
-          <div class="metric-tile"><strong>28/mo</strong><span>support tickets. 12 asking for a new connector, 16 stuck setting one up. Every one pulled in CS, Sales, and engineering</span></div>
-          <div class="metric-tile"><strong>3 to 4 → 2 wks</strong><span>per-connector lead time after the reusable pattern replaced one-off flows</span></div>
-          <div class="metric-tile"><strong>4 in 3 wks</strong><span>new connectors on the first run. Salesforce, ServiceTitan, HubSpot, Housecall Pro</span></div>
-          <div class="metric-tile"><strong>1 pattern</strong><span>one lifecycle that new connectors slot into as configuration, not a redesign</span></div>
-        </div>
-        <div class="at-glance">
-          <div class="at-glance-item">
-            <small>The problem</small>
-            <p>Customer data lived across <b>6 separate tools</b> and every connector was a one-off build. <b>32%</b> of customers already automate from an integration and <b>~$350K of mail/month</b> runs on that data. Even so, <b>12 tickets/month</b> asked for new connectors and <b>16/month</b> came from people stuck setting one up (<b>3 in 10</b> couldn't finish). Each of those pulled in CS, Sales, and engineering. <span style="opacity:.65">(Figures from internal product analytics, rounded.)</span></p>
-          </div>
-          <div class="at-glance-item">
-            <small>What I did</small>
-            <p>Led the <b>UX strategy and end-to-end design</b> for one reusable integration framework. I built it as a system around a shared <b>connect → test → attribute → manage</b> lifecycle, so a new connector ships as configuration, not a redesign. Worked with a PM and a developer.</p>
-          </div>
-          <div class="at-glance-item">
-            <small>The outcome</small>
-            <p>A connector used to take <b>3 to 4 weeks</b>. It now takes <b>~2</b>. In the first <b>3-week parallel batch</b> we shipped <b>4 new connectors</b>. One of them was <b>Salesforce</b>, asked for by a client worth <b>~500K mails</b>.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- MAIN UX (white background) -->
-    <section class="section" id="main-ux" style="background:#ffffff">
-      <div class="container">
-        <div class="section-head">
-          <div class="eyebrow">Main UX</div>
-          <h2>The whole integration surface in one view.</h2>
-          <p>One management screen holds connected accounts, their status and sync details, attribution setup, and the next action. Every connector lives in the same place.</p>
-        </div>
-        <figure class="shot shot-wide" style="margin-top:0">
-          <div class="shot-frame">
-            <div class="shot-media">
-              <img src="images/integration-manage-connections.webp" alt="Manage Integration screen for Housecall Pro, connected accounts with Pending and Active status, sync details, Add New Account, Create an Automation, and Customize Attribution actions" onerror="this.remove()">
-              <span class="shot-ph"><strong>Manage Integration. Connected accounts with status and sync details, plus add-account, automation, and attribution actions</strong></span>
-            </div>
-          </div>
-          <figcaption class="shot-cap">The final management screen. Connected accounts, status, attribution setup, and next actions.</figcaption>
-        </figure>
-      </div>
-    </section>
-
-    <!-- PROBLEM -->
-    <section class="section section-dark-soft" id="problem">
-      <div class="container">
-        <div class="pattern-head">
-          <div class="eyebrow">The problem</div>
-          <h2>Why did adding one integration take a month and still trip up the customer who asked for it?</h2>
-        </div>
-        <div class="question-copy">
-          <p>LettrLabs wants to be the one-stop shop for direct mail. Customers keep their leads, purchases, jobs, and CRM activity spread across many platforms though. Every new connector had been its own build, so the same slow, expensive path repeated each time.</p>
-          <p>So I reframed it. The job wasn't "add one more app." It was the gap between how a new integration <em>should</em> reach a customer and how it actually did.</p>
-        </div>
-      </div>
-      <div class="container question-journey">
-        <p class="diagram-title diagram-title-outside">Expected vs. actual integration journey</p>
-        <div class="journey-groups" aria-label="Expected vs actual integration journey timeline">
-          <div class="journey-group">
-            <div class="journey-group-line" aria-hidden="true"></div>
-            <p class="journey-group-head">Expected</p>
-            <div class="journey-group-items">
-              <div class="journey-timeline-item">
-                <div class="journey-timeline-marker">1</div>
-                <div class="journey-timeline-copy">
-                  <h3>The business picks what to connect</h3>
-                  <p>Customers, engineering, and the business agree on which integrations are worth building, guided by what customers actually ask for.</p>
-                </div>
-              </div>
-              <div class="journey-timeline-item">
-                <div class="journey-timeline-marker">2</div>
-                <div class="journey-timeline-copy">
-                  <h3>Engineering builds it once, consistently</h3>
-                  <p>Devs put their time into a proper data pipeline and reuse the same workflow for every integration instead of rebuilding the setup.</p>
-                </div>
-              </div>
-              <div class="journey-timeline-item">
-                <div class="journey-timeline-marker">3</div>
-                <div class="journey-timeline-copy">
-                  <h3>The customer uses it within a week</h3>
-                  <p>Once it's released, the connector is familiar and self-serve, so the customer connects and starts automating within a week.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="journey-group">
-            <div class="journey-group-line" aria-hidden="true"></div>
-            <p class="journey-group-head">Reality</p>
-            <div class="journey-group-items">
-              <div class="journey-timeline-item is-risk">
-                <div class="journey-timeline-marker">1</div>
-                <div class="journey-timeline-copy">
-                  <h3>The request waits a month to be heard</h3>
-                  <p>A customer asks for an integration. It takes at least a month just to reach management and get prioritized, and that's before any design or build starts.</p>
-                </div>
-              </div>
-              <div class="journey-timeline-item is-risk">
-                <div class="journey-timeline-marker">2</div>
-                <div class="journey-timeline-copy">
-                  <h3>Every build is researched from scratch</h3>
-                  <p>Devs research the data pipeline, then work with product to design the data model and handle each API's quirks. A fresh custom effort every time.</p>
-                </div>
-              </div>
-              <div class="journey-timeline-item is-risk">
-                <div class="journey-timeline-marker">3</div>
-                <div class="journey-timeline-copy">
-                  <h3>The customer hits a brand-new flow</h3>
-                  <p>They finally use it, but it's another unfamiliar process. They hit problems or get stuck, and support gets pulled right back in.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- DISCOVERY -->
-    <section class="section" id="discovery">
-      <div class="container">
-        <div class="section-head">
-          <div class="eyebrow">Discovery</div>
-          <h2>Why does every connection start over? That was the question, more than "which app next."</h2>
-          <p>The support queue and the analytics agreed. Integrations were already central to how customers got value, but the way we built and set them up didn't scale. Before I drew a screen, I let the evidence point at the pattern.</p>
-        </div>
-        <div class="discovery-band">
-          <div class="discovery-evidence-head"><div>What we saw</div><div>What it told us</div></div>
-          <div class="discovery-evidence-row"><div>12 tickets / mo</div><div>Customers were actively asking for connectors we didn't have yet. That's unmet demand, not a hypothesis. The queue was telling us where to expand.</div></div>
-          <div class="discovery-evidence-row"><div>16 tickets / mo</div><div>The setup itself was the blocker. Every one pulled in Customer Success, Sales, and engineering just to get a customer connected.</div></div>
-          <div class="discovery-evidence-row"><div>3 in 10 users</div><div>Couldn't add their account and trigger an automation on their own. The flow was failing before anyone got anything out of it.</div></div>
-          <div class="discovery-evidence-row"><div>32% · $350K/mo</div><div>A third of customers already automate from an integration, and ~$350K of mail a month rides on that data. Integrations were core infrastructure, not a nice-to-have.</div></div>
-          <div class="discovery-evidence-row"><div>6 one-off builds</div><div>Each connector had been designed and built separately, 3 to 4 weeks each, so the roadmap couldn't add sources fast enough to keep up with demand.</div></div>
-          <div class="discovery-evidence-row"><div>1 key client</div><div>One client worth ~500K mails asked for Salesforce. That put a number on what it cost us <em>not</em> to have a pattern that scaled, and made it urgent.</div></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- FRAMEWORK -->
-    <!-- UX AUDIT -->
-    <section class="section section-dark" id="audit">
-      <div class="container">
-        <div class="section-head">
-          <div class="eyebrow">UX audit</div>
-          <h2>I moved the conversation from "add an app" to "unblock the setup."</h2>
-          <p>No single screen looked wrong. Connecting an app just kept stalling. So I listed every blocker and paired it with the fix the reusable pattern shipped.</p>
-        </div>
-        <div class="comparison-table">
-          <div class="comparison-head"><div>Blocker</div><div>Fix</div></div>
-          <div class="row"><div class="cell" data-label="Blocker">A request waited ~a month just to get prioritized. Then every connector was built from scratch, 3 to 4 weeks each.</div><div class="cell" data-label="Fix">One reusable lifecycle turns a new connector into configuration. Logo, name, fields, attributes. It ships as setup, not a project.</div></div>
-          <div class="row"><div class="cell" data-label="Blocker">16 tickets a month came from users stuck in setup, and 3 in 10 couldn't finish connecting on their own.</div><div class="cell" data-label="Fix">A guided connect → test → confirm → manage flow that tests credentials before it saves and explains every wait, so users can do it themselves.</div></div>
-          <div class="row"><div class="cell" data-label="Blocker">Attribution was buried in a heavy, data-engineering setup marketers couldn't finish.</div><div class="cell" data-label="Fix">Attribution became its own short, explicit step. You confirm which statuses count as a Lead or Conversion, and a live warning fires if nothing would attribute.</div></div>
-          <div class="row"><div class="cell" data-label="Blocker">Every API has its own quirks, like custom objects, renamed fields, and multiple pipelines. They broke any one-size-fits-all guess.</div><div class="cell" data-label="Fix">A checkbox-grid mapping handles multiple pipelines and non-linear stages out in the open, in the marketer's own language.</div></div>
-          <div class="row"><div class="cell" data-label="Blocker">Success and failure states lived on one screen, so users lost track of what was active, syncing, or failed.</div><div class="cell" data-label="Fix">Status shows in the account list and in-app notifications, whether that's active, sync-in-progress, failed, or ready for the next step.</div></div>
-          <div class="row"><div class="cell" data-label="Blocker">Every connector was designed and maintained separately across product and engineering.</div><div class="cell" data-label="Fix">One pattern devs reuse and the product team scales. New sources slot in as configuration, not a redesign.</div></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ECOSYSTEM -->
-    <style id="eco-styles">
+<style id="rd-fonts">body{font-family:"Inter",ui-sans-serif,system-ui,sans-serif}h1,h2,h3,h4,h5,.eyebrow,[class*="title"],[class*="kicker"],[class*="heading"]{font-family:"Space Grotesk","Inter",sans-serif}</style>
+<style id="eco-styles">
       .eco{
         --eco-info:#2f6bff; --eco-info-bg:#eaf1ff;
         --eco-card-bg:#ffffff; --eco-card-bd:#e8ebf1; --eco-plate-bg:#ffffff;
@@ -796,96 +1117,30 @@
       .callout,.result-band,.note-box,.note-dark,.story-diagram,.discovery-band{padding:18px;border-radius:12px}
     }
   </style>
-    <section class="section eco">
-      <div class="container">
-        <div class="section-head">
-          <div class="eyebrow">Supported ecosystem</div>
-          <h2>Built for many sources of customer data, not just one CRM.</h2>
-          <p>Six connectors already existed as one-off builds. The reusable pattern let us add four more in a single three-week run, Salesforce among them, asked for by a client worth ~500K mails. Each one is the same card and the same flow with a different source.</p>
-        </div>
-
-        <div class="eco-marquee" aria-label="Supported integrations">
-          <!-- Row 1 — left to right -->
-          <div class="eco-row eco-row--1"><div class="eco-track">
-            <article class="eco-card">
-              <div class="eco-card__media"><span class="eco-card__logo"><img src="images/logos/klaviyo.webp" alt="" loading="lazy" width="292" height="150"></span></div>
-              <div class="eco-card__body"><div class="eco-card__title">Klaviyo</div><p class="eco-card__desc">Fold direct mail into your SMS and email campaigns using your Klaviyo segments.</p></div>
-            </article>
-            <article class="eco-card">
-              <div class="eco-card__media"><span class="eco-card__logo"><img src="images/logos/shopify.webp" alt="" loading="lazy" width="292" height="150"></span></div>
-              <div class="eco-card__body"><div class="eco-card__title">Shopify</div><p class="eco-card__desc">Retarget Shopify customers straight into print, from first-time buyers to win-back segments and more.</p></div>
-            </article>
-            <article class="eco-card">
-              <div class="eco-card__media"><span class="eco-card__new">New</span><span class="eco-card__logo"><img src="images/logos/salesforce.webp" alt="" loading="lazy" width="292" height="150"></span></div>
-              <div class="eco-card__body"><div class="eco-card__title">Salesforce</div><p class="eco-card__desc">Sync Salesforce contacts and pipeline stages to trigger direct-mail automations.</p></div>
-            </article>
-            <article class="eco-card">
-              <div class="eco-card__media"><span class="eco-card__logo"><img src="images/logos/zapier.webp" alt="" loading="lazy" width="292" height="150"></span></div>
-              <div class="eco-card__body"><div class="eco-card__title">Zapier</div><p class="eco-card__desc">Automate your sending through Zapier's workflow-automation platform and 6,000+ apps.</p></div>
-            </article>
-            <article class="eco-card">
-              <div class="eco-card__media"><span class="eco-card__logo"><img src="images/logos/leadreveal.webp" alt="" loading="lazy" width="292" height="150"></span></div>
-              <div class="eco-card__body"><div class="eco-card__title">LeadReveal</div><p class="eco-card__desc">Reveal anonymous website traffic and retarget those visitors with LettrLabs LeadReveal.</p></div>
-            </article>
-          </div></div>
-
-          <!-- Row 2 — right to left -->
-          <div class="eco-row eco-row--2"><div class="eco-track">
-            <article class="eco-card eco-card--featured">
-              <div class="eco-card__media"><span class="eco-card__core">Core Tier</span><span class="eco-card__logo"><img src="images/logos/hailtrace.webp" alt="" loading="lazy" width="292" height="150"></span></div>
-              <div class="eco-card__body"><div class="eco-card__title">Storm Automation</div><p class="eco-card__desc">Automatically target storm-affected homeowners in your service area the moment a storm hits. Powered by HailTrace.</p></div>
-            </article>
-            <article class="eco-card">
-              <div class="eco-card__media"><span class="eco-card__new">New</span><span class="eco-card__logo"><img src="images/logos/hubspot.webp" alt="" loading="lazy" width="292" height="150"></span></div>
-              <div class="eco-card__body"><div class="eco-card__title">HubSpot</div><p class="eco-card__desc">Trigger mailers off HubSpot lifecycle stages, list membership, and deal activity.</p></div>
-            </article>
-            <article class="eco-card">
-              <div class="eco-card__media"><span class="eco-card__logo"><img src="images/logos/movermail.webp" alt="" loading="lazy" width="292" height="150"></span></div>
-              <div class="eco-card__body"><div class="eco-card__title">MoverMail</div><p class="eco-card__desc">Automatically reach new movers in your area the week they arrive.</p></div>
-            </article>
-            <article class="eco-card">
-              <div class="eco-card__media"><span class="eco-card__logo"><img src="images/logos/openapi.webp" alt="" loading="lazy" width="292" height="150"></span></div>
-              <div class="eco-card__body"><div class="eco-card__title">Open API</div><p class="eco-card__desc">Integrate and automate your sending directly through the LettrLabs Open API.</p></div>
-            </article>
-            <article class="eco-card">
-              <div class="eco-card__media"><span class="eco-card__new">New</span><span class="eco-card__logo"><img src="images/logos/housecall-pro.webp" alt="" loading="lazy" width="292" height="150"></span></div>
-              <div class="eco-card__body"><div class="eco-card__title">Housecall Pro</div><p class="eco-card__desc">Target customers automatically based on Housecall Pro jobs and service history.</p></div>
-            </article>
-          </div></div>
-
-          <!-- Row 3 — left to right -->
-          <div class="eco-row eco-row--3"><div class="eco-track">
-            <article class="eco-card">
-              <div class="eco-card__media"><span class="eco-card__new">New</span><span class="eco-card__logo"><img src="images/logos/servicetitan.webp" alt="" loading="lazy" width="292" height="150"></span></div>
-              <div class="eco-card__body"><div class="eco-card__title">ServiceTitan</div><p class="eco-card__desc">Sync ServiceTitan jobs and customer records to launch automated field-service campaigns.</p></div>
-            </article>
-            <article class="eco-card">
-              <div class="eco-card__media"><span class="eco-card__logo"><img src="images/logos/webhooks.webp" alt="" loading="lazy" width="292" height="150"></span></div>
-              <div class="eco-card__body"><div class="eco-card__title">Webhooks</div><p class="eco-card__desc">Push and pull events in real time and automate your sending through LettrLabs Webhooks.</p></div>
-            </article>
-            <article class="eco-card">
-              <div class="eco-card__media"><span class="eco-card__logo"><img src="images/logos/recipient-search.webp" alt="" loading="lazy" width="292" height="150"></span></div>
-              <div class="eco-card__body"><div class="eco-card__title">Recipient Search</div><p class="eco-card__desc">Build a target audience by searching recipients directly, with no upstream source needed.</p></div>
-            </article>
-            <article class="eco-card">
-              <div class="eco-card__media"><span class="eco-card__logo"><img src="images/logos/csv-upload.webp" alt="" loading="lazy" width="292" height="150"></span></div>
-              <div class="eco-card__body"><div class="eco-card__title">CSV Upload</div><p class="eco-card__desc">Automate mail sending to any recipient list with a simple CSV upload.</p></div>
-            </article>
-            <article class="eco-card">
-              <div class="eco-card__media"><span class="eco-card__logo"><img src="images/logos/permits.webp" alt="" loading="lazy" width="292" height="150"></span></div>
-              <div class="eco-card__body"><div class="eco-card__title">Permits</div><p class="eco-card__desc">Automatically target properties based on new building-permit activity.</p></div>
-            </article>
-            <article class="eco-card">
-              <div class="eco-card__media"><span class="eco-card__logo"><img src="images/logos/acculynx.webp" alt="" loading="lazy" width="292" height="150"></span></div>
-              <div class="eco-card__body"><div class="eco-card__title">AccuLynx</div><p class="eco-card__desc">Sync AccuLynx roofing jobs and customer records to trigger automated direct-mail campaigns.</p></div>
-            </article>
-          </div></div>
-        </div>
-
-        <p class="eco-legend"><span class="eco-dot"></span>The <b>four “New”</b> connectors were added in the first 3-week run on the reusable pattern. The rest already existed as separate one-off builds.</p>
-      </div>
-    </section>
-    <script>
+<script src="v3/v3.js?v=79"></script>
+<script src="case-study.js?v=79"></script>
+<script defer src="case-study-mobile.js"></script>
+<script defer src="carousel-swipe.js?v=7"></script>
+<script defer src="scroll-hint.js?v=1"></script>
+<script type="text/javascript">
+    (function(c,l,a,r,i,t,y){if(window.self!==window.top)return;
+      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "xu2es8f588");
+  </script>
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "headline": "Building a reusable integration flow for supported API connections",
+    "about": "B2B SaaS product design case study — a reusable integration framework with validation states and attribution",
+    "keywords": ["product design","B2B SaaS","integrations","design systems","validation states","attribution","UX"],
+    "url": "https://josejeani06.github.io/portfolio/integration-case-study.html",
+    "author": { "@type": "Person", "name": "Jean Ivan Jose", "alternateName": "Ivan Jose", "jobTitle": "Senior Product Designer", "url": "https://josejeani06.github.io/portfolio/" }
+  }
+  </script>
+<script>
       (function(){
         var tracks = document.querySelectorAll('.eco-marquee .eco-track');
         tracks.forEach(function(track){
@@ -897,307 +1152,7 @@
         });
       })();
     </script>
-
-    <!-- EVOLUTION -->
-    <section class="section section-dark" id="evolution">
-      <div class="container">
-        <div class="section-head">
-          <div class="eyebrow">Design evolution</div>
-          <h2>The version we didn't ship, and why "easier" won.</h2>
-          <p>The first design was far more powerful. To connect a CRM like Salesforce, you'd browse the entire schema, hand-map every object and field to the attribution model, define conversion/lead/exclude rules, then run a full extract-and-load pipeline into SQL. It could model almost anything, and that was exactly the problem.</p>
-        </div>
-
-        <div class="concept-carousel" id="concept-carousel">
-          <div class="concept-carousel-shell">
-            <button class="concept-carousel-btn prev" type="button" aria-label="Previous V1 step">
-              <span class="concept-carousel-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></span>
-            </button>
-            <div class="concept-carousel-viewport">
-              <div class="concept-carousel-track">
-                <article class="concept-carousel-slide is-active">
-                  <div class="concept-carousel-copy">
-                    <span class="concept-carousel-label">Not shipped · V1 · step 01</span>
-                    <h3>Browse the CRM schema.</h3>
-                    <p>The advanced path opened with the whole Salesforce object model and asked the user to pick what mattered. Opportunity, Lead, Case, Order, Campaign, Contact, Account.</p>
-                  </div>
-                  <figure class="concept-carousel-media"><img src="images/integration-v1-schema.webp" alt="V1: browse the Salesforce schema and pick objects" onerror="this.style.display='none'"></figure>
-                </article>
-                <article class="concept-carousel-slide">
-                  <div class="concept-carousel-copy">
-                    <span class="concept-carousel-label">Not shipped · V1 · step 02</span>
-                    <h3>Hand-map every field.</h3>
-                    <p>Event object, customer object, and every field mapped by hand, plus the relationship between them. Precise, and a lot to ask before anything useful comes back.</p>
-                  </div>
-                  <figure class="concept-carousel-media"><img src="images/integration-v1-mapping.webp" alt="V1: hand-map event and customer objects and every field" onerror="this.style.display='none'"></figure>
-                </article>
-                <article class="concept-carousel-slide">
-                  <div class="concept-carousel-copy">
-                    <span class="concept-carousel-label">Not shipped · V1 · step 03</span>
-                    <h3>Build the attribution rules.</h3>
-                    <p>Conversion, lead, and exclude criteria. Each one a rule builder the user had to reason about up front, before they'd seen a single result.</p>
-                  </div>
-                  <figure class="concept-carousel-media"><img src="images/integration-v1-criteria.webp" alt="V1: conversion, lead, and exclude rule builders" onerror="this.style.display='none'"></figure>
-                </article>
-                <article class="concept-carousel-slide">
-                  <div class="concept-carousel-copy">
-                    <span class="concept-carousel-label">Not shipped · V1 · step 04</span>
-                    <h3>Run a data pipeline.</h3>
-                    <p>Then run an extract-and-load pipeline into SQL, with a "skip dbt" toggle. Powerful, and plainly a data-engineering task.</p>
-                  </div>
-                  <figure class="concept-carousel-media"><img src="images/integration-v1-pipeline.webp" alt="V1: run an extract-and-load pipeline into SQL" onerror="this.style.display='none'"></figure>
-                </article>
-                <article class="concept-carousel-slide">
-                  <div class="concept-carousel-copy">
-                    <span class="concept-carousel-label">Not shipped · explored</span>
-                    <h3>Auto-infer the field mappings.</h3>
-                    <p>Guess every mapping on connect and read it back as a filled-in review. It was elegant until custom objects and renamed fields showed up. Then guessing for people quietly guessed wrong on real Salesforce orgs.</p>
-                  </div>
-                  <figure class="concept-carousel-media"><img src="images/integration-v2-attribution.webp" alt="Explored, not shipped: auto-inferred field mappings shown as a plain-language review" onerror="this.style.display='none'"></figure>
-                </article>
-                <article class="concept-carousel-slide">
-                  <div class="concept-carousel-copy">
-                    <span class="concept-carousel-label">Not shipped · explored</span>
-                    <h3>Attribution as one slider.</h3>
-                    <p>Drag a single handle across your Salesforce stages to say "a Lead starts here, a Conversion here." Lovely for one linear pipeline. Real orgs run several, across two objects, so it couldn't stretch to cover them.</p>
-                  </div>
-                  <figure class="concept-carousel-media"><img src="images/integration-v2-review.webp" alt="Explored, not shipped: a single slider maps Salesforce lead and opportunity stages to Lead and Conversion" onerror="this.style.display='none'"></figure>
-                </article>
-              </div>
-            </div>
-            <button class="concept-carousel-btn next" type="button" aria-label="Next V1 step">
-              <span class="concept-carousel-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></span>
-            </button>
-          </div>
-          <div class="concept-carousel-meta" aria-label="V1 step navigation">
-            <button class="concept-carousel-dot is-active" type="button" aria-label="Show V1 step 1"></button>
-            <button class="concept-carousel-dot" type="button" aria-label="Show V1 step 2"></button>
-            <button class="concept-carousel-dot" type="button" aria-label="Show V1 step 3"></button>
-            <button class="concept-carousel-dot" type="button" aria-label="Show V1 step 4"></button>
-            <button class="concept-carousel-dot" type="button" aria-label="Show explored concept 5"></button>
-            <button class="concept-carousel-dot" type="button" aria-label="Show explored concept 6"></button>
-          </div>
-        </div>
-
-        <div class="note-grid">
-          <div class="note-box">
-            <h3>What we cut, and why</h3>
-            <p>V1 could model anything, but it assumed every user was a data engineer. Two simpler replacements looked elegant and then quietly failed on real Salesforce orgs. <strong>Auto-inferred mappings</strong> guessed wrong on custom objects and renamed fields, and <strong>a single attribution slider</strong> couldn't handle two objects, Lead and Opportunity, with non-linear stages. Both were good ideas to kill.</p>
-          </div>
-          <div class="note-box note-box--ship">
-            <h3>What shipped</h3>
-            <p>The least clever version held up. You connect with credentials, and attribution becomes its own explicit step. You <strong>confirm which statuses count as a Lead, a Conversion, or Job Complete</strong>, and a live warning fires if the choice would attribute nothing. A checkbox grid handles the pipelines and non-linear stages the slider couldn't.</p>
-          </div>
-        </div>
-
-        <div class="itable comparison-itable">
-          <table>
-            <thead>
-              <tr><th style="width:26%">The job</th><th>V1, powerful and complex</th><th>Shipped, simple and explicit</th></tr>
-            </thead>
-            <tbody>
-              <tr><td class="k">Find the data</td><td>Browse the full CRM schema and pick objects</td><td>Connect with credentials, and the connection exposes what's needed</td></tr>
-              <tr><td class="k">Map it</td><td>Hand-map event/customer objects + every field</td><td>Confirm which statuses count, a few clicks</td></tr>
-              <tr><td class="k">Attribution</td><td>Define conversion/lead/exclude rules up front</td><td>Confirm Lead / Conversion stages, warned if nothing would attribute</td></tr>
-              <tr><td class="k">Move the data</td><td>Configure and run an extract-load (dbt/SQL) pipeline</td><td>The connection tests and syncs on its own</td></tr>
-              <tr><td class="k">How it felt</td><td>Like data engineering</td><td>Like signing in</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <p class="subcopy" style="margin:18px 0 0">That's the through-line of the whole project. The reusable pattern below is what's left <em>after</em> deciding what the user should never have to care about.</p>
-      </div>
-    </section>
-
-    <!-- CONNECTION FLOW + STATES + VALIDATION -->
-    <section class="section" id="connection">
-      <div class="container">
-        <div class="section-head">
-          <div class="eyebrow">Connection flow</div>
-          <h2>The connection flow, its states, and what it validates.</h2>
-          <p>Here's the reusable pattern on a real connector, Housecall Pro. One entry point, a connect step that tests credentials before it moves on, clear connecting and connected states, a management list for multiple accounts, and attribution setup as its own job.</p>
-        </div>
-
-        <h3 class="subhead">The shipped flow, step by step.</h3>
-        <div class="scroll-story" data-scroll-gallery>
-          <div class="scroll-story-copy">
-            <article class="scroll-story-step is-active" data-scroll-step="cf-connect">
-              <figure class="scroll-story-mobile-media"><img src="images/integration-connect.webp" alt="Connect Housecall Pro: connection name, client ID, client secret, test and continue" onerror="this.closest('.scroll-story-mobile-media').remove()"></figure>
-              <span class="scroll-story-label">Final output · step 01</span>
-              <h3>Create a new connection.</h3>
-              <p>Only the essentials. Name, Client ID, masked Client Secret. Then <em>Test and Continue</em> before anything is saved.</p>
-              <figure class="liveframe-stage" style="--frame-w:760px;--frame-h:840px;--frame-ratio:760 / 840"><iframe class="fitframe" data-w="760" data-h="840" width="760" height="840" src="recreations/integration-connect.html?auto&amp;v=20260729" scrolling="no" title="Live animated connection flow" loading="eager"></iframe></figure>
-            </article>
-            <article class="scroll-story-step" data-scroll-step="cf-connecting">
-              <figure class="scroll-story-mobile-media"><img src="images/integration-connecting.webp" alt="Connecting loading state while credentials are validated and objects discovered" onerror="this.closest('.scroll-story-mobile-media').remove()"></figure>
-              <span class="scroll-story-label">Final output · step 02</span>
-              <h3>Connecting…</h3>
-              <p>The wait says what it's doing. Credentials are being verified and objects and fields discovered, so it isn't a dead spinner.</p>
-            </article>
-            <article class="scroll-story-step" data-scroll-step="cf-connected">
-              <figure class="scroll-story-mobile-media"><img src="images/integration-connected.webp" alt="You are connected, now finish setup with a clear next action" onerror="this.closest('.scroll-story-mobile-media').remove()"></figure>
-              <span class="scroll-story-label">Final output · step 03</span>
-              <h3>Connected → finish setup.</h3>
-              <p>Success isn't the end. It routes straight to the next action (Customize Attribution).</p>
-            </article>
-            <article class="scroll-story-step" data-scroll-step="cf-attribution">
-              <figure class="scroll-story-mobile-media"><img src="images/integration-attribution-setup.webp" alt="Attribution setup: name the automation and pick a trigger before saving" onerror="this.closest('.scroll-story-mobile-media').remove()"></figure>
-              <span class="scroll-story-label">Final output · step 04</span>
-              <h3>Attribution setup.</h3>
-              <p>Configuration is its own step. Name the automation, pick a trigger, then Save &amp; Continue.</p>
-              <figure class="liveframe-stage" style="--frame-w:940px;--frame-h:440px;--frame-ratio:940 / 440"><iframe class="fitframe" data-w="940" data-h="440" data-replay="__replayAttribution" width="940" height="440" src="recreations/integration-attribution-setup.html?v=20260729" scrolling="no" title="Live attribution setup" loading="eager"></iframe></figure>
-            </article>
-            <article class="scroll-story-step" data-scroll-step="cf-manage">
-              <figure class="scroll-story-mobile-media"><img src="images/integration-accounts.webp" alt="Manage Integration: connected accounts with active status, sync progress, finish setup, and remove" onerror="this.closest('.scroll-story-mobile-media').remove()"></figure>
-              <span class="scroll-story-label">Final output · step 05</span>
-              <h3>Manage your accounts.</h3>
-              <p>Every connected account sits on one surface with its status (Active / Sync in Progress), last sync, Finish Setup, Customize Attribution, Add New Account, and Remove.</p>
-              <figure class="liveframe-stage" style="--frame-w:996px;--frame-h:852px;--frame-ratio:996 / 852"><iframe class="fitframe" data-w="996" data-h="852" data-replay="__replayAccounts" width="996" height="852" src="recreations/integration-accounts.html?v=20260729" scrolling="no" title="Live integration account management" loading="eager"></iframe></figure>
-            </article>
-            <div class="scroll-story-progress" aria-hidden="true"></div>
-          </div>
-          <div class="scroll-story-sticky">
-            <div class="scroll-story-stage">
-              <figure class="scroll-story-media is-active flowmedia" data-scroll-media="cf-connect cf-connecting cf-connected"><iframe class="flowframe fitframe" data-w="760" data-h="840" width="760" height="840" src="recreations/integration-connect.html?v=20260729" scrolling="no" title="Live connection flow that advances with the case-study scroll" loading="eager"></iframe></figure>
-              <figure class="scroll-story-media" data-scroll-media="cf-attribution"><iframe class="fitframe" data-w="940" data-h="440" data-replay="__replayAttribution" width="940" height="440" src="recreations/integration-attribution-setup.html?v=20260729" scrolling="no" title="Live attribution setup that replays when its step is active" loading="eager"></iframe></figure>
-              <figure class="scroll-story-media" data-scroll-media="cf-manage"><iframe class="fitframe" data-w="996" data-h="852" data-replay="__replayAccounts" width="996" height="852" src="recreations/integration-accounts.html?v=20260729" scrolling="no" title="Live integration account management that replays when its step is active" loading="eager"></iframe></figure>
-            </div>
-          </div>
-        </div>
-
-        <h3 class="subhead">Validation we added to the flow</h3>
-        <p class="subcopy">The same pattern has to hold across very different APIs, so the safety lives in validation. It catches problems at entry instead of after a sync has already broken.</p>
-        <div class="itable validation-table">
-          <table>
-            <thead>
-              <tr><th>Field / step</th><th>Validation added</th><th>Why it matters</th></tr>
-            </thead>
-            <tbody>
-              <tr><td class="k">Connection identity &amp; credentials</td><td>Name, format-checked Client ID, and a masked Client Secret are all required. The secret is never shown again after save.</td><td>Accounts stay easy to tell apart, and bad or exposed credentials get caught at entry.</td></tr>
-              <tr><td class="k">Test before save</td><td>A live connection test plus object and field discovery have to pass before the user can continue.</td><td>No half-connected accounts, and failures show up early enough to recover.</td></tr>
-              <tr><td class="k">Account identity &amp; status</td><td>Tenant IDs are unique, duplicates are blocked, and every account shows its sync state with a last-updated time.</td><td>People can trust which source is connected and how fresh its data is.</td></tr>
-              <tr><td class="k">Setup completion</td><td>Attribution is required before activation, and the automation has to be named and tied to a valid trigger.</td><td>Nothing launches on undefined, half-configured data.</td></tr>
-              <tr><td class="k">Destructive change</td><td>Removing a connected account takes an explicit confirmation.</td><td>Changes that could hit live automations stay deliberate.</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
-
-    <!-- DECISIONS -->
-    <section class="section" id="decisions">
-      <div class="container">
-        <div class="section-head">
-          <div class="eyebrow">Decision making</div>
-          <h2>The hard parts weren't the screens. They were the trade-offs.</h2>
-          <p>I wrote down what each call cost us, so the PM, engineering, and I could agree faster.</p>
-        </div>
-        <div class="decision-log-table">
-          <div class="decision-log-head">
-            <div>Question</div><div>Trade-off</div><div>Decision</div><div>Future</div>
-          </div>
-          <div class="decision-log-body">
-            <div class="decision-log-cell" data-label="Question"><p>How much should the connect step ask for up front?</p></div>
-            <div class="decision-log-cell" data-label="Trade-off"><p>Exposing every object and field was powerful, but it turned setup into a data-engineering task. 3 in 10 users stalled before finishing.</p></div>
-            <div class="decision-log-cell" data-label="Decision"><p>Cut connect down to the few required inputs, name, Client ID, and masked secret, all tested before anything saves. Deeper mapping became a separate, optional step.</p></div>
-            <div class="decision-log-cell" data-label="Future"><p>Use AI to pre-suggest field mappings so even the optional step gets faster.</p></div>
-          </div>
-          <div class="decision-log-body">
-            <div class="decision-log-cell" data-label="Question"><p>Connect and attribution, one flow or two?</p></div>
-            <div class="decision-log-cell" data-label="Trade-off"><p>One flow felt continuous, but attribution carries different business logic and different risk than authentication.</p></div>
-            <div class="decision-log-cell" data-label="Decision"><p>Split them. Connect stays lightweight and works the same everywhere. Attribution is its own job, shown only to the users who need it.</p></div>
-            <div class="decision-log-cell" data-label="Future"><p>Infer attribution defaults per connector, keeping the explicit step as the override.</p></div>
-          </div>
-          <div class="decision-log-body">
-            <div class="decision-log-cell" data-label="Question"><p>Build each connector custom, or one reusable shell?</p></div>
-            <div class="decision-log-cell" data-label="Trade-off"><p>Custom screens fit each API perfectly, but every new app restarted design and engineering. That was 6 one-off builds at 3 to 4 weeks each.</p></div>
-            <div class="decision-log-cell" data-label="Decision"><p>One reusable lifecycle where logo, name, fields, and attributes are configuration, so a connector ships as setup instead of a redesign. Four shipped in a three-week parallel batch.</p></div>
-            <div class="decision-log-cell" data-label="Future"><p>A connector "manifest" so a new source can be added with no new design at all.</p></div>
-          </div>
-          <div class="decision-log-body">
-            <div class="decision-log-cell" data-label="Question"><p>Where should connection status live?</p></div>
-            <div class="decision-log-cell" data-label="Trade-off"><p>Keeping status on the detail page was simplest, but users lost track of what was active, syncing, or failed across many accounts.</p></div>
-            <div class="decision-log-cell" data-label="Decision"><p>Put status in the account list and in-app notifications, active, sync-in-progress, failed, or ready, instead of on one screen.</p></div>
-            <div class="decision-log-cell" data-label="Future"><p>Proactive alerts when a sync breaks, before it silently pauses an automation.</p></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- OUTCOME -->
-    <section class="section" id="outcome">
-      <div class="container">
-        <div class="section-head">
-          <div class="eyebrow">Outcome</div>
-          <h2>Adding an integration became routine instead of a project.</h2>
-          <p>The workflow finally matched how the business, engineering, and customers actually add a source. That mattered more than a prettier connect screen.</p>
-        </div>
-        <div class="result-grid">
-          <div class="result-item"><span class="result-idx">01 / CUSTOMER · SHIPPED FLOW</span><h3>A clearer path to connection</h3><p>The shipped connect → test → confirm → manage flow checks credentials before save and spells out each next action. Completion rate and ticket reduction are what we still need to confirm with live usage.</p></div>
-          <div class="result-item"><span class="result-idx">02 / Business</span><h3>A routine, not a project</h3><p>Lead time per connector went from 3 to 4 weeks down to ~2, and the first parallel batch shipped 4 new connectors in three weeks. One of them was the Salesforce connector a ~500K-mail client was waiting on.</p></div>
-          <div class="result-item"><span class="result-idx">03 / Engineering</span><h3>One workflow to reuse</h3><p>Instead of researching and building each connector from scratch, engineering slots new sources into a stable lifecycle where logo, name, fields, and attributes are configuration.</p></div>
-          <div class="result-item"><span class="result-idx">04 / Platform</span><h3>A reusable base for the next connectors</h3><p>The reusable pattern shipped across four new connectors, Salesforce, ServiceTitan, HubSpot, and Housecall Pro. It's built so future sources arrive as configuration rather than a redesign.</p></div>
-          <div class="result-item"><span class="result-idx">05 / SUPPORT · BASELINE</span><h3>Setup was the next measure</h3><p>The baseline was 16 setup tickets a month and 3 in 10 users unable to finish on their own. The new flow has a clear measurement plan behind it. Connection completion, setup tickets, and time to first automation.</p></div>
-          <div class="result-item"><span class="result-idx">06 / PLATFORM · NEXT</span><h3>Connection enables the next workflow</h3><p>The framework links account setup to attribution, automation, and analytics. The chance now is to grow the $350K/month integration-data base with more completed, well-configured connections. I won't claim that growth before it's measured.</p></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- REFLECTION -->
-    <section class="section section-dark" id="reflection">
-      <div class="container split">
-        <div class="pattern-head">
-          <div class="eyebrow">Reflection</div>
-          <h2>Technical complexity doesn't always need a complex interface.</h2>
-        </div>
-        <div class="lede">
-          <p style="color:rgba(242,240,230,.86)">I assumed at first that connecting an integration would need a lot of fields and a lot of visible configuration. After working the flow through with the team, the simpler answer turned out to be the better one. Ask for only what's essential, validate it clearly, and let the backend do the hard part.</p>
-          <p style="color:rgba(242,240,230,.86)">Version 2 would tighten syncing status, add better search for integrations, support more credential types, and use AI to help preselect fields for automation, data merge, and attribution setup.</p>
-        </div>
-      </div>
-      <div class="container" style="margin-top:36px">
-        <p class="quote" style="color:#f1ecfb">"This project taught me that good platform design isn't about showing all the data. It's about knowing which data matters, hiding the rest, and making the next integration easier than the last."</p>
-      </div>
-    </section>
-  
-    <section class="section next-case-cta">
-      <div class="container">
-        <div class="next-case-panel">
-          <span class="next-case-kicker">Next case study</span>
-          <h2>Enterprise org management</h2>
-          <p>One place to manage roles, permissions, and shared templates across an enterprise org.</p>
-          <div class="next-case-actions">
-            <a class="next-case-primary" href="org-management-case-study.html">Read it <svg class="arw" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-            <a class="next-case-outline" href="index.html#work">All work</a>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer class="footer">
-    <div class="container footer-nav" style="padding:36px 0">
-      <a class="footer-move prev" href="map-case-study.html"><span class="fm-dir">← Previous</span><span class="fm-name">Audience map redesign</span></a>
-      <a class="button secondary" href="index.html">All work</a>
-      <a class="footer-move next" href="org-management-case-study.html"><span class="fm-dir">Next →</span><span class="fm-name">Org management</span></a>
-    </div>
-  </footer>
-
-  <div class="preview-card" id="preview-card" hidden aria-live="polite">
-    <div class="preview-card-shell">
-      <button class="preview-close" id="preview-close" type="button" aria-label="Close preview">×</button>
-      <div class="preview-visual" id="preview-visual"></div>
-      <div class="preview-copy">
-        <div class="preview-kicker" id="preview-kicker"></div>
-        <h3 class="preview-title" id="preview-title"></h3>
-        <p class="preview-text" id="preview-text"></p>
-        <div class="preview-actions">
-          <a class="button" id="preview-visit" href="#" target="_blank" rel="noreferrer">Visit</a>
-          <button class="button secondary" id="preview-dismiss" type="button">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <script>
+<script>
     const previewData = {
       "integration-manage": { kicker: "Platform integrations", title: "Reusable integration platform", text: "A single management surface for connected accounts, statuses, attribution setup, and next actions.", url: "#connection", visual: "integration-manage" },
       "integration-framework-1": { kicker: "Framework step", title: "Select integration", text: "Use a familiar shell so new apps feel like configuration inside one stable system.", url: "#connection", visual: "integration-manage" },
@@ -1362,23 +1317,7 @@
     window.addEventListener("resize", updateActiveSection);
     updateActiveSection();
   </script>
-
-  <div class="read-progress" id="read-progress" aria-hidden="true">
-    <div class="read-progress-ring">
-      <svg viewBox="0 0 44 44" width="44" height="44" aria-hidden="true">
-        <defs><linearGradient id="rpGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9e6ee5"/><stop offset=".5" stop-color="#ff4d8d"/><stop offset="1" stop-color="#2cc8ff"/></linearGradient></defs>
-        <circle class="rp-track" cx="22" cy="22" r="18" fill="none" stroke-width="4"/>
-        <circle class="rp-bar" id="rp-bar" cx="22" cy="22" r="18" fill="none" stroke-width="4" stroke-dasharray="113.097" stroke-dashoffset="113.097"/>
-      </svg>
-      <div class="read-progress-pct" id="rp-pct">0%</div>
-    </div>
-    <div class="read-progress-copy">
-      <div class="read-progress-title" id="rp-title">Overview</div>
-      <div class="read-progress-sub" id="rp-sub">A reusable integration platform</div>
-    </div>
-  </div>
-
-  <script>
+<script>
     (function () {
       var el = document.getElementById("read-progress");
       if (!el) return;
@@ -1411,8 +1350,7 @@
       update();
     })();
   </script>
-
-  <script>
+<script>
     (function () {
       var galleries = Array.prototype.slice.call(document.querySelectorAll("[data-scroll-gallery]"));
       if (!galleries.length) return;
@@ -1561,8 +1499,7 @@
       });
     })();
   </script>
-
-  <script>
+<script>
     /* Scale each live recreation from declared artboard dimensions. We deliberately
        do not read iframe.contentDocument: it can be unavailable while its modules
        load, which silently left some panels at the browser default of 150px high. */
@@ -1604,8 +1541,7 @@
       fit();
     })();
   </script>
-
-  <script>
+<script>
     (function () {
       var cc = document.getElementById("concept-carousel");
       if (!cc) return;
@@ -1639,30 +1575,7 @@
       render();
     })();
   </script>
-  <script defer src="case-study-mobile.js"></script>
-  <footer class="site-footer">
-    <div class="container">
-      <div class="site-footer-top">
-        <a class="site-footer-brand" href="index.html">Ivan Jose</a>
-        <nav class="site-footer-links" aria-label="Footer">
-          <a href="index.html#work">Case Studies</a>
-          <a href="index.html#other-work">Other Works</a>
-          <a href="index.html#approach">Approach</a>
-        </nav>
-        <div class="site-footer-social" aria-label="Social links">
-          <a class="site-footer-icon" href="https://www.behance.net/ivancreatives" target="_blank" rel="noreferrer" aria-label="Behance" title="Behance"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.7 12c.9-.4 1.4-1.1 1.4-2.2 0-2-1.5-2.8-3.3-2.8H1v11h6c2 0 3.6-.9 3.6-3 0-1.3-.7-2.4-1.9-3zM3.6 8.9h2.7c.8 0 1.4.3 1.4 1.2s-.5 1.3-1.4 1.3H3.6V8.9zm2.9 7.2H3.6v-2.9h3c1 0 1.7.4 1.7 1.5 0 1-.8 1.4-1.8 1.4zM23 13.7c0-2.6-1.5-4.7-4.2-4.7-2.6 0-4.4 2-4.4 4.5 0 2.7 1.7 4.5 4.4 4.5 2 0 3.4-.9 4-2.8h-2.3c-.2.6-.9 1-1.6 1-1.2 0-1.9-.7-1.9-1.9H23c0-.1 0-.3 0-.6zm-6-1c.1-1 .7-1.6 1.7-1.6 1 0 1.5.6 1.6 1.6H17zM16 7h6v1.5h-6V7z"></path></svg></a>
-          <a class="site-footer-icon" href="https://www.linkedin.com/in/ivancreatives/" target="_blank" rel="noreferrer" aria-label="LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.37 3.1A2.37 2.37 0 1 1 5.4 7.84 2.37 2.37 0 0 1 5.37 3.1ZM3.3 9.7h4.14V21H3.3V9.7ZM10.04 9.7H14v1.54h.06c.55-1.04 1.9-2.14 3.9-2.14 4.18 0 4.95 2.75 4.95 6.32V21h-4.13v-4.96c0-1.18-.02-2.7-1.64-2.7-1.65 0-1.9 1.29-1.9 2.62V21h-4.14V9.7Z"></path></svg></a>
-          <a class="site-footer-icon site-footer-icon--whatsapp" href="https://wa.me/639679223947" target="_blank" rel="noopener" aria-label="WhatsApp" title="WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-3-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.6-6.1c-.25-.13-1.5-.74-1.7-.82-.23-.08-.4-.13-.56.13-.17.25-.64.82-.79.99-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.02-1.25-.75-.66-1.25-1.48-1.4-1.73-.14-.25-.01-.39.11-.51.11-.11.25-.29.38-.44.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.42h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1s.9 2.44 1.03 2.61c.13.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.43.53.6.19 1.15.16 1.58.1.48-.07 1.5-.61 1.71-1.2.21-.59.21-1.1.15-1.2-.06-.11-.23-.17-.48-.29z"></path></svg></a>
-        </div>
-      </div>
-      <div class="site-footer-bottom">
-        <span>© 2026 Ivan Jose · Senior Product Designer</span>
-        <a href="mailto:helloivanjose@gmail.com">helloivanjose@gmail.com</a>
-      </div>
-    </div>
-  </footer>
-
-  <script>
+<script>
     /* Home -> case-study funnel: tag this case-study view for Microsoft Clarity so
        the dashboard can build a funnel (which case study, and whether the visit
        arrived from the homepage). Top window only — embeds are gated out elsewhere. */
@@ -1677,7 +1590,20 @@
       clarity("event", "case_study_view");
     })();
   </script>
-  <script defer src="carousel-swipe.js?v=7"></script>
-  <script defer src="scroll-hint.js?v=1"></script>
+
+<!-- Shared image lightbox: click any content image to see it larger -->
+<div class="cs-lightbox" id="cs-lightbox" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-label="Enlarged image">
+  <div class="cs-lightbox__shell">
+    <button class="cs-lightbox__close" id="cs-lightbox-close" type="button" aria-label="Close">&times;</button>
+    <figure class="cs-lightbox__media">
+      <img id="cs-lightbox-image" src="" alt="">
+      <video id="cs-lightbox-video" hidden muted loop playsinline controls></video>
+      <figcaption class="cs-lightbox__caption">
+        <strong id="cs-lightbox-title"></strong>
+        <span id="cs-lightbox-text"></span>
+      </figcaption>
+    </figure>
+  </div>
+</div>
 </body>
 </html>
