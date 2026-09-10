@@ -3294,11 +3294,17 @@ html.v3 { overflow-x: clip; }
    ============================================================================ */
 .cs-scroller {
   position: relative;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior-x: contain;
   margin-top: var(--space-medium) !important;
   margin-bottom: var(--margin-medium) !important;
+}
+/* Sideways scrolling is a phone affordance. On a wide screen the table has
+   room to wrap, so it stays put and nothing is hidden off to the right. */
+@media (max-width: 767px) {
+  .cs-scroller {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+  }
 }
 .cs-scroller > * { margin-top: 0 !important; margin-bottom: 0 !important; }
 
@@ -3319,17 +3325,9 @@ html.v3 { overflow-x: clip; }
   position: sticky;
   left: 0;
 }
-.cs-scroller.is-scrollable::after { display: block; }
+@media (max-width: 767px) { .cs-scroller.is-scrollable::after { display: block; } }
 
-/* the capability matrix carries its own minimum width; let it, and scroll */
-.cs-content .perm-matrix { min-width: 620px; }
-.cs-scroller .comparison-table,
-.cs-scroller .decision-log-table,
-.cs-scroller .results-table,
-.cs-scroller .itable,
-.cs-scroller .rd-rows,
-.cs-scroller .rd-compare,
-.cs-scroller .discovery-band { width: max-content; min-width: 100%; }
+.cs-scroller > * { width: 100%; }
 
 /* ---------- Banner meta stacks on a phone: label, then value ---------- */
 @media (max-width: 767px) {
@@ -3436,3 +3434,74 @@ html.v3 { overflow-x: clip; }
   box-shadow: none !important;
 }
 .cs-content .refine-item { padding-block: var(--space-medium) !important; }
+
+
+/* ============================================================================
+   PASS 53 — one type rule for reading copy
+   Every page's own stylesheet loads after this one and sets its copy wrappers
+   (.lede, .question-copy, .business-copy, .dark-copy, .journey-timeline-copy,
+   .scroll-story-step, .concept-carousel-copy ...) to 16px at the same
+   specificity as `.cs-content p`, so the later rule kept winning. Rather than
+   chase each wrapper, reading copy is p-large by default and only the things
+   that should be quieter are stepped down.
+   ============================================================================ */
+.cs-content p,
+.cs-content li {
+  font-size: var(--fs-p-large) !important;
+  line-height: 1.65 !important;
+}
+
+/* --- quieter by intent: captions, notes, meta --- */
+.cs-content figcaption,
+.cs-content figcaption p,
+.cs-content .shot-cap,
+.cs-content .rd-cap,
+.cs-content .cs-note-inline,
+.cs-content .results-note,
+.cs-content .grade-note,
+.cs-content .journey-group-head,
+.cs-content .matrix-legend,
+.cs-content .a11y-chip,
+.cs-content .a11y-tag,
+.cs-content .cs-outcomes__label,
+.cs-content .cs-md__file,
+.cs-content .harness-file,
+.cs-content .md-file { font-size: var(--fs-p-small) !important; }
+
+/* --- dense surfaces: cards, table cells, list panels --- */
+.cs-content .harness-card p,
+.cs-content .md-card p,
+.cs-content .cs-md p,
+.cs-content .cs-card p,
+.cs-content .rd-card p,
+.cs-content .alignment-card p,
+.cs-content .impact-card p,
+.cs-content .cs-fork__cell p,
+.cs-content .cs-out__cell p,
+.cs-content .cs-outcomes p,
+.cs-content .jc-old p,
+.cs-content .jc-new p,
+.cs-content .split-2 p,
+.cs-content .req-donut p,
+.cs-content .refine-item p,
+.cs-content .refine-item-desc,
+.cs-content .cs-points > li,
+.cs-content .cell,
+.cs-content .decision-log-cell,
+.cs-content td,
+.cs-content th,
+.cs-content .rd-row > *,
+.cs-content .rd-crow > *,
+.cs-content .discovery-evidence-row > * {
+  font-size: var(--fs-p-medium) !important;
+  line-height: 1.6 !important;
+}
+
+/* persona cards keep the larger copy their design calls for */
+.cs-content .cs-model .cs-model__desc { font-size: var(--fs-p-large) !important; }
+
+/* the prominent callouts in the reading column are body copy, not card meta */
+.cs-content .cs-note p,
+.cs-content .cs-callout,
+.cs-content .note-box p,
+.cs-content .callout p { font-size: var(--fs-p-large) !important; line-height: 1.65 !important; }

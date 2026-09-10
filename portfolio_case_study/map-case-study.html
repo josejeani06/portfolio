@@ -9,11 +9,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;700&family=Istok+Web:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="v3/tokens.css?v=79">
-<link rel="stylesheet" href="redesign.css?v=79">
-<link rel="stylesheet" href="v3-bridge.css?v=79">
-<link rel="stylesheet" href="v3/v3.css?v=79">
-<link rel="stylesheet" href="case-study.css?v=79">
+<link rel="stylesheet" href="v3/tokens.css?v=82">
+<link rel="stylesheet" href="redesign.css?v=82">
+<link rel="stylesheet" href="v3-bridge.css?v=82">
+<link rel="stylesheet" href="v3/v3.css?v=82">
+<link rel="stylesheet" href="case-study.css?v=82">
 </head>
 <body>
 
@@ -429,7 +429,7 @@
   </div>
 </footer>
 
-<script src="v3/v3.js?v=79"></script>
+<script src="v3/v3.js?v=82"></script>
 <!-- Carried over from the previous build: drives the before/after slider,
      the persona filter carousel and the reveal states. -->
 <script>
@@ -480,8 +480,8 @@
     /* product-strategy video carousel: persona filter + timer auto-next */
     (function(){var root=document.getElementById("refine-carousel");if(!root)return;var track=root.querySelector(".refine-track");var slides=[].slice.call(root.querySelectorAll(".refine-slide"));var items=[].slice.call(root.querySelectorAll(".refine-item"));var badges=[].slice.call(root.querySelectorAll(".refine-persona"));if(!track||slides.length!==items.length)return;var personaOf=items.map(function(it){return it.getAttribute("data-persona");});var activePersona=badges.length?badges[0].getAttribute("data-persona"):null;var index=0;function setBar(n,pct){var bar=items[n]&&items[n].querySelector(".refine-item-bar i");if(bar)bar.style.width=pct+"%";}function listFor(p){var out=[];personaOf.forEach(function(x,i){if(x===p)out.push(i);});return out;}function go(i){index=(i+slides.length)%slides.length;activePersona=personaOf[index]||activePersona;track.style.transform="translateX(-"+(index*100)+"%)";badges.forEach(function(b){var a=b.getAttribute("data-persona")===activePersona;b.classList.toggle("is-active",a);b.setAttribute("aria-selected",a?"true":"false");});items.forEach(function(item,n){item.classList.toggle("is-hidden",personaOf[n]!==activePersona);var a=n===index;item.classList.toggle("is-active",a);if(!a)setBar(n,0);});slides.forEach(function(s,n){var v=s.querySelector("video");if(!v)return;if(n===index){try{v.currentTime=0;}catch(e){}var pr=v.play();if(pr&&pr.catch)pr.catch(function(){});}else{v.pause();}});}function step(dir){var list=listFor(activePersona);var pos=list.indexOf(index);if(pos===-1){if(list.length)go(list[0]);return;}go(list[(pos+dir+list.length)%list.length]);}slides.forEach(function(s,n){var v=s.querySelector("video");if(!v)return;v.addEventListener("timeupdate",function(){if(n===index&&v.duration)setBar(n,(v.currentTime/v.duration)*100);});v.addEventListener("ended",function(){if(n===index)step(1);});});items.forEach(function(item,n){item.addEventListener("click",function(){go(n);});});badges.forEach(function(b){b.addEventListener("click",function(){var list=listFor(b.getAttribute("data-persona"));if(list.length)go(list[0]);});});var pv=root.querySelector(".refine-arrow.prev"),nx=root.querySelector(".refine-arrow.next");if(pv)pv.addEventListener("click",function(){step(-1);});if(nx)nx.addEventListener("click",function(){step(1);});var f=listFor(activePersona);go(f.length?f[0]:0);})();
   </script>
-<script src="carousel-swipe.js?v=79"></script>
-<script src="case-study.js?v=79"></script>
+<script src="carousel-swipe.js?v=82"></script>
+<script src="case-study.js?v=82"></script>
 
 <!-- Shared image lightbox: click any content image to see it larger -->
 <div class="cs-lightbox" id="cs-lightbox" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-label="Enlarged image">
