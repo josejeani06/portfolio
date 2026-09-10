@@ -1,651 +1,581 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){if(window.self!==window.top)return;
-      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "xu2es8f588");
-  </script>
-
-
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-  <title>Ivan Jose | Senior Product Designer</title>
-  <meta name="description" content="Ivan Jose is a Senior Product Designer with 6 years shipping end-to-end B2B SaaS. Platform integrations, enterprise org management, billing, and design systems." />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://unpkg.com" crossorigin>
-  <link rel="preconnect" href="https://esm.sh" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;450;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=content_copy" />
-  <style>
-    /* =========================================================================
-       Palette taken as-is from superhuman.com · Layout language from uber.com
-       (Uber Move → Space Grotesk fallback; bento grids, whitespace, flat cards)
-       ========================================================================= */
-    :root{
-      --paper:#ffffff;
-      --paper-2:#f7f5f2;      /* superhuman warm off-white */
-      --paper-3:#f2f0eb;      /* deeper warm tint          */
-      --ink:#292827;          /* superhuman warm near-black text */
-      --ink-strong:#111110;   /* uber near-black */
-      --muted:#6b675f;
-      --faint:#767169;
-      --line:rgba(41,40,39,.12);
-      --line-2:rgba(41,40,39,.20);
-      --purple:#714cb6;       /* superhuman primary accent */
-      --purple-bright:#9e6ee5;/* the alternate accent      */
-      --lavender:#d4c7ff;     /* tint */
-      --lavender-bg:#f1ecfb;  /* pale lavender surface */
-      --teal:#027e6f;         /* superhuman secondary accent */
-      --radius:20px;
-      --radius-sm:14px;
-      --ease:cubic-bezier(.22,.61,.24,1);
-      --maxw:1240px;
-    }
-    *,*::before,*::after{box-sizing:border-box}
-    html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:92px}
-    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-    body{
-      margin:0;background:var(--paper);color:var(--ink);
-      font-family:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
-      font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
-      overflow-x:hidden;
-    }
-    a{color:inherit;text-decoration:none}
-    img{max-width:100%;display:block}
-    ::selection{background:var(--lavender);color:var(--ink-strong)}
-    .container{width:min(100% - 48px,var(--maxw));margin-inline:auto}
-    @media(max-width:640px){.container{width:min(100% - 32px,var(--maxw))}}
-
-    /* display type — Uber Move stand-in */
-    .display{font-family:"Space Grotesk","Inter",sans-serif;font-weight:600;letter-spacing:-.03em;line-height:1;margin:0}
-    h1,h2,h3{font-family:"Space Grotesk","Inter",sans-serif;font-weight:600;letter-spacing:-.03em;margin:0}
-
-    .kicker{display:inline-flex;align-items:center;gap:9px;font-family:"Space Grotesk";font-size:13px;font-weight:500;letter-spacing:.02em;color:var(--purple);text-transform:none}
-    .kicker::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--purple-bright)}
-
-    .section{padding:clamp(72px,9vw,132px) 0}
-    .section-head{max-width:none;margin-bottom:clamp(24px,3vw,40px)}
-    .section-head h2{font-size:clamp(30px,4vw,48px);line-height:1.02;letter-spacing:-.035em;margin:20px 0 0}
-    .section-head p{color:var(--muted);font-size:clamp(17px,1.5vw,20px);margin:20px 0 0;max-width:none}
-
-    /* progress + nav */
-    .progress{position:fixed;top:0;left:0;height:2px;width:0;z-index:60;background:var(--purple)}
-    .nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,0);transition:background .3s var(--ease),border-color .3s var(--ease)}
-    .nav.scrolled{background:rgba(255,255,255,.82);backdrop-filter:saturate(160%) blur(16px);border-bottom:1px solid var(--line)}
-    .nav-inner{display:flex;align-items:center;justify-content:space-between;height:76px}
-    .brand{font-family:"Space Grotesk";font-weight:700;font-size:20px;letter-spacing:-.02em;color:var(--ink-strong)}
-    .nav-links{display:flex;gap:34px}
-    .nav-links a{font-size:15px;font-weight:500;color:var(--muted);transition:color .2s var(--ease)}
-    .nav-links a:hover{color:var(--ink-strong)}
-    .nav-cta{font-size:15px;font-weight:600;color:#fff;background:var(--purple);padding:11px 20px;border-radius:999px;transition:transform .2s var(--ease),background .2s var(--ease)}
-    .nav-cta:hover{background:#5f3da0;transform:translateY(-1px)}
-    @media(max-width:860px){.nav-links{display:none}}
-
-    /* buttons */
-    .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;height:54px;padding:0 26px;border-radius:999px;font-family:"Inter";font-weight:600;font-size:16px;border:1.5px solid transparent;cursor:pointer;transition:transform .2s var(--ease),background .2s var(--ease),border-color .2s var(--ease),color .2s var(--ease);white-space:nowrap}
-    .btn .arw{transition:transform .25s var(--ease)}
-    .btn:hover .arw{transform:translateX(4px)}
-    .btn-primary{background:var(--purple);color:#fff}
-    .btn-primary:hover{background:#5f3da0;transform:translateY(-2px)}
-    .btn-dark{background:var(--ink-strong);color:#fff}
-    .btn-dark:hover{background:#000;transform:translateY(-2px)}
-    .btn-outline{background:transparent;color:var(--ink-strong);border-color:var(--line-2)}
-    .btn-outline:hover{border-color:var(--ink-strong);transform:translateY(-2px)}
-
-    /* hero */
-    .hero{padding-top:clamp(40px,6vw,72px);padding-bottom:clamp(28px,4vw,48px)}
-    .hero-status{display:inline-flex;align-items:center;gap:10px;white-space:nowrap;font-size:14px;font-weight:500;color:var(--muted);background:var(--paper-2);border:1px solid var(--line);padding:8px 16px;border-radius:999px}
-    .hero-status .dot{width:8px;height:8px;border-radius:50%;background:var(--teal)}
-    .hero h1{font-size:clamp(52px,8.4vw,116px);line-height:.94;letter-spacing:-.045em;margin:28px 0 0;color:var(--ink-strong)}
-    .hero h1 .alt{color:var(--purple)}
-    .hero-sub{color:var(--muted);font-size:clamp(18px,1.7vw,23px);max-width:62ch;margin:30px 0 0;line-height:1.5}
-    .hero-sub b{color:var(--ink);font-weight:600}
-    .hero-actions{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin-top:38px}
-    .email-group{display:inline-flex;align-items:center;height:54px;border:1.5px solid var(--line-2);border-radius:999px;overflow:hidden}
-    .email-group a{display:inline-flex;align-items:center;height:100%;padding:0 6px 0 20px;font-weight:600;font-size:15px;color:var(--ink)}
-    .email-group a:hover{color:var(--purple)}
-    .copy-btn{display:inline-flex;align-items:center;justify-content:center;width:50px;height:100%;border:0;border-left:1px solid var(--line);background:transparent;color:var(--purple);cursor:pointer;transition:background .2s var(--ease)}
-    .copy-btn:hover{background:var(--lavender-bg)}
-    .material-symbols-rounded{font-family:'Material Symbols Rounded';font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;font-size:20px;line-height:1}
-    .icon-link{display:inline-grid;place-items:center;width:54px;height:54px;border:1.5px solid var(--line-2);border-radius:50%;color:var(--ink);transition:transform .2s var(--ease),background .2s var(--ease),border-color .2s var(--ease),color .2s var(--ease)}
-    .icon-link:hover{transform:translateY(-2px);border-color:var(--ink-strong);background:var(--ink-strong);color:#fff}
-    .icon-link svg{width:18px;height:18px;fill:currentColor}
-    .icon-link .be{font-family:"Space Grotesk";font-weight:700;font-size:15px}
-    .icon-link--wa:hover{background:#25D366;border-color:#25D366;color:#fff}
-    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
-
-    /* hero product frame (uber-style clean card) */
-    .hero-frame{margin-top:clamp(44px,6vw,72px);border-radius:var(--radius);overflow:hidden;background:var(--paper-2);border:1px solid var(--line);display:block;transition:transform .35s var(--ease),box-shadow .35s var(--ease)}
-    .hero-frame:hover{transform:translateY(-4px);box-shadow:0 30px 70px rgba(41,40,39,.10)}
-    .frame-bar{display:none}
-    .frame-bar .lights{display:flex;gap:7px}
-    .frame-bar .lights i{width:11px;height:11px;border-radius:50%;background:rgba(41,40,39,.16)}
-    .frame-bar .url{margin-left:12px;font-family:"Space Grotesk";font-size:13px;color:var(--faint)}
-    .frame-stage{position:relative;width:100%;aspect-ratio:1600/700;overflow:hidden;background:var(--paper-2)}
-    .frame-stage img{width:100%;height:100%;object-fit:cover;object-position:top center;transition:transform .5s var(--ease)}
-    .hero-frame:hover .frame-stage img{transform:scale(1.012)}
-
-    /* uber-style bold stat band */
-    .band{border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-    .band-grid{display:grid;grid-template-columns:repeat(4,1fr)}
-    .band-cell{padding:clamp(28px,3.4vw,44px) clamp(20px,2.4vw,32px);border-left:1px solid var(--line)}
-    .band-cell:first-child{border-left:0}
-    .band-cell .n{font-family:"Space Grotesk";font-weight:600;font-size:clamp(40px,5.4vw,66px);letter-spacing:-.04em;line-height:1;color:var(--ink-strong)}
-    .band-cell .l{color:var(--muted);font-size:15px;margin-top:14px;line-height:1.4}
-    @media(max-width:820px){.band-grid{grid-template-columns:repeat(2,1fr)}.band-cell:nth-child(3){border-left:0}.band-cell:nth-child(n+3){border-top:1px solid var(--line)}}
-    @media(max-width:460px){.band-grid{grid-template-columns:1fr}.band-cell{border-left:0;border-top:1px solid var(--line)}.band-cell:first-child{border-top:0}}
-
-    /* ===================== BENTO — selected work ===================== */
-    .bento{display:grid;grid-template-columns:repeat(2,1fr);gap:26px 22px}
-    .tile{position:relative;background:transparent;display:flex;flex-direction:column;transition:transform .3s var(--ease)}
-    .tile:hover{transform:translateY(-4px)}
-    .tile-media{position:relative;aspect-ratio:16/9;overflow:hidden;border-radius:var(--radius);border:1px solid var(--line);transition:border-color .3s var(--ease),box-shadow .3s var(--ease);
-      background:#ece6f8}
-    .tile:hover .tile-media{border-color:var(--line-2);box-shadow:0 26px 60px rgba(113,76,182,.16)}
-    .tile-media img{width:100%;height:100%;object-fit:cover;object-position:top center}
-    .tile-media .case-live{position:absolute;top:50%;left:50%;border:0;transform-origin:center;background:transparent;pointer-events:none}
-    .tile-media.ph{display:grid;place-items:center;color:var(--faint);font-family:"Space Grotesk";font-size:12px;letter-spacing:.1em;text-transform:uppercase}
-    /* click-to-view affordance on hover; the whole tile is a link to the case study */
-    .tile-media::before{content:"";position:absolute;inset:0;z-index:1;background:rgba(17,17,16,0);transition:background .3s var(--ease);pointer-events:none}
-    .tile:hover .tile-media::before{background:rgba(17,17,16,.24)}
-    .tile-media::after{content:"View \2192";position:absolute;z-index:2;top:50%;left:50%;transform:translate(-50%,-50%) scale(.7);width:58px;height:58px;border-radius:50%;background:var(--purple);color:#fff;display:grid;place-items:center;text-align:center;font-family:"Space Grotesk";font-weight:600;font-size:12px;line-height:1;letter-spacing:.01em;box-shadow:0 10px 24px rgba(113,76,182,.42);opacity:0;transition:opacity .25s var(--ease),transform .3s var(--ease);pointer-events:none}
-    .tile:hover .tile-media::after{opacity:1;transform:translate(-50%,-50%) scale(1)}
-    .tile-body{padding:18px 2px 0}
-    .tile-ix{font-family:"Space Grotesk";font-weight:600;font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--purple)}
-    .tile-body h3{font-size:clamp(19px,1.7vw,23px);line-height:1.14;margin:11px 0 0;letter-spacing:-.02em;color:var(--ink-strong)}
-    .tile-body p{color:var(--muted);font-size:15px;line-height:1.5;margin:11px 0 0}
-    .tile-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
-    .tile-tags span{font-size:12.5px;font-weight:500;color:var(--purple);background:var(--lavender-bg);border:1px solid var(--lavender);padding:4px 11px;border-radius:999px}
-    .tile-cta{margin-top:18px;display:inline-flex;align-items:center;gap:7px;font-weight:600;font-size:15px;color:var(--ink-strong)}
-    .tile-cta .arw{transition:transform .25s var(--ease)}
-    .tile:hover .tile-cta .arw{transform:translateX(4px)}
-    /* spans */
-    .t-map,.t-uled{grid-column:span 2}
-    .t-int,.t-ds,.t-org,.t-bill{grid-column:span 1}
-    /* featured map: full-width, 16:9, fills the container edge-to-edge */
-    .t-map .tile-media,.t-uled .tile-media{aspect-ratio:16/9}
-    @media(max-width:640px){.bento{grid-template-columns:1fr}.t-map,.t-uled{grid-column:span 1}}
-
-    /* ===================== BENTO — why me ===================== */
-    .why{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
-    .why-card{padding:0;background:transparent;transition:transform .3s var(--ease)}
-    .why-card:hover{transform:translateY(-3px)}
-    /* Why-me = high-contrast green band (Superhuman-style), no card containers */
-    .section--green{background:#0e3b30;color:#fff}
-    .section--green .section-head h2{color:#fff}
-    .section--green .section-head p{color:rgba(255,255,255,.88)}
-    .section--green .kicker{color:#7cf0a6}
-    .section--green .kicker::before{background:#7cf0a6}
-    .section--green .why-icon{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.26);color:#fff}
-    .section--green .why-card .l{color:#7cf0a6}
-    .section--green .why-card p{color:rgba(255,255,255,.80)}
-    .why-icon{width:52px;height:52px;border-radius:14px;display:grid;place-items:center;background:var(--lavender-bg);border:1px solid var(--lavender);color:var(--purple)}
-    .why-icon svg{width:24px;height:24px}
-    .why-card .l{font-family:"Space Grotesk";font-size:13px;font-weight:600;letter-spacing:.04em;color:var(--purple);margin-top:22px;display:block}
-    .why-card p{color:var(--muted);font-size:16.5px;line-height:1.55;margin:12px 0 0}
-    @media(max-width:720px){.why{grid-template-columns:1fr}}
-
-    /* capabilities */
-    .skills-row{display:grid;grid-template-columns:210px 1fr;gap:28px;padding:28px 0;border-top:1px solid var(--line);align-items:start}
-    .skills-row:last-child{border-bottom:1px solid var(--line)}
-    .skills-label{font-family:"Space Grotesk";font-weight:600;font-size:13px;letter-spacing:.03em;color:var(--ink-strong);padding-top:7px}
-    .chips{display:flex;flex-wrap:wrap;gap:10px}
-    .chips span{display:inline-flex;align-items:center;height:38px;padding:0 16px;border-radius:999px;background:var(--paper-2);border:1px solid var(--line);color:var(--ink);font-weight:500;font-size:14.5px;transition:border-color .2s var(--ease),background .2s var(--ease),color .2s var(--ease);cursor:default}
-    
-    @media(max-width:680px){.skills-row{grid-template-columns:1fr;gap:14px}.skills-label{padding-top:0}}
-
-    /* approach — dark plum section (superhuman alternate surface) */
-    .approach-sec{background:#221836;color:#fff}
-    .approach{display:grid;grid-template-columns:1fr 1.15fr;gap:clamp(36px,6vw,84px);align-items:start}
-    .approach .kicker{color:var(--purple-bright)}
-    .approach .kicker::before{background:var(--purple-bright)}
-    .approach-head{position:sticky;top:92px;align-self:start}.approach-head h2{font-size:clamp(30px,4vw,48px);line-height:1.04;letter-spacing:-.035em;margin:20px 0 0;color:#fff}
-    .approach-head h2 span{display:block}
-    .approach-head h2 .alt{color:var(--purple-bright)}
-    .approach-list>div{display:grid;grid-template-columns:56px 1fr;gap:20px;padding:26px 0;border-top:1px solid rgba(255,255,255,.14);align-items:baseline}
-    .approach-list>div:first-child{border-top:0;padding-top:0}
-    .approach-num{font-family:"Space Grotesk";font-weight:600;font-size:28px;letter-spacing:-.03em;color:var(--purple-bright)}
-    .approach-list p{color:rgba(255,255,255,.9);font-size:16.5px;line-height:1.6;margin:0}
-    @media(max-width:840px){.approach{grid-template-columns:1fr;gap:36px}
-      /* the sticky head scrolled over the numbered list on phones */
-      .approach-head{position:static;top:auto}}
-
-    /* other work */
-    .other-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-    .other{background:transparent;transition:transform .3s var(--ease)}
-    .other:hover{transform:translateY(-4px)}
-    .other a{display:flex;flex-direction:column;height:100%}
-    .other-cover{aspect-ratio:16/9;overflow:hidden;border-radius:var(--radius);border:1px solid var(--line);transition:border-color .3s var(--ease),box-shadow .3s var(--ease);background:#ece6f8}
-    .other:hover .other-cover{border-color:var(--line-2);box-shadow:0 22px 50px rgba(41,40,39,.1)}
-    .other-cover img{width:100%;height:100%;object-fit:cover}
-    .other-body{padding:16px 2px 0;display:flex;flex-direction:column;gap:8px;flex:1}
-    .other-kicker{font-family:"Space Grotesk";font-size:12px;font-weight:600;letter-spacing:.03em;color:var(--faint)}
-    .other-body h3{font-size:19px;letter-spacing:-.02em;color:var(--ink-strong)}
-    .other-body p{color:var(--muted);font-size:14.5px;line-height:1.5;margin:0}
-    .other-link{margin-top:auto;padding-top:6px;font-weight:600;font-size:14px;color:var(--purple)}
-    @media(max-width:900px){.other-grid{grid-template-columns:repeat(2,1fr)}}
-    @media(max-width:560px){.other-grid{grid-template-columns:1fr}}
-
-    /* CTA — full purple block */
-    .cta{border-radius:28px;overflow:hidden;padding:clamp(52px,8vw,104px) clamp(28px,5vw,72px);background:var(--purple);color:#fff;text-align:center;position:relative}
-    .cta .kicker{color:#e6dbff}
-    .cta .kicker::before{background:#e6dbff}
-    .cta h2{font-size:clamp(30px,4vw,48px);letter-spacing:-.035em;line-height:1.02;margin:18px 0 0;color:#fff}
-    .cta p{color:rgba(255,255,255,.86);font-size:19px;margin:20px auto 0;max-width:54ch}
-    .cta-actions{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:36px}
-    .cta .btn-light{background:#fff;color:var(--purple)}
-    .cta .btn-light:hover{background:var(--paper-2);transform:translateY(-2px)}
-    .cta .btn-ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.5)}
-    .cta .btn-ghost:hover{background:rgba(255,255,255,.12);border-color:#fff;transform:translateY(-2px)}
-
-    /* footer */
-    .footer{border-top:1px solid var(--line);padding:60px 0 44px}
-    .footer-top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:22px}
-    .footer-links{display:flex;gap:26px}
-    .footer-links a{font-size:15px;font-weight:500;color:var(--muted)}
-    .footer-links a:hover{color:var(--ink-strong)}
-    .footer-social{display:flex;gap:10px}
-    .footer-bottom{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;margin-top:30px;padding-top:26px;border-top:1px solid var(--line);color:var(--faint);font-size:14px}
-    .footer-bottom a:hover{color:var(--purple)}
-
-    /* reveal */
-    .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
-    .reveal.in{opacity:1;transform:none}
-    .reveal.d1{transition-delay:.07s}.reveal.d2{transition-delay:.14s}.reveal.d3{transition-delay:.21s}
-    @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
-
-    /* ---------- scroll cue: nudges the reader down to the case studies ------ */
-    .scroll-cue{
-      position:fixed;right:22px;bottom:22px;z-index:55;
-      display:inline-flex;align-items:center;gap:10px;
-      min-height:44px;padding:0 18px;border-radius:999px;
-      background:var(--purple);color:#fff;
-      font-family:"Space Grotesk","Inter",sans-serif;font-size:13.5px;font-weight:600;
-      letter-spacing:.01em;white-space:nowrap;cursor:pointer;
-      box-shadow:0 10px 30px rgba(113,76,182,.38);
-      transition:opacity .35s var(--ease),transform .35s var(--ease),background .2s var(--ease);
-    }
-    .scroll-cue:hover{background:#5f3da0;transform:translateY(-2px)}
-    .scroll-cue svg{width:15px;height:15px;flex:0 0 auto;animation:cueBob 1.6s ease-in-out infinite}
-    /* once the work section is on screen the cue has done its job */
-    .scroll-cue.is-hidden{opacity:0;transform:translateY(10px);pointer-events:none}
-    @keyframes cueBob{0%,100%{transform:translateY(0)}50%{transform:translateY(3px)}}
-    @media(max-width:520px){
-      .scroll-cue{right:14px;bottom:14px;font-size:12.5px;padding:0 14px;gap:8px}
-    }
-    @media(prefers-reduced-motion:reduce){
-      .scroll-cue svg{animation:none}
-      .scroll-cue{transition:opacity .2s linear}
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ivan Jose — B2B SaaS Designer</title>
+<meta name="description" content="B2B SaaS product designer. Blockchain, health, and direct mail ads.">
+<link rel="icon" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;700&family=Istok+Web:wght@400;700&display=swap" rel="stylesheet">
+<script>
+  // Only show the loader when JS can also remove it.
+  document.documentElement.classList.add('is-loading');
+</script>
+<script>
+  // Set before paint: only hide reveal targets if we can actually reveal them.
+  if ('IntersectionObserver' in window &&
+      !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.documentElement.classList.add('has-reveal');
+  }
+</script>
+<link rel="preload" as="image" fetchpriority="high"
+      imagesrcset="images/hero/h-integration-1440.webp 1440w, images/hero/h-integration-2880.webp 2880w"
+      imagesizes="100vw">
+<link rel="stylesheet" href="v3/tokens.css">
+<link rel="stylesheet" href="v3/v3.css">
 </head>
 <body>
-  <a class="scroll-cue" id="scrollCue" href="#work" aria-label="Scroll to case studies">
-    Scroll for case studies
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
-  </a>
 
-  <div class="progress" id="progress" aria-hidden="true"></div>
+<!-- Loader: pale gradient veil that fades as the hero images arrive. Injected
+     behind .is-loading, which a head script sets and the loader clears, so it
+     never appears (or traps the page) without JS. -->
+<div class="loader" data-loader role="status" aria-label="Loading">
+  <div class="loader__content">
+    <img class="loader__avatar" src="images/ivan-jose-shot.png"
+         width="400" height="480" alt="" aria-hidden="true">
+    <span class="loader__name"><strong>Ivan</strong>Jose&hellip;</span>
+  </div>
+</div>
 
-  <nav class="nav" id="nav">
-    <div class="container nav-inner">
-      <a class="brand" href="index.html">Ivan Jose</a>
-      <div class="nav-links">
-        <a href="#work">Work</a>
-        <a href="#why">Why me</a>
-        <a href="#capabilities">Capabilities</a>
-        <a href="#approach">Approach</a>
+<a class="skip-link t-p-medium" href="#main">Skip to content</a>
+
+<!-- ==================== NAVIGATION · 80px · 3 groups ==================== -->
+<header class="nav">
+  <nav class="container nav__inner" aria-label="Primary">
+
+    <div class="nav__group nav__group--start">
+      <a class="nav__link" href="#about">About</a>
+      <a class="nav__link" href="#case-studies">Product</a>
+      <a class="nav__link" href="#websites">Websites</a>
+    </div>
+
+    <a class="nav__logo" href="#top">
+      <span class="nav__logo-avatar">
+        <img width="400" height="480" src="images/ivan-jose-shot.png" alt="">
+      </span>
+      <span class="nav__logo-name"><strong>Ivan</strong>Jose</span>
+    </a>
+
+    <div class="nav__group nav__group--end">
+      <a class="nav__link" href="#tech-stacks">Tech Stacks</a>
+      <a class="btn btn--main btn--sm nav__cv" href="Jean-Ivan-Jose-Senior-Product-Designer.pdf" download>Download CV</a>
+      <a class="btn btn--accent-2 btn--sm" href="mailto:helloivanjose@gmail.com"
+         data-copy="helloivanjose@gmail.com" data-copy-toast="Email copied">Email Me</a>
+
+      <div class="nav__mobile">
+        <button class="nav__burger" type="button"
+                data-nav-toggle aria-expanded="false"
+                aria-controls="nav-panel" aria-label="Menu">
+          <svg class="nav__burger-icon nav__burger-icon--menu" viewBox="0 -960 960 960" aria-hidden="true"><path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/></svg>
+          <svg class="nav__burger-icon nav__burger-icon--close" viewBox="0 -960 960 960" aria-hidden="true"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
+        </button>
       </div>
-      <a class="nav-cta" href="#contact">Let's talk</a>
     </div>
   </nav>
 
-  <main>
-    <!-- ============================ HERO ============================ -->
-    <section class="hero">
-      <div class="container">
-        <span class="hero-status reveal in"><span class="dot"></span>Open to Remote | Relocation</span>
-        <h1 class="reveal in d1">Your next <span class="alt">B2B<br>Senior Product Designer.</span></h1>
-        <p class="hero-sub reveal in d2">I take something complex, simplify it, and turn it into a flow people can actually understand. <b>6 years shipping end-to-end B2B SaaS, Health App and Blockchain.</b> Integrations, enterprise org management, billing, and design systems.</p>
-        <div class="hero-actions reveal in d3">
-          <a class="btn btn-primary" href="mailto:helloivanjose@gmail.com">Email me <svg class="arw" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-          <a class="btn btn-outline" href="#other">View web designs</a>
-          <a class="icon-link" href="https://www.behance.net/ivancreatives" target="_blank" rel="noreferrer" aria-label="Behance" title="Behance"><span class="be" aria-hidden="true">Bē</span></a>
-          <a class="icon-link" href="https://www.linkedin.com/in/ivancreatives/" target="_blank" rel="noreferrer" aria-label="LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.37 3.1A2.37 2.37 0 1 1 5.4 7.84 2.37 2.37 0 0 1 5.37 3.1ZM3.3 9.7h4.14V21H3.3V9.7ZM10.04 9.7H14v1.54h.06c.55-1.04 1.9-2.14 3.9-2.14 4.18 0 4.95 2.75 4.95 6.32V21h-4.13v-4.96c0-1.18-.02-2.7-1.64-2.7-1.65 0-1.9 1.29-1.9 2.62V21h-4.14V9.7Z"/></svg></a>
-          <a class="icon-link icon-link--wa" href="https://wa.me/639679223947" target="_blank" rel="noopener" aria-label="WhatsApp" title="WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-3-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.6-6.1c-.25-.13-1.5-.74-1.7-.82-.23-.08-.4-.13-.56.13-.17.25-.64.82-.79.99-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.02-1.25-.75-.66-1.25-1.48-1.4-1.73-.14-.25-.01-.39.11-.51.11-.11.25-.29.38-.44.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.42h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1s.9 2.44 1.03 2.61c.13.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.43.53.6.19 1.15.16 1.58.1.48-.07 1.5-.61 1.71-1.2.21-.59.21-1.1.15-1.2-.06-.11-.23-.17-.48-.29z"/></svg></a>
-          <span class="sr-only" data-copy-feedback aria-live="polite"></span>
+  <div class="nav__panel" id="nav-panel" data-nav-panel>
+    <a class="nav__link" href="#about">About</a>
+    <a class="nav__link" href="#case-studies">Product</a>
+    <a class="nav__link" href="#websites">Websites</a>
+    <a class="nav__link" href="#tech-stacks">Tech Stacks</a>
+    <a class="btn btn--main btn--sm nav__cv" href="Jean-Ivan-Jose-Senior-Product-Designer.pdf" download>Download CV</a>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ==================== HERO ==================== -->
+  <!-- One sticky stage: text + frame centred together, frame grows over 200vh -->
+  <section class="hero" id="top" data-grow-track>
+    <div class="hero__stage" data-grow-stage>
+
+      <div class="hero__text" data-grow-text>
+        <span class="badge">Open to remote | relocation <span aria-hidden="true">&#127757;</span></span>
+
+        <!-- The one semantic h1 on the page. Style = Display Large. -->
+        <h1 class="hero__title">B2B Saas Designer</h1>
+
+        <p class="t-p-large hero__tagline">Direct Mail Ads | Blockchain | Health</p>
+      </div>
+
+      <figure class="hero__frame">
+        <div class="hero__screen" data-fallback data-sequence>
+          <img width="2880" height="1620" class="hero__slide is-current" fetchpriority="high" decoding="async" srcset="images/hero/h-integration-1440.webp 1440w, images/hero/h-integration-2880.webp 2880w" sizes="100vw" src="images/hero/h-integration-1440.webp"
+               alt="Product screen from the LettrLabs storm automation flow">
+          <img width="2880" height="1620" class="hero__slide" fetchpriority="low" decoding="async" srcset="images/hero/h-map-1440.webp 1440w, images/hero/h-map-2880.webp 2880w" sizes="100vw" src="images/hero/h-map-1440.webp" alt="" aria-hidden="true">
+          <img width="2880" height="1620" class="hero__slide" fetchpriority="low" decoding="async" srcset="images/hero/h-storybook-1440.webp 1440w, images/hero/h-storybook-2880.webp 2880w" sizes="100vw" src="images/hero/h-storybook-1440.webp" alt="" aria-hidden="true">
+          <img width="2880" height="1620" class="hero__slide" fetchpriority="low" decoding="async" srcset="images/hero/h-billing-1440.webp 1440w, images/hero/h-billing-2880.webp 2880w" sizes="100vw" src="images/hero/h-billing-1440.webp" alt="" aria-hidden="true">
+          <img width="2880" height="1620" class="hero__slide" fetchpriority="low" decoding="async" srcset="images/hero/h-org-1440.webp 1440w, images/hero/h-org-2880.webp 2880w" sizes="100vw" src="images/hero/h-org-1440.webp" alt="" aria-hidden="true">
+          <div class="fallback hero__placeholder">
+            <span>Hero image &middot; 1000 &times; 400 &rarr; full width, 16:9</span>
+            <span>drop the files at images/hero/h-*-1440.webp and h-*-2880.webp</span>
+          </div>
+        </div>
+      </figure>
+
+
+      <!-- Floating social rail (desktop) — fades out with --tf as you scroll -->
+      <div class="hero__rail">
+        <a class="icon-btn" href="https://www.linkedin.com/in/ivancreatives" target="_blank" rel="noopener" aria-label="LinkedIn">
+        <svg viewBox="0 0 40 40" aria-hidden="true" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"> <g clip-path="url(#clip0_40000281_14203)"> <path d="M20 0C8.95312 0 0 8.95312 0 20C0 31.0469 8.95312 40 20 40C31.0469 40 40 31.0469 40 20C40 8.95312 31.0469 0 20 0ZM14.4062 28.3672H10.5078V15.8906H14.4062V28.3672ZM12.3516 14.3281H12.3203C10.9062 14.3281 9.99219 13.375 9.99219 12.1641C9.99219 10.9297 10.9375 10 12.375 10C13.8125 10 14.6953 10.9297 14.7266 12.1641C14.7344 13.3672 13.8203 14.3281 12.3516 14.3281ZM30 28.3672H25.5781V21.9141C25.5781 20.2266 24.8906 19.0703 23.3672 19.0703C22.2031 19.0703 21.5547 19.8516 21.2578 20.6016C21.1484 20.8672 21.1641 21.2422 21.1641 21.625V28.3672H16.7812C16.7812 28.3672 16.8359 16.9297 16.7812 15.8906H21.1641V17.8516C21.4219 16.9922 22.8203 15.7734 25.0547 15.7734C27.8281 15.7734 30 17.5703 30 21.4297V28.3672Z" fill="currentColor"/> </g> <defs> <clipPath id="clip0_40000281_14203"> <rect width="40" height="40" fill="white"/> </clipPath> </defs> </svg>
+        </a>
+        <a class="icon-btn" href="https://www.behance.net/ivancreatives" target="_blank" rel="noopener" aria-label="Behance">
+        <svg viewBox="0 0 40 40" aria-hidden="true" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"> <g clip-path="url(#clip0_40000281_14205)"> <path d="M26.8828 19.1016C26.5 18.7734 26.0234 18.6094 25.4609 18.6094C24.8516 18.6094 24.375 18.7812 24.0313 19.1328C23.6953 19.4844 23.4844 19.9531 23.3906 20.5469H27.5078C27.4766 19.9141 27.2578 19.4375 26.8828 19.1016Z" fill="currentColor"/> <path d="M16.7422 20.7891C16.4453 20.6563 16.0391 20.5859 15.5078 20.5781H12.4609V23.875H15.4688C16.0078 23.875 16.4219 23.8047 16.7188 23.6562C17.2656 23.3828 17.5312 22.875 17.5312 22.1172C17.5312 21.4766 17.2656 21.0313 16.7422 20.7891Z" fill="currentColor"/> <path d="M20 0C8.95312 0 0 8.95312 0 20C0 31.0469 8.95312 40 20 40C31.0469 40 40 31.0469 40 20C40 8.95312 31.0469 0 20 0ZM22.7812 14.2422H28.0781V15.7812H22.7812V14.2422ZM19.5859 24.2656C19.3516 24.6484 19.0625 24.9766 18.7109 25.2344C18.3203 25.5391 17.8516 25.7422 17.3125 25.8594C16.7734 25.9688 16.1953 26.0234 15.5625 26.0234H10V13.6641H15.9766C17.4844 13.6875 18.5547 14.125 19.1797 14.9844C19.5547 15.5078 19.7422 16.1406 19.7422 16.875C19.7422 17.625 19.5547 18.2344 19.1719 18.6953C18.9609 18.9531 18.6406 19.1875 18.2266 19.3984C18.8594 19.6328 19.3359 19.9922 19.6562 20.4922C19.9766 20.9922 20.1406 21.5938 20.1406 22.3047C20.1406 23.0234 19.9531 23.6797 19.5859 24.2656ZM30 22.125H23.3438C23.3828 23.0391 23.6953 23.6875 24.2969 24.0547C24.6641 24.2812 25.1016 24.3984 25.6172 24.3984C26.1562 24.3984 26.6016 24.2578 26.9453 23.9766C27.1328 23.8281 27.2969 23.6172 27.4375 23.3438H29.875C29.8125 23.8828 29.5156 24.4375 28.9922 25C28.1719 25.8906 27.0312 26.3359 25.5547 26.3359C24.3359 26.3359 23.2656 25.9609 22.3359 25.2109C21.4062 24.4609 20.9375 23.2422 20.9375 21.5547C20.9375 19.9688 21.3594 18.7578 22.1953 17.9141C23.0391 17.0703 24.125 16.6484 25.4609 16.6484C26.2578 16.6484 26.9766 16.7891 27.6094 17.0781C28.25 17.3594 28.7734 17.8125 29.1875 18.4297C29.5625 18.9688 29.8047 19.6016 29.9141 20.3203C29.9844 20.7344 30.0078 21.3359 30 22.125Z" fill="currentColor"/> <path d="M16.7812 18.2266C17.1172 18.0234 17.2812 17.6562 17.2812 17.1406C17.2812 16.5625 17.0625 16.1875 16.6172 16C16.2344 15.875 15.75 15.8047 15.1562 15.8047H12.4688V18.5312H15.4687C16.0078 18.5391 16.4375 18.4375 16.7812 18.2266Z" fill="currentColor"/> </g> <defs> <clipPath id="clip0_40000281_14205"> <rect width="40" height="40" fill="white"/> </clipPath> </defs> </svg>
+        </a>
+        <a class="icon-btn" href="https://wa.me/639679223947" data-copy="+639679223947" data-copy-toast="Number copied" target="_blank" rel="noopener" aria-label="WhatsApp">
+        <svg viewBox="0 0 40 40" aria-hidden="true" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"> <g clip-path="url(#clip0_40000281_14211)"> <path fill-rule="evenodd" clip-rule="evenodd" d="M31.642 28.2422C31.16 29.6066 29.244 30.7353 27.716 31.0654C26.67 31.2875 25.306 31.4632 20.71 29.5586C15.548 27.42 8.38 19.8019 8.38 14.7324C8.38 12.1516 9.868 9.14648 12.47 9.14648C13.722 9.14648 13.998 9.1709 14.41 10.1592C14.892 11.3235 16.068 14.1922 16.208 14.4863C16.786 15.6927 15.62 16.3989 14.774 17.4492C14.504 17.7653 14.198 18.1072 14.54 18.6953C14.88 19.2715 16.056 21.1881 17.784 22.7266C20.016 24.7152 21.826 25.35 22.474 25.6201C22.956 25.8202 23.532 25.7736 23.884 25.3975C24.33 24.9153 24.884 24.1154 25.448 23.3271C25.846 22.763 26.352 22.6925 26.882 22.8926C27.24 23.0166 31.79 25.1297 31.982 25.4678C32.124 25.7139 32.124 26.8778 31.642 28.2422ZM20.004 0H19.994C8.96799 0 0 8.9707 0 20C0 24.3733 1.41001 28.4307 3.80801 31.7217L1.31601 39.1533L9.00201 36.6973C12.164 38.7899 15.938 40 20.004 40C31.03 40 40 31.0293 40 20C40 8.9707 31.03 0 20.004 0Z" fill="currentColor"/> </g> <defs> <clipPath id="clip0_40000281_14211"> <rect width="40" height="40" fill="white"/> </clipPath> </defs> </svg>
+        </a>
+        <a class="icon-btn icon-btn--email" href="mailto:helloivanjose@gmail.com"
+           data-copy="helloivanjose@gmail.com" data-copy-toast="Email copied" aria-label="Email">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-3.92 7.94"/></svg>
+        </a>
+      </div>
+
+      <!-- Scroll cue (desktop) — same --tf, so it disappears once you scroll -->
+      <a class="hero__scroll" href="#about">
+        <span class="t-p-small">Scroll</span>
+        <svg class="hero__scroll-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 5v14"/><path d="m19 12-7 7-7-7"/>
+        </svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- ==================== ABOUT ==================== -->
+  <section class="about" id="about">
+    <div class="container about__inner">
+
+      <div class="about__photo reveal" data-fallback>
+        <img width="400" height="480" src="images/ivan-jose-shot.png" alt="Ivan Jose">
+        <div class="fallback about__photo-fallback">
+          <span>Portrait · 400 × 480<br>drop the file at images/ivan-portrait.jpg</span>
         </div>
       </div>
-    </section>
 
-    <!-- ============================ WORK — BENTO ============================ -->
-    <section class="section" id="work" style="padding-top:clamp(28px,4vw,52px)">
-      <div class="container">
+      <div class="about__text reveal">
+        <!-- H3 text style on an h2 element: one h1 per page, styles are free -->
+        <h2 class="t-h3 about__heading">
+          Hey, <span class="c-accent-3">I am Ivan Jose</span>, from the Philippines <span aria-hidden="true">🇵🇭</span>
+        </h2>
 
-        <div class="bento">
-          <a class="tile t-map reveal" href="map-case-study.html" target="_blank" rel="noopener">
-            <div class="tile-media">
-              <iframe class="case-live case-hover" data-w="1280" data-h="720" data-play-param="auto" data-play-mode="swap" data-src="map-animation.html?embed=1&v=redesign" title="Preview: the audience map, search, radius and polygon, county include, ZIP exclude, save. Hover to play." loading="lazy" tabindex="-1"></iframe>
-            </div>
-            <div class="tile-body">
-              <span class="tile-ix">01 · Core targeting workflow</span>
-              <h3>Modernizing a legacy audience map for faster, more flexible geographic targeting.</h3>
-              <p>Shipped the map-first core, then defined one audience model for search or region selection, CSV upload, saved areas, radius, and polygon across phased releases.</p>
-              <div class="tile-tags"><span>AI Prototype</span><span>Workflow redesign</span><span>Interaction systems</span></div>
-              <span class="tile-cta">Read case study <span class="arw">→</span></span>
-            </div>
+        <p class="t-p-large about__body">
+          I take something complex, simplify it, and turn it into a flow people can
+          actually understand. 6 years shipping end-to-end B2B SaaS. Integrations,
+          enterprise org management, billing, and design systems.
+        </p>
+
+        <p class="t-p-medium about__note">
+          I am a product furparent of 4 beautiful dogs <span aria-hidden="true">🐶</span>
+          and 4 majestic cats <span aria-hidden="true">🐱</span>. Let&rsquo;s talk about fur!
+        </p>
+
+        <a class="btn btn--dark btn--lg about__cta" href="mailto:helloivanjose@gmail.com"
+           data-copy="helloivanjose@gmail.com" data-copy-toast="Email copied">
+          <svg class="btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-3.92 7.94"/></svg>
+          helloivanjose@gmail.com
+        </a>
+
+        <div class="about__links">
+          <a class="icon-btn" href="https://www.linkedin.com/in/ivancreatives" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <svg viewBox="0 0 40 40" aria-hidden="true" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"> <g clip-path="url(#clip0_40000281_14203)"> <path d="M20 0C8.95312 0 0 8.95312 0 20C0 31.0469 8.95312 40 20 40C31.0469 40 40 31.0469 40 20C40 8.95312 31.0469 0 20 0ZM14.4062 28.3672H10.5078V15.8906H14.4062V28.3672ZM12.3516 14.3281H12.3203C10.9062 14.3281 9.99219 13.375 9.99219 12.1641C9.99219 10.9297 10.9375 10 12.375 10C13.8125 10 14.6953 10.9297 14.7266 12.1641C14.7344 13.3672 13.8203 14.3281 12.3516 14.3281ZM30 28.3672H25.5781V21.9141C25.5781 20.2266 24.8906 19.0703 23.3672 19.0703C22.2031 19.0703 21.5547 19.8516 21.2578 20.6016C21.1484 20.8672 21.1641 21.2422 21.1641 21.625V28.3672H16.7812C16.7812 28.3672 16.8359 16.9297 16.7812 15.8906H21.1641V17.8516C21.4219 16.9922 22.8203 15.7734 25.0547 15.7734C27.8281 15.7734 30 17.5703 30 21.4297V28.3672Z" fill="currentColor"/> </g> <defs> <clipPath id="clip0_40000281_14203"> <rect width="40" height="40" fill="white"/> </clipPath> </defs> </svg>
           </a>
-
-          <a class="tile t-int reveal d1" href="integration-case-study.html" target="_blank" rel="noopener">
-            <div class="tile-media">
-              <iframe class="case-live case-hover" data-w="760" data-h="880" data-play-param="auto" data-play-mode="swap" data-src="recreations/integration-connect.html" title="Preview: the connect flow, type credentials, test, connecting, connected. Hover to play." loading="lazy" tabindex="-1"></iframe>
-            </div>
-            <div class="tile-body">
-              <span class="tile-ix">02 · Platform integrations</span>
-              <h3>A reusable connection flow for credentials, validation &amp; account management.</h3>
-              <p>A scalable pattern so each new app inherits the same product logic, states, and UI structure instead of starting from zero.</p>
-            </div>
+          <a class="icon-btn" href="https://www.behance.net/ivancreatives" target="_blank" rel="noopener" aria-label="Behance">
+            <svg viewBox="0 0 40 40" aria-hidden="true" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"> <g clip-path="url(#clip0_40000281_14205)"> <path d="M26.8828 19.1016C26.5 18.7734 26.0234 18.6094 25.4609 18.6094C24.8516 18.6094 24.375 18.7812 24.0313 19.1328C23.6953 19.4844 23.4844 19.9531 23.3906 20.5469H27.5078C27.4766 19.9141 27.2578 19.4375 26.8828 19.1016Z" fill="currentColor"/> <path d="M16.7422 20.7891C16.4453 20.6563 16.0391 20.5859 15.5078 20.5781H12.4609V23.875H15.4688C16.0078 23.875 16.4219 23.8047 16.7188 23.6562C17.2656 23.3828 17.5312 22.875 17.5312 22.1172C17.5312 21.4766 17.2656 21.0313 16.7422 20.7891Z" fill="currentColor"/> <path d="M20 0C8.95312 0 0 8.95312 0 20C0 31.0469 8.95312 40 20 40C31.0469 40 40 31.0469 40 20C40 8.95312 31.0469 0 20 0ZM22.7812 14.2422H28.0781V15.7812H22.7812V14.2422ZM19.5859 24.2656C19.3516 24.6484 19.0625 24.9766 18.7109 25.2344C18.3203 25.5391 17.8516 25.7422 17.3125 25.8594C16.7734 25.9688 16.1953 26.0234 15.5625 26.0234H10V13.6641H15.9766C17.4844 13.6875 18.5547 14.125 19.1797 14.9844C19.5547 15.5078 19.7422 16.1406 19.7422 16.875C19.7422 17.625 19.5547 18.2344 19.1719 18.6953C18.9609 18.9531 18.6406 19.1875 18.2266 19.3984C18.8594 19.6328 19.3359 19.9922 19.6562 20.4922C19.9766 20.9922 20.1406 21.5938 20.1406 22.3047C20.1406 23.0234 19.9531 23.6797 19.5859 24.2656ZM30 22.125H23.3438C23.3828 23.0391 23.6953 23.6875 24.2969 24.0547C24.6641 24.2812 25.1016 24.3984 25.6172 24.3984C26.1562 24.3984 26.6016 24.2578 26.9453 23.9766C27.1328 23.8281 27.2969 23.6172 27.4375 23.3438H29.875C29.8125 23.8828 29.5156 24.4375 28.9922 25C28.1719 25.8906 27.0312 26.3359 25.5547 26.3359C24.3359 26.3359 23.2656 25.9609 22.3359 25.2109C21.4062 24.4609 20.9375 23.2422 20.9375 21.5547C20.9375 19.9688 21.3594 18.7578 22.1953 17.9141C23.0391 17.0703 24.125 16.6484 25.4609 16.6484C26.2578 16.6484 26.9766 16.7891 27.6094 17.0781C28.25 17.3594 28.7734 17.8125 29.1875 18.4297C29.5625 18.9688 29.8047 19.6016 29.9141 20.3203C29.9844 20.7344 30.0078 21.3359 30 22.125Z" fill="currentColor"/> <path d="M16.7812 18.2266C17.1172 18.0234 17.2812 17.6562 17.2812 17.1406C17.2812 16.5625 17.0625 16.1875 16.6172 16C16.2344 15.875 15.75 15.8047 15.1562 15.8047H12.4688V18.5312H15.4687C16.0078 18.5391 16.4375 18.4375 16.7812 18.2266Z" fill="currentColor"/> </g> <defs> <clipPath id="clip0_40000281_14205"> <rect width="40" height="40" fill="white"/> </clipPath> </defs> </svg>
           </a>
-
-          <a class="tile t-org reveal d1" href="org-management-case-study.html" target="_blank" rel="noopener">
-            <div class="tile-media">
-              <img src="images/new%20org/grid%20templates.webp" alt="Organization templates with group hierarchy, shared scopes, and centrally governed assets" onerror="this.closest('.tile-media').classList.add('ph');this.innerHTML='Org management'">
-            </div>
-            <div class="tile-body">
-              <span class="tile-ix">03 · Organization management</span>
-              <h3>Enterprise org management: roles, permissions &amp; shared templates that protect live automations.</h3>
-              <p>An organization layer above groups, with permission that follows the hierarchy. Built to win a high-revenue enterprise account that named it a requirement.</p>
-              <div class="tile-tags"><span>RBAC &amp; scopes</span><span>Enterprise</span></div>
-            </div>
+          <a class="icon-btn" href="https://wa.me/639679223947" data-copy="+639679223947" data-copy-toast="Number copied" target="_blank" rel="noopener" aria-label="WhatsApp">
+            <svg viewBox="0 0 40 40" aria-hidden="true" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"> <g clip-path="url(#clip0_40000281_14211)"> <path fill-rule="evenodd" clip-rule="evenodd" d="M31.642 28.2422C31.16 29.6066 29.244 30.7353 27.716 31.0654C26.67 31.2875 25.306 31.4632 20.71 29.5586C15.548 27.42 8.38 19.8019 8.38 14.7324C8.38 12.1516 9.868 9.14648 12.47 9.14648C13.722 9.14648 13.998 9.1709 14.41 10.1592C14.892 11.3235 16.068 14.1922 16.208 14.4863C16.786 15.6927 15.62 16.3989 14.774 17.4492C14.504 17.7653 14.198 18.1072 14.54 18.6953C14.88 19.2715 16.056 21.1881 17.784 22.7266C20.016 24.7152 21.826 25.35 22.474 25.6201C22.956 25.8202 23.532 25.7736 23.884 25.3975C24.33 24.9153 24.884 24.1154 25.448 23.3271C25.846 22.763 26.352 22.6925 26.882 22.8926C27.24 23.0166 31.79 25.1297 31.982 25.4678C32.124 25.7139 32.124 26.8778 31.642 28.2422ZM20.004 0H19.994C8.96799 0 0 8.9707 0 20C0 24.3733 1.41001 28.4307 3.80801 31.7217L1.31601 39.1533L9.00201 36.6973C12.164 38.7899 15.938 40 20.004 40C31.03 40 40 31.0293 40 20C40 8.9707 31.03 0 20.004 0Z" fill="currentColor"/> </g> <defs> <clipPath id="clip0_40000281_14211"> <rect width="40" height="40" fill="white"/> </clipPath> </defs> </svg>
           </a>
-
-          <a class="tile t-bill reveal d1" href="billing-case-study.html" target="_blank" rel="noopener">
-            <div class="tile-media">
-              <img src="images/new%20billing/Manage%20Members%20at%20Group%20Level.webp" alt="Billing Management overview showing group balances, payment access, monthly caps, and account moves" onerror="this.closest('.tile-media').classList.add('ph');this.innerHTML='Org billing'">
-            </div>
-            <div class="tile-body">
-              <span class="tile-ix">04 · Org billing &amp; spend</span>
-              <h3>Org-wide billing: pool money at the org, spend it by group, protect paying campaigns.</h3>
-              <p>The companion to org management. Billing groups, per-account caps, transfers and disbursement, and spend analytics legible from org down to a single automation.</p>
-              <div class="tile-tags"><span>Financial UX</span><span>Enterprise</span></div>
-            </div>
-          </a>
-
-          <a class="tile t-ds reveal" href="design-system-case-study.html" target="_blank" rel="noopener">
-            <div class="tile-media">
-              <iframe class="case-live" data-w="1040" data-h="903" data-src="recreations/ds-tokens.html" title="Live preview: the design system's token layers and swatch table" loading="lazy" tabindex="-1"></iframe>
-            </div>
-            <div class="tile-body">
-              <span class="tile-ix">05 · Design system · Personal project</span>
-              <h3>Figma to React: a system a designer, an AI, and a compiler can all build from.</h3>
-              <p>I owned the Figma system at LettrLabs, then built the packaged React library, machine-readable specs, and an agent audit against a written standard.</p>
-            </div>
-          </a>
-
-          <a class="tile t-uled reveal" href="uledger-case-study.html" target="_blank" rel="noopener">
-            <div class="tile-media">
-              <img width="1622" height="1073" src="images/uledger/v2-outlook-wide.webp" alt="The ULedger Verify add-in open beside a draft in Outlook, showing verified email counts, top contacts, and recent activity" loading="lazy" onerror="this.closest('.tile-media').classList.add('ph');this.innerHTML='ULedger Verify'">
-            </div>
-            <div class="tile-body">
-              <span class="tile-ix">06 &middot; Email security add-in &middot; Client work</span>
-              <h3>ULedger Verify: turning a one-button Outlook add-in into somewhere people go back to.</h3>
-              <p>Version 1 sent a verified email and said nothing else. I redesigned it around three customer requests: reactivity, contact verification, and email history.</p>
-              <div class="tile-tags"><span>Outlook add-in</span><span>Trust &amp; verification</span><span>Client work</span></div>
-              <span class="tile-cta">Read case study <span class="arw">&rarr;</span></span>
-            </div>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============================ STAT BAND ============================ -->
-    <div class="band reveal">
-      <div class="container">
-        <div class="band-grid">
-          <div class="band-cell"><div class="n">06</div><div class="l">Years shipping<br>end-to-end B2B SaaS</div></div>
-          <div class="band-cell"><div class="n">06</div><div class="l">In-depth case studies<br>of real product work</div></div>
-          <div class="band-cell"><div class="n">~75%</div><div class="l">Of revenue served by<br>surfaces I designed</div></div>
-          <div class="band-cell"><div class="n">AA</div><div class="l">WCAG 2.1 held across<br>every surface</div></div>
         </div>
       </div>
     </div>
+  </section>
 
-    <!-- ============================ WHY ME — BENTO ============================ -->
-    <section class="section section--green" id="why">
-      <div class="container">
-        <div class="section-head reveal">
-          <span class="kicker">Why me</span>
-          <h2>The range behind the case studies.</h2>
-        </div>
-        <div class="why">
-          <div class="why-card reveal">
-            <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M3 12.5h18"/></svg></div>
-            <span class="l">Experience</span>
-            <p>6 years designing products end-to-end. Core workflows, platform integrations, and enterprise surfaces, shipped cross-functionally with CTOs, PMs, and engineers.</p>
+  <!-- ==================== CASE STUDIES ==================== -->
+  <section class="cases" id="case-studies">
+    <div class="container cases__cols">
+
+      <div class="cases__col">
+        <h2 class="t-h2 cases__title reveal">Case Studies</h2>
+        <a class="card reveal" data-cursor-label="Read case study" href="map-case-study.html">
+          <div class="card__media">
+            <img width="1600" height="900" src="images/cards/card-map.webp" alt="Audience Map Builder" loading="lazy">
           </div>
-          <div class="why-card reveal d1">
-            <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 3 8l9 5 9-5-9-5Z"/><path d="M3 12l9 5 9-5"/><path d="M3 16l9 5 9-5"/></svg></div>
-            <span class="l">Design systems</span>
-            <p>I build and own the system: tokens, documented components, and AI-ready specs backed by Storybook and the Claude Design System.</p>
+          <div class="card__text">
+            <h3 class="t-h3 card__title">Audience Map Builder</h3>
+            <p class="t-p-medium card__desc">Lettrlabs | End-to-end design with UX research</p>
+            <div class="card__tags">
+            <span class="badge badge--sm">AI Prototype</span>
+            <span class="badge badge--sm">Workflow redesign</span>
+            <span class="badge badge--sm">UX research</span>
+            </div>
           </div>
-          <div class="why-card reveal">
-            <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="1.5"/><path d="M9 8h.01M15 8h.01M9 12h.01M15 12h.01M9 16h6"/></svg></div>
-            <span class="l">Industries</span>
-            <p>Health SaaS, a blockchain email-security platform, e-commerce, plus executive, investor, and podcast sites.</p>
+        </a>
+
+        <a class="card reveal" data-cursor-label="Read case study" href="billing-case-study.html">
+          <div class="card__media">
+            <img width="1600" height="900" src="images/cards/card-billing.webp" alt="Billing Management" loading="lazy">
           </div>
-          <div class="why-card reveal d1">
-            <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.7 5.1L19 10l-5.3 1.9L12 17l-1.7-5.1L5 10l5.3-1.9L12 3Z"/></svg></div>
-            <span class="l">AI-assisted</span>
-            <p>I build AI skills and machine-readable specs so Codex, Claude, and Google Stitch produce on-brand work inside my design workflow.</p>
+          <div class="card__text">
+            <h3 class="t-h3 card__title">Billing Management</h3>
+            <p class="t-p-medium card__desc">Lettrlabs | End-to-end design with UX research</p>
+            <div class="card__tags">
+            <span class="badge badge--sm">Org-wide billing</span>
+            <span class="badge badge--sm">Workflow redesign</span>
+            <span class="badge badge--sm">UX research</span>
+            </div>
           </div>
-        </div>
-      </div>
-    </section>
+        </a>
 
-    <!-- ============================ CAPABILITIES ============================ -->
-    <section class="section" id="capabilities">
-      <div class="container">
-        <div class="section-head reveal">
-          <span class="kicker">Capabilities</span>
-          <h2>What I bring, and what I build with.</h2>
-        </div>
-        <div class="reveal">
-          <div class="skills-row"><span class="skills-label">Product areas</span><div class="chips"><span>B2B SaaS</span><span>B2C</span><span>Dashboards</span><span>Integrations</span><span>Admin &amp; RBAC</span><span>Automations</span><span>Payments &amp; billing</span></div></div>
-          <div class="skills-row"><span class="skills-label">Industries</span><div class="chips"><span>Direct mail ads</span><span>Health SaaS</span><span>Blockchain email security</span><span>E-commerce</span><span>Executive &amp; investor sites</span><span>Podcasts</span></div></div>
-          <div class="skills-row"><span class="skills-label">Design &amp; systems</span><div class="chips"><span>Figma</span><span>Storybook</span><span>Claude Design System</span><span>Design tokens</span><span>Adobe (Ps, Ai, XD)</span></div></div>
-          <div class="skills-row"><span class="skills-label">Accessibility</span><div class="chips"><span>WCAG 2.1 AA</span><span>Color contrast</span><span>Keyboard navigation</span><span>Screen-reader testing</span><span>Focus states</span><span>axe DevTools</span></div></div>
-          <div class="skills-row"><span class="skills-label">AI workflow</span><div class="chips"><span>Figma Make</span><span>Codex</span><span>Claude Design tooling</span><span>MCP</span><span>Machine-readable specs</span><span>AI for research &amp; discovery</span></div></div>
-          <div class="skills-row"><span class="skills-label">Web &amp; CMS</span><div class="chips"><span>WordPress</span><span>WP ACF</span><span>WooCommerce</span><span>Shopify</span><span>Webflow</span><span>Elementor Pro</span><span>HTML / CSS</span></div></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============================ APPROACH (dark) ============================ -->
-    <section class="section approach-sec" id="approach">
-      <div class="container approach">
-        <div class="approach-head reveal">
-          <span class="kicker">Approach</span>
-          <h2><span>Reuse what works.</span><span>Reduce what distracts.</span><span class="alt">Make the interaction carry the clarity.</span></h2>
-        </div>
-        <div class="approach-list reveal d1">
-          <div><span class="approach-num">01</span><p>I start from product logic and mental models, not decoration. The interface should explain how the system behaves, especially in complex, ambiguous problems.</p></div>
-          <div><span class="approach-num">02</span><p>I extend and advocate the design system before inventing new components, and keep it consistent enough that people and AI can both build from it.</p></div>
-          <div><span class="approach-num">03</span><p>I work cross-functionally, close to PM, engineering, and stakeholders, explaining the concept behind a screen, not just the screen, so handoff feels like a shared product conversation.</p></div>
-          <div><span class="approach-num">04</span><p>I prototype with engineering in mind, often in code or Codex, so the team can pressure-test states, feasibility, and edge cases before build cost rises.</p></div>
-          <div><span class="approach-num">05</span><p>I treat B2B as consumer-grade underneath. A business buys the product, but one person still has to build an audience, configure automation, and pay, largely on their own. So I design the permissions, complexity, and scale a business needs with the speed, clarity, and ease people expect from consumer apps.</p></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============================ OTHER WORK ============================ -->
-    <section class="section" id="other">
-      <div class="container">
-        <div class="section-head reveal">
-          <span class="kicker">Selected other work</span>
-          <h2>Shipped client &amp; product work, in brief.</h2>
-          <p>Supporting work, not full case studies. The blockchain explorer from my time with ULedger, plus CMS-driven marketing sites. Each opens in a new tab.</p>
-        </div>
-        <div class="other-grid">
-          <div class="other reveal"><a href="https://www.behance.net/gallery/202614057/ULedgerNet-Blockchain-Explorer" target="_blank" rel="noopener noreferrer"><div class="other-cover"><img src="images/uledger.jpg" alt="ULedgerNet blockchain explorer" loading="lazy"></div><div class="other-body"><span class="other-kicker">Blockchain · ULedger</span><h3>ULedgerNet, Blockchain Explorer</h3><p>A data-dense explorer for searching blocks, transactions, and hashes on the ULedger network.</p><span class="other-link">View on Behance ↗</span></div></a></div>
-          <div class="other reveal d1"><a href="https://www.ajlatelier.com/" target="_blank" rel="noopener noreferrer"><div class="other-cover"><img src="images/ajl thumbnail new.webp" alt="AJL Atelier Webflow CMS site" loading="lazy"></div><div class="other-body"><span class="other-kicker">Webflow CMS · Live site</span><h3>AJL Atelier, consultancy + podcast</h3><p>Dynamic CMS pages, podcast episodes, blog, and service pages for a short-term-rental consultancy.</p><span class="other-link">Visit live site ↗</span></div></a></div>
-          <div class="other reveal"><a href="https://asymmetry.vc/portfolio/" target="_blank" rel="noopener noreferrer"><div class="other-cover"><img src="images/asymmetry vc.webp" alt="Asymmetry Ventures site" loading="lazy"></div><div class="other-body"><span class="other-kicker">WordPress · Elementor</span><h3>Asymmetry VC, portfolio site</h3><p>A CMS-driven portfolio grid built from dynamic custom fields, so new investments publish without touching the layout.</p><span class="other-link">Visit live site ↗</span></div></a></div>
-          <div class="other reveal d1"><a href="https://www.hypervestor.com/" target="_blank" rel="noopener noreferrer"><div class="other-cover"><img src="images/hypervestor.webp" alt="Hypervestor investor platform site" loading="lazy"></div><div class="other-body"><span class="other-kicker">WordPress · Live site</span><h3>Hypervestor, investor platform</h3><p>A marketing site for an early-stage investment platform, with dynamic deal listings and domain-driven sections.</p><span class="other-link">Visit live site ↗</span></div></a></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============================ CTA ============================ -->
-    <section class="section" id="contact">
-      <div class="container">
-        <div class="cta reveal">
-          <span class="kicker">Let's work together</span>
-          <h2>Have a role or project in mind?</h2>
-          <p>I'm looking for a Senior Product Designer role where systems thinking, craft, and an AI-native workflow all matter.</p>
-          <div class="cta-actions">
-            <a class="btn btn-light" href="mailto:helloivanjose@gmail.com">Email me</a>
-            <a class="btn btn-ghost" href="https://www.linkedin.com/in/ivancreatives/" target="_blank" rel="noreferrer">Connect on LinkedIn</a>
+        <a class="card reveal" data-cursor-label="Read case study" href="integration-case-study.html">
+          <div class="card__media">
+            <img width="1600" height="900" src="images/cards/card-integration.webp" alt="Integration Framework" loading="lazy">
           </div>
-        </div>
+          <div class="card__text">
+            <h3 class="t-h3 card__title">Integration Framework</h3>
+            <p class="t-p-medium card__desc">Lettrlabs | End-to-end design with UX research</p>
+            <div class="card__tags">
+            <span class="badge badge--sm">Connection flow</span>
+            <span class="badge badge--sm">Workflow redesign</span>
+            <span class="badge badge--sm">UX research</span>
+            </div>
+          </div>
+        </a>
       </div>
-    </section>
-  </main>
 
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-top">
-        <a class="brand" href="index.html">Ivan Jose</a>
-        <nav class="footer-links" aria-label="Footer"><a href="#work">Work</a><a href="#why">Why me</a><a href="#capabilities">Capabilities</a><a href="#approach">Approach</a></nav>
-        <div class="footer-social">
-          <a class="icon-link" href="https://www.behance.net/ivancreatives" target="_blank" rel="noreferrer" aria-label="Behance" style="width:46px;height:46px"><span class="be" aria-hidden="true">Bē</span></a>
-          <a class="icon-link" href="https://www.linkedin.com/in/ivancreatives/" target="_blank" rel="noreferrer" aria-label="LinkedIn" style="width:46px;height:46px"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.37 3.1A2.37 2.37 0 1 1 5.4 7.84 2.37 2.37 0 0 1 5.37 3.1ZM3.3 9.7h4.14V21H3.3V9.7ZM10.04 9.7H14v1.54h.06c.55-1.04 1.9-2.14 3.9-2.14 4.18 0 4.95 2.75 4.95 6.32V21h-4.13v-4.96c0-1.18-.02-2.7-1.64-2.7-1.65 0-1.9 1.29-1.9 2.62V21h-4.14V9.7Z"/></svg></a>
-          <a class="icon-link icon-link--wa" href="https://wa.me/639679223947" target="_blank" rel="noopener" aria-label="WhatsApp" style="width:46px;height:46px"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-3-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.6-6.1c-.25-.13-1.5-.74-1.7-.82-.23-.08-.4-.13-.56.13-.17.25-.64.82-.79.99-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.02-1.25-.75-.66-1.25-1.48-1.4-1.73-.14-.25-.01-.39.11-.51.11-.11.25-.29.38-.44.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.42h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1s.9 2.44 1.03 2.61c.13.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.43.53.6.19 1.15.16 1.58.1.48-.07 1.5-.61 1.71-1.2.21-.59.21-1.1.15-1.2-.06-.11-.23-.17-.48-.29z"/></svg></a>
+      <div class="cases__col">
+        <a class="card reveal" data-cursor-label="Read case study" href="org-management-case-study.html">
+          <div class="card__media">
+            <img width="1600" height="900" src="images/cards/card-org.webp" alt="Enterprise Org Management" loading="lazy">
+          </div>
+          <div class="card__text">
+            <h3 class="t-h3 card__title">Enterprise Org Management</h3>
+            <p class="t-p-medium card__desc">Lettrlabs | End-to-end design with UX research</p>
+            <div class="card__tags">
+            <span class="badge badge--sm">RBAC</span>
+            <span class="badge badge--sm">Enterprise Design</span>
+            <span class="badge badge--sm">UX research</span>
+            </div>
+          </div>
+        </a>
+
+        <a class="card reveal" data-cursor-label="Read case study" href="design-system-case-study.html">
+          <div class="card__media">
+            <img width="1600" height="900" src="images/cards/card-design-system.webp" alt="Figma to React Design System" loading="lazy">
+          </div>
+          <div class="card__text">
+            <h3 class="t-h3 card__title">Figma to React Design System</h3>
+            <p class="t-p-medium card__desc">Lettrlabs | End-to-end design with UX research</p>
+            <div class="card__tags">
+            <span class="badge badge--sm">Design tokens</span>
+            <span class="badge badge--sm">AI-ready specs</span>
+            <span class="badge badge--sm">Storybook</span>
+            </div>
+          </div>
+        </a>
+
+        <div class="other reveal">
+          <h3 class="t-h3 other__title">View other App Design</h3>
+          <a class="other__link t-p-large" href="https://www.behance.net/gallery/202614057/ULedgerNet-Blockchain-Explorer" target="_blank" rel="noopener">
+            <span class="other__link-text">Blockchain Explorer | ULedger <span class="other__link-end">2023<svg class="other__link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></svg></span></span>
+            <span class="sr-only">(opens in a new tab)</span>
+          </a>
+          <a class="other__link t-p-large" href="https://www.figma.com/design/ImZ9PIK2wAoQcO4anzBXQZ/Archived?node-id=0-1" target="_blank" rel="noopener">
+            <span class="other__link-text">Figma Archived (Mix 2021 - <span class="other__link-end">2026)<svg class="other__link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></svg></span></span>
+            <span class="sr-only">(opens in a new tab)</span>
+          </a>
         </div>
       </div>
-      <div class="footer-bottom">
-        <span>© 2026 Ivan Jose · Senior Product Designer</span>
-        <a href="mailto:helloivanjose@gmail.com">helloivanjose@gmail.com</a>
+
+    </div>
+  </section>
+
+  <!-- ==================== WEBSITE WORKS ==================== -->
+  <section class="sites" id="websites">
+    <div class="container sites__inner">
+      <h2 class="t-h2 sites__title reveal">Website Works</h2>
+      <div class="sites__grid">
+        <a class="card reveal" data-cursor-label="Visit site" href="https://www.behance.net/gallery/202614057/ULedgerNet-Blockchain-Explorer" target="_blank" rel="noopener">
+          <div class="card__media">
+            <img width="1454" height="1024" src="images/uledger.jpg" alt="ULedgerNet, Blockchain Explorer" loading="lazy">
+          </div>
+          <div class="card__text">
+            <h3 class="t-h3 card__title">ULedgerNet, Blockchain Explorer</h3>
+            <p class="t-p-medium card__desc">Blockchain &middot; ULedger</p>
+            <div class="card__tags">
+              <span class="badge badge--sm">Explorer UI</span>
+              <span class="badge badge--sm">Data-dense</span>
+              <span class="badge badge--sm">Behance</span>
+            </div>
+          </div>
+          <span class="sr-only">(opens in a new tab)</span>
+        </a>
+
+        <a class="card reveal" data-cursor-label="Visit site" href="https://www.ajlatelier.com/" target="_blank" rel="noopener">
+          <div class="card__media">
+            <img width="1600" height="900" src="images/ajl%20thumbnail%20new.webp" alt="AJL Atelier, consultancy + podcast" loading="lazy">
+          </div>
+          <div class="card__text">
+            <h3 class="t-h3 card__title">AJL Atelier, consultancy + podcast</h3>
+            <p class="t-p-medium card__desc">Webflow CMS &middot; Live site</p>
+            <div class="card__tags">
+              <span class="badge badge--sm">Webflow</span>
+              <span class="badge badge--sm">CMS</span>
+              <span class="badge badge--sm">Podcast</span>
+            </div>
+          </div>
+          <span class="sr-only">(opens in a new tab)</span>
+        </a>
+
+        <a class="card reveal" data-cursor-label="Visit site" href="https://asymmetry.vc/portfolio/" target="_blank" rel="noopener">
+          <div class="card__media">
+            <img width="1600" height="900" src="images/asymmetry%20vc.webp" alt="Asymmetry VC, portfolio site" loading="lazy">
+          </div>
+          <div class="card__text">
+            <h3 class="t-h3 card__title">Asymmetry VC, portfolio site</h3>
+            <p class="t-p-medium card__desc">WordPress &middot; Elementor</p>
+            <div class="card__tags">
+              <span class="badge badge--sm">WordPress</span>
+              <span class="badge badge--sm">Elementor</span>
+              <span class="badge badge--sm">Custom fields</span>
+            </div>
+          </div>
+          <span class="sr-only">(opens in a new tab)</span>
+        </a>
+
+        <a class="card reveal" data-cursor-label="Visit site" href="https://www.hypervestor.com/" target="_blank" rel="noopener">
+          <div class="card__media">
+            <img width="1600" height="900" src="images/hypervestor.webp" alt="Hypervestor, investor platform" loading="lazy">
+          </div>
+          <div class="card__text">
+            <h3 class="t-h3 card__title">Hypervestor, investor platform</h3>
+            <p class="t-p-medium card__desc">WordPress &middot; Live site</p>
+            <div class="card__tags">
+              <span class="badge badge--sm">WordPress</span>
+              <span class="badge badge--sm">Marketing site</span>
+              <span class="badge badge--sm">Deal listings</span>
+            </div>
+          </div>
+          <span class="sr-only">(opens in a new tab)</span>
+        </a>
       </div>
     </div>
-  </footer>
+  </section>
 
-  <script>
-    var progress=document.getElementById("progress"), nav=document.getElementById("nav");
-    function onScrollUI(){var h=document.documentElement,sc=h.scrollTop||document.body.scrollTop,max=(h.scrollHeight-h.clientHeight)||1;progress.style.width=(sc/max*100)+"%";nav.classList.toggle("scrolled",sc>20);}
-    window.addEventListener("scroll",onScrollUI,{passive:true});onScrollUI();
+  <!-- ==================== MORE OF ME ==================== -->
+  <section class="more" id="more">
+    <div class="container more__inner">
+      <h2 class="t-h2 more__title reveal">More of me</h2>
+      <div class="more__grid">
+        <div class="more__item reveal">
+          <h3 class="t-h3">Experience</h3>
+          <p class="t-p-large">6 years designing products end-to-end. Core workflows, platform integrations, and enterprise surfaces, shipped cross-functionally with CTOs, PMs, and engineers.</p>
+        </div>
+        <div class="more__item reveal">
+          <h3 class="t-h3">Design systems</h3>
+          <p class="t-p-large">I build and own the system: tokens, documented components, and AI-ready specs backed by Storybook and the Claude Design System.</p>
+        </div>
+        <div class="more__item reveal">
+          <h3 class="t-h3">Industries</h3>
+          <p class="t-p-large">Health SaaS, a blockchain email-security platform, e-commerce, plus executive, investor, and podcast sites.</p>
+        </div>
+        <div class="more__item reveal">
+          <h3 class="t-h3">AI-assisted Workflow</h3>
+          <p class="t-p-large">I build AI skills and machine-readable specs so Codex, Claude, and Google Stitch produce on-brand work inside my design workflow.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    var prefersReduced=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if(!prefersReduced){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target);}});},{threshold:0.1});document.querySelectorAll(".reveal:not(.in)").forEach(function(n){io.observe(n);});}
-    else{document.querySelectorAll(".reveal").forEach(function(n){n.classList.add("in");});}
+  <!-- ==================== WHAT I BRING ==================== -->
+  <section class="stack" id="tech-stacks">
+    <div class="container stack__inner">
+      <div class="stack__head reveal">
+        <h2 class="t-h2 stack__title">What I bring, and what I build with.</h2>
+        <p class="t-p-large stack__lede">These are the stacks I work in most, not a complete list. I adapt to whatever a team already runs on. The systems thinking carries over faster than the tooling does.</p>
+      </div>
+      <div class="stack__rows">
+        <div class="stack__row reveal">
+          <h3 class="t-h3 stack__label">Product areas</h3>
+          <div class="stack__tags">
+            <span class="badge">B2B SaaS</span>
+            <span class="badge">B2C</span>
+            <span class="badge">Dashboards</span>
+            <span class="badge">Integrations</span>
+            <span class="badge">Admin &amp; RBAC</span>
+            <span class="badge">Automations</span>
+            <span class="badge">Payments &amp; billing</span>
+          </div>
+        </div>
+        <div class="stack__row reveal">
+          <h3 class="t-h3 stack__label">Industries</h3>
+          <div class="stack__tags">
+            <span class="badge">Direct mail ads</span>
+            <span class="badge">Health SaaS</span>
+            <span class="badge">Blockchain email security</span>
+            <span class="badge">E-commerce</span>
+            <span class="badge">Executive &amp; investor sites</span>
+            <span class="badge">Podcasts</span>
+          </div>
+        </div>
+        <div class="stack__row reveal">
+          <h3 class="t-h3 stack__label">Design &amp; systems</h3>
+          <div class="stack__tags">
+            <span class="badge">Figma</span>
+            <span class="badge">Storybook</span>
+            <span class="badge">Claude Design System</span>
+            <span class="badge">Design tokens</span>
+            <span class="badge">Adobe (Ps, Ai, XD)</span>
+          </div>
+        </div>
+        <div class="stack__row reveal">
+          <h3 class="t-h3 stack__label">Accessibility</h3>
+          <div class="stack__tags">
+            <span class="badge">WCAG 2.1 AA</span>
+            <span class="badge">Color contrast</span>
+            <span class="badge">Keyboard navigation</span>
+            <span class="badge">Screen-reader testing</span>
+            <span class="badge">Focus states</span>
+            <span class="badge">axe DevTools</span>
+          </div>
+        </div>
+        <div class="stack__row reveal">
+          <h3 class="t-h3 stack__label">AI workflow</h3>
+          <div class="stack__tags">
+            <span class="badge">Figma Make</span>
+            <span class="badge">Codex</span>
+            <span class="badge">Claude Design tooling</span>
+            <span class="badge">MCP</span>
+            <span class="badge">Machine-readable specs</span>
+            <span class="badge">AI for research &amp; discovery</span>
+          </div>
+        </div>
+        <div class="stack__row reveal">
+          <h3 class="t-h3 stack__label">Web &amp; CMS</h3>
+          <div class="stack__tags">
+            <span class="badge">WordPress</span>
+            <span class="badge">WP ACF</span>
+            <span class="badge">WooCommerce</span>
+            <span class="badge">Shopify</span>
+            <span class="badge">Webflow</span>
+            <span class="badge">Elementor Pro</span>
+            <span class="badge">HTML / CSS</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    /* scroll cue: hide it once the work section is actually on screen */
-    (function(){
-      var cue=document.getElementById("scrollCue"), work=document.getElementById("work");
-      if(!cue||!work) return;
-      /* No preventDefault: the native anchor jump is what actually moves the
-         page. html{scroll-behavior:smooth} animates it, and unlike a scripted
-         scrollIntoView it still works when rAF is throttled. */
-      function sync(){
-        var de=document.documentElement;
-        /* `a || b` is wrong here: at a genuine scrollTop of 0 it falls through
-           to whichever other property is stale. Only one node is the real
-           scroller, so the largest value is the true offset. */
-        var top=Math.max(de.scrollTop||0, document.body.scrollTop||0, window.pageYOffset||0);
-        /* vh can report 0 in embedded/headless contexts, which silently made the
-           old `r.top < vh*0.75` test never fire. Scroll distance always works,
-           and the viewport test just refines it when vh is real. */
-        /* NOT document.body.clientHeight — that is the whole document height
-           (~19500px here), which made every element look "in view". */
-        var vh=window.innerHeight||de.clientHeight||0;
-        var scrolledOff = top > 240;
-        var workInView = vh > 0 && work.getBoundingClientRect().top < vh*0.75;
-        cue.classList.toggle("is-hidden", scrolledOff || workInView);
-      }
-      window.addEventListener("scroll",sync,{passive:true});
-      window.addEventListener("resize",sync,{passive:true});
-      sync();
-    })();
+  <!-- ==================== APPROACH ==================== -->
+  <section class="approach" id="approach">
+    <div class="container approach__inner">
+
+      <h2 class="t-h2 approach__title reveal">
+        <span>Reuse what works.<br>Reduce what distracts.</span>
+        <span class="c-accent-3">Make the interaction<br>carry the clarity.</span>
+      </h2>
+
+      <ol class="approach__list">
+        <li class="approach__item reveal">
+          <span class="t-h3 approach__num" aria-hidden="true">01</span>
+          <p class="t-p-medium approach__body">I start from product logic and mental models, not decoration. The interface should explain how the system behaves, especially in complex, ambiguous problems.</p>
+        </li>
+        <li class="approach__item reveal">
+          <span class="t-h3 approach__num" aria-hidden="true">02</span>
+          <p class="t-p-medium approach__body">I extend and advocate the design system before inventing new components, and keep it consistent enough that people and AI can both build from it.</p>
+        </li>
+        <li class="approach__item reveal">
+          <span class="t-h3 approach__num" aria-hidden="true">03</span>
+          <p class="t-p-medium approach__body">I work cross-functionally, close to PM, engineering, and stakeholders, explaining the concept behind a screen, not just the screen, so handoff feels like a shared product conversation.</p>
+        </li>
+        <li class="approach__item reveal">
+          <span class="t-h3 approach__num" aria-hidden="true">04</span>
+          <p class="t-p-medium approach__body">I prototype with engineering in mind, often in code or Codex, so the team can pressure-test states, feasibility, and edge cases before build cost rises.</p>
+        </li>
+        <li class="approach__item reveal">
+          <span class="t-h3 approach__num" aria-hidden="true">05</span>
+          <p class="t-p-medium approach__body">I treat B2B as consumer-grade underneath. A business buys the product, but one person still has to build an audience, configure automation, and pay, largely on their own. So I design the permissions, complexity, and scale a business needs with the speed, clarity, and ease people expect from consumer apps.</p>
+        </li>
+      </ol>
+
+    </div>
+  </section>
+
+</main>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="marquee-band">
+
+    <h2 class="sr-only">Let&rsquo;s design your product</h2>
+    <p class="sr-only">Product, UI/UX, Web, Wordpress, Marketing Design.</p>
+
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__track">
+          <span class="marquee__item">Let&rsquo;s design your product!</span>
+          <span class="marquee__item">Let&rsquo;s design your product!</span>
+          <span class="marquee__item">Let&rsquo;s design your product!</span>
+          <span class="marquee__item">Let&rsquo;s design your product!</span>
+      </div>
+      <div class="marquee__track">
+          <span class="marquee__item">Let&rsquo;s design your product!</span>
+          <span class="marquee__item">Let&rsquo;s design your product!</span>
+          <span class="marquee__item">Let&rsquo;s design your product!</span>
+          <span class="marquee__item">Let&rsquo;s design your product!</span>
+      </div>
+    </div>
+
+    <div class="marquee marquee--reverse" aria-hidden="true">
+      <div class="marquee__track">
+          <span class="marquee__item">Product | UI/UX | Web | Wordpress | Marketing Design |</span>
+          <span class="marquee__item">Product | UI/UX | Web | Wordpress | Marketing Design |</span>
+          <span class="marquee__item">Product | UI/UX | Web | Wordpress | Marketing Design |</span>
+          <span class="marquee__item">Product | UI/UX | Web | Wordpress | Marketing Design |</span>
+      </div>
+      <div class="marquee__track">
+          <span class="marquee__item">Product | UI/UX | Web | Wordpress | Marketing Design |</span>
+          <span class="marquee__item">Product | UI/UX | Web | Wordpress | Marketing Design |</span>
+          <span class="marquee__item">Product | UI/UX | Web | Wordpress | Marketing Design |</span>
+          <span class="marquee__item">Product | UI/UX | Web | Wordpress | Marketing Design |</span>
+      </div>
+    </div>
+
+  <div class="container footer__bottom">
+    <div class="footer__contact">
+      <div class="footer__social">
+        <a class="icon-btn" href="https://www.linkedin.com/in/ivancreatives" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <svg viewBox="0 0 40 40" aria-hidden="true" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"> <g clip-path="url(#clip0_40000281_14203)"> <path d="M20 0C8.95312 0 0 8.95312 0 20C0 31.0469 8.95312 40 20 40C31.0469 40 40 31.0469 40 20C40 8.95312 31.0469 0 20 0ZM14.4062 28.3672H10.5078V15.8906H14.4062V28.3672ZM12.3516 14.3281H12.3203C10.9062 14.3281 9.99219 13.375 9.99219 12.1641C9.99219 10.9297 10.9375 10 12.375 10C13.8125 10 14.6953 10.9297 14.7266 12.1641C14.7344 13.3672 13.8203 14.3281 12.3516 14.3281ZM30 28.3672H25.5781V21.9141C25.5781 20.2266 24.8906 19.0703 23.3672 19.0703C22.2031 19.0703 21.5547 19.8516 21.2578 20.6016C21.1484 20.8672 21.1641 21.2422 21.1641 21.625V28.3672H16.7812C16.7812 28.3672 16.8359 16.9297 16.7812 15.8906H21.1641V17.8516C21.4219 16.9922 22.8203 15.7734 25.0547 15.7734C27.8281 15.7734 30 17.5703 30 21.4297V28.3672Z" fill="currentColor"/> </g> <defs> <clipPath id="clip0_40000281_14203"> <rect width="40" height="40" fill="white"/> </clipPath> </defs> </svg>
+          </a>
+          <a class="icon-btn" href="https://www.behance.net/ivancreatives" target="_blank" rel="noopener" aria-label="Behance">
+            <svg viewBox="0 0 40 40" aria-hidden="true" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"> <g clip-path="url(#clip0_40000281_14205)"> <path d="M26.8828 19.1016C26.5 18.7734 26.0234 18.6094 25.4609 18.6094C24.8516 18.6094 24.375 18.7812 24.0313 19.1328C23.6953 19.4844 23.4844 19.9531 23.3906 20.5469H27.5078C27.4766 19.9141 27.2578 19.4375 26.8828 19.1016Z" fill="currentColor"/> <path d="M16.7422 20.7891C16.4453 20.6563 16.0391 20.5859 15.5078 20.5781H12.4609V23.875H15.4688C16.0078 23.875 16.4219 23.8047 16.7188 23.6562C17.2656 23.3828 17.5312 22.875 17.5312 22.1172C17.5312 21.4766 17.2656 21.0313 16.7422 20.7891Z" fill="currentColor"/> <path d="M20 0C8.95312 0 0 8.95312 0 20C0 31.0469 8.95312 40 20 40C31.0469 40 40 31.0469 40 20C40 8.95312 31.0469 0 20 0ZM22.7812 14.2422H28.0781V15.7812H22.7812V14.2422ZM19.5859 24.2656C19.3516 24.6484 19.0625 24.9766 18.7109 25.2344C18.3203 25.5391 17.8516 25.7422 17.3125 25.8594C16.7734 25.9688 16.1953 26.0234 15.5625 26.0234H10V13.6641H15.9766C17.4844 13.6875 18.5547 14.125 19.1797 14.9844C19.5547 15.5078 19.7422 16.1406 19.7422 16.875C19.7422 17.625 19.5547 18.2344 19.1719 18.6953C18.9609 18.9531 18.6406 19.1875 18.2266 19.3984C18.8594 19.6328 19.3359 19.9922 19.6562 20.4922C19.9766 20.9922 20.1406 21.5938 20.1406 22.3047C20.1406 23.0234 19.9531 23.6797 19.5859 24.2656ZM30 22.125H23.3438C23.3828 23.0391 23.6953 23.6875 24.2969 24.0547C24.6641 24.2812 25.1016 24.3984 25.6172 24.3984C26.1562 24.3984 26.6016 24.2578 26.9453 23.9766C27.1328 23.8281 27.2969 23.6172 27.4375 23.3438H29.875C29.8125 23.8828 29.5156 24.4375 28.9922 25C28.1719 25.8906 27.0312 26.3359 25.5547 26.3359C24.3359 26.3359 23.2656 25.9609 22.3359 25.2109C21.4062 24.4609 20.9375 23.2422 20.9375 21.5547C20.9375 19.9688 21.3594 18.7578 22.1953 17.9141C23.0391 17.0703 24.125 16.6484 25.4609 16.6484C26.2578 16.6484 26.9766 16.7891 27.6094 17.0781C28.25 17.3594 28.7734 17.8125 29.1875 18.4297C29.5625 18.9688 29.8047 19.6016 29.9141 20.3203C29.9844 20.7344 30.0078 21.3359 30 22.125Z" fill="currentColor"/> <path d="M16.7812 18.2266C17.1172 18.0234 17.2812 17.6562 17.2812 17.1406C17.2812 16.5625 17.0625 16.1875 16.6172 16C16.2344 15.875 15.75 15.8047 15.1562 15.8047H12.4688V18.5312H15.4687C16.0078 18.5391 16.4375 18.4375 16.7812 18.2266Z" fill="currentColor"/> </g> <defs> <clipPath id="clip0_40000281_14205"> <rect width="40" height="40" fill="white"/> </clipPath> </defs> </svg>
+          </a>
+          <a class="icon-btn" href="https://wa.me/639679223947" data-copy="+639679223947" data-copy-toast="Number copied" target="_blank" rel="noopener" aria-label="WhatsApp">
+            <svg viewBox="0 0 40 40" aria-hidden="true" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"> <g clip-path="url(#clip0_40000281_14211)"> <path fill-rule="evenodd" clip-rule="evenodd" d="M31.642 28.2422C31.16 29.6066 29.244 30.7353 27.716 31.0654C26.67 31.2875 25.306 31.4632 20.71 29.5586C15.548 27.42 8.38 19.8019 8.38 14.7324C8.38 12.1516 9.868 9.14648 12.47 9.14648C13.722 9.14648 13.998 9.1709 14.41 10.1592C14.892 11.3235 16.068 14.1922 16.208 14.4863C16.786 15.6927 15.62 16.3989 14.774 17.4492C14.504 17.7653 14.198 18.1072 14.54 18.6953C14.88 19.2715 16.056 21.1881 17.784 22.7266C20.016 24.7152 21.826 25.35 22.474 25.6201C22.956 25.8202 23.532 25.7736 23.884 25.3975C24.33 24.9153 24.884 24.1154 25.448 23.3271C25.846 22.763 26.352 22.6925 26.882 22.8926C27.24 23.0166 31.79 25.1297 31.982 25.4678C32.124 25.7139 32.124 26.8778 31.642 28.2422ZM20.004 0H19.994C8.96799 0 0 8.9707 0 20C0 24.3733 1.41001 28.4307 3.80801 31.7217L1.31601 39.1533L9.00201 36.6973C12.164 38.7899 15.938 40 20.004 40C31.03 40 40 31.0293 40 20C40 8.9707 31.03 0 20.004 0Z" fill="currentColor"/> </g> <defs> <clipPath id="clip0_40000281_14211"> <rect width="40" height="40" fill="white"/> </clipPath> </defs> </svg>
+          </a>
+      </div>
+      <a class="t-p-medium footer__email" href="mailto:helloivanjose@gmail.com"
+         data-copy="helloivanjose@gmail.com" data-copy-toast="Email copied">helloivanjose@gmail.com</a>
+    </div>
+    <p class="t-p-small footer__copy">&copy; Designed by Ivan Jose</p>
+  </div>
+</footer>
 
 
-    document.querySelectorAll("[data-copy-email]").forEach(function(button){
-      button.addEventListener("click",async function(){
-        var email=button.dataset.copyEmail,feedback=document.querySelector("[data-copy-feedback]"),prev=button.getAttribute("aria-label");
-        try{
-          if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(email);}
-          else{var ta=document.createElement("textarea");ta.value=email;ta.style.position="fixed";ta.style.opacity="0";document.body.appendChild(ta);ta.select();document.execCommand("copy");ta.remove();}
-          button.setAttribute("aria-label","Email copied");button.title="Email copied";if(feedback)feedback.textContent="Email copied to clipboard";
-          setTimeout(function(){button.setAttribute("aria-label",prev||"Copy email address");button.title="Copy email address";},1800);
-        }catch(err){if(feedback)feedback.textContent="Copy failed. Select the email to copy it.";}
-      });
-    });
-  </script>
+<div class="cursor" data-cursor aria-hidden="true">
+  <span class="cursor__dot"></span>
+  <span class="cursor__ring">
+    <svg viewBox="0 0 132 132">
+      <defs>
+        <path id="cursor-path" d="M 66,66 m -54.0,0 a 54.0,54.0 0 1,1 108.0,0 a 54.0,54.0 0 1,1 -108.0,0"/>
+      </defs>
+      <text><textPath href="#cursor-path" textLength="339.3" data-cursor-text>Read case study ✳ Read case study ✳</textPath></text>
+    </svg>
+  </span>
+</div>
 
-  <script>
-    /* Live case-study previews: lazy-load CDN-backed iframes, contain-fit them,
-       and play one pass on hover / keyboard focus. */
-    (function () {
-      (function () {
-        var pending = [].slice.call(document.querySelectorAll(".case-live[data-src]"));
-        if (!pending.length) return;
-        function reveal() {
-          var vh = window.innerHeight || document.documentElement.clientHeight;
-          pending = pending.filter(function (f) {
-            var box = f.parentElement || f, r = box.getBoundingClientRect();
-            if (r.top < vh + 800 && r.bottom > -800) { f.src = f.dataset.src; return false; }
-            return true;
-          });
-          if (!pending.length) { window.removeEventListener("scroll", onScroll); window.removeEventListener("resize", onScroll); }
-        }
-        var t; function onScroll() { if (t) return; t = setTimeout(function () { t = 0; reveal(); }, 120); }
-        window.addEventListener("scroll", onScroll, { passive: true });
-        window.addEventListener("resize", onScroll, { passive: true });
-        reveal();
-      })();
+<div class="toast" data-toast role="status" aria-live="polite"></div>
 
-      function fit() {
-        document.querySelectorAll(".case-live").forEach(function (f) {
-          try {
-            var cover = f.parentElement; if (!cover) return;
-            var cw = cover.clientWidth, ch = cover.clientHeight;
-            var natW = +(f.dataset.w || 1280), natH = +(f.dataset.h || 720);
-            f.style.width = natW + "px"; f.style.height = natH + "px";
-            /* contain: whole live demo visible, centered on the gradient */
-            var scale = Math.min(cw / natW, ch / natH);
-            f.style.transform = "translate(-50%,-50%) scale(" + scale.toFixed(3) + ")";
-          } catch (e) {}
-        });
-      }
-      fit();
-
-      document.querySelectorAll("iframe.case-hover").forEach(function (f) {
-        var card = f.closest(".tile") || f.parentElement;
-        if (!card) return;
-        var base = (f.getAttribute("src") || f.dataset.src || "").split("#")[0];
-        var playParam = f.dataset.playParam || "play";
-        var playSrc = base + (base.indexOf("?") >= 0 ? "&" : "?") + playParam + "=1";
-        var swapOnly = f.dataset.playMode === "swap";
-        var fileMode = location.protocol === "file:";
-        var state = "";
-        var set = function (msg) {
-          if (state === msg) return; state = msg;
-          if (fileMode || swapOnly) { f.src = (msg === "play" ? playSrc : base); return; }
-          try { f.contentWindow.postMessage(msg === "play" ? "play" : "stop", "*"); }
-          catch (e) { f.src = (msg === "play" ? playSrc : base); }
-        };
-        card.addEventListener("mouseenter", function () { set("play"); });
-        card.addEventListener("mouseleave", function () { set("stop"); });
-        card.addEventListener("focusin",    function () { set("play"); });
-        card.addEventListener("focusout",   function () { set("stop"); });
-      });
-
-      window.addEventListener("resize", fit);
-      window.addEventListener("load", fit);
-      var n = 0, iv = setInterval(function () { fit(); if (++n > 14) clearInterval(iv); }, 300);
-    })();
-  </script>
+<script src="v3/v3.js"></script>
 </body>
 </html>

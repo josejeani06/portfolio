@@ -1295,3 +1295,7 @@ button { font: inherit; color: inherit; }
 [data-fallback] .fallback { display: none; }
 [data-fallback].is-empty .fallback { display: grid; }
 [data-fallback].is-empty img { display: none; }
+
+/* ---------- Download CV, a button in the nav beside the email CTA ---------- */
+.nav__cv { white-space: nowrap; }
+.nav__panel .nav__cv { width: 100%; justify-content: center; margin-top: var(--gap-small); }
