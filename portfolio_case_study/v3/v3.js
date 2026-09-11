@@ -555,3 +555,23 @@
     }
   );
 }());
+
+/* ============================================================================
+   10. The Download CV FAB belongs to the hero, so it fades out with it.
+       Observed rather than measured on every scroll frame: the hero is a tall
+       sticky track, and its intersection is exactly the signal we want.
+   ============================================================================ */
+(function () {
+  'use strict';
+  var fab = document.querySelector('[data-hero-cv]');
+  var hero = document.querySelector('.hero');
+  if (!fab || !hero) return;
+
+  if (!('IntersectionObserver' in window)) return;   /* stays visible, still usable */
+
+  new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      fab.classList.toggle('is-gone', !entry.isIntersecting);
+    });
+  }, { rootMargin: '-10% 0px -10% 0px', threshold: 0 }).observe(hero);
+}());

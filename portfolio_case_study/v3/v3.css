@@ -8,7 +8,10 @@
 
 html {
   scroll-behavior: smooth;
-  overflow-x: hidden;
+  /* `hidden` makes the root a scroll container, which silently breaks
+     `position: sticky` for the hero stage. `clip` gives the same protection
+     without establishing one. */
+  overflow-x: clip;
   -webkit-text-size-adjust: 100%;                /* iOS: no landscape inflation */
   text-size-adjust: 100%;
 }
@@ -1299,3 +1302,52 @@ button { font: inherit; color: inherit; }
 /* ---------- Download CV, a button in the nav beside the email CTA ---------- */
 .nav__cv { white-space: nowrap; }
 .nav__panel .nav__cv { width: 100%; justify-content: center; margin-top: var(--gap-small); }
+
+/* ============================================================================
+   Mobile nav: only the logo and the burger belong in the bar
+   The 1023px rule hid `.nav__group--end .nav__link` but not the two buttons,
+   so Download CV and Email Me stayed in the bar and pushed the page 77px wider
+   than the viewport. Everything but the burger now moves into the panel.
+   ============================================================================ */
+@media (max-width: 1023px) {
+  .nav__group--end > .btn { display: none; }
+  .nav__group--end { gap: 0; }
+  .nav__panel-cta { width: 100%; justify-content: center; margin-top: var(--gap-small); }
+}
+
+/* ============================================================================
+   Download CV: a floating action button, hero section only
+   ============================================================================ */
+.hero__cv {
+  position: fixed;
+  right: var(--page-gutter);
+  bottom: var(--margin-medium);
+  z-index: 50;
+  /* sizing, fill and radius come from .btn .btn--accent-2 .btn--md */
+  box-shadow: 0 10px 30px color-mix(in srgb, var(--bg-accent-2) 32%, transparent);
+  transition: opacity .3s ease, transform .3s ease, background-color .2s ease;
+}
+.hero__cv svg { width: var(--space-large); height: var(--space-large); flex: none; }
+/* it belongs to the hero, so it leaves with it */
+.hero__cv.is-gone {
+  opacity: 0;
+  transform: translateY(var(--space-large));
+  pointer-events: none;
+}
+@media (max-width: 767px) {
+  .hero__cv svg { width: var(--space-medium); height: var(--space-medium); }
+}
+@media (prefers-reduced-motion: reduce) { .hero__cv { transition: none; } }
+
+/* ============================================================================
+   Hero frame sits on the left, flush with the copy above it
+   It still reaches full bleed: the inset interpolates to 0 with --p, the same
+   progress value the width animation uses.
+   ============================================================================ */
+.hero__stage {
+  /* justify-items places the item inside its track; the track itself was still
+     being centred by justify-content, which is why the frame sat ~40px in. */
+  justify-items: start;
+  justify-content: start;
+}
+.hero__frame { margin-left: calc(var(--page-gutter) * (1 - var(--p, 0))); }
