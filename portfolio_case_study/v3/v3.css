@@ -1344,10 +1344,14 @@ button { font: inherit; color: inherit; }
    It still reaches full bleed: the inset interpolates to 0 with --p, the same
    progress value the width animation uses.
    ============================================================================ */
-.hero__stage {
-  /* justify-items places the item inside its track; the track itself was still
-     being centred by justify-content, which is why the frame sat ~40px in. */
-  justify-items: start;
-  justify-content: start;
+/* Centred on desktop and tablet; left-aligned on a phone, where a centred
+   frame leaves uneven margins against the left-aligned copy above it.
+   justify-items places the item inside its track, justify-content places the
+   track itself — both are needed, or the frame sits ~40px off the edge. */
+@media (max-width: 767px) {
+  .hero__stage {
+    justify-items: start;
+    justify-content: start;
+  }
+  .hero__frame { margin-left: calc(var(--page-gutter) * (1 - var(--p, 0))); }
 }
-.hero__frame { margin-left: calc(var(--page-gutter) * (1 - var(--p, 0))); }
