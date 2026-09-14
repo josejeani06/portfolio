@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Integration Framework — Deck | Ivan Jose</title>
+<title>Integration Framework Deck | Ivan Jose</title>
 <meta name="description" content="One connection pattern for client credentials, validation, and account management.">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16.png">
@@ -11,8 +11,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;700&family=Istok+Web:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../v3/tokens.css?v=fe23c101">
-<link rel="stylesheet" href="deck.css?v=fe23c101">
+<link rel="stylesheet" href="../v3/tokens.css?v=2a64c068">
+<link rel="stylesheet" href="deck.css?v=2a64c068">
 </head>
 <body>
 
@@ -39,7 +39,7 @@
       <div class="slide__head">
         <p class="slide__eyebrow">The problem</p>
         <h2 class="t-h1 slide__title">Every connector was a one-off build</h2>
-        <p class="t-p-large slide__lead">Customer data lived across 6 separate tools. 32% of customers already automate from an integration and ~$350K of mail a month runs on that data &mdash; and every request pulled in CS, Sales, and engineering. <em>(Figures from internal product analytics, rounded.)</em></p>
+        <p class="t-p-large slide__lead">Customer data lived across 6 separate tools. 32% of customers already automate from an integration and ~$350K of mail a month runs on that data. Every request pulled in CS, Sales, and engineering. <em>(Figures from internal product analytics, rounded.)</em></p>
       </div>
       <div class="slide__body">
         <div class="stats">
@@ -98,7 +98,7 @@
           <div class="card-box">
             <span class="card-box__label">Me</span>
             <h3 class="t-h3 card-box__title">UX strategy and design</h3>
-            <p>I framed each decision as a written trade-off with a cost, a call, and a future path &mdash; which is what made the calls quick.</p>
+            <p>I framed each decision as a written trade-off with a cost, a call, and a future path. That is what made the calls quick.</p>
           </div>
         </div>
       </div>
@@ -108,7 +108,7 @@
       <div class="slide__head">
         <p class="slide__eyebrow">Process</p>
         <h2 class="t-h1 slide__title">The first design was far more powerful</h2>
-        <p class="t-p-large slide__lead">To connect a CRM like Salesforce, you&rsquo;d browse the entire schema, hand-map every object and field to the attribution model, define conversion / lead / exclude rules, then run a full extract-and-load pipeline into SQL. It could model almost anything. <strong>And that was exactly the problem</strong> &mdash; 3 in 10 users stalled before finishing.</p>
+        <p class="t-p-large slide__lead">To connect a CRM like Salesforce, you&rsquo;d browse the entire schema, hand-map every object and field to the attribution model, define conversion / lead / exclude rules, then run a full extract-and-load pipeline into SQL. It could model almost anything. <strong>And that was exactly the problem.</strong> 3 in 10 users stalled before finishing.</p>
       </div>
       <div class="slide__body">
         <div class="gallery gallery--2">
@@ -152,9 +152,9 @@
         <table class="d-table">
           <thead><tr><th>Question</th><th>Trade-off</th><th>Decision</th></tr></thead>
           <tbody>
-            <tr><td>How much should connect ask for up front?</td><td>Exposing every object and field was powerful, but it turned setup into a data-engineering task.</td><td>Cut connect down to the few required inputs &mdash; name, Client ID, masked secret &mdash; all tested before anything saves.</td></tr>
+            <tr><td>How much should connect ask for up front?</td><td>Exposing every object and field was powerful, but it turned setup into a data-engineering task.</td><td>Cut connect down to the few required inputs: name, Client ID, and a masked secret, all tested before anything saves.</td></tr>
             <tr><td>Connect and attribution, one flow or two?</td><td>One flow felt continuous, but attribution carries different business logic and risk than authentication.</td><td>Split them. Connect stays lightweight and works the same everywhere; attribution is shown only to the users who need it.</td></tr>
-            <tr><td>Custom connectors, or one reusable shell?</td><td>Custom screens fit each API perfectly, but every new app restarted design and engineering &mdash; 6 one-off builds at 3 to 4 weeks each.</td><td>One reusable lifecycle, where the connector-specific parts are configuration.</td></tr>
+            <tr><td>Custom connectors, or one reusable shell?</td><td>Custom screens fit each API perfectly, but every new app restarted design and engineering. That was 6 one-off builds at 3 to 4 weeks each.</td><td>One reusable lifecycle, where the connector-specific parts are configuration.</td></tr>
           </tbody>
         </table>
       </div>
@@ -272,6 +272,6 @@
 
 </div>
 
-<script src="deck.js?v=fe23c101"></script>
+<script src="deck.js?v=2a64c068"></script>
 </body>
 </html>

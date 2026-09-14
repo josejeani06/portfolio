@@ -629,12 +629,12 @@
     h3{font-size:var(--h3);font-weight:700}
     .eyebrow{color:var(--blue-2);letter-spacing:.08em;font-weight:720;font-size:var(--text-xs);text-transform:uppercase}
     .lead{color:#4a473f}
-    /* .button inherits the pill radius from style.css — no override */
+    /* .button inherits the pill radius from style.css, no override */
     .button.secondary{background:transparent;border:1px solid rgba(41, 40, 39,.16);color:var(--text)}
     .section{padding:80px 0}
     .section-dark{background:linear-gradient(180deg,#17161a,#111014);color:#f7f5f2}
     .section-dark-soft{background:linear-gradient(180deg,#26252c,#1c1b20)}
-    /* UX audit (id=audit) — override style.css's maroon to the terracotta-dark palette */
+    /* UX audit (id=audit), override style.css's maroon to the terracotta-dark palette */
     #audit{background:linear-gradient(180deg,#17161a,#111014)}
     #audit .eyebrow{color:#9e6ee5}
     #audit .comparison-head div{color:rgba(255,231,219,.72)}
@@ -687,7 +687,7 @@
     @media(max-width:900px){.case-summary{grid-template-columns:1fr}}
     .callout{background:var(--ink);color:#f7f5f2}
 
-    /* screenshot frame (canonical — shared with billing/org) */
+    /* screenshot frame (canonical, shared with billing/org) */
     .shot{margin:28px 0 0}
     .shot-wide{margin-top:28px}
     .shot-frame{border-radius:12px;overflow:hidden;border:1px solid rgba(41, 40, 39,.12);background:#ffffff;box-shadow:0 34px 80px rgba(17, 17, 16,.16)}
@@ -728,7 +728,7 @@
     /* mini cards (editorial surface) */
     .mini-card{background:#fff;border:1px solid var(--line);box-shadow:none;border-radius:12px}
     .mini-card h3{font-size:var(--text-lg)}
-    /* mini cards on dark sections — translucent, matching base .section-dark .panel */
+    /* mini cards on dark sections, translucent, matching base .section-dark .panel */
     .section-dark .mini-card{background:rgba(255,255,255,.06);border-color:rgba(242,240,231,.14);box-shadow:none}
     .section-dark .mini-card h3{color:#f1ecfb}
     .section-dark .mini-card p{color:rgba(242,240,230,.82)}
@@ -751,14 +751,14 @@
     .badge.badge-new{background:var(--blue);color:#f8efe7;border-color:var(--blue)}
     .badge-legend{margin:16px 0 0;color:var(--muted);font-size:var(--text-sm)}
     .badge-legend b{color:var(--blue-2);font-weight:800}
-    /* At a glance — the 10-second scannable summary under the hero */
+    /* At a glance, the 10-second scannable summary under the hero */
     .at-glance{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:36px 44px;border-top:2px solid var(--ink);padding-top:28px}
     .at-glance-item{padding:0}
     .at-glance-item small{display:block;margin-bottom:12px;color:var(--blue-2);font-size:var(--text-xs);font-weight:800;letter-spacing:.12em;text-transform:uppercase}
     .at-glance-item p{margin:0;font-size:var(--text-md);line-height:1.62;color:#33323a}
     .at-glance-item b{color:var(--ink);font-weight:800}
     @media(max-width:820px){.at-glance{grid-template-columns:1fr}.at-glance-item{border-right:0;border-bottom:1px solid var(--hair);padding:20px 0}.at-glance-item:last-child{border-bottom:0}}
-    /* decision-log table — question / trade-off / decision / future (shared style with map) */
+    /* decision-log table, question / trade-off / decision / future (shared style with map) */
     .decision-log-table{border:var(--surface-border);border-radius:12px;background:var(--surface);box-shadow:var(--surface-shadow);overflow:hidden;margin-top:8px}
     .decision-log-head,.decision-log-body{display:grid;grid-template-columns:1.1fr 1.1fr 1.3fr 1fr}
     .decision-log-head{border-bottom:1px solid rgba(41, 40, 39,.1);background:rgba(255,255,255,.4)}
@@ -791,7 +791,7 @@
     .result-item p{margin:0;color:#565049;font-size:var(--text-md);line-height:1.6}
     @media(max-width:760px){.result-grid{grid-template-columns:1fr}.result-item{border-right:0!important;padding:22px 0!important;border-bottom:1px solid var(--hair)!important}.result-item:last-child{border-bottom:0!important}}
 
-    /* overflow fix so position:sticky works (clip, not hidden) — required for scroll-story sticky images */
+    /* overflow fix so position:sticky works (clip, not hidden), required for scroll-story sticky images */
     html{overflow-x:clip}
     body.case-study-page{overflow-x:clip}
 
@@ -831,7 +831,7 @@
     .journey-timeline-item.is-risk .journey-timeline-copy h3{color:#fff0ea}
     @media(max-width:760px){.journey-group{padding-left:0}.journey-group-line{display:none}.journey-timeline-item{gap:16px}.journey-timeline-marker{width:42px;height:42px;font-size:var(--text-md)}.journey-timeline-copy h3{font-size:var(--h3)}.journey-timeline-copy p{font-size:var(--text-sm)}}
 
-    /* scroll story — text scrolls left, image sticky right (shared with map; used for not-shipped explorations + final output) */
+    /* scroll story, text scrolls left, image sticky right (shared with map; used for not-shipped explorations + final output) */
     .scroll-story{display:grid;grid-template-columns:minmax(0,.82fr) minmax(380px,1.18fr);gap:42px;align-items:start;margin-top:42px}
     .scroll-story-copy{position:relative;display:grid;padding-left:24px;padding-right:18px}
     .scroll-story-step{position:relative;min-height:78vh;padding:32px 0;display:grid;align-content:start;opacity:.42;transform:translateY(16px);transition:opacity .32s ease .12s,transform .32s ease .12s}
@@ -879,7 +879,7 @@
       #connection .scroll-story-progress{display:none}
     }
 
-    /* concept carousel — big-button slideshow for old / not-approved versions (shared pattern with map; dark band = the discarded path) */
+    /* concept carousel, big-button slideshow for old / not-approved versions (shared pattern with map; dark band = the discarded path) */
     .concept-carousel{margin-top:28px;padding:clamp(22px,4vw,40px);border-radius:16px;background:linear-gradient(180deg,#17161a,#111014)}
     .concept-carousel-shell{position:relative;padding:0 68px}
     .concept-carousel-viewport{overflow:hidden}
@@ -1026,7 +1026,7 @@
         .eco-card__core{ top:5px; left:5px; height:16px; padding:0 5px; font-size:8.5px; }
         .eco-card__new{ top:5px; right:5px; height:15px; padding:0 5px; font-size:8px; }
       }
-      /* ≥640px — still 4-up, but roomier with descriptions restored */
+      /* ≥640px: still 4-up, but roomier with descriptions restored */
       @media (min-width:640px){
         .eco{ --eco-cols:4; --eco-gap:20px; }
         .eco-card{ height:300px; padding:22px; gap:18px; border-width:1.5px; border-radius:var(--eco-radius); }
@@ -1037,7 +1037,7 @@
         .eco-card__title{ font-size:17px; }
         .eco-card__desc{ display:-webkit-box; -webkit-line-clamp:3; font-size:13px; }
       }
-      /* ≥1024px — 6-up desktop */
+      /* ≥1024px: 6-up desktop */
       @media (min-width:1024px){
         .eco{ --eco-cols:6; --eco-gap:20px; }
         .eco-card{ height:266px; padding:18px; gap:14px; }
@@ -1062,7 +1062,7 @@
         .eco-track{ animation:none !important; }
       }
     
-    /* ===================== MOBILE (≤640px) — see skill: mobile-case-study =====================
+    /* ===================== MOBILE (≤640px), see skill: mobile-case-study =====================
        Placed after the ≤900 restacks so these win. Selectors absent on a page are no-ops. */
     @media(max-width:640px){
       .section{padding:40px 0!important}
@@ -1136,7 +1136,7 @@
     "@context": "https://schema.org",
     "@type": "CreativeWork",
     "headline": "Building a reusable integration flow for supported API connections",
-    "about": "B2B SaaS product design case study — a reusable integration framework with validation states and attribution",
+    "about": "B2B SaaS product design case study, a reusable integration framework with validation states and attribution",
     "keywords": ["product design","B2B SaaS","integrations","design systems","validation states","attribution","UX"],
     "url": "https://josejeani06.github.io/portfolio/integration-case-study.html",
     "author": { "@type": "Person", "name": "Jean Ivan Jose", "alternateName": "Ivan Jose", "jobTitle": "Senior Product Designer", "url": "https://josejeani06.github.io/portfolio/" }
@@ -1158,7 +1158,7 @@
     const previewData = {
       "integration-manage": { kicker: "Platform integrations", title: "Reusable integration platform", text: "A single management surface for connected accounts, statuses, attribution setup, and next actions.", url: "#connection", visual: "integration-manage" },
       "integration-framework-1": { kicker: "Framework step", title: "Select integration", text: "Use a familiar shell so new apps feel like configuration inside one stable system.", url: "#connection", visual: "integration-manage" },
-      "integration-framework-2": { kicker: "Framework step", title: "Connect account", text: "Credential setup stays lightweight—client ID and secret, tested before save.", url: "#connection", visual: "integration-connect" },
+      "integration-framework-2": { kicker: "Framework step", title: "Connect account", text: "Credential setup stays lightweight: client ID and secret, tested before save.", url: "#connection", visual: "integration-connect" },
       "integration-framework-3": { kicker: "Framework step", title: "Test and validate", text: "Loading and syncing states make backend validation visible instead of feeling stuck or opaque.", url: "#connection", visual: "integration-connected" },
       "integration-framework-4": { kicker: "Framework step", title: "Customize attribution", text: "Connection stays separate from deeper business logic so only the users who need more setup see it.", url: "#connection", visual: "integration-attribution" },
       "integration-framework-5": { kicker: "Framework step", title: "Manage accounts", text: "The reusable management view supports multiple accounts, status, sync details, and follow-up actions.", url: "#connection", visual: "integration-manage" },
@@ -1406,7 +1406,7 @@
               if (run === flowRun) window.setTimeout(startTyping, 180);
               return;
             }
-            var values = ["Housecall Pro — Production", "hcp_9f3a-b21c-4d9e-a077", "sk_live_9f2c7a41d0b8e6a3"];
+            var values = ["Housecall Pro Production", "hcp_9f3a-b21c-4d9e-a077", "sk_live_9f2c7a41d0b8e6a3"];
             var cursorX = 300, cursorY = 720;
             cursor.classList.remove("show");
             cursor.style.transitionDuration = "0ms";
@@ -1580,7 +1580,7 @@
 <script>
     /* Home -> case-study funnel: tag this case-study view for Microsoft Clarity so
        the dashboard can build a funnel (which case study, and whether the visit
-       arrived from the homepage). Top window only — embeds are gated out elsewhere. */
+       arrived from the homepage). Top window only, embeds are gated out elsewhere. */
     (function () {
       if (window.self !== window.top) return;
       if (typeof window.clarity !== "function") return;

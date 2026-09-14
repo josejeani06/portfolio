@@ -45,8 +45,7 @@
 
 
   /* ---------------------------------------------------------------------------
-     Height sync. The track is a flex row, so its height is the TALLEST slide —
-     a short image therefore leaves a large gap above the arrows, which sit at
+     Height sync. The track is a flex row, so its height is the TALLEST slide, a short image therefore leaves a large gap above the arrows, which sit at
      the viewport's bottom edge. Pin the viewport to the ACTIVE slide's height.
      --------------------------------------------------------------------------- */
   function activeIndex(track) {
@@ -164,7 +163,7 @@
     }
     var limit = Math.round(vh * MAX_H);
 
-    // 2a. standalone panel screenshots (.shot) — same treatment as a slide, so a
+    // 2a. standalone panel screenshots (.shot), same treatment as a slide, so a
     // 1,300px-tall add-in panel doesn't own a whole phone screen. Full-width on
     // mobile, clipped, with the same "Show full" lightbox.
     document.querySelectorAll('.shot-img').forEach(function (host) {

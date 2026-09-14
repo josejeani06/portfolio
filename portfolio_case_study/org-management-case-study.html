@@ -564,7 +564,7 @@
     h3{font-size:var(--h3);font-weight:700}
     .eyebrow{color:var(--blue-2);letter-spacing:.08em;font-weight:720;font-size:var(--text-xs)}
     .lead{color:#4a473f}
-    /* .button inherits the pill radius + 700 weight from style.css — no override */
+    /* .button inherits the pill radius + 700 weight from style.css, no override */
     .button.secondary{background:transparent;border:1px solid var(--line);color:var(--text)}
     .section{padding:80px 0}
     .section-dark{background:linear-gradient(180deg,#17161a,#111014);color:#f7f5f2}
@@ -572,7 +572,7 @@
     .section-dark .eyebrow{color:#9e6ee5}
     .section-dark p{color:rgba(242,240,230,.84)}
     .section-dark .section-head p,.section-dark .pattern-head p,.section-dark .lede p{color:rgba(242,240,230,.86)}
-    /* reflection copy + pull-quote — kept identical to the billing companion study */
+    /* reflection copy + pull-quote, kept identical to the billing companion study */
     .dark-copy{max-width:none;padding-top:8px}
     .dark-copy p{margin:0;color:rgba(242,240,230,.88);font-size:var(--text-md);line-height:1.7}
     .dark-copy p + p{margin-top:18px}
@@ -586,7 +586,7 @@
     .case-hero .lead{font-size:var(--text-lg)}
     .case-hero .case-title{line-height:1;font-size:var(--h1)}
     .lede{display:grid;gap:16px}
-    /* full-width stacked reframe sections (matches map & billing — never a 2-col title/copy split) */
+    /* full-width stacked reframe sections (matches map & billing, never a 2-col title/copy split) */
     .split{display:grid;grid-template-columns:1fr;gap:18px;align-items:start}
     .split .lede{padding-top:4px}
     .status-tag{display:inline-flex;align-items:center;min-height:26px;padding:0 12px;border:1px solid var(--blue);border-radius:2px;color:var(--blue-2);font-size:var(--text-xs);font-weight:800;letter-spacing:.14em;text-transform:uppercase}
@@ -672,7 +672,7 @@
     .impact-card small{display:block;font-size:var(--text-xs);font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
     .impact-card.lose small{color:#5f3da0}.impact-card.gain small{color:#2f6b3d}
     .impact-card p{margin:0;font-size:var(--text-sm);line-height:1.55;color:#3a3942}
-    /* impact cards + captions on dark sections — these are styled for light bg; lift them so they stay legible on the dark section */
+    /* impact cards + captions on dark sections, these are styled for light bg; lift them so they stay legible on the dark section */
     .section-dark .impact-card.lose{background:rgba(224,120,90,.14);border-color:rgba(224,120,90,.34)}
     .section-dark .impact-card.gain{background:rgba(120,200,150,.12);border-color:rgba(120,200,150,.30)}
     .section-dark .impact-card.lose small{color:#ff9d86}
@@ -752,7 +752,7 @@
     .quote{font-size:var(--h2);line-height:1.14;letter-spacing:-.02em;max-width:940px;font-weight:600}
     .footer{border-top:1px solid var(--line)}
 
-    /* refinement carousel — clickable, filterable feature table (shared with billing) */
+    /* refinement carousel, clickable, filterable feature table (shared with billing) */
     .refine-carousel{margin-top:26px;display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:14px 36px;align-items:start}
     .refine-personas{grid-column:1 / -1;display:flex;flex-wrap:wrap;gap:10px;margin-bottom:6px}
     .refine-persona{appearance:none;border:1px solid var(--line);background:transparent;color:var(--muted);border-radius:999px;padding:9px 16px;font-family:inherit;font-weight:700;font-size:var(--text-sm);cursor:pointer;transition:background .2s ease,border-color .2s ease,color .2s ease}
@@ -792,7 +792,7 @@
     @media(prefers-reduced-motion:reduce){.read-progress,.read-progress-ring .rp-bar{transition:none}.ai-badge::before{animation:none}}
 
     /* keep the sticky nav working: style.css sets overflow-x:hidden on html/body,
-       which breaks position:sticky — clip preserves it (same fix as map & billing) */
+       which breaks position:sticky, clip preserves it (same fix as map & billing) */
     html{overflow-x:clip}
     body.case-study-page{overflow-x:clip}
     /* nav prototype pill + hero meta (shared with map & billing) */
@@ -812,7 +812,7 @@
     @media(max-width:760px){.nav-prototype-link span:last-child{display:none}.nav-prototype-link{padding:0 11px;min-width:38px;justify-content:center}}
     .hero-meta{display:grid;justify-items:start;gap:10px}
 
-    /* permission matrix — same table treatment as map/integration blocker tables */
+    /* permission matrix, same table treatment as map/integration blocker tables */
     .perm-matrix{width:100%;border-collapse:collapse}
     .comparison-table:has(.perm-matrix){background:#fff;border:1px solid var(--line);box-shadow:none}
     .perm-matrix th,.perm-matrix td{padding:14px 16px;border-bottom:1px solid var(--line);vertical-align:middle}
@@ -834,7 +834,7 @@
     .matrix-note{margin:12px 2px 0;color:var(--muted);font-size:var(--text-sm);line-height:1.55}
     @media(max-width:640px){.comparison-table:has(.perm-matrix){overflow-x:auto}.perm-matrix{min-width:620px}.perm-matrix th,.perm-matrix td{padding:11px 12px}.perm-matrix thead th{font-size:11px}.perm-matrix tbody th{font-size:13px}.perm-matrix .ic{width:18px;height:18px}}
 
-    /* model comparison — shared white-table treatment, with a compact mobile reading order */
+    /* model comparison, shared white-table treatment, with a compact mobile reading order */
     .model-comparison-table{border:1px solid rgba(242,240,230,.16);border-radius:14px;background:#0e0e0d;box-shadow:none}
     .model-comparison-table .comparison-head{background:#0e0e0d;border-bottom-color:rgba(242,240,230,.16)}
     .model-comparison-table .comparison-head div{padding:14px 16px;color:#f7f5f2;font-size:var(--text-xs)}
@@ -904,7 +904,7 @@
       .ot-leaf{width:min(440px,100%)}
     }
   
-    /* ===================== MOBILE (≤640px) — see skill: mobile-case-study =====================
+    /* ===================== MOBILE (≤640px), see skill: mobile-case-study =====================
        Placed after the ≤900 restacks so these win. Selectors absent on a page are no-ops. */
     @media(max-width:640px){
       .section{padding:40px 0!important}
@@ -977,7 +977,7 @@
     "@context": "https://schema.org",
     "@type": "CreativeWork",
     "headline": "Enterprise org management: roles, permissions, and shared templates",
-    "about": "B2B SaaS product design case study — an enterprise organization and permission model with governed templates",
+    "about": "B2B SaaS product design case study, an enterprise organization and permission model with governed templates",
     "keywords": ["product design","B2B SaaS","enterprise","RBAC","permissions","design systems","templates","UX"],
     "url": "https://josejeani06.github.io/portfolio/org-management-case-study.html",
     "author": { "@type": "Person", "name": "Jean Ivan Jose", "alternateName": "Ivan Jose", "jobTitle": "Senior Product Designer", "url": "https://josejeani06.github.io/portfolio/" }
@@ -1120,7 +1120,7 @@
 <script>
     /* Home -> case-study funnel: tag this case-study view for Microsoft Clarity so
        the dashboard can build a funnel (which case study, and whether the visit
-       arrived from the homepage). Top window only — embeds are gated out elsewhere. */
+       arrived from the homepage). Top window only, embeds are gated out elsewhere. */
     (function () {
       if (window.self !== window.top) return;
       if (typeof window.clarity !== "function") return;

@@ -90,7 +90,7 @@
   if (prevBtn) prevBtn.addEventListener('click', function () { go(-1); });
   if (nextBtn) nextBtn.addEventListener('click', function () { go(1); });
 
-  /* swipe — horizontal only, so a vertical scroll gesture is left alone */
+  /* swipe: horizontal only, so a vertical scroll gesture is left alone */
   var x0 = null, y0 = null;
   deck.addEventListener('touchstart', function (e) {
     var t = e.changedTouches[0];

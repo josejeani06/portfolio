@@ -1,7 +1,7 @@
 /* ============================================================================
    CASE STUDY DECK
    A presentation layer on top of the v3 design system. Same tokens, same two
-   typefaces, same four surfaces — laid out on a fixed 16:9 stage instead of a
+   typefaces, same four surfaces, laid out on a fixed 16:9 stage instead of a
    scrolling page.
 
    Load order: tokens.css -> deck.css
@@ -96,7 +96,7 @@ strong, b { font-weight: 700; }
 
   /* Positioned from its own centre rather than centred by the parent.
      The stage is 1440 wide before scaling, so on a narrow window it overflows
-     its box — and CSS overflow alignment then clamps `justify-items: center`
+     its box, and CSS overflow alignment then clamps `justify-items: center`
      to the start edge to avoid clipping the start of the content, which
      parked the whole stage off-screen on a phone. Anchoring to 50/50 and
      translating back by half its own size is immune to that.
@@ -133,7 +133,7 @@ strong, b { font-weight: 700; }
 
 .slide.is-current { display: flex; }
 
-/* Dark surfaces — the same three the site uses, no new colours. */
+/* Dark surfaces: the same three the site uses, no new colours. */
 .slide--dark   { background: var(--bg-accent-2); color: var(--text-invert); }
 .slide--green  { background: var(--bg-accent-3); color: var(--text-invert); }
 .slide--ink    { background: var(--bg-dark);     color: var(--text-invert); }
@@ -209,7 +209,7 @@ strong, b { font-weight: 700; }
    --------------------------------------------------------------------------- */
 
 /* A slide that is only the thumbnail. The image and the stage are both 16:9,
-   so this renders it at exactly 1:1 — nothing cropped, nothing stretched,
+   so this renders it at exactly 1:1, nothing cropped, nothing stretched,
    nothing laid over it. */
 .slide--shot {
   padding: 0;
@@ -329,7 +329,7 @@ strong, b { font-weight: 700; }
 
 /* Absolutely positioned, not sized with max-height. The frame's height comes
    down a chain of flex items, and a percentage *max*-height resolves to `none`
-   through it — tall screenshots then render at full size and overflow. Against
+   through it, tall screenshots then render at full size and overflow. Against
    the frame's used box, inset:0 gives object-fit an exact area to fit inside.
 
    The shadow is a filter rather than box-shadow on purpose: `drop-shadow`
@@ -495,7 +495,7 @@ strong, b { font-weight: 700; }
 .slide--green .stat__label,
 .slide--ink .stat__label { color: var(--text-invert); opacity: .8; }
 
-/* decision table — one horizontal rule, no column dividers, same as the site */
+/* decision table: one horizontal rule, no column dividers, same as the site */
 .d-table {
   width: 100%;
   border-collapse: collapse;
@@ -572,7 +572,7 @@ strong, b { font-weight: 700; }
 }
 
 /* ---------------------------------------------------------------------------
-   7. DECK CHROME — progress, controls, counter
+   7. DECK CHROME: progress, controls, counter
    --------------------------------------------------------------------------- */
 
 .deck__progress {
@@ -703,7 +703,7 @@ strong, b { font-weight: 700; }
 }
 
 /* ---------------------------------------------------------------------------
-   9. PRINT — one slide per landscape page, for a PDF export
+   9. PRINT: one slide per landscape page, for a PDF export
    --------------------------------------------------------------------------- */
 
 @page { size: 1440px 810px; margin: 0; }

@@ -1,7 +1,7 @@
 /* ============================================================================
    v3 behaviour
    1. Hero: measure the text block, then drive --p (0..1) while the stage is
-      pinned. Desktop only — on mobile the hero hugs its content and there is
+      pinned. Desktop only: on mobile the hero hugs its content and there is
       no animation at all.
    2. Nav hides on scroll down, returns on scroll up.
    3. Mobile nav panel toggle.

@@ -1,5 +1,5 @@
 /* ============================================================================
-   case-study-mobile.js — shared mobile helpers for the case-study pages.
+   case-study-mobile.js: shared mobile helpers for the case-study pages.
 
    "Swipe to scroll" hint: any element marked [data-hscroll] that actually
    overflows horizontally on a small screen gets a small floating pill with a
@@ -121,7 +121,7 @@
   // re-check when the viewport crosses the breakpoint (rotate / resize)
   function onMediaChange() {
     if (!MOBILE.matches) {
-      // left mobile — drop any lingering hint
+      // left mobile, drop any lingering hint
       var hints = document.querySelectorAll(".hscroll-hint");
       for (var i = 0; i < hints.length; i++) hints[i].parentNode.removeChild(hints[i]);
       return;

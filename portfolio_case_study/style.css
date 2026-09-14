@@ -33,7 +33,7 @@ body {
   margin: 0;
   width: 100%;
   max-width: 100%;
-  /* NOTE: no overflow-x here — it makes <body> a scroll container and breaks
+  /* NOTE: no overflow-x here: it makes <body> a scroll container and breaks
      position:sticky on the homepage nav. html{overflow-x:hidden} already clips
      any horizontal overflow. */
   font-family: Manrope, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -284,7 +284,7 @@ h3 {
   color: rgba(255, 231, 219, 0.42);
 }
 
-/* "Why this mattered" flow strip — SVG arrow between nodes.
+/* "Why this mattered" flow strip, SVG arrow between nodes.
    Fill is currentColor so it inherits each case study's .diagram-arrow color
    (light sections and dark sections both work with no per-file override). */
 .diagram-arrow {
@@ -2426,7 +2426,7 @@ body.case-study-page {
 }
 
 /* ==========================================================================
-   SHARED MOBILE (≤640px) — case-study + landing. See skill: mobile-case-study.
+   SHARED MOBILE (≤640px): case-study + landing. See skill: mobile-case-study.
    - Full-bleed helper: break a card out of the container, edge to edge.
    - [data-hscroll]: horizontal-scroll wrapper + "Swipe to scroll" hint.
    ========================================================================== */
@@ -2485,7 +2485,7 @@ body.case-study-page {
   .shot-cap { padding-left: 16px; padding-right: 16px; }
   /* footer: drop the middle "All work" button on mobile */
   .footer-nav .button.secondary { display: none; }
-  /* refinement carousel: full-bleed 1:1 media (cover — no letterbox bands), arrows
+  /* refinement carousel: full-bleed 1:1 media (cover, no letterbox bands), arrows
      overlaid on the sides (no reserved padding). Applies to every page that has it. */
   .refine-slide .vid-frame { aspect-ratio: 1 / 1 !important; height: auto !important; }
   .refine-slide .vid-media { object-fit: cover !important; background: transparent !important; }
@@ -2508,7 +2508,7 @@ body.case-study-page {
 }
 
 /* ==========================================================================
-   Site footer — shared across landing + all case studies
+   Site footer: shared across landing + all case studies
    ========================================================================== */
 .site-footer { background: #141308; color: rgba(242,240,230,.7); border-top: 1px solid rgba(242,240,230,.1); padding: 44px 0; }
 .site-footer-top { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; padding-bottom: 24px; border-bottom: 1px solid rgba(242,240,230,.1); }

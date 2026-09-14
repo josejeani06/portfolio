@@ -1,7 +1,7 @@
 /* =============================================================================
    "Swipe to see" hint for horizontally-scrollable tables on mobile.
    Only attaches to elements that ACTUALLY overflow, and removes itself the
-   moment the reader scrolls — so it never lies and never nags.
+   moment the reader scrolls, so it never lies and never nags.
    ============================================================================= */
 (function () {
   var SELECTOR = [

@@ -74,7 +74,7 @@
   var update = function () {
     queued = false;
 
-    /* 1. nav treatment — light over the banner, solid past it, and out of the
+    /* 1. nav treatment: light over the banner, solid past it, and out of the
        way while reading downward. It comes back on any upward scroll. */
     var y = window.scrollY;
     if (nav && banner) {
@@ -132,7 +132,7 @@
 }());
 
 /* ============================================================================
-   3. Image lightbox — click any content image to see it larger.
+   3. Image lightbox: click any content image to see it larger.
       The billing page shipped this behaviour bound to two selectors; this is
       the same idea applied to every content image, carousels included. The
       caption prefers an explicit data-lightbox-caption, then the figure's own
@@ -191,7 +191,7 @@
       var fc = fig && fig.querySelector('figcaption');
       /* a carousel slide carries its copy beside the media, not in a caption */
       var slide = media.closest('.refine-slide, .concept-carousel-slide');
-      /* NB: not `title` — that name is the lightbox's own title element in the
+      /* NB: not `title`: that name is the lightbox's own title element in the
          enclosing scope, and a `var` here would hoist over it. */
       var slideTitle = null;
       if (slide) {

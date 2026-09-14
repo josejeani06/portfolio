@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Enterprise Billing — Deck | Ivan Jose</title>
+<title>Enterprise Billing Deck | Ivan Jose</title>
 <meta name="description" content="Pooled balances, caps, and disbursement, designed so a payment problem never halts a live campaign.">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16.png">
@@ -11,8 +11,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;700&family=Istok+Web:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../v3/tokens.css?v=fe23c101">
-<link rel="stylesheet" href="deck.css?v=fe23c101">
+<link rel="stylesheet" href="../v3/tokens.css?v=2a64c068">
+<link rel="stylesheet" href="deck.css?v=2a64c068">
 </head>
 <body>
 
@@ -71,7 +71,7 @@
           <div class="card-box">
             <span class="card-box__label">Movement</span>
             <h3 class="t-h3 card-box__title">Transfers, disbursement, purchases</h3>
-            <p>Move balance between a group and an account, split a volume commitment across billing groups, and add funds by card, bank, or invoice &mdash; in-product.</p>
+            <p>Move balance between a group and an account, split a volume commitment across billing groups, and add funds by card, bank, or invoice, all in-product.</p>
           </div>
         </div>
       </div>
@@ -118,7 +118,7 @@
         <table class="d-table">
           <thead><tr><th>Question</th><th>Trade-off</th><th>Decision</th></tr></thead>
           <tbody>
-            <tr><td>Should caps be mandatory?</td><td>Hard caps stop overspend but could halt a paying campaign.</td><td>Optional guardrails plus structural redundancy &mdash; multiple billing groups &times; multiple payment methods, so one declined card can&rsquo;t take down a live campaign.</td></tr>
+            <tr><td>Should caps be mandatory?</td><td>Hard caps stop overspend but could halt a paying campaign.</td><td>Optional guardrails plus structural redundancy: multiple billing groups &times; multiple payment methods, so one declined card can&rsquo;t take down a live campaign.</td></tr>
             <tr><td>How do you change a payment method?</td><td>Stripe won&rsquo;t let a saved card&rsquo;s number be edited in place.</td><td>Make adding effortless. Every &ldquo;change&rdquo; is really adding a new method and repointing the automation.</td></tr>
             <tr><td>When are new funds spendable?</td><td>Show funds instantly, but they aren&rsquo;t verified yet.</td><td>Balance and receipt show at once but sit in <strong>Pending verification</strong>, unspendable until they clear.</td></tr>
           </tbody>
@@ -134,7 +134,7 @@
       <div class="slide__body">
         <div class="split">
           <div class="split__copy">
-            <p class="t-p-large">The org holds a total balance and a monthly volume commitment. Admins create billing groups &mdash; often one per campaign or region &mdash; then nest groups inside them, attach payment methods, and set how much each account can spend.</p>
+            <p class="t-p-large">The org holds a total balance and a monthly volume commitment. Admins create billing groups, often one per campaign or region, then nest groups inside them, attach payment methods, and set how much each account can spend.</p>
             <p class="t-p-large">Every money action inherits the same rule as the rest of the org: <strong>no structural change without first showing what it breaks</strong>.</p>
           </div>
           <figure class="shot">
@@ -261,6 +261,6 @@
 
 </div>
 
-<script src="deck.js?v=fe23c101"></script>
+<script src="deck.js?v=2a64c068"></script>
 </body>
 </html>

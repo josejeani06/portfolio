@@ -8,7 +8,7 @@ html.v3 { overflow-x: clip; }
 .v3 body { overflow-x: clip; }
 
 /* ============================================================================
-   CASE STUDY — v3 blog layout
+   CASE STUDY: v3 blog layout
    Built on v3 tokens. Nav goes light over the dark banner and solid after it,
    then a sticky contents rail beside a single reading column.
    ============================================================================ */
@@ -130,7 +130,7 @@ html.v3 { overflow-x: clip; }
 
 /* ---------- Two-column layout ---------- */
 :root {
-  /* Spec'd component dimensions for this page — named, not scattered inline.
+  /* Spec'd component dimensions for this page, named, not scattered inline.
      Everything else comes off the v3 ladders. */
   --cs-toc-w:      400px;   /* contents rail */
   --cs-read-w:    1200px;   /* reading column */
@@ -331,7 +331,7 @@ html.v3 { overflow-x: clip; }
 .cs-content .rd-frame { overflow: hidden; border-radius: var(--radius-large); }
 
 /* ============================================================================
-   Dark panel — for blocks whose design was authored on a dark surface
+   Dark panel: for blocks whose design was authored on a dark surface
    ============================================================================ */
 .cs-card--dark {
   background: var(--bg-accent-2);
@@ -409,7 +409,7 @@ html.v3 { overflow-x: clip; }
 
 /* ============================================================================
    Tables authored for dark sections must not keep their dark rows on a light
-   page — the container was light while every row stayed near-black.
+   page, the container was light while every row stayed near-black.
    ============================================================================ */
 .cs-content .rd-row,
 .cs-content .rd-crow,
@@ -428,7 +428,7 @@ html.v3 { overflow-x: clip; }
 /* ============================================================================
    Colored bands run the full viewport width
    The TOC is an addition to the reading column, not a reason to box in a
-   coloured section — so these break out of the grid to the screen edges.
+   coloured section, so these break out of the grid to the screen edges.
    ============================================================================ */
 /* The carousel keeps a dark card because its styles were authored on a dark
    ground; the page itself stays a plain bg-main throughout. */
@@ -509,7 +509,7 @@ html.v3 { overflow-x: clip; }
 .cs-card--dark .refine-slide .vid-frame { max-height: 620px; }
 
 /* ============================================================================
-   PASS 2 — heading colour ramp, group rhythm, one page max-width,
+   PASS 2: heading colour ramp, group rhythm, one page max-width,
    uncropped figures, deterministic table grids, and the restored components.
    Appended rather than merged: region-replacing this file has silently eaten
    the verbatim carousel rules three times.
@@ -880,7 +880,7 @@ html.v3 { overflow-x: clip; }
 .cs-model__icon svg { width: 60%; height: 60%; }
 
 /* ============================================================================
-   PASS 3 — one shared page inset, and a proximity ladder.
+   PASS 3: one shared page inset, and a proximity ladder.
    Spacing carries the relationship: the closer two things belong together,
    the tighter the gap. 8 label-to-text, 16 text-to-its-figure,
    40 heading-to-subheading, 80 between H2 groups.
@@ -892,7 +892,7 @@ html.v3 { overflow-x: clip; }
   padding-inline: var(--page-gutter);
 }
 
-/* 8 — a label and the line it introduces */
+/* 8: a label and the line it introduces */
 .cs-content h3,
 .cs-content h4,
 .cs-content .cs-label,
@@ -904,7 +904,7 @@ html.v3 { overflow-x: clip; }
 .cs-content .cs-note h4 { margin-bottom: var(--space-medium); }
 .cs-figure figcaption { margin-top: var(--space-medium); }
 
-/* 16 — a paragraph and the figure, table, or card set that illustrates it */
+/* 16: a paragraph and the figure, table, or card set that illustrates it */
 .cs-content p { margin-bottom: var(--space-large); }
 .cs-content > *:not(h2):not(h3):not(h4):not(p) {
   margin-top: var(--space-large);
@@ -930,13 +930,13 @@ html.v3 { overflow-x: clip; }
   margin-bottom: var(--margin-medium) !important;
 }
 
-/* 40 — a heading and the sub-heading beneath it */
+/* 40: a heading and the sub-heading beneath it */
 .cs-content h2 { margin-bottom: var(--margin-medium); }
 .cs-content h3 { margin-top: var(--margin-medium); }
 .cs-content h2 + h3 { margin-top: 0; }
 .cs-subhead { margin-top: var(--margin-medium) !important; }
 
-/* 80 — between whole H2 groups */
+/* 80: between whole H2 groups */
 .cs-content h2 { margin-top: var(--margin-group); }
 .cs-content > h2:first-child { margin-top: 0; }
 
@@ -949,12 +949,12 @@ html.v3 { overflow-x: clip; }
 }
 
 /* ============================================================================
-   PASS 4 — proximity, corrected one rung down the ladder
+   PASS 4: proximity, corrected one rung down the ladder
    (space-small 8 / space-medium 16 / space-large 24), the Quick Summary
    container, and shared emphasis styling.
    ============================================================================ */
 
-/* 8 — a label and the line it introduces */
+/* 8: a label and the line it introduces */
 .cs-content h3,
 .cs-content h4,
 .cs-content .cs-label,
@@ -966,7 +966,7 @@ html.v3 { overflow-x: clip; }
 .cs-content .cs-note h4 { margin-bottom: var(--space-small); }
 .cs-figure figcaption { margin-top: var(--space-small); }
 
-/* 16 — a paragraph and the block that illustrates it */
+/* 16: a paragraph and the block that illustrates it */
 .cs-content p { margin-bottom: var(--space-medium); }
 .cs-content > *:not(h2):not(h3):not(h4):not(p) {
   margin-top: var(--space-medium);
@@ -1026,7 +1026,7 @@ html.v3 { overflow-x: clip; }
 .cs-card--dark .cs-em { color: var(--text-invert); }
 
 /* ============================================================================
-   PASS 5 — shared across every case study
+   PASS 5: shared across every case study
    ============================================================================ */
 
 /* The hero band below the banner shares the page inset like everything else */
@@ -1037,7 +1037,7 @@ html.v3 { overflow-x: clip; }
 .cs-ba { padding-block: var(--margin-medium); }
 .cs-ba .cs-figure { margin: 0 !important; }
 
-/* Banner variants — the three accent surfaces we already have, nothing new */
+/* Banner variants: the three accent surfaces we already have, nothing new */
 .cs-banner--accent-2 { background: var(--bg-accent-2); }
 .cs-banner--accent-1 { background: var(--text-accent-1); }
 .cs-banner--dark     { background: var(--bg-dark); }
@@ -1052,7 +1052,7 @@ html.v3 { overflow-x: clip; }
 }
 
 /* ============================================================================
-   PASS 6 — bands that must keep their own ground
+   PASS 6: bands that must keep their own ground
    A section authored on a dark surface keeps that surface as a contained band
    inside the reading column. Without it, every `.section-dark .foo` rule in
    the page's own CSS stops matching and the copy goes invisible.
@@ -1091,7 +1091,7 @@ html.v3 { overflow-x: clip; }
 @media (max-width: 767px) { .cs-band { padding: var(--padding-large); } }
 
 /* ============================================================================
-   PASS 7 — the map page's treatment, applied to every case study
+   PASS 7: the map page's treatment, applied to every case study
    These four pages were authored with dark section grounds. The v3 page is a
    plain bg-main throughout, so the copy is re-inked dark and the components
    that carried those grounds become the same light surfaces the map page uses.
@@ -1277,7 +1277,7 @@ html.v3 { overflow-x: clip; }
 .cs-content .container.split { display: block !important; }
 
 /* ============================================================================
-   PASS 8 — the last of the dark-ground leftovers, re-inked dark
+   PASS 8: the last of the dark-ground leftovers, re-inked dark
    These come from rules keyed on the old dark section ids (#audit,
    #accessibility) or on comparison tables that were dark by design. On a
    bg-main page they become the same white table + dark text the map page uses.
@@ -1377,7 +1377,7 @@ html.v3 { overflow-x: clip; }
 }
 
 /* ============================================================================
-   PASS 9 — final contrast sweep
+   PASS 9: final contrast sweep
    ============================================================================ */
 
 /* Captions were light because the shots sat on dark grounds */
@@ -1414,7 +1414,7 @@ html.v3 { overflow-x: clip; }
 .cs-content .om-node-sub { color: var(--text-secondary) !important; }
 
 /* ============================================================================
-   PASS 10 — the last two dark grounds
+   PASS 10: the last two dark grounds
    ============================================================================ */
 
 /* The AI-process "approach" card kept a dark fill from its old section, which
@@ -1438,7 +1438,7 @@ html.v3 { overflow-x: clip; }
 .cs-content .om-bridge-arrow { color: var(--text-accent-2) !important; }
 
 /* ============================================================================
-   PASS 11 — diagram labels and the grade chart
+   PASS 11: diagram labels and the grade chart
    ============================================================================ */
 
 /* Billing's org/billing diagram used a mid-grey that only worked on its old
@@ -1470,7 +1470,7 @@ html.v3 { overflow-x: clip; }
 }
 
 /* ============================================================================
-   PASS 12 — integration case study components
+   PASS 12: integration case study components
    ============================================================================ */
 
 /* ---------- Data: the six figures as a 2 x 3 grid ---------- */
@@ -1575,7 +1575,7 @@ html.v3 { overflow-x: clip; }
 .cs-content .diagram-title { font-size: var(--fs-p-small) !important; text-transform: uppercase; letter-spacing: 0.05em; }
 
 /* ============================================================================
-   PASS 13 — contents rail: the active H2 group and the active H3 read as two
+   PASS 13: contents rail: the active H2 group and the active H3 read as two
    different states, so you can see which section you are in and where in it.
    H2 = dark and bold on a text-main bar. H3 = accent-2, the existing marker.
    ============================================================================ */
@@ -1605,7 +1605,7 @@ html.v3 { overflow-x: clip; }
 @media (prefers-reduced-motion: reduce) { .cs-toc { scroll-behavior: auto; } }
 
 /* ============================================================================
-   PASS 14 — supported integrations: logos only
+   PASS 14: supported integrations: logos only
    No card, no border, no marquee. The set is the point, so it just sits there.
    ============================================================================ */
 .cs-content .cs-logos {
@@ -1635,7 +1635,7 @@ html.v3 { overflow-x: clip; }
 @media (max-width: 640px)  { .cs-content .cs-logos { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--gap-large); } }
 
 /* ============================================================================
-   PASS 15 — Outcomes: an enumerated list in one colored container
+   PASS 15: Outcomes: an enumerated list in one colored container
    The numbers come from the <ol>, so each item's own "01 /" prefix is dropped.
    The tint is mixed from text-accent-2 so the copy stays dark and readable.
    ============================================================================ */
@@ -1706,7 +1706,7 @@ html.v3 { overflow-x: clip; }
 }
 
 /* ============================================================================
-   PASS 16 — smaller desktop: a narrower rail, a wider reading column, and the
+   PASS 16: smaller desktop: a narrower rail, a wider reading column, and the
    rail's top edge flush with the Quick Summary panel.
    ============================================================================ */
 @media (min-width: 1024px) and (max-width: 1439px) {
@@ -1730,7 +1730,7 @@ html.v3 { overflow-x: clip; }
 }
 
 /* ============================================================================
-   PASS 17 — put the light text back on the surfaces that stayed dark
+   PASS 17: put the light text back on the surfaces that stayed dark
    PASS 7 re-inked the reading column dark with !important, which also hit the
    inside of the design-evolution carousel, the terminal snippet and the video
    frames. Those keep their own dark ground, so their copy has to win back.
@@ -1785,11 +1785,10 @@ html.v3 { overflow-x: clip; }
 .cs-content .vid-frame figcaption { color: var(--text-invert) !important; }
 
 /* ============================================================================
-   PASS 18 — the prototype frame hugs its poster
+   PASS 18: the prototype frame hugs its poster
    The poster was absolutely positioned, so it contributed no height and the
    frame collapsed to the empty <iframe>'s default ~154px, cropping the image.
-   Putting the poster back in flow lets the frame take the image's own height —
-   no magic number, and it stays correct if the poster is ever swapped.
+   Putting the poster back in flow lets the frame take the image's own height, no magic number, and it stays correct if the poster is ever swapped.
    ============================================================================ */
 .cs-content .rd-frame { height: auto !important; max-height: none !important; }
 .cs-content .rd-frame .proto-poster {
@@ -1813,7 +1812,7 @@ html.v3 { overflow-x: clip; }
 .cs-content .rd-frame:not(.has-poster) iframe { position: absolute !important; }
 
 /* ============================================================================
-   PASS 19 — number boxes lose the strokes
+   PASS 19: number boxes lose the strokes
    No outer border and no cell dividers; the figures carry the grid on their own.
    ============================================================================ */
 .cs-content .metric-strip,
@@ -1837,14 +1836,14 @@ html.v3 { overflow-x: clip; }
 }
 
 /* ============================================================================
-   PASS 20 — the feature carousel's per-item category label is redundant
+   PASS 20: the feature carousel's per-item category label is redundant
    The selector above already names the category, so repeating "Set up" on
    every slide inside it just adds noise.
    ============================================================================ */
 .cs-content .refine-item .refine-item-persona { display: none !important; }
 
 /* ============================================================================
-   PASS 21 — the last two dark-authored spots
+   PASS 21: the last two dark-authored spots
    ============================================================================ */
 
 /* The Storybook CTA keeps light text on its accent fill */
@@ -1856,7 +1855,7 @@ html.v3 { overflow-x: clip; }
 .cs-content .results-column-label { color: var(--text-secondary) !important; }
 
 /* ============================================================================
-   PASS 22 — one box design across every case study
+   PASS 22: one box design across every case study
    The map page's card is the reference: white ground, hairline stroke,
    radius-large, padding-large, a bold display h4, tertiary body copy, and the
    accent reserved for labels and dots. Every box-like component on every page
@@ -1985,7 +1984,7 @@ html.v3 { overflow-x: clip; }
 }
 
 /* ============================================================================
-   PASS 23 — 80px of air between the nav and the contents rail
+   PASS 23: 80px of air between the nav and the contents rail
    The rail's sticky offset clears the fixed nav plus an 80px gap, and the
    layout's top padding matches it so the rail and the summary panel still
    start on the same line at rest.
@@ -1999,7 +1998,7 @@ html.v3 { overflow-x: clip; }
 }
 
 /* ============================================================================
-   PASS 24 — the carousel follows its ground
+   PASS 24: the carousel follows its ground
    On every page but the map, the design-evolution carousel now sits on the
    light page, so it takes the same box design as everything else. The map's
    copy of it lives inside .cs-card--dark, and those rules (PASS 17) out-specify
@@ -2035,7 +2034,7 @@ html.v3 { overflow-x: clip; }
 .cs-content .results-column-label { color: var(--text-secondary) !important; }
 
 /* ============================================================================
-   PASS 25 — tables stay tables
+   PASS 25: tables stay tables
    PASS 22's box design reached table cells and turned each one into a rounded
    card. A cell is a cell: no fill of its own, no border box, no radius. Only
    hairline rules between rows and columns.
@@ -2102,7 +2101,7 @@ html.v3 { overflow-x: clip; }
 .cs-content .row > .cell:first-child { color: var(--text-main) !important; }
 
 /* ============================================================================
-   PASS 26 — the prototype play overlay
+   PASS 26: the prototype play overlay
    These rules lived in the map page's old inline <style> and were not carried
    into the rebuild, so the button rendered as a bare <button> under the poster.
    Restored here in v3 tokens, which covers every page that has a prototype.
@@ -2136,7 +2135,7 @@ html.v3 { overflow-x: clip; }
 .cs-content .rd-frame.is-playing .proto-poster { display: none !important; }
 
 /* ============================================================================
-   PASS 27 — the V1 concept carousel
+   PASS 27: the V1 concept carousel
    It keeps its own dark ground, so its copy stays light. The arrows move to the
    bottom and float over the media, and the shot gets more room.
    ============================================================================ */
@@ -2200,7 +2199,7 @@ html.v3 { overflow-x: clip; }
 .cs-content h4 { scroll-margin-top: calc(var(--nav-height) + var(--margin-medium)); }
 
 /* ============================================================================
-   PASS 28 — inactive persona pills inside the dark carousel
+   PASS 28: inactive persona pills inside the dark carousel
    PASS 24 gives the pills a white ground for the light pages, but it never had
    a counterpart inside .cs-card--dark, so the map's inactive pills went white
    while keeping light text. Give the dark card's pills their own transparent
@@ -2223,7 +2222,7 @@ html.v3 { overflow-x: clip; }
 }
 
 /* ============================================================================
-   PASS 29 — persona cards
+   PASS 29: persona cards
    A white card with no stroke, a filled dark-green icon disc in the top-right,
    and a lavender gradient rising out of the bottom edge. Declared after the
    shared box design (PASS 22) so it wins for this one component.
@@ -2306,7 +2305,7 @@ html.v3 { overflow-x: clip; }
 }
 
 /* ============================================================================
-   PASS 30 — headings never carry a surface
+   PASS 30: headings never carry a surface
    A lifted heading can land where a legacy rule paints a panel gradient (the
    billing Strategy h3 was picking up a 158deg purple fill). A heading in the
    reading column is text, so it gets no background, no ring, no padding box.
@@ -2322,7 +2321,7 @@ html.v3 { overflow-x: clip; }
   border: 0 !important;
   /* The reorganised headings reuse the old section ids (#discovery, #outcome,
      #accessibility ...), so legacy `#id { padding: clamp(...) }` section rules
-     were landing on the heading itself — billing's Discovery h2 was 219px tall
+     were landing on the heading itself, billing's Discovery h2 was 219px tall
      instead of 35. A heading in the reading column carries no padding box. */
   padding: 0 !important;
   min-height: 0 !important;
@@ -2371,7 +2370,7 @@ html.v3 { overflow-x: clip; }
 @media (max-width: 640px)  { .cs-content .cs-logos { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; } }
 
 /* ============================================================================
-   PASS 31 — no stroke on any box
+   PASS 31, no stroke on any box
    The hairline read as inconsistent once some components lost it, so every
    card-like box now sits on white with no outline at all, the way the persona
    cards do. Tables keep their frame: there the boundary is doing real work.
@@ -2413,7 +2412,7 @@ html.v3 { overflow-x: clip; }
 .cs-content .cs-prevnext__card:hover { border: 0 !important; }
 
 /* ============================================================================
-   PASS 32 — org management components
+   PASS 32: org management components
    ============================================================================ */
 
 /* ---------- Capability matrix: headers centred over their own column ----------
@@ -2570,7 +2569,7 @@ html.v3 { overflow-x: clip; }
 }
 
 /* ============================================================================
-   PASS 33 — one consistent rule in every table, no column dividers
+   PASS 33: one consistent rule in every table, no column dividers
    Audited across all six studies. These carried vertical dividers, usually on
    the header only, so the head looked split while the body did not:
      .comparison-head div:first-child        (style.css)
@@ -2653,7 +2652,7 @@ html.v3 { overflow-x: clip; }
 }
 
 /* ============================================================================
-   PASS 34 — the Drafts carousel loses its container
+   PASS 34: the Drafts carousel loses its container
    No dark ground and no padding, so the slides sit directly on the page. With
    the dark surface gone the copy has to come back to dark text, which reverses
    PASS 27's light treatment for this component.
@@ -2689,7 +2688,7 @@ html.v3 { overflow-x: clip; }
 .cs-content .concept-carousel-dot.is-active { background: var(--text-accent-2) !important; }
 
 /* ============================================================================
-   PASS 35 — the last round of component corrections
+   PASS 35: the last round of component corrections
    ============================================================================ */
 
 /* ---------- Banner lead runs the full column ---------- */
@@ -2777,7 +2776,7 @@ html.v3 { overflow-x: clip; }
 .cs-content .results-table { border-top: 0 !important; }
 
 /* ============================================================================
-   PASS 36 — the client link replaces the banner CTA
+   PASS 36: the client link replaces the banner CTA
    The "Visit Lettrlabs" button was overlapping the h1, so the client's name is
    the link now: underlined on the banner, accent-coloured in the body.
    ============================================================================ */
@@ -2801,7 +2800,7 @@ html.v3 { overflow-x: clip; }
 .cs-content .cs-banner__link:hover { color: var(--text-accent-1) !important; }
 
 /* ============================================================================
-   PASS 37 — carousel arrows, and the dark card goes full-bleed on mobile
+   PASS 37: carousel arrows, and the dark card goes full-bleed on mobile
    ============================================================================ */
 
 /* the chevrons read white on their dark disc, on every page */
@@ -2835,7 +2834,7 @@ html.v3 { overflow-x: clip; }
 }
 
 /* ============================================================================
-   PASS 38 — the prototype can't run on a phone
+   PASS 38: the prototype can't run on a phone
    The embedded prototype needs a pointer and a wide viewport, so on mobile the
    play control states that plainly and stops being interactive rather than
    loading an iframe that cannot be used.
@@ -2863,7 +2862,7 @@ html.v3 { overflow-x: clip; }
 }
 
 /* ============================================================================
-   PASS 39 — table headers stay on mobile
+   PASS 39: table headers stay on mobile
    redesign.css / style.css hide `.is-head` below 640-760px because the old
    design stacked each row and repeated the column name per cell. These tables
    keep their two columns on a phone, so hiding the head left the columns
@@ -2897,7 +2896,7 @@ html.v3 { overflow-x: clip; }
 }
 
 /* ============================================================================
-   PASS 40 — the nav gets out of the way while reading
+   PASS 40: the nav gets out of the way while reading
    Matches the landing page: it slides away on downward scroll past the banner
    and returns on any upward scroll. The contents rail keeps its own offset, so
    it does not jump when the nav leaves.
@@ -2907,7 +2906,7 @@ html.v3 { overflow-x: clip; }
 @media (prefers-reduced-motion: reduce) { .cs-nav { transition: none; } }
 
 /* ============================================================================
-   PASS 41 — the swipe hint on horizontally scrollable tables
+   PASS 41: the swipe hint on horizontally scrollable tables
    One pill for both the CSS hint and the scroll-hint.js one: dark ground,
    white label, a chevron pair, centred under the table it belongs to.
    ============================================================================ */
@@ -2943,7 +2942,7 @@ html.v3 { overflow-x: clip; }
 .cs-content .scroll-hint svg,
 .scroll-hint svg { color: var(--text-invert) !important; stroke: currentColor !important; }
 
-/* Tighter logo grid on a phone — the rows were carrying far more air than the
+/* Tighter logo grid on a phone: the rows were carrying far more air than the
    marks inside them needed. */
 @media (max-width: 767px) {
   .cs-content .cs-logos {
@@ -2955,11 +2954,10 @@ html.v3 { overflow-x: clip; }
 }
 
 /* ============================================================================
-   PASS 42 — mobile flow steps show their still, and one scroll helper only
+   PASS 42: mobile flow steps show their still, and one scroll helper only
    The step images were revealed by `#connection .scroll-story-mobile-media`,
    and the reorg moved the flow out of that section, so they went missing.
-   Reveal them on their own, and drop the live animated frames on a phone —
-   they need a pointer and a wide viewport, and the still says the same thing.
+   Reveal them on their own, and drop the live animated frames on a phone, they need a pointer and a wide viewport, and the still says the same thing.
    ============================================================================ */
 @media (max-width: 767px) {
   .cs-content .scroll-story-mobile-media {
@@ -2995,7 +2993,7 @@ html.v3 { overflow-x: clip; }
 .cs-scroller .scroll-hint { display: none !important; }
 
 /* ============================================================================
-   PASS 43 — the features carousel items lose their frame
+   PASS 43: the features carousel items lose their frame
    No border and no radius; the active item is carried by its fill and the
    progress bar underneath it instead of an outline.
    ============================================================================ */
@@ -3015,7 +3013,7 @@ html.v3 { overflow-x: clip; }
 }
 
 /* ============================================================================
-   PASS 44 — rejected vs shipped reads as two containers
+   PASS 44: rejected vs shipped reads as two containers
    The two-column table collapsed its head onto one line and stacked its cells
    with dead space. Two cards side by side say the same thing far more clearly,
    and they stack on a phone.
@@ -3052,7 +3050,7 @@ html.v3 { overflow-x: clip; }
 @media (max-width: 767px) { .cs-content .cs-vs { grid-template-columns: 1fr !important; } }
 
 /* ============================================================================
-   PASS 45 — the spec cards: a coloured header, one inset for the body
+   PASS 45: the spec cards: a coloured header, one inset for the body
    The header band was set to --bg-main, which is the page colour, so it read
    as if it sat outside the card. It now carries an accent tint. And the body
    inset is declared on the actual children of each shape rather than through a
@@ -3139,7 +3137,7 @@ html.v3 { overflow-x: clip; }
 }
 
 /* ============================================================================
-   PASS 46 — reflection quotes take the highlighted-view treatment
+   PASS 46: reflection quotes take the highlighted-view treatment
    The same shape as the highlighted Business card: white surface, an accent
    bar on the leading edge, square on that edge and rounded on the other.
    ============================================================================ */
@@ -3171,7 +3169,7 @@ html.v3 { overflow-x: clip; }
 }
 
 /* ============================================================================
-   PASS 47 — no rule between flow steps
+   PASS 47, no rule between flow steps
    `.scroll-story-step + .scroll-story-step` draws a top border, and the only
    thing suppressing it was `#connection ...`. The reorg moved the flow out of
    that section, so the line came back above every step.
@@ -3182,7 +3180,7 @@ html.v3 { overflow-x: clip; }
 }
 
 /* ============================================================================
-   PASS 48 — shared image lightbox
+   PASS 48: shared image lightbox
    The billing page already had this behaviour but the rebuild dropped its
    markup, so the script was binding to nothing. Promoted to the shared layer
    in v3 tokens, and wired to every content image including the carousels.
@@ -3265,7 +3263,7 @@ html.v3 { overflow-x: clip; }
 .cs-content .vid-frame[data-cs-zoom] { cursor: zoom-in; }
 
 /* ============================================================================
-   PASS 49 — highlighted cards carry an accent fill, not an edge
+   PASS 49: highlighted cards carry an accent fill, not an edge
    The purple leading border is replaced by a light accent-2 wash, so the
    emphasis comes from the surface. The reflection quote keeps its bar, since
    that shape was asked for explicitly.
@@ -3286,10 +3284,10 @@ html.v3 { overflow-x: clip; }
 .cs-content .cs-view.is-highlight p { color: var(--text-secondary) !important; }
 
 /* ============================================================================
-   PASS 50 — every long table scrolls sideways, and says so
+   PASS 50: every long table scrolls sideways, and says so
    Each table is wrapped in a .cs-scroller. The wrapper does the scrolling, so
    the table keeps its rounded frame and its own minimum width. The hint only
-   appears when the content actually overflows — case-study.js measures that
+   appears when the content actually overflows, case-study.js measures that
    and sets .is-scrollable, since CSS cannot detect it.
    ============================================================================ */
 .cs-scroller {
@@ -3350,7 +3348,7 @@ html.v3 { overflow-x: clip; }
 }
 
 /* ============================================================================
-   PASS 51 — on a phone a table stays a table
+   PASS 51: on a phone a table stays a table
    The legacy sheets collapse every row to one column below 640-1024px and
    repeat the column name per cell. Now that the tables live in a scroller,
    they keep their columns and move sideways instead. `grid-auto-flow: column`
@@ -3419,7 +3417,7 @@ html.v3 { overflow-x: clip; }
 }
 
 /* ============================================================================
-   PASS 52 — feature carousel items carry no chrome
+   PASS 52: feature carousel items carry no chrome
    No fill, no padding box, no radius, no edge. The active one is marked by its
    progress bar alone.
    ============================================================================ */
@@ -3437,7 +3435,7 @@ html.v3 { overflow-x: clip; }
 
 
 /* ============================================================================
-   PASS 53 — one type rule for reading copy
+   PASS 53: one type rule for reading copy
    Every page's own stylesheet loads after this one and sets its copy wrappers
    (.lede, .question-copy, .business-copy, .dark-copy, .journey-timeline-copy,
    .scroll-story-step, .concept-carousel-copy ...) to 16px at the same
