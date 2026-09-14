@@ -29,9 +29,9 @@
       <h1 class="t-display-large cover__title">Enterprise&nbsp;Billing</h1>
       <p class="t-p-large cover__sub">Pooled balances, caps, and disbursement, designed so a payment problem never halts a live campaign.</p>
       <dl class="cover__meta">
-        <div><dt>My role</dt><dd>Designed the billing &amp; spend flows, and built the org-level payment actions closely with engineering</dd></div>
+        <div><dt>My role</dt><dd>Designed the money-movement and spend flows, and built the org-level payment actions closely with engineering</dd></div>
         <div><dt>Team</dt><dd>A PM, a Staff Designer, and engineering</dd></div>
-        <div><dt>Scope</dt><dd>Billing groups &middot; Payment access &amp; caps &middot; Transfers &amp; disbursement &middot; In-flow requests &middot; Spend analytics</dd></div>
+        <div><dt>Scope</dt><dd>Transfers &amp; purchases &middot; Payment methods &middot; Payment access &amp; caps &middot; In-flow requests &middot; Spend analytics</dd></div>
         <div><dt>Status</dt><dd>Shipped flows, launch measures pending</dd></div>
       </dl>
     </section>
@@ -59,19 +59,19 @@
       <div class="slide__body">
         <div class="cards cards--3">
           <div class="card-box">
-            <span class="card-box__label">Structure</span>
-            <h3 class="t-h3 card-box__title">Billing groups and pooled balance</h3>
-            <p>The org holds a total balance and, for enterprises, a monthly volume commitment. Admins create billing groups, nest groups inside them, and attach one or more payment methods.</p>
+            <span class="card-box__label">Moving money</span>
+            <h3 class="t-h3 card-box__title">Transfers and purchases</h3>
+            <p>Move balance between a billing group and an account, with a live preview that reconciles both balances before you confirm, and add funds by card, bank account, or invoice.</p>
           </div>
           <div class="card-box">
-            <span class="card-box__label">Control</span>
-            <h3 class="t-h3 card-box__title">Payment access, budgets, and caps</h3>
-            <p>Per-account Monthly Cap or No Limit, plus who is allowed to spend. Designed to go after the failure pattern behind the 14 tickets.</p>
+            <span class="card-box__label">Payment methods</span>
+            <h3 class="t-h3 card-box__title">Adding, removing, and access</h3>
+            <p>Adding a method is the fast path. Deleting one that is in use names its dependents first. Payment access and per-account caps decide who is allowed to spend.</p>
           </div>
           <div class="card-box">
-            <span class="card-box__label">Movement</span>
-            <h3 class="t-h3 card-box__title">Transfers, disbursement, purchases</h3>
-            <p>Move balance between a group and an account, split a volume commitment across billing groups, and add funds by card, bank, or invoice, all in-product.</p>
+            <span class="card-box__label">Visibility</span>
+            <h3 class="t-h3 card-box__title">Spend analytics</h3>
+            <p>Payment history and spend rolled up by team and by type, at org, group, and account level, down to an itemized receipt.</p>
           </div>
         </div>
       </div>
@@ -92,7 +92,7 @@
           <div class="card-box">
             <span class="card-box__label">Design</span>
             <h3 class="t-h3 card-box__title">Our Staff Designer</h3>
-            <p>On the org and billing surfaces we worked together and split the tasks between us.</p>
+            <p>We split the surface between us. I took moving the money, payment methods, and analytics. Our Staff Designer took manage billing group and disbursement.</p>
           </div>
           <div class="card-box">
             <span class="card-box__label">Engineering</span>
@@ -138,8 +138,8 @@
             <p class="t-p-large">Every money action inherits the same rule as the rest of the org: <strong>no structural change without first showing what it breaks</strong>.</p>
           </div>
           <figure class="shot">
-            <div class="shot__frame"><img width="860" height="1369" src="../images/new%20billing/Modal-container-2.webp" alt="Manage a billing group: pooled balance or a card of its own" loading="lazy"></div>
-            <figcaption class="shot__cap">Manage a billing group: pooled balance or a card of its own</figcaption>
+            <div class="shot__frame"><img width="1920" height="1586" src="../images/bill-management.webp" alt="Billing management: balance, groups, and spend in one view" loading="lazy"></div>
+            <figcaption class="shot__cap">Billing management: balance, groups, and spend in one view</figcaption>
           </figure>
         </div>
       </div>
@@ -157,12 +157,12 @@
             <figcaption class="shot__cap">Transfer balance between a group and an account</figcaption>
           </figure>
           <figure class="shot">
-            <div class="shot__frame"><img width="860" height="1265" src="../images/new%20billing/Modal-container-5.webp" alt="Disbursement: split a commitment across billing groups" loading="lazy"></div>
-            <figcaption class="shot__cap">Disbursement: split a commitment across billing groups</figcaption>
-          </figure>
-          <figure class="shot">
             <div class="shot__frame"><img width="860" height="765" src="../images/new%20billing/Modal-container-1.webp" alt="Purchase balance by card, bank account, or invoice" loading="lazy"></div>
             <figcaption class="shot__cap">Purchase balance by card, bank account, or invoice</figcaption>
+          </figure>
+          <figure class="shot">
+            <div class="shot__frame"><img width="852" height="945" src="../images/bill-request.webp" alt="In-flow access request when a team has no payment method" loading="lazy"></div>
+            <figcaption class="shot__cap">In-flow access request when a team has no payment method</figcaption>
           </figure>
         </div>
       </div>
