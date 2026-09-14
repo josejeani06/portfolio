@@ -300,21 +300,25 @@ strong, b { font-weight: 700; }
   height: 100%;
 }
 
+/* The frame has nothing of its own to show: no fill, no border, no corner.
+   It is purely the area the screenshot is fitted into, so a screenshot that
+   is taller or shorter than the area leaves the slide background showing
+   rather than a white panel. */
 .shot__frame {
   position: relative;
-  border-radius: var(--radius-medium);
-  overflow: hidden;
-  background: var(--bg-white);
-  box-shadow: var(--floating-shadow);
   min-height: 0;
   height: 100%;
 }
 
-/* Absolutely positioned, not just height:100%. The frame is a 1fr grid row,
-   so its height is indefinite while the image is being sized — a percentage
-   height there silently resolves to auto, and a tall screenshot renders at
-   its full natural height and gets cropped by the overflow. Against the
-   frame's used box, inset:0 gives object-fit an exact area to letterbox in. */
+/* Absolutely positioned, not sized with max-height. The frame's height comes
+   down a chain of flex items, and a percentage *max*-height resolves to `none`
+   through it — tall screenshots then render at full size and overflow. Against
+   the frame's used box, inset:0 gives object-fit an exact area to fit inside.
+
+   The shadow is a filter rather than box-shadow on purpose: `drop-shadow`
+   follows the painted image, so with object-fit the shadow traces the
+   screenshot's own edges. box-shadow would trace the frame instead and draw
+   a rectangle out in the empty space beside a tall screenshot. */
 .shot__frame img {
   position: absolute;
   inset: 0;
@@ -323,6 +327,7 @@ strong, b { font-weight: 700; }
   height: 100%;
   object-fit: contain;
   object-position: center;
+  filter: drop-shadow(var(--floating-shadow));
 }
 
 .shot__cap {
@@ -398,6 +403,37 @@ strong, b { font-weight: 700; }
 .slide--dark .card-box p,
 .slide--green .card-box p,
 .slide--ink .card-box p { color: var(--text-invert); opacity: .8; }
+
+/* A card that goes somewhere. The arrow sits on the bottom rail so the two
+   onward cards line up with each other whatever their copy runs to. */
+.card-box--link {
+  justify-content: flex-start;
+  transition: background .2s ease, transform .2s ease;
+}
+
+.card-box--link:hover { transform: translateY(-2px); }
+
+.slide--ink .card-box--link:hover,
+.slide--dark .card-box--link:hover,
+.slide--green .card-box--link:hover { background: rgba(247, 245, 245, .16); }
+
+.card-box--link .card-box__title { color: var(--text-accent-3); }
+
+.card-box__go {
+  align-self: flex-start;
+  width: var(--space-large);
+  height: var(--space-large);
+  margin-top: auto;
+  color: var(--text-accent-3);
+  transition: transform .2s ease;
+}
+
+.card-box--link:hover .card-box__go { transform: translateX(4px); }
+
+:where(.card-box--link):focus-visible {
+  outline: var(--focus-ring-width) solid var(--text-accent-3);
+  outline-offset: var(--focus-ring-offset);
+}
 
 /* big numbers */
 .stats {
@@ -580,10 +616,24 @@ strong, b { font-weight: 700; }
   font-variant-numeric: tabular-nums;
 }
 
-.deck__home {
+.deck__links {
   position: fixed;
   left: var(--margin-medium);
   bottom: var(--margin-medium);
+  display: flex;
+  align-items: center;
+  gap: var(--gap-medium);
+  z-index: 3;
+}
+
+.deck__links-sep {
+  font-family: var(--font-body);
+  font-size: var(--fs-p-medium);
+  color: var(--text-invert);
+  opacity: .32;
+}
+
+.deck__home {
   display: inline-flex;
   align-items: center;
   gap: var(--gap-small);
@@ -592,7 +642,6 @@ strong, b { font-weight: 700; }
   color: var(--text-invert);
   opacity: .72;
   text-decoration: none;
-  z-index: 3;
 }
 
 .deck__home:hover { opacity: 1; text-decoration: underline; text-underline-offset: .25em; }
@@ -625,10 +674,15 @@ strong, b { font-weight: 700; }
 
 @media (max-width: 767px) {
   .deck__controls,
-  .deck__home { bottom: var(--margin-small); }
+  .deck__links { bottom: var(--margin-small); }
   .deck__controls { right: var(--margin-small); }
-  .deck__home { left: var(--margin-small); }
+  .deck__links { left: var(--margin-small); gap: var(--gap-small); }
   .deck__hint { display: none; }
+
+  /* Two links plus the controls do not fit on a phone; the case-study link
+     is reachable from the last slide, so the home link is the one that stays. */
+  .deck__links-sep,
+  .deck__links .deck__home + .deck__home { display: none; }
 }
 
 /* ---------------------------------------------------------------------------
@@ -657,7 +711,7 @@ strong, b { font-weight: 700; }
   }
   .deck__progress,
   .deck__controls,
-  .deck__home,
+  .deck__links,
   .deck__hint { display: none !important; }
 }
 
