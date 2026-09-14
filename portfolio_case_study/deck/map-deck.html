@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Audience Map Builder — Deck | Ivan Jose</title>
+<meta name="description" content="Turning a scattered set of map bug-fixes into one audience model with five entry points.">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../favicon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;700&family=Istok+Web:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../v3/tokens.css?v=1">
+<link rel="stylesheet" href="deck.css?v=1">
+</head>
+<body>
+
+<div class="deck" data-deck>
+
+  <div class="deck__progress" aria-hidden="true"><i data-deck-bar></i></div>
+
+  <div class="deck__stage">
+    <section class="slide slide--dark cover" aria-hidden="true">
+      <div class="cover__kicker"><span>Ivan Jose</span><span>&middot;</span><span>Product Designer</span></div>
+      <h1 class="t-display-large cover__title">Audience&nbsp;Map&nbsp;Builder</h1>
+      <p class="t-p-large cover__sub">Turning a scattered set of map bug-fixes into one audience model with five entry points.</p>
+      <dl class="cover__meta">
+        <div><dt>My role</dt><dd>Led the audience-builder design end-to-end. Another designer owned the automation around it</dd></div>
+        <div><dt>Timeline</dt><dd>6 weeks, from audit to shipped redesign</dd></div>
+        <div><dt>Process</dt><dd>AI-assisted prototype, built in Codex</dd></div>
+        <div><dt>Status</dt><dd>Phase one shipped, later phases defined</dd></div>
+      </dl>
+    </section>
+    <section class="slide" aria-hidden="true">
+      <div class="slide__head">
+        <p class="slide__eyebrow">The problem</p>
+        <h2 class="t-h1 slide__title">One way in, and it didn&rsquo;t fit everyone</h2>
+        <p class="t-p-large slide__lead">An old audience builder buried in the automation flow. Open the map, draw a shape. If you thought in ZIP codes, already had a CSV, or wanted last month&rsquo;s area again, there was <strong>no way in for you</strong> &mdash; so people called Customer Success or filed a ticket.</p>
+      </div>
+      <div class="slide__body">
+        <div class="stats">
+          <div class="stat"><span class="stat__num">~1,500</span><span class="stat__label">automation users on the surface</span></div>
+          <div class="stat"><span class="stat__num">~20</span><span class="stat__label">customer interviews, sorted into 4 mental models</span></div>
+          <div class="stat"><span class="stat__num">6</span><span class="stat__label">steps before anyone drew a single area</span></div>
+          <div class="stat"><span class="stat__num">31</span><span class="stat__label">tickets tracing back to the same blockers</span></div>
+        </div>
+      </div>
+      <div class="slide__foot"><span>Ivan Jose</span><b>Audience Map Builder</b></div>
+    </section>
+    <section class="slide" aria-hidden="true">
+      <div class="slide__head">
+        <p class="slide__eyebrow">My part</p>
+        <h2 class="t-h1 slide__title">I changed the brief</h2>
+      </div>
+      <div class="slide__body">
+        <div class="cards cards--3">
+          <div class="card-box">
+            <span class="card-box__label">Reframed</span>
+            <h3 class="t-h3 card-box__title">From &ldquo;fix the map&rdquo; to &ldquo;help people build an audience&rdquo;</h3>
+            <p>That shift told me what belonged in the experience and what stayed secondary. The map became one way in, not the only way.</p>
+          </div>
+          <div class="card-box">
+            <span class="card-box__label">Modelled</span>
+            <h3 class="t-h3 card-box__title">One audience, five entry points</h3>
+            <p>Search or region selection, CSV upload, saved areas, radius, and polygon all land in the same audience, so people can look at total reach and cost instead of the tool they used to get there.</p>
+          </div>
+          <div class="card-box">
+            <span class="card-box__label">Specified</span>
+            <h3 class="t-h3 card-box__title">Ready for build</h3>
+            <p>I evaluated 4 map providers and specified the interaction model across ~55 states spanning 13 flows, with entry methods, calculation states, and failure cases written out for QA.</p>
+          </div>
+        </div>
+      </div>
+      <div class="slide__foot"><span>Ivan Jose</span><b>Audience Map Builder</b></div>
+    </section>
+    <section class="slide" aria-hidden="true">
+      <div class="slide__head">
+        <p class="slide__eyebrow">Working with others</p>
+        <h2 class="t-h1 slide__title">Each side wanted a different thing from the same release</h2>
+        <p class="t-p-large slide__lead">So I put the views next to each other rather than arguing them one at a time.</p>
+      </div>
+      <div class="slide__body">
+        <div class="cards cards--3">
+          <div class="card-box">
+            <span class="card-box__label">Product</span>
+            <h3 class="t-h3 card-box__title">PM</h3>
+            <p>Wanted the ticket backlog cleared without slipping the automation release.</p>
+          </div>
+          <div class="card-box">
+            <span class="card-box__label">Business</span>
+            <h3 class="t-h3 card-box__title">Revenue risk</h3>
+            <p>~75% of revenue rides on three enterprise accounts, all on this one surface. A regression here is a revenue event, so <strong>the phased path mattered more than the elegant one</strong>.</p>
+          </div>
+          <div class="card-box">
+            <span class="card-box__label">Engineering</span>
+            <h3 class="t-h3 card-box__title">One model to build against</h3>
+            <p>Needed one interaction model, not five special cases.</p>
+          </div>
+        </div>
+      </div>
+      <div class="slide__foot"><span>Ivan Jose</span><b>Audience Map Builder</b></div>
+    </section>
+    <section class="slide" aria-hidden="true">
+      <div class="slide__head">
+        <p class="slide__eyebrow">Discovery</p>
+        <h2 class="t-h1 slide__title">What the audit actually said</h2>
+        <p class="t-p-large slide__lead">The loudest signal wasn&rsquo;t that the UI looked old. It was that the product kept saying <strong>&ldquo;not yet&rdquo;</strong> and never showed customers a way forward.</p>
+      </div>
+      <div class="slide__body">
+        <table class="d-table">
+          <thead><tr><th>Source</th><th>Evidence</th></tr></thead>
+          <tbody>
+            <tr><td>Active users</td><td>~1,500 automation users</td></tr>
+            <tr><td>Product research</td><td>~20 interviews gathered by PM and CS, then sorted into recurring patterns and personas</td></tr>
+            <tr><td>Behavioral data (Hotjar)</td><td>Heatmaps, drop-offs, and rage clicks, each tied back to a specific broken action, validation, or edge case</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="slide__foot"><span>Ivan Jose</span><b>Audience Map Builder</b></div>
+    </section>
+    <section class="slide" aria-hidden="true">
+      <div class="slide__head">
+        <p class="slide__eyebrow">Process</p>
+        <h2 class="t-h1 slide__title">Four mental models, one workflow</h2>
+        <p class="t-p-large slide__lead">None of these personas needed a different product. They needed <strong>one audience-building workflow</strong> that could bend to how they already thought about the task.</p>
+      </div>
+      <div class="slide__body">
+        <div class="cards cards--3">
+          <div class="card-box">
+            <span class="card-box__label">Power users</span>
+            <h3 class="t-h3 card-box__title">Start from data</h3>
+            <p>At home with audience controls and refinement logic. They start from CSV upload, include / exclude rules, and filtering, so import has to be fast and complex edits have to hold up.</p>
+          </div>
+          <div class="card-box">
+            <span class="card-box__label">Local marketers</span>
+            <h3 class="t-h3 card-box__title">Start from the map</h3>
+            <p>Need the map first to get oriented and trust the flow before committing spend.</p>
+          </div>
+          <div class="card-box">
+            <span class="card-box__label">Repeat users</span>
+            <h3 class="t-h3 card-box__title">Start from last time</h3>
+            <p>Want last month&rsquo;s area again without rebuilding it, which is what saved areas are for.</p>
+          </div>
+        </div>
+      </div>
+      <div class="slide__foot"><span>Ivan Jose</span><b>Audience Map Builder</b></div>
+    </section>
+    <section class="slide slide--dark" aria-hidden="true">
+      <div class="slide__head">
+        <p class="slide__eyebrow">The work</p>
+        <h2 class="t-h1 slide__title">The shipped audience builder</h2>
+      </div>
+      <div class="slide__body">
+        <div class="split">
+          <div class="split__copy">
+            <p class="t-p-large">Phase one shipped the map-first workflow and the core targeting controls, on the surface behind <strong>~95% of automations</strong>.</p>
+            <p class="t-p-large">I defined the full five-entry-point model up front for phased delivery, so later releases could add CSV upload, saved areas, and exclusions <strong>without reopening the interaction model</strong>.</p>
+          </div>
+          <figure class="shot">
+            <div class="shot__frame"><img src="../images/map-audience-builder.webp" alt="The shipped audience-builder prototype" loading="lazy"></div>
+            <figcaption class="shot__cap">The shipped audience-builder prototype</figcaption>
+          </figure>
+        </div>
+      </div>
+      <div class="slide__foot"><span>Ivan Jose</span><b>Audience Map Builder</b></div>
+    </section>
+    <section class="slide" aria-hidden="true">
+      <div class="slide__head">
+        <p class="slide__eyebrow">The rejected idea</p>
+        <h2 class="t-h1 slide__title">Task-first entry</h2>
+      </div>
+      <div class="slide__body">
+        <div class="split">
+          <div class="split__copy">
+            <p class="t-p-large">My strongest rejected idea was a <strong>task-first entry</strong>, where you pick the map, a CSV, or saved locations up front.</p>
+            <p class="t-p-large">It would have helped people who arrive with a clear job in mind. But other customers need the map first to get oriented and trust the flow &mdash; and those customers are on the surface carrying the revenue.</p>
+            <p class="t-p-large">I&rsquo;d A/B it against the shipped map-first flow, one persona at a time.</p>
+          </div>
+          <figure class="shot">
+            <div class="shot__frame"><img src="../images/map-concept-task-first-cards.jpeg" alt="The task-first concept: pick how to start before the map loads" loading="lazy"></div>
+            <figcaption class="shot__cap">The task-first concept: pick how to start before the map loads</figcaption>
+          </figure>
+        </div>
+      </div>
+      <div class="slide__foot"><span>Ivan Jose</span><b>Audience Map Builder</b></div>
+    </section>
+    <section class="slide slide--green" aria-hidden="true">
+      <div class="slide__head">
+        <p class="slide__eyebrow">Outcome</p>
+        <h2 class="t-h1 slide__title">De-risked a revenue-critical path</h2>
+        <p class="t-p-large slide__lead">Phase one shipped on the surface behind ~95% of automations, the same one serving the three enterprise accounts that carry ~75% of revenue.</p>
+      </div>
+      <div class="slide__body">
+        <div class="stats stats--3">
+          <div class="stat"><span class="stat__num">15 of 31</span><span class="stat__label">tickets addressed in phase one, the rest scoped across later releases</span></div>
+          <div class="stat"><span class="stat__num">~55</span><span class="stat__label">states across 13 flows, specified for QA</span></div>
+          <div class="stat"><span class="stat__num">4</span><span class="stat__label">map providers evaluated before the build</span></div>
+        </div>
+      </div>
+      <div class="slide__foot"><span>Ivan Jose</span><b>Audience Map Builder</b></div>
+    </section>
+    <section class="slide slide--dark quote-slide" aria-hidden="true">
+      <blockquote>&ldquo;None of these personas needed a different product. They needed one audience-building workflow that could bend to how they already thought about the task.&rdquo;</blockquote>
+      <cite>Persona summary</cite>
+      <div class="slide__foot"><span>Ivan Jose</span><b>Audience Map Builder</b></div>
+    </section>
+    <section class="slide slide--ink" aria-hidden="true">
+      <div class="slide__head">
+        <h2 class="t-h1 slide__title">Where it goes next</h2>
+      </div>
+      <div class="slide__body">
+        <div class="cards cards--2">
+          <div class="card-box"><h3 class="t-h3 card-box__title">Audience creation outside automation</h3><p>Build an audience once, save it, and reuse it across automations. It didn&rsquo;t fit the first release, but it&rsquo;s the better architecture, because it narrows the on-screen job to one thing.</p></div>
+          <div class="card-box"><h3 class="t-h3 card-box__title">Read the full case study</h3><p>The complete write-up covers the UX audit, the personas, the user journey, the drafts, and the AI-assisted prototype.</p></div>
+        </div>
+      </div>
+      <div class="slide__foot"><span>Ivan Jose</span><b>Audience Map Builder</b></div>
+    </section>
+
+  </div>
+
+  <a class="deck__home" href="../map-case-study.html">
+    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></svg>
+    Read the full case study
+  </a>
+
+  <p class="deck__hint" data-deck-hint>Use &larr; and &rarr; to move through the deck</p>
+
+  <div class="deck__controls">
+    <button class="deck__btn" type="button" data-deck-prev aria-label="Previous slide">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+    </button>
+    <span class="deck__count" data-deck-count aria-live="polite">1 / 1</span>
+    <button class="deck__btn" type="button" data-deck-next aria-label="Next slide">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+    </button>
+  </div>
+
+</div>
+
+<script src="deck.js?v=1"></script>
+</body>
+</html>

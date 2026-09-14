@@ -1,0 +1,666 @@
+/* ============================================================================
+   CASE STUDY DECK
+   A presentation layer on top of the v3 design system. Same tokens, same two
+   typefaces, same four surfaces — laid out on a fixed 16:9 stage instead of a
+   scrolling page.
+
+   Load order: tokens.css -> deck.css
+
+   v3.css is deliberately not loaded: it is the scrolling-page layer (nav,
+   hero, cards, reveal animations) and none of it applies to a slide. The
+   handful of base rules a document needs are restated below, matching v3.css
+   exactly so both layers behave the same.
+   ============================================================================ */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg-dark);
+  color: var(--text-main);
+  font-family: var(--font-body);
+  font-size: var(--fs-p-medium);
+  line-height: normal;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; text-decoration: none; }
+figure, figcaption { margin: 0; }
+img, svg { display: block; max-width: 100%; }
+button { font: inherit; color: inherit; }
+strong, b { font-weight: 700; }
+
+/* ---------------------------------------------------------------------------
+   1. THE STAGE
+
+   Every slide is composed at exactly 1440 x 810 and the whole stage is scaled
+   to fit the window. That keeps one layout everywhere: no reflow between a
+   laptop, a projector, and a PDF export.
+
+   Because the stage size is fixed while the *viewport* is not, the responsive
+   remaps in tokens.css would otherwise fire against a window width that has
+   nothing to do with the slide. So the ladders and the type scale are pinned
+   back to their desktop values on the stage. These are the same numbers
+   tokens.css declares at >= 1200px, restated here for the one element that
+   must ignore the breakpoints. Nothing else in the deck may write a number.
+   --------------------------------------------------------------------------- */
+
+:root {
+  --stage-w: 1440px;      /* fixed component dimension: the 16:9 slide canvas */
+  --stage-h: 810px;
+  --deck-k: 1;            /* scale factor, set by deck.js */
+
+  /* Fixed component dimension. Matches the .btn--md height so the deck's
+     square controls sit on the same 48px as every button on the site.
+     --btn-md-height itself is declared inside the .btn rule, not on :root,
+     so a non-.btn element cannot resolve it. */
+  --deck-btn: 48px;
+}
+
+.deck {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background: var(--bg-dark);
+}
+
+.deck__stage {
+  /* --- desktop ladder, pinned (see note above) --- */
+  --space-small:    8px;
+  --space-medium:  16px;
+  --space-large:   24px;
+  --space-xlarge:  40px;
+
+  --radius-small:   8px;
+  --radius-medium: 16px;
+  --radius-large:  24px;
+  --radius-xlarge: 40px;
+
+  --margin-small:   16px;
+  --margin-medium:  40px;
+  --margin-group:   80px;
+  --margin-large:  100px;
+
+  --fs-display-large: 96px;
+  --fs-h1:            64px;
+  --fs-h2:            28px;
+  --fs-h3:            24px;
+  --fs-p-large:       20px;
+  --fs-p-medium:      16px;
+  --fs-p-small:       14px;
+
+  /* Positioned from its own centre rather than centred by the parent.
+     The stage is 1440 wide before scaling, so on a narrow window it overflows
+     its box — and CSS overflow alignment then clamps `justify-items: center`
+     to the start edge to avoid clipping the start of the content, which
+     parked the whole stage off-screen on a phone. Anchoring to 50/50 and
+     translating back by half its own size is immune to that.
+
+     The offset lifts it clear of the chrome row (controls, counter, and the
+     case-study link), which is fixed to the window; deck.js subtracts the
+     same amount when it works out the scale. */
+  position: absolute;
+  left: 50%;
+  top: calc(50% - (var(--deck-btn) + var(--margin-medium)) / 2);
+  width: var(--stage-w);
+  height: var(--stage-h);
+  transform: translate(-50%, -50%) scale(var(--deck-k));
+  transform-origin: center center;
+  border-radius: var(--radius-large);
+  overflow: hidden;
+  background: var(--bg-main);
+  box-shadow: var(--floating-shadow);
+}
+
+/* ---------------------------------------------------------------------------
+   2. SLIDES
+   --------------------------------------------------------------------------- */
+
+.slide {
+  position: absolute;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  padding: var(--margin-medium) var(--margin-large);
+  background: var(--bg-main);
+  color: var(--text-main);
+}
+
+.slide.is-current { display: flex; }
+
+/* Dark surfaces — the same three the site uses, no new colours. */
+.slide--dark   { background: var(--bg-accent-2); color: var(--text-invert); }
+.slide--green  { background: var(--bg-accent-3); color: var(--text-invert); }
+.slide--ink    { background: var(--bg-dark);     color: var(--text-invert); }
+
+.slide--dark .slide__eyebrow,
+.slide--green .slide__eyebrow,
+.slide--ink .slide__eyebrow { color: var(--text-accent-3); }
+
+.slide--dark .slide__lead,
+.slide--green .slide__lead,
+.slide--ink .slide__lead { color: var(--text-invert); opacity: .86; }
+
+/* --- slide head ----------------------------------------------------------- */
+
+.slide__head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-small);
+  flex: none;
+}
+
+.slide__eyebrow {
+  font-family: var(--font-body);
+  font-size: var(--fs-p-small);
+  text-transform: uppercase;
+  letter-spacing: .08em;          /* tracking is a label treatment, not body type */
+  color: var(--text-accent-2);
+}
+
+.slide__title { color: inherit; }
+
+.slide__lead {
+  max-width: 62ch;
+  color: var(--text-tertiary);
+}
+
+/* --- slide body ----------------------------------------------------------- */
+
+.slide__body {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--gap-large);
+  margin-block: var(--space-large);
+}
+
+.slide__foot {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gap-medium);
+  padding-top: var(--padding-medium);
+  font-family: var(--font-body);
+  font-size: var(--fs-p-small);
+  color: var(--text-tertiary);
+  border-top: 1px solid var(--stroke-main);
+}
+
+.slide--dark .slide__foot,
+.slide--green .slide__foot,
+.slide--ink .slide__foot {
+  color: var(--text-invert);
+  border-top-color: rgba(247, 245, 245, .24);
+}
+
+.slide__foot b { font-weight: 400; }
+
+/* ---------------------------------------------------------------------------
+   3. COVER
+   --------------------------------------------------------------------------- */
+
+.cover { justify-content: center; gap: var(--gap-xlarge); }
+
+.cover__kicker {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-medium);
+  font-family: var(--font-body);
+  font-size: var(--fs-p-medium);
+  color: var(--text-accent-3);
+}
+
+.cover__title {
+  font-size: var(--fs-h1);
+  max-width: 22ch;
+}
+
+.cover__sub {
+  max-width: 60ch;
+  color: var(--text-invert);
+  opacity: .86;
+}
+
+.cover__meta {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--gap-large);
+  margin-top: var(--space-medium);
+}
+
+.cover__meta dt {
+  font-family: var(--font-body);
+  font-size: var(--fs-p-small);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--text-accent-3);
+  margin-bottom: var(--space-small);
+}
+
+.cover__meta dd {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--fs-p-medium);
+  color: var(--text-invert);
+  opacity: .86;
+}
+
+/* ---------------------------------------------------------------------------
+   4. LAYOUT PRIMITIVES
+   --------------------------------------------------------------------------- */
+
+/* copy beside a visual
+
+   align-items must stay `stretch`: the shot column has to inherit a definite
+   height from the row, otherwise the frame (whose image is absolutely
+   positioned) has nothing to measure against and collapses to nothing. The
+   copy opts out and centres itself instead. */
+.split {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: var(--gap-xlarge);
+  align-items: stretch;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.split--even { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.split--wide { grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); }
+
+.split__copy {
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-medium);
+}
+
+.split > .shot,
+.split > .gallery { height: 100%; min-height: 0; }
+
+.split__copy p { color: inherit; }
+
+/* a framed screenshot */
+/* Two rows, not a centred column: the frame takes whatever height is going
+   and the caption sits on the bottom rail, so captions across a gallery line
+   up with each other even when the screenshots are different shapes. */
+.shot {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: var(--gap-small);
+  min-height: 0;
+  height: 100%;
+}
+
+.shot__frame {
+  position: relative;
+  border-radius: var(--radius-medium);
+  overflow: hidden;
+  background: var(--bg-white);
+  box-shadow: var(--floating-shadow);
+  min-height: 0;
+  height: 100%;
+}
+
+/* Absolutely positioned, not just height:100%. The frame is a 1fr grid row,
+   so its height is indefinite while the image is being sized — a percentage
+   height there silently resolves to auto, and a tall screenshot renders at
+   its full natural height and gets cropped by the overflow. Against the
+   frame's used box, inset:0 gives object-fit an exact area to letterbox in. */
+.shot__frame img {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+
+.shot__cap {
+  font-family: var(--font-body);
+  font-size: var(--fs-p-small);
+  color: var(--text-tertiary);
+}
+
+.slide--dark .shot__cap,
+.slide--green .shot__cap,
+.slide--ink .shot__cap { color: var(--text-invert); opacity: .72; }
+
+/* a row or grid of screenshots */
+.gallery {
+  display: grid;
+  gap: var(--gap-medium);
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.gallery--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.gallery--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+.gallery .shot { height: 100%; }
+
+/* ---------------------------------------------------------------------------
+   5. CARDS, STATS, TABLE
+   --------------------------------------------------------------------------- */
+
+.cards {
+  display: grid;
+  gap: var(--gap-medium);
+}
+
+.cards--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.cards--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.cards--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+.card-box {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-small);
+  padding: var(--padding-xlarge);
+  border-radius: var(--radius-large);
+  background: var(--bg-white);
+}
+
+.slide--dark .card-box,
+.slide--green .card-box,
+.slide--ink .card-box { background: rgba(247, 245, 245, .08); }
+
+.card-box__label {
+  font-family: var(--font-body);
+  font-size: var(--fs-p-small);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--text-accent-2);
+}
+
+.slide--dark .card-box__label,
+.slide--green .card-box__label,
+.slide--ink .card-box__label { color: var(--text-accent-3); }
+
+.card-box__title { color: inherit; }
+
+.card-box p {
+  font-family: var(--font-body);
+  font-size: var(--fs-p-medium);
+  color: var(--text-tertiary);
+  margin: 0;
+}
+
+.slide--dark .card-box p,
+.slide--green .card-box p,
+.slide--ink .card-box p { color: var(--text-invert); opacity: .8; }
+
+/* big numbers */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--gap-large);
+}
+
+.stats--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-small);
+  padding: var(--padding-xlarge);
+  border-radius: var(--radius-large);
+  background: var(--bg-white);
+}
+
+.slide--dark .stat,
+.slide--green .stat,
+.slide--ink .stat { background: rgba(247, 245, 245, .08); }
+
+.stat__num {
+  font-family: var(--font-display);
+  font-size: var(--fs-h1);
+  line-height: normal;
+  color: var(--text-accent-1);
+}
+
+.slide--dark .stat__num,
+.slide--green .stat__num,
+.slide--ink .stat__num { color: var(--text-accent-3); }
+
+.stat__label {
+  font-family: var(--font-body);
+  font-size: var(--fs-p-medium);
+  color: var(--text-tertiary);
+}
+
+.slide--dark .stat__label,
+.slide--green .stat__label,
+.slide--ink .stat__label { color: var(--text-invert); opacity: .8; }
+
+/* decision table — one horizontal rule, no column dividers, same as the site */
+.d-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-body);
+  font-size: var(--fs-p-medium);
+  color: var(--text-tertiary);
+  text-align: left;
+}
+
+.d-table th,
+.d-table td {
+  padding: var(--padding-medium) var(--padding-medium);
+  vertical-align: top;
+  box-shadow: var(--table-shadow);
+}
+
+.d-table th {
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  font-weight: 400;
+  color: var(--text-main);
+}
+
+.d-table td:first-child { color: var(--text-main); }
+
+.d-table tr:last-child th,
+.d-table tr:last-child td { box-shadow: none; }
+
+.d-table .is-out  { color: var(--text-tertiary); }
+.d-table .is-ship { color: var(--text-accent-1); font-weight: 700; }
+
+/* status pill inside a table or card */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--padding-small);
+  border-radius: var(--radius-xlarge);
+  border: 1px solid var(--stroke-main);
+  background: var(--bg-white);
+  font-family: var(--font-body);
+  font-size: var(--fs-p-small);
+  color: var(--text-accent-1);
+  white-space: nowrap;
+}
+
+.pill--ship {
+  background: var(--bg-accent-3);
+  border-color: var(--bg-accent-3);
+  color: var(--text-invert);
+}
+
+/* ---------------------------------------------------------------------------
+   6. QUOTE
+   --------------------------------------------------------------------------- */
+
+.quote-slide { justify-content: center; }
+
+.quote-slide blockquote {
+  margin: 0;
+  max-width: 46ch;
+  font-family: var(--font-display);
+  font-size: var(--fs-h1);
+  line-height: normal;
+  color: var(--text-invert);
+}
+
+.quote-slide cite {
+  display: block;
+  margin-top: var(--space-large);
+  font-family: var(--font-body);
+  font-size: var(--fs-p-large);
+  font-style: normal;
+  color: var(--text-accent-3);
+}
+
+/* ---------------------------------------------------------------------------
+   7. DECK CHROME — progress, controls, counter
+   --------------------------------------------------------------------------- */
+
+.deck__progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: var(--space-small);
+  width: 100%;
+  background: transparent;
+  z-index: 3;
+}
+
+.deck__progress i {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: var(--text-accent-3);
+  transition: width .24s ease;
+}
+
+.deck__controls {
+  position: fixed;
+  right: var(--margin-medium);
+  bottom: var(--margin-medium);
+  display: flex;
+  align-items: center;
+  gap: var(--gap-small);
+  z-index: 3;
+}
+
+.deck__btn {
+  display: inline-grid;
+  place-items: center;
+  width: var(--deck-btn);
+  height: var(--deck-btn);
+  border-radius: var(--radius-medium);
+  border: 1px solid rgba(247, 245, 245, .24);
+  background: rgba(247, 245, 245, .08);
+  color: var(--text-invert);
+  cursor: pointer;
+  transition: background .2s ease, border-color .2s ease;
+}
+
+.deck__btn:hover:not(:disabled) {
+  background: rgba(247, 245, 245, .16);
+  border-color: rgba(247, 245, 245, .48);
+}
+
+.deck__btn:disabled { opacity: .32; cursor: default; }
+.deck__btn svg { width: var(--space-large); height: var(--space-large); }
+
+.deck__count {
+  font-family: var(--font-body);
+  font-size: var(--fs-p-medium);
+  color: var(--text-invert);
+  opacity: .72;
+  padding-inline: var(--padding-small);
+  font-variant-numeric: tabular-nums;
+}
+
+.deck__home {
+  position: fixed;
+  left: var(--margin-medium);
+  bottom: var(--margin-medium);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--gap-small);
+  font-family: var(--font-body);
+  font-size: var(--fs-p-medium);
+  color: var(--text-invert);
+  opacity: .72;
+  text-decoration: none;
+  z-index: 3;
+}
+
+.deck__home:hover { opacity: 1; text-decoration: underline; text-underline-offset: .25em; }
+
+.deck__hint {
+  position: fixed;
+  left: 50%;
+  bottom: var(--margin-medium);
+  transform: translateX(-50%);
+  font-family: var(--font-body);
+  font-size: var(--fs-p-small);
+  color: var(--text-invert);
+  opacity: .48;
+  z-index: 3;
+  transition: opacity .4s ease;
+}
+
+.deck__hint.is-gone { opacity: 0; }
+
+:where(.deck__btn, .deck__home):focus-visible {
+  outline: var(--focus-ring-width) solid var(--text-accent-3);
+  outline-offset: var(--focus-ring-offset);
+}
+
+/* ---------------------------------------------------------------------------
+   8. SMALL SCREENS
+   The stage scales down rather than reflowing, so a phone gets a readable
+   miniature of the same slide. Chrome tightens so it does not crowd it.
+   --------------------------------------------------------------------------- */
+
+@media (max-width: 767px) {
+  .deck__controls,
+  .deck__home { bottom: var(--margin-small); }
+  .deck__controls { right: var(--margin-small); }
+  .deck__home { left: var(--margin-small); }
+  .deck__hint { display: none; }
+}
+
+/* ---------------------------------------------------------------------------
+   9. PRINT — one slide per landscape page, for a PDF export
+   --------------------------------------------------------------------------- */
+
+@page { size: 1440px 810px; margin: 0; }
+
+@media print {
+  .deck { position: static; display: block; overflow: visible; background: none; }
+  .deck__stage {
+    position: static;
+    transform: none;
+    width: var(--stage-w);
+    height: auto;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  .slide {
+    position: relative;
+    inset: auto;
+    display: flex !important;
+    width: var(--stage-w);
+    height: var(--stage-h);
+    break-after: page;
+  }
+  .deck__progress,
+  .deck__controls,
+  .deck__home,
+  .deck__hint { display: none !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .deck__progress i { transition: none; }
+}

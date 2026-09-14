@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Enterprise Billing — Deck | Ivan Jose</title>
+<meta name="description" content="Pooled balances, caps, and disbursement, designed so a payment problem never halts a live campaign.">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../favicon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;700&family=Istok+Web:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../v3/tokens.css?v=1">
+<link rel="stylesheet" href="deck.css?v=1">
+</head>
+<body>
+
+<div class="deck" data-deck>
+
+  <div class="deck__progress" aria-hidden="true"><i data-deck-bar></i></div>
+
+  <div class="deck__stage">
+    <section class="slide slide--dark cover" aria-hidden="true">
+      <div class="cover__kicker"><span>Ivan Jose</span><span>&middot;</span><span>Product Designer</span></div>
+      <h1 class="t-display-large cover__title">Enterprise&nbsp;Billing</h1>
+      <p class="t-p-large cover__sub">Pooled balances, caps, and disbursement, designed so a payment problem never halts a live campaign.</p>
+      <dl class="cover__meta">
+        <div><dt>My role</dt><dd>Designed the billing &amp; spend flows, and built the org-level payment actions closely with engineering</dd></div>
+        <div><dt>Team</dt><dd>A PM, a Staff Designer, and engineering</dd></div>
+        <div><dt>Scope</dt><dd>Billing groups &middot; Payment access &amp; caps &middot; Transfers &amp; disbursement &middot; In-flow requests &middot; Spend analytics</dd></div>
+        <div><dt>Status</dt><dd>Shipped flows, launch measures pending</dd></div>
+      </dl>
+    </section>
+    <section class="slide" aria-hidden="true">
+      <div class="slide__head">
+        <p class="slide__eyebrow">The problem</p>
+        <h2 class="t-h1 slide__title">Billing sat on the money itself</h2>
+        <p class="t-p-large slide__lead">Three enterprise accounts sat behind ~75% of revenue, each running 95 live automations that a payment issue could interrupt. It had already cost real money.</p>
+      </div>
+      <div class="slide__body">
+        <div class="stats">
+          <div class="stat"><span class="stat__num">14</span><span class="stat__label">payment-issue tickets this year that halted automations</span></div>
+          <div class="stat"><span class="stat__num">~$158K</span><span class="stat__label">in overspend across three incidents</span></div>
+          <div class="stat"><span class="stat__num">~75%</span><span class="stat__label">of revenue behind 3 enterprise accounts</span></div>
+          <div class="stat"><span class="stat__num">~$2M</span><span class="stat__label">prospect naming org billing as a requirement</span></div>
+        </div>
+      </div>
+      <div class="slide__foot"><span>Ivan Jose</span><b>Enterprise Billing</b></div>
+    </section>
+    <section class="slide" aria-hidden="true">
+      <div class="slide__head">
+        <p class="slide__eyebrow">My part</p>
+        <h2 class="t-h1 slide__title">The flows I designed</h2>
+      </div>
+      <div class="slide__body">
+        <div class="cards cards--3">
+          <div class="card-box">
+            <span class="card-box__label">Structure</span>
+            <h3 class="t-h3 card-box__title">Billing groups and pooled balance</h3>
+            <p>The org holds a total balance and, for enterprises, a monthly volume commitment. Admins create billing groups, nest groups inside them, and attach one or more payment methods.</p>
+          </div>
+          <div class="card-box">
+            <span class="card-box__label">Control</span>
+            <h3 class="t-h3 card-box__title">Payment access, budgets, and caps</h3>
+            <p>Per-account Monthly Cap or No Limit, plus who is allowed to spend. Designed to go after the failure pattern behind the 14 tickets.</p>
+          </div>
+          <div class="card-box">
+            <span class="card-box__label">Movement</span>
+            <h3 class="t-h3 card-box__title">Transfers, disbursement, purchases</h3>
+            <p>Move balance between a group and an account, split a volume commitment across billing groups, and add funds by card, bank, or invoice &mdash; in-product.</p>
+          </div>
+        </div>
+      </div>
+      <div class="slide__foot"><span>Ivan Jose</span><b>Enterprise Billing</b></div>
+    </section>
+    <section class="slide" aria-hidden="true">
+      <div class="slide__head">
+        <p class="slide__eyebrow">Working with others</p>
+        <h2 class="t-h1 slide__title">A model that had to satisfy four parties</h2>
+      </div>
+      <div class="slide__body">
+        <div class="cards cards--4">
+          <div class="card-box">
+            <span class="card-box__label">Product</span>
+            <h3 class="t-h3 card-box__title">PM</h3>
+            <p>Traded scope against a named prospect requirement: three of four accounts had explicitly asked for billing aggregation.</p>
+          </div>
+          <div class="card-box">
+            <span class="card-box__label">Design</span>
+            <h3 class="t-h3 card-box__title">Staff Designer</h3>
+            <p>Built alongside a Staff Designer, on the org backbone of nested hierarchy and inherited permission.</p>
+          </div>
+          <div class="card-box">
+            <span class="card-box__label">Engineering</span>
+            <h3 class="t-h3 card-box__title">The payment actions, together</h3>
+            <p>I designed the org-level payment actions closely with engineering. Money flows are where the UI and the data model have to agree exactly.</p>
+          </div>
+          <div class="card-box">
+            <span class="card-box__label">Platform</span>
+            <h3 class="t-h3 card-box__title">Stripe and settlement</h3>
+            <p>Money runs on systems with hard limits. Each pushback turned into a decision with a visible trade-off.</p>
+          </div>
+        </div>
+      </div>
+      <div class="slide__foot"><span>Ivan Jose</span><b>Enterprise Billing</b></div>
+    </section>
+    <section class="slide" aria-hidden="true">
+      <div class="slide__head">
+        <p class="slide__eyebrow">Decisions</p>
+        <h2 class="t-h1 slide__title">Where the platform pushed back</h2>
+        <p class="t-p-large slide__lead">Each constraint became a decision you can see, with a path forward rather than a dead end.</p>
+      </div>
+      <div class="slide__body">
+        <table class="d-table">
+          <thead><tr><th>Question</th><th>Trade-off</th><th>Decision</th></tr></thead>
+          <tbody>
+            <tr><td>Should caps be mandatory?</td><td>Hard caps stop overspend but could halt a paying campaign.</td><td>Optional guardrails plus structural redundancy &mdash; multiple billing groups &times; multiple payment methods, so one declined card can&rsquo;t take down a live campaign.</td></tr>
+            <tr><td>How do you change a payment method?</td><td>Stripe won&rsquo;t let a saved card&rsquo;s number be edited in place.</td><td>Make adding effortless. Every &ldquo;change&rdquo; is really adding a new method and repointing the automation.</td></tr>
+            <tr><td>When are new funds spendable?</td><td>Show funds instantly, but they aren&rsquo;t verified yet.</td><td>Balance and receipt show at once but sit in <strong>Pending verification</strong>, unspendable until they clear.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="slide__foot"><span>Ivan Jose</span><b>Enterprise Billing</b></div>
+    </section>
+    <section class="slide" aria-hidden="true">
+      <div class="slide__head">
+        <p class="slide__eyebrow">Process</p>
+        <h2 class="t-h1 slide__title">Money is where permissions collide</h2>
+      </div>
+      <div class="slide__body">
+        <div class="split">
+          <div class="split__copy">
+            <p class="t-p-large">The org holds a total balance and a monthly volume commitment. Admins create billing groups &mdash; often one per campaign or region &mdash; then nest groups inside them, attach payment methods, and set how much each account can spend.</p>
+            <p class="t-p-large">Every money action inherits the same rule as the rest of the org: <strong>no structural change without first showing what it breaks</strong>.</p>
+          </div>
+          <figure class="shot">
+            <div class="shot__frame"><img src="../images/new%20billing/Modal-container-2.webp" alt="Manage a billing group: pooled balance or a card of its own" loading="lazy"></div>
+            <figcaption class="shot__cap">Manage a billing group: pooled balance or a card of its own</figcaption>
+          </figure>
+        </div>
+      </div>
+      <div class="slide__foot"><span>Ivan Jose</span><b>Enterprise Billing</b></div>
+    </section>
+    <section class="slide slide--dark" aria-hidden="true">
+      <div class="slide__head">
+        <p class="slide__eyebrow">The work</p>
+        <h2 class="t-h1 slide__title">Moving money, safely</h2>
+      </div>
+      <div class="slide__body">
+        <div class="gallery gallery--3">
+          <figure class="shot">
+            <div class="shot__frame"><img src="../images/new%20billing/Modal-container.webp" alt="Transfer balance between a group and an account" loading="lazy"></div>
+            <figcaption class="shot__cap">Transfer balance between a group and an account</figcaption>
+          </figure>
+          <figure class="shot">
+            <div class="shot__frame"><img src="../images/new%20billing/Modal-container-5.webp" alt="Disbursement: split a commitment across billing groups" loading="lazy"></div>
+            <figcaption class="shot__cap">Disbursement: split a commitment across billing groups</figcaption>
+          </figure>
+          <figure class="shot">
+            <div class="shot__frame"><img src="../images/new%20billing/Modal-container-1.webp" alt="Purchase balance by card, bank account, or invoice" loading="lazy"></div>
+            <figcaption class="shot__cap">Purchase balance by card, bank account, or invoice</figcaption>
+          </figure>
+        </div>
+      </div>
+      <div class="slide__foot"><span>Ivan Jose</span><b>Enterprise Billing</b></div>
+    </section>
+    <section class="slide" aria-hidden="true">
+      <div class="slide__head">
+        <p class="slide__eyebrow">The work</p>
+        <h2 class="t-h1 slide__title">Guardrails and visibility</h2>
+      </div>
+      <div class="slide__body">
+        <div class="gallery gallery--3">
+          <figure class="shot">
+            <div class="shot__frame"><img src="../images/bill-budgets.webp" alt="Per-account budgets: a Monthly Cap, or No Limit" loading="lazy"></div>
+            <figcaption class="shot__cap">Per-account budgets: a Monthly Cap, or No Limit</figcaption>
+          </figure>
+          <figure class="shot">
+            <div class="shot__frame"><img src="../images/new%20billing/Modal-container-6.webp" alt="Deleting a payment method in use names its dependents first" loading="lazy"></div>
+            <figcaption class="shot__cap">Deleting a payment method in use names its dependents first</figcaption>
+          </figure>
+          <figure class="shot">
+            <div class="shot__frame"><img src="../images/bill-analytics.webp" alt="Spend rolled up by team and by type" loading="lazy"></div>
+            <figcaption class="shot__cap">Spend rolled up by team and by type</figcaption>
+          </figure>
+        </div>
+      </div>
+      <div class="slide__foot"><span>Ivan Jose</span><b>Enterprise Billing</b></div>
+    </section>
+    <section class="slide slide--green" aria-hidden="true">
+      <div class="slide__head">
+        <p class="slide__eyebrow">Outcome</p>
+        <h2 class="t-h1 slide__title">Minutes, not days</h2>
+        <p class="t-p-large slide__lead">The shipped flows put budgets, caps, transfers, and balance purchases inside the product. The task times are click-level estimates I still have to validate with live accounts.</p>
+      </div>
+      <div class="slide__body">
+        <div class="stats stats--3">
+          <div class="stat"><span class="stat__num">~1&frac12; min</span><span class="stat__label">projected transfer, against a 1&ndash;3 business-day CS request</span></div>
+          <div class="stat"><span class="stat__num">~3 min</span><span class="stat__label">projected purchase submission</span></div>
+          <div class="stat"><span class="stat__num">3</span><span class="stat__label">enterprise accounts expected to self-manage at launch</span></div>
+        </div>
+      </div>
+      <div class="slide__foot"><span>Ivan Jose</span><b>Enterprise Billing</b></div>
+    </section>
+    <section class="slide slide--dark quote-slide" aria-hidden="true">
+      <blockquote>&ldquo;Anyone can draw a transfer dialog. The real work was the model underneath it. Pooled money, scoped access, and safeguards designed to protect a paying campaign from funding interruptions that never had to happen.&rdquo;</blockquote>
+      <cite>Reflection</cite>
+      <div class="slide__foot"><span>Ivan Jose</span><b>Enterprise Billing</b></div>
+    </section>
+    <section class="slide slide--ink" aria-hidden="true">
+      <div class="slide__head">
+        <h2 class="t-h1 slide__title">What I&rsquo;d revisit</h2>
+      </div>
+      <div class="slide__body">
+        <div class="cards cards--2">
+          <div class="card-box"><h3 class="t-h3 card-box__title">The one thing I&rsquo;d change</h3><p>Disbursement and resolving affected automations are powerful but still ask a lot of the admin. I&rsquo;d collapse the multi-step money moves into fewer, clearer decisions while keeping every consequence visible.</p></div>
+          <div class="card-box"><h3 class="t-h3 card-box__title">Read the full case study</h3><p>The complete write-up covers the journey, the ticket evidence, the AI-assisted design system, and accessibility.</p></div>
+        </div>
+      </div>
+      <div class="slide__foot"><span>Ivan Jose</span><b>Enterprise Billing</b></div>
+    </section>
+
+  </div>
+
+  <a class="deck__home" href="../billing-case-study.html">
+    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></svg>
+    Read the full case study
+  </a>
+
+  <p class="deck__hint" data-deck-hint>Use &larr; and &rarr; to move through the deck</p>
+
+  <div class="deck__controls">
+    <button class="deck__btn" type="button" data-deck-prev aria-label="Previous slide">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+    </button>
+    <span class="deck__count" data-deck-count aria-live="polite">1 / 1</span>
+    <button class="deck__btn" type="button" data-deck-next aria-label="Next slide">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+    </button>
+  </div>
+
+</div>
+
+<script src="deck.js?v=1"></script>
+</body>
+</html>

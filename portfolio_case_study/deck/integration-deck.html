@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Integration Framework — Deck | Ivan Jose</title>
+<meta name="description" content="One connection pattern for client credentials, validation, and account management.">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../favicon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;700&family=Istok+Web:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../v3/tokens.css?v=1">
+<link rel="stylesheet" href="deck.css?v=1">
+</head>
+<body>
+
+<div class="deck" data-deck>
+
+  <div class="deck__progress" aria-hidden="true"><i data-deck-bar></i></div>
+
+  <div class="deck__stage">
+    <section class="slide slide--dark cover" aria-hidden="true">
+      <div class="cover__kicker"><span>Ivan Jose</span><span>&middot;</span><span>Product Designer</span></div>
+      <h1 class="t-display-large cover__title">Integration&nbsp;Framework</h1>
+      <p class="t-p-large cover__sub">One connection pattern for client credentials, validation, and account management, built to hold up across many apps.</p>
+      <dl class="cover__meta">
+        <div><dt>My role</dt><dd>Led the UX strategy and the end-to-end design: flows, states, validations, UI, QA</dd></div>
+        <div><dt>Team</dt><dd>Cross-functional. A PM, a developer, and me</dd></div>
+        <div><dt>Challenge</dt><dd>Turn many different API setups into one product experience</dd></div>
+        <div><dt>Status</dt><dd>Shipped, four connectors in the first batch</dd></div>
+      </dl>
+    </section>
+    <section class="slide" aria-hidden="true">
+      <div class="slide__head">
+        <p class="slide__eyebrow">The problem</p>
+        <h2 class="t-h1 slide__title">Every connector was a one-off build</h2>
+        <p class="t-p-large slide__lead">Customer data lived across 6 separate tools. 32% of customers already automate from an integration and ~$350K of mail a month runs on that data &mdash; and every request pulled in CS, Sales, and engineering. <em>(Figures from internal product analytics, rounded.)</em></p>
+      </div>
+      <div class="slide__body">
+        <div class="stats">
+          <div class="stat"><span class="stat__num">6</span><span class="stat__label">separate tools, each a bespoke connector</span></div>
+          <div class="stat"><span class="stat__num">12/mo</span><span class="stat__label">tickets asking for new connectors</span></div>
+          <div class="stat"><span class="stat__num">16/mo</span><span class="stat__label">tickets from people stuck setting one up</span></div>
+          <div class="stat"><span class="stat__num">3 in 10</span><span class="stat__label">couldn&rsquo;t finish setup</span></div>
+        </div>
+      </div>
+      <div class="slide__foot"><span>Ivan Jose</span><b>Integration Framework</b></div>
+    </section>
+    <section class="slide" aria-hidden="true">
+      <div class="slide__head">
+        <p class="slide__eyebrow">My part</p>
+        <h2 class="t-h1 slide__title">I built it as a system, not a screen</h2>
+      </div>
+      <div class="slide__body">
+        <div class="cards cards--3">
+          <div class="card-box">
+            <span class="card-box__label">Strategy</span>
+            <h3 class="t-h3 card-box__title">One shared lifecycle</h3>
+            <p>connect &rarr; test &rarr; attribute &rarr; manage. A new connector ships as configuration, not a redesign: logo, name, fields, and attributes are data.</p>
+          </div>
+          <div class="card-box">
+            <span class="card-box__label">Design</span>
+            <h3 class="t-h3 card-box__title">End-to-end</h3>
+            <p>Flows, states, validations, and UI, through to QA. Credentials are checked before anything saves, and every screen spells out the next action.</p>
+          </div>
+          <div class="card-box">
+            <span class="card-box__label">Scale</span>
+            <h3 class="t-h3 card-box__title">Built for the next one</h3>
+            <p>The pattern shipped across Salesforce, ServiceTitan, HubSpot, and Housecall Pro, and it&rsquo;s built so future sources arrive as configuration.</p>
+          </div>
+        </div>
+      </div>
+      <div class="slide__foot"><span>Ivan Jose</span><b>Integration Framework</b></div>
+    </section>
+    <section class="slide" aria-hidden="true">
+      <div class="slide__head">
+        <p class="slide__eyebrow">Working with others</p>
+        <h2 class="t-h1 slide__title">I wrote down what each call cost us</h2>
+        <p class="t-p-large slide__lead">So the PM, engineering, and I could agree faster.</p>
+      </div>
+      <div class="slide__body">
+        <div class="cards cards--3">
+          <div class="card-box">
+            <span class="card-box__label">Product</span>
+            <h3 class="t-h3 card-box__title">PM</h3>
+            <p>Weighed connector demand against build cost: 12 requests a month against a 3-to-4-week lead time each.</p>
+          </div>
+          <div class="card-box">
+            <span class="card-box__label">Engineering</span>
+            <h3 class="t-h3 card-box__title">One developer, one lifecycle</h3>
+            <p>Instead of researching and building each connector from scratch, engineering slots new sources into a stable lifecycle.</p>
+          </div>
+          <div class="card-box">
+            <span class="card-box__label">Me</span>
+            <h3 class="t-h3 card-box__title">UX strategy and design</h3>
+            <p>I framed each decision as a written trade-off with a cost, a call, and a future path &mdash; which is what made the calls quick.</p>
+          </div>
+        </div>
+      </div>
+      <div class="slide__foot"><span>Ivan Jose</span><b>Integration Framework</b></div>
+    </section>
+    <section class="slide" aria-hidden="true">
+      <div class="slide__head">
+        <p class="slide__eyebrow">Process</p>
+        <h2 class="t-h1 slide__title">The first design was far more powerful</h2>
+        <p class="t-p-large slide__lead">To connect a CRM like Salesforce, you&rsquo;d browse the entire schema, hand-map every object and field to the attribution model, define conversion / lead / exclude rules, then run a full extract-and-load pipeline into SQL. It could model almost anything. <strong>And that was exactly the problem</strong> &mdash; 3 in 10 users stalled before finishing.</p>
+      </div>
+      <div class="slide__body">
+        <div class="gallery gallery--2">
+          <figure class="shot">
+            <div class="shot__frame"><img src="../images/integration-v1-schema.webp" alt="V1: browse the schema and pick objects" loading="lazy"></div>
+            <figcaption class="shot__cap">V1: browse the schema and pick objects</figcaption>
+          </figure>
+          <figure class="shot">
+            <div class="shot__frame"><img src="../images/integration-v1-mapping.webp" alt="V1: hand-map every object and field" loading="lazy"></div>
+            <figcaption class="shot__cap">V1: hand-map every object and field</figcaption>
+          </figure>
+        </div>
+      </div>
+      <div class="slide__foot"><span>Ivan Jose</span><b>Integration Framework</b></div>
+    </section>
+    <section class="slide slide--dark" aria-hidden="true">
+      <div class="slide__head">
+        <p class="slide__eyebrow">Process</p>
+        <h2 class="t-h1 slide__title">The least clever version held up</h2>
+      </div>
+      <div class="slide__body">
+        <div class="split">
+          <div class="split__copy">
+            <p class="t-p-large">You connect with credentials, and attribution becomes its own explicit step. You confirm which statuses count as a Lead, a Conversion, or Job Complete, and <strong>a live warning fires if the choice would attribute nothing</strong>.</p>
+            <p class="t-p-large">That&rsquo;s the through-line of the whole project. The reusable pattern is what&rsquo;s left <em>after</em> deciding what the user should never have to care about.</p>
+          </div>
+          <figure class="shot">
+            <div class="shot__frame"><img src="../images/integration-attribution-setup.webp" alt="Attribution as its own explicit step" loading="lazy"></div>
+            <figcaption class="shot__cap">Attribution as its own explicit step</figcaption>
+          </figure>
+        </div>
+      </div>
+      <div class="slide__foot"><span>Ivan Jose</span><b>Integration Framework</b></div>
+    </section>
+    <section class="slide" aria-hidden="true">
+      <div class="slide__head">
+        <p class="slide__eyebrow">Decisions</p>
+        <h2 class="t-h1 slide__title">Three calls, written down</h2>
+      </div>
+      <div class="slide__body">
+        <table class="d-table">
+          <thead><tr><th>Question</th><th>Trade-off</th><th>Decision</th></tr></thead>
+          <tbody>
+            <tr><td>How much should connect ask for up front?</td><td>Exposing every object and field was powerful, but it turned setup into a data-engineering task.</td><td>Cut connect down to the few required inputs &mdash; name, Client ID, masked secret &mdash; all tested before anything saves.</td></tr>
+            <tr><td>Connect and attribution, one flow or two?</td><td>One flow felt continuous, but attribution carries different business logic and risk than authentication.</td><td>Split them. Connect stays lightweight and works the same everywhere; attribution is shown only to the users who need it.</td></tr>
+            <tr><td>Custom connectors, or one reusable shell?</td><td>Custom screens fit each API perfectly, but every new app restarted design and engineering &mdash; 6 one-off builds at 3 to 4 weeks each.</td><td>One reusable lifecycle, where the connector-specific parts are configuration.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="slide__foot"><span>Ivan Jose</span><b>Integration Framework</b></div>
+    </section>
+    <section class="slide" aria-hidden="true">
+      <div class="slide__head">
+        <p class="slide__eyebrow">The work</p>
+        <h2 class="t-h1 slide__title">One lifecycle, every connector</h2>
+      </div>
+      <div class="slide__body">
+        <div class="gallery gallery--3">
+          <figure class="shot">
+            <div class="shot__frame"><img src="../images/integration-connect.webp" alt="Connect: name, client ID, masked secret" loading="lazy"></div>
+            <figcaption class="shot__cap">Connect: name, client ID, masked secret</figcaption>
+          </figure>
+          <figure class="shot">
+            <div class="shot__frame"><img src="../images/integration-connecting.webp" alt="Credentials validated before anything saves" loading="lazy"></div>
+            <figcaption class="shot__cap">Credentials validated before anything saves</figcaption>
+          </figure>
+          <figure class="shot">
+            <div class="shot__frame"><img src="../images/integration-connected.webp" alt="Connected, with a clear next action" loading="lazy"></div>
+            <figcaption class="shot__cap">Connected, with a clear next action</figcaption>
+          </figure>
+        </div>
+      </div>
+      <div class="slide__foot"><span>Ivan Jose</span><b>Integration Framework</b></div>
+    </section>
+    <section class="slide" aria-hidden="true">
+      <div class="slide__head">
+        <p class="slide__eyebrow">The work</p>
+        <h2 class="t-h1 slide__title">One place for every connector</h2>
+      </div>
+      <div class="slide__body">
+        <div class="split">
+          <div class="split__copy">
+            <p class="t-p-large">One management screen holds connected accounts, their status and sync details, attribution setup, and the next action.</p>
+            <p class="t-p-large">A connector used to take <strong>3 to 4 weeks</strong>. It now takes <strong>~2</strong>.</p>
+          </div>
+          <figure class="shot">
+            <div class="shot__frame"><img src="../images/integration-accounts.webp" alt="Manage Integration: connected accounts, status, sync details" loading="lazy"></div>
+            <figcaption class="shot__cap">Manage Integration: connected accounts, status, sync details</figcaption>
+          </figure>
+        </div>
+      </div>
+      <div class="slide__foot"><span>Ivan Jose</span><b>Integration Framework</b></div>
+    </section>
+    <section class="slide slide--green" aria-hidden="true">
+      <div class="slide__head">
+        <p class="slide__eyebrow">Outcome</p>
+        <h2 class="t-h1 slide__title">A routine, not a project</h2>
+        <p class="t-p-large slide__lead">Lead time per connector dropped, and the first parallel batch proved the pattern held across four very different APIs.</p>
+      </div>
+      <div class="slide__body">
+        <div class="stats stats--3">
+          <div class="stat"><span class="stat__num">3&ndash;4 wks &rarr; ~2</span><span class="stat__label">lead time per connector</span></div>
+          <div class="stat"><span class="stat__num">4</span><span class="stat__label">new connectors shipped in the first 3-week batch</span></div>
+          <div class="stat"><span class="stat__num">~500K</span><span class="stat__label">mails from the client waiting on Salesforce</span></div>
+        </div>
+      </div>
+      <div class="slide__foot"><span>Ivan Jose</span><b>Integration Framework</b></div>
+    </section>
+    <section class="slide slide--dark quote-slide" aria-hidden="true">
+      <blockquote>&ldquo;Good platform design isn&rsquo;t about showing all the data. It&rsquo;s about knowing which data matters, hiding the rest, and making the next integration easier than the last.&rdquo;</blockquote>
+      <cite>Reflection</cite>
+      <div class="slide__foot"><span>Ivan Jose</span><b>Integration Framework</b></div>
+    </section>
+    <section class="slide slide--ink" aria-hidden="true">
+      <div class="slide__head">
+        <h2 class="t-h1 slide__title">Where it goes next</h2>
+      </div>
+      <div class="slide__body">
+        <div class="cards cards--2">
+          <div class="card-box"><h3 class="t-h3 card-box__title">Version 2</h3><p>Tighter syncing status, better search across integrations, more credential types, and AI to preselect fields for automation, data merge, and attribution setup.</p></div>
+          <div class="card-box"><h3 class="t-h3 card-box__title">Read the full case study</h3><p>The complete write-up covers the integration journey, the blocker, the full draft-versus-shipped comparison, and the validations.</p></div>
+        </div>
+      </div>
+      <div class="slide__foot"><span>Ivan Jose</span><b>Integration Framework</b></div>
+    </section>
+
+  </div>
+
+  <a class="deck__home" href="../integration-case-study.html">
+    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></svg>
+    Read the full case study
+  </a>
+
+  <p class="deck__hint" data-deck-hint>Use &larr; and &rarr; to move through the deck</p>
+
+  <div class="deck__controls">
+    <button class="deck__btn" type="button" data-deck-prev aria-label="Previous slide">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+    </button>
+    <span class="deck__count" data-deck-count aria-live="polite">1 / 1</span>
+    <button class="deck__btn" type="button" data-deck-next aria-label="Next slide">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+    </button>
+  </div>
+
+</div>
+
+<script src="deck.js?v=1"></script>
+</body>
+</html>
