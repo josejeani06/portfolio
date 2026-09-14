@@ -25,10 +25,14 @@
   var moved = false;
 
   /* ---- 1. fit the stage ---------------------------------------------------
-     The stage never reflows; it is scaled as a whole. Leaving a margin's worth
-     of breathing room on each side stops it touching the window edge, and the
-     factor is capped at 1 so a huge monitor shows the slide at its true size
-     rather than a blurry upscale. */
+     The stage never reflows; it is scaled as a whole, so 16:9 is locked by
+     construction: one uniform factor on both axes can't distort it.
+
+     The factor is deliberately NOT capped at 1. Everything on a slide is
+     drawn from CSS, so scaling up re-rasterises type, rules and boxes at the
+     larger size and stays sharp; capping it just left a 1440-wide slide
+     marooned in the middle of a 4K display. Only the screenshots have a real
+     resolution ceiling, and they carry assets up to 2880 for it. */
   var fit = function () {
     /* The breathing room is the page's own --margin-medium, read from the
        stylesheet rather than restated here, so it tightens on small screens
@@ -43,7 +47,7 @@
        its bottom corners. */
     var w = (window.innerWidth - 2 * gap) / stage.offsetWidth;
     var h = (window.innerHeight - 2 * gap - btn - gap) / stage.offsetHeight;
-    var k = Math.min(w, h, 1);
+    var k = Math.min(w, h);
     document.documentElement.style.setProperty('--deck-k', k > 0 ? k : 1);
   };
 

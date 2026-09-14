@@ -684,7 +684,26 @@ strong, b { font-weight: 700; }
 }
 
 /* ---------------------------------------------------------------------------
-   8. SMALL SCREENS
+   8. BIG SCREENS
+   Past this width the stage scales beyond the size it was authored at, and
+   chrome pinned to viewport pixels reads as a row of specks beside it. One
+   step up, on the same ladders: the large button height, the next type size.
+   deck.js reads --deck-btn back out of the stylesheet, so the room it
+   reserves for the chrome follows automatically.
+   --------------------------------------------------------------------------- */
+
+@media (min-width: 1920px) {
+  :root { --deck-btn: 60px; }           /* == .btn--lg height */
+
+  .deck__count,
+  .deck__home { font-size: var(--fs-p-large); }
+  .deck__hint { font-size: var(--fs-p-medium); }
+  .deck__btn svg { width: var(--space-xlarge); height: var(--space-xlarge); }
+  .deck__home svg { width: var(--space-large); height: var(--space-large); }
+}
+
+/* ---------------------------------------------------------------------------
+   9. SMALL SCREENS
    The stage scales down rather than reflowing, so a phone gets a readable
    miniature of the same slide. Chrome tightens so it does not crowd it.
    --------------------------------------------------------------------------- */
@@ -703,7 +722,7 @@ strong, b { font-weight: 700; }
 }
 
 /* ---------------------------------------------------------------------------
-   9. PRINT: one slide per landscape page, for a PDF export
+   10. PRINT: one slide per landscape page, for a PDF export
    --------------------------------------------------------------------------- */
 
 @page { size: 1440px 810px; margin: 0; }
