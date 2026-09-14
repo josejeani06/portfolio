@@ -208,7 +208,55 @@ strong, b { font-weight: 700; }
    3. COVER
    --------------------------------------------------------------------------- */
 
-.cover { justify-content: center; gap: var(--gap-xlarge); }
+/* The cover leads with the case study's own hero shot, full bleed. The title
+   block sits on a gradient over the lower half: the screenshots in these
+   heroes are light and dense, so text laid straight over them is unreadable —
+   the gradient buys legibility at the bottom while the top of the shot stays
+   completely clear. */
+.cover {
+  /* No `position` here. .slide is already `absolute; inset: 0`, so it is
+     both the positioning ancestor the background needs AND the thing that
+     gives the slide its full height — overriding it to `relative` drops the
+     inset and the slide collapses to the height of its own content. */
+  justify-content: flex-end;
+  padding: 0;
+}
+
+.cover__bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.cover__bg img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+
+/* Opaque where the words are, gone by the halfway mark. */
+.cover__bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    var(--bg-accent-2) 0%,
+    var(--bg-accent-2) 38%,
+    rgba(36, 23, 54, .92) 50%,
+    rgba(36, 23, 54, .55) 68%,
+    rgba(36, 23, 54, .18) 100%);
+}
+
+.cover__panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-large);
+  padding: var(--margin-medium) var(--margin-large);
+}
 
 .cover__kicker {
   display: flex;
@@ -234,7 +282,7 @@ strong, b { font-weight: 700; }
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: var(--gap-large);
-  margin-top: var(--space-medium);
+  margin-top: var(--space-small);
 }
 
 .cover__meta dt {
