@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en" class="v3">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ULedger Verify, an Outlook Add-in for Email Provenance | Ivan Jose</title>
+<meta name="description" content="How I redesigned a one-button Outlook add-in into a dashboard people came back to, built around three requests customers were actually making.">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="favicon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;700&family=Istok+Web:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="v3/tokens.css?v=82">
+<link rel="stylesheet" href="redesign.css?v=82">
+<link rel="stylesheet" href="v3-bridge.css?v=82">
+<link rel="stylesheet" href="v3/v3.css?v=82">
+<link rel="stylesheet" href="case-study.css?v=82">
+</head>
+<body>
+
+<a class="skip-link t-p-medium" href="#content">Skip to content</a>
+
+<!-- Nav: transparent with white text over the dark banner, solid after it -->
+<header class="cs-nav" data-cs-nav>
+  <nav class="cs-nav__inner" aria-label="Primary">
+    <a class="nav__logo" href="work.html#top">
+      <span class="nav__logo-avatar">
+        <img width="400" height="480" src="images/ivan-jose-shot.png" alt="">
+      </span>
+      <span class="nav__logo-name"><strong>Ivan</strong>Jose</span>
+    </a>
+    <div class="cs-nav__links">
+        <a class="cs-nav__link" href="#the-short-version">Summary</a>
+        <a class="cs-nav__link" href="#i-started-with-a-peg-and-with-what-we-already-had">Discovery</a>
+        <a class="cs-nav__link" href="#it-lacks-reactivity">Reactivity</a>
+        <a class="cs-nav__link" href="#can-i-see-if-my-contacts-on-my-teams-or-association-are-legi">Verification</a>
+        <a class="cs-nav__link" href="#the-add-in-stopped-being-a-button-and-started-being-somewher">Outcome</a>
+    </div>
+  </nav>
+</header>
+
+<!-- Banner, height hugs its content -->
+<header class="cs-banner cs-banner--accent-2">
+  <div class="cs-banner__inner">
+    <h1 class="cs-banner__title">ULedger Verify</h1>
+    <p class="cs-banner__lead">Turning a one-button Outlook add-in into <span class="cs-hl">something people came back to.</span> ULedger Verify for Email Sender lets you confirm who really sent an email, without leaving Outlook. Version 1 did one thing and did it well. The board liked it. Customers kept saying the same thing back to us: <b>"it lacks reactivity."</b> I redesigned the add-in around three requests they were actually making, and ULedger reported a <b>43% rise in engagement duration</b> and <b>400% more emails sent</b> through the app afterwards.</p>
+    <a class="btn btn--main btn--sm cs-banner__cta" href="https://www.behance.net/gallery/202614095/Outlook-Uledger-Verify-for-Email" target="_blank" rel="noopener">View on Behance</a>
+    <dl class="cs-meta">
+        <div class="cs-meta__row">
+          <dt class="cs-meta__label">My role</dt>
+          <dd class="cs-meta__value">Product Designer. Design system, user flows, wireframing, low-fidelity, prototyping, and high-fidelity</dd>
+        </div>
+        <div class="cs-meta__row">
+          <dt class="cs-meta__label">Client</dt>
+          <dd class="cs-meta__value">ULedger Inc.</dd>
+        </div>
+        <div class="cs-meta__row">
+          <dt class="cs-meta__label">Timeline</dt>
+          <dd class="cs-meta__value">4 weeks, excluding development</dd>
+        </div>
+        <div class="cs-meta__row">
+          <dt class="cs-meta__label">Team</dt>
+          <dd class="cs-meta__value">A senior engineer, a project manager, and the marketing head</dd>
+        </div>
+        <div class="cs-meta__row">
+          <dt class="cs-meta__label">Tools</dt>
+          <dd class="cs-meta__value">Figma</dd>
+        </div>
+    </dl>
+  </div>
+</header>
+
+<!-- Hero, directly below the banner -->
+<section class="cs-ba" aria-label="The redesigned add-in">
+  <div class="cs-ba__inner">
+    <figure class="cs-figure rd-reveal-done">
+      <img width="1622" height="1073" src="images/uledger/v2-outlook-wide.webp" alt="The redesigned ULedger Verify panel open beside a draft email in Outlook, showing the profile card, verified email summary, top 3 contacts, and latest activity" loading="lazy">
+      <figcaption>The redesigned add-in, sitting beside a draft in Outlook.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- Two columns: sticky contents + the reading column -->
+<div class="cs-layout" id="content">
+  <aside class="cs-toc" aria-label="Contents">
+    <p class="cs-toc__title">Contents</p>
+    <ol>
+        <li class="cs-toc__group">Quick Summary</li>
+        <li><a href="#the-problem">The problem</a></li>
+        <li><a href="#my-part">My part</a></li>
+        <li><a href="#the-outcome">The outcome</a></li>
+        <li class="cs-toc__group">Summary</li>
+        <li><a href="#the-short-version">The short version.</a></li>
+        <li><a href="#three-objectives-three-things-to-build">Three objectives, three things to build.</a></li>
+        <li><a href="#version-1-did-one-thing-and-it-did-it-well">Version 1 did one thing, and it did it well.</a></li>
+        <li class="cs-toc__group">Discovery</li>
+        <li><a href="#i-started-with-a-peg-and-with-what-we-already-had">I started with a peg and with what we already had.</a></li>
+        <li><a href="#the-nearest-thing-to-us-was-hubspot">The nearest thing to us was HubSpot.</a></li>
+        <li><a href="#the-moodboard-with-everything-grouped">The moodboard, with everything grouped.</a></li>
+        <li><a href="#everything-we-could-show-before-deciding-what-we-would">Everything we could show, before deciding what we would.</a></li>
+        <li class="cs-toc__group">Reactivity</li>
+        <li><a href="#it-lacks-reactivity">"It lacks reactivity."</a></li>
+        <li><a href="#what-went-wrong-or-did-not">What went wrong, or did not.</a></li>
+        <li><a href="#so-here-is-the-final-version">So here is the final version.</a></li>
+        <li><a href="#this-is-where-customer-reactivity-comes-in">This is where customer reactivity comes in.</a></li>
+        <li><a href="#green-for-inbound-blue-for-outbound">Green for inbound, blue for outbound.</a></li>
+        <li><a href="#the-variations-i-did-not-ship">The variations I did not ship.</a></li>
+        <li class="cs-toc__group">Verification</li>
+        <li><a href="#can-i-see-if-my-contacts-on-my-teams-or-association-are-legi">"Can I see if my contacts on my teams or association are legit?"</a></li>
+        <li><a href="#i-want-to-see-my-previous-verified-emails-right-away">"I want to see my previous verified emails right away."</a></li>
+        <li class="cs-toc__group">Outcome</li>
+        <li><a href="#the-add-in-stopped-being-a-button-and-started-being-somewher">The add-in stopped being a button and started being somewhere you go.</a></li>
+        <li><a href="#43-increase-in-engagement-duration">43% increase in engagement duration</a></li>
+        <li><a href="#400-more-emails-sent-through-the-app">400% more emails sent through the app</a></li>
+        <li><a href="#95-satisfaction-on-fake-email-detection">95% satisfaction on fake email detection</a></li>
+        <li><a href="#three-requests-inside-one-add-in-panel">Three requests inside one add-in panel</a></li>
+        <li class="cs-toc__group">Reflection</li>
+        <li><a href="#the-helper-i-would-put-back-and-the-tests-i-never-got-to-run">The helper I would put back, and the tests I never got to run.</a></li>
+    </ol>
+  </aside>
+
+  <main class="cs-content">
+
+<section class="cs-summary" aria-labelledby="quick-summary">
+    <h2 id="quick-summary">Quick Summary</h2>
+
+    <h3 id="the-problem">The problem</h3>
+    <p>Version 1 was one button. You opened an email, hit reply, and a Send Verified Email button appeared. It worked, and the board liked it. Customers kept saying it did not react to them. They could not see what they had already sent, they could not tell whether a contact was real, and the add-in forgot them the moment they closed an email.</p>
+
+    <h3 id="my-part">My part</h3>
+    <p>I took the four quotes the team collected and grouped them into three requests. Then I mapped everything the app could actually show, since it already writes every verified email to the blockchain, and worked out how much of that fits an add-in panel. I designed the idle state, the activity states, and a verification flow, and I put variations in front of the team at each step.</p>
+
+    <h3 id="the-outcome">The outcome</h3>
+    <p>The add-in opens to a dashboard now. Recent activity, top contacts, verified counts, and a badge on anyone in the ULedger Network. ULedger reported 43% longer engagement, 400% more emails sent, and a 95% satisfaction rating on fake email detection.</p>
+    </section>
+
+    <div class="rd-container">
+        <p>ULedger Verify shipped as a <strong>dashboard instead of a button</strong>. You open the add-in while you're signed in and it already shows your verified email history, your top contacts, and whether the person you're about to email is who they say they are. I designed it in 4 weeks against three customer requests, and I kept every screen inside what an Outlook add-in panel can actually hold.</p>
+      </div>
+    
+      <div class="rd-container">
+        <h2 id="the-short-version">The short version.</h2>
+        <div class="rd-stats rd-reveal-done">
+          <div class="rd-stat"><div class="n">43%</div><div class="l">increase in user engagement duration after the update</div></div>
+          <div class="rd-stat"><div class="n">400%</div><div class="l">increase in the number of emails sent using the app</div></div>
+          <div class="rd-stat"><div class="n">95%</div><div class="l">satisfaction rating for fake email detection</div></div>
+          <div class="rd-stat"><div class="n">4 wks</div><div class="l">of design, from the first request to handoff. Development ran after that</div></div>
+          <div class="rd-stat"><div class="n">4</div><div class="l">customer quotes the team brought back. They set the whole scope</div></div>
+          <div class="rd-stat"><div class="n">3</div><div class="l">requests I grouped those quotes into, with one flow designed for each</div></div>
+        </div>
+        <p class="rd-note rd-reveal-done">The 43%, 400%, and 95% figures were reported by ULedger after the update shipped. I designed the work. I did not run the measurement.</p>
+        
+      </div>
+    
+<div class="cs-band rd-section--dark">
+      <div class="rd-container">
+        <div class="rd-reveal-done" style="max-width:900px">
+          <blockquote class="rd-quote" style="margin-top:24px"><span class="q">It lacks reactivity</span></blockquote>
+          <p class="rd-p" style="margin-top:24px">Four quotes came back from customers. None of them asked for a feature by name. Read together they describe the same gap. The add-in never told anyone anything. Every screen in this case study traces back to one of these four lines.</p>
+        </div>
+        <div class="cs-scroller" data-cs-scroller><div class="rd-rows rd-reveal-done" style="margin-top:36px;background:var(--d-bg-2);border-color:var(--d-line)">
+          <div class="rd-row is-head"><span>What they said</span><span>What it was actually asking for</span></div>
+          <div class="rd-row" style="border-color:var(--d-line)"><div class="k" style="color:#fff">"It lacks reactivity"</div><div class="v" style="color:rgba(255,255,255,.85)">Show previous activity, previous emails, and the information around an email, instead of a single send button that says nothing back.</div></div>
+          <div class="rd-row" style="border-color:var(--d-line)"><div class="k" style="color:#fff">"I want to see my previous verified emails right away"</div><div class="v" style="color:rgba(255,255,255,.85)">Verified email history has to be there on open, not buried behind a click into another platform.</div></div>
+          <div class="rd-row" style="border-color:var(--d-line)"><div class="k" style="color:#fff">"Can I see if my contacts on my teams/association are legit?"</div><div class="v" style="color:rgba(255,255,255,.85)">Use the ULedger Network to confirm that a contact is who they say they are, for the people already on our products.</div></div>
+          <div class="rd-row" style="border-color:var(--d-line)"><div class="k" style="color:#fff">"I have been receiving fake emails with my associate names and mistyped emails, is there a way to fix it?"</div><div class="v" style="color:rgba(255,255,255,.85)">Catch the case where the name matches but the address is off by a character, and stop the send before it happens.</div></div>
+        </div></div>
+      </div>
+    </div>
+
+      <div class="rd-container">
+        <h2 id="three-objectives-three-things-to-build">Three objectives, three things to build.</h2>
+    <p>We wrote the objectives before I drew anything, and each one had a matching solution the whole team agreed on. That pairing is what kept a 4 week project from turning into a wishlist.</p>
+        <div class="cs-scroller" data-cs-scroller><div class="rd-rows rd-reveal-done">
+          <div class="rd-row is-head"><span>Objective</span><span>Solution</span></div>
+          <div class="rd-row"><div class="k">Add new flows that could enhance engagement and reactivity.</div><div class="v">Create a dashboard to display recent emails, contacts, and helpful data.</div></div>
+          <div class="rd-row"><div class="k">Develop a feature that retrieves information from our server.</div><div class="v">Use the app's own network to verify existing contacts.</div></div>
+          <div class="rd-row"><div class="k">Implement a new security feature to protect against email phishing.</div><div class="v">Notify users when there is an attempt to communicate with a potentially fake profile.</div></div>
+        </div></div>
+      </div>
+    
+      <div class="rd-container">
+        <h2 id="version-1-did-one-thing-and-it-did-it-well">Version 1 did one thing, and it did it well.</h2>
+    <p>It was direct and to the point, and the board members all liked it. They wanted more features though. Customers wanted something interactive. We set out to cover that before we put our own pipeline in.</p>
+        <div class="refine-carousel rd-reveal-done" data-carousel style="--shot-w:260px">
+          <div class="refine-viewport">
+            <button class="refine-arrow prev" type="button" aria-label="Previous screen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+            <button class="refine-arrow next" type="button" aria-label="Next screen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
+            <div class="refine-track">
+              <article class="refine-slide"><div class="shot-media"><img width="257" height="744" src="images/uledger/v1-signin.webp" alt="Version 1 sign-in screen with a Sign in with Microsoft button" loading="lazy"></div></article>
+              <article class="refine-slide"><div class="shot-media"><img width="257" height="744" src="images/uledger/v1-signing-in.webp" alt="Version 1 validating the user, with the button reading Signing In" loading="lazy"></div></article>
+              <article class="refine-slide"><div class="shot-media"><img width="257" height="744" src="images/uledger/v1-empty.webp" alt="Version 1 empty state telling the user to click the new email button" loading="lazy"></div></article>
+              <article class="refine-slide"><div class="shot-media"><img width="257" height="744" src="images/uledger/v1-send.webp" alt="Version 1 with the Send Verified Email button available" loading="lazy"></div></article>
+              <article class="refine-slide"><div class="shot-media"><img width="257" height="744" src="images/uledger/v1-sending.webp" alt="Version 1 mid-send, with the button reading Sending" loading="lazy"></div></article>
+              <article class="refine-slide"><div class="shot-media"><img width="257" height="744" src="images/uledger/v1-sent.webp" alt="Version 1 confirmation that the email was sent and verified, with a link to view it in the blockchain" loading="lazy"></div></article>
+            </div>
+          </div>
+          <div class="refine-controls" role="tablist" aria-label="Version 1 screens">
+            <button class="refine-item is-active" type="button" role="tab"><span class="refine-item-persona">Step 01</span><span class="refine-item-title">Sign in</span><span class="refine-item-desc">Connect a Microsoft account. Nothing in the add-in works until you do.</span></button>
+            <button class="refine-item" type="button" role="tab"><span class="refine-item-persona">Step 02</span><span class="refine-item-title">Validating</span><span class="refine-item-desc">A holding state while the account is checked.</span></button>
+            <button class="refine-item" type="button" role="tab"><span class="refine-item-persona">Step 03</span><span class="refine-item-title">Nothing to do yet</span><span class="refine-item-desc">Signed in, but the panel is empty. You have to go write or reply to an email first, and the helper text is the only thing that says so.</span></button>
+            <button class="refine-item" type="button" role="tab"><span class="refine-item-persona">Step 04</span><span class="refine-item-title">Send verified email</span><span class="refine-item-desc">The one action in the whole product. It only shows up once you are composing.</span></button>
+            <button class="refine-item" type="button" role="tab"><span class="refine-item-persona">Step 05</span><span class="refine-item-title">Sending</span><span class="refine-item-desc">In progress.</span></button>
+            <button class="refine-item" type="button" role="tab"><span class="refine-item-persona">Step 06</span><span class="refine-item-title">Sent and verified</span><span class="refine-item-desc">Done, with a way out to the record on the blockchain. Then the panel goes quiet again.</span></button>
+          </div>
+        </div>
+      </div>
+    
+      <div class="rd-container">
+        <h2 id="i-started-with-a-peg-and-with-what-we-already-had">I started with a peg and with what we already had.</h2>
+        <div class="rd-grid-2 rd-reveal-done" style="align-items:start;margin-bottom:clamp(28px,4vw,44px)">
+          <div>
+            <h3 id="the-nearest-thing-to-us-was-hubspot">The nearest thing to us was HubSpot.</h3>
+            <p class="rd-p">HubSpot's add-in is direct and to the point, with well organised information and an easy way in. Our target market looks like theirs, mid to high level users who know their way around SaaS. ULedger Verify has a narrower job though. It sends secured email. And because it is an add-in, we cannot put much on screen at once.</p>
+          </div>
+          <figure class="rd-figure" style="margin:0"><img width="519" height="1126" src="images/uledger/peg-hubspot.webp" alt="The HubSpot Sales add-in panel in Outlook, showing templates, a contact profile, recent activity, and tasks" loading="lazy"></figure>
+        </div>
+        <h3 id="the-moodboard-with-everything-grouped">The moodboard, with everything grouped.</h3>
+        <p class="rd-p rd-reveal-done" style="margin-bottom:20px">Here is the board I worked from. I like running variations, and our head engineer gave me the data we actually needed to show, which made this a lot easier. The first goal was laying the groups out in different formats: cards, carousel, or list.</p>
+        <figure class="rd-figure rd-reveal-done" style="margin:0 0 12px"><img width="1185" height="911" src="images/uledger/moodboard.webp" alt="Working canvas of activity list variations, empty states, and sticky-note comments for the add-in" loading="lazy"></figure>
+        <p class="rd-cap rd-reveal-done" style="margin-bottom:clamp(28px,4vw,44px)">Recent activity, all activities, and the two no-activity states, laid out side by side with the team's comments attached.</p>
+
+        <h3 id="everything-we-could-show-before-deciding-what-we-would">Everything we could show, before deciding what we would.</h3>
+        <div class="shots rd-reveal-done" style="--n:2;--nt:2;--nm:1;--shot-w:300px;margin-bottom:clamp(24px,3vw,36px)">
+          <figure class="shot" style="margin:0"><div class="shot-img"><img width="294" height="796" src="images/uledger/data-model.webp" alt="Wireframe of the My Numbers panel with verified email counts, unique contacts, top people contacted, and an activity list" loading="lazy"></div><figcaption>The data laid out as a panel, before any styling.</figcaption></figure>
+          <figure class="shot" style="margin:0"><div class="shot-img"><img width="297" height="611" src="images/uledger/early-frame.webp" alt="Early frame showing a contact whose email matches but whose name does not, with a warning under the send button" loading="lazy"></div><figcaption>An early pass at the mismatch warning that became Request 2.</figcaption></figure>
+        </div>
+        <div class="rd-grid-4">
+          <div class="rd-card rd-reveal-done"><span class="rd-card-label">Numbers</span><p>Number of emails sent. Number of emails received.</p></div>
+          <div class="rd-card rd-reveal-done"><span class="rd-card-label">Contacts</span><p>Name of the contact. Email address. Emails exchanged.</p></div>
+          <div class="rd-card rd-reveal-done"><span class="rd-card-label">Association</span><p>The email list connected within the association.</p></div>
+          <div class="rd-card rd-reveal-done"><span class="rd-card-label">ULedger blockchain</span><p>The app stores and encrypts every email and every piece of information on the blockchain, so we can read that back and show it. It is also what verifies contacts and emails.</p></div>
+        </div>
+      </div>
+    
+      <div class="rd-container">
+        <h2 id="it-lacks-reactivity">"It lacks reactivity."</h2>
+    <p>Products are good when the goal is clear and everything is straightforward. Direct is not always what people want though. We could add more than features. We could give the add-in an information reaction, which means showing previous activities, previous emails, and the information around an email.</p>
+        <div class="shots rd-reveal-done" style="--n:2;--nt:2;--nm:1">
+          <figure class="shot" style="margin:0"><div class="shot-img"><img width="416" height="1320" src="images/uledger/idle-a.webp" alt="Idle state version A, with full-width blue and green summary blocks and the top 3 contacts as a plain list" loading="lazy"></div><figcaption><strong>Version A.</strong> Full-bleed colour blocks for the summary, and a plain list for the top 3 contacts.</figcaption></figure>
+          <figure class="shot" style="margin:0"><div class="shot-img"><img width="416" height="1437" src="images/uledger/idle-b.webp" alt="Idle state version B, with the summary inside a white card and the top 3 contacts running as a carousel" loading="lazy"></div><figcaption><strong>Version B.</strong> The summary sits inside a card, and the top 3 contacts run as a carousel.</figcaption></figure>
+        </div>
+        <div class="rd-reveal-done" style="max-width:78ch;margin-top:clamp(28px,3.5vw,40px)">
+          <p class="rd-p">These are the two idle states I made. I had already set and updated the branding colours before this, which is not shown here. I also like showing colour variations and different layouts for grouped information.</p>
+          <p class="rd-p">We went with the coloured layout for the summary, since it presents the most interesting data we can show right now. We do not have a hierarchy of colours yet, so I used our main blue and green for the two sets of data. For the Top 3 emails section I built a carousel. Most of the team preferred the simplicity of a list. We went with the carousel anyway, because it is more reactive and it gets people engaging. For the button colour we picked a light shade, since it is not as crucial.</p>
+        </div>
+      </div>
+    
+      <div class="rd-container">
+        <h2 id="what-went-wrong-or-did-not">What went wrong, or did not.</h2>
+        <div class="rd-grid-2" style="align-items:start">
+          <div class="rd-card rd-reveal-done">
+            <span class="rd-card-label rd-label--bad">What we dropped<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></span>
+            <p style="margin-top:14px">We removed the helper that explains how the add-on works. Users still need to reply to or write an email in order to use it, and now nothing on screen says so. Personally I think we should have kept it.</p>
+            <figure class="rd-figure" style="margin:18px 0 0;background:var(--paper-3)"><img width="384" height="172" src="images/uledger/removed-helper.webp" alt="The removed helper: an envelope icon above the line To send a verified email, please click on the new email button" loading="lazy" style="max-width:384px;margin:0 auto"></figure>
+          </div>
+          <div class="rd-card rd-reveal-done">
+            <span class="rd-card-label rd-label--good">What we gained<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span>
+            <p style="margin-top:14px">In version 1, users had to click an existing email and reply before the send button would appear at all. In the new version they reach their dashboard without opening a new email, as long as they are signed in. The profiles are useful too. They give people a sense of ownership and personalisation that version 1 did not have. And the update uses far more of the add-on's screen real estate.</p>
+          </div>
+        </div>
+        <h3 id="so-here-is-the-final-version">So here is the final version.</h3>
+        <figure class="rd-figure rd-reveal-done" style="margin:16px 0 0;background:var(--paper-3)"><img width="416" height="1437" src="images/uledger/idle-b.webp" alt="The final idle state: profile card, my summary with verified email counts and unique contacts, top 3 contacts as a carousel, and my latest activity" loading="lazy" style="max-width:420px;margin:0 auto"></figure>
+      </div>
+    
+<div class="cs-band rd-section--dark">
+      <div class="rd-container">
+        <h2 id="this-is-where-customer-reactivity-comes-in">This is where customer reactivity comes in.</h2>
+    <p>There are three scenarios. No general activity for the past three months at all. Recent activities recorded. And no activity with the person you are contacting or emailing. You can tell them apart from the icon and the microcopy. I used a paper airplane icon to stand for communication with the contact.</p>
+        <div class="refine-carousel rd-reveal-done" data-carousel>
+          <div class="refine-viewport">
+            <button class="refine-arrow prev" type="button" aria-label="Previous scenario"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+            <button class="refine-arrow next" type="button" aria-label="Next scenario"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
+            <div class="refine-track">
+              <article class="refine-slide"><div class="shot-media"><img width="416" height="903" src="images/uledger/scenario-recent.webp" alt="Sending to a contact with recent activity: three outbound messages listed under the Verify and Send Email button" loading="lazy"></div></article>
+              <article class="refine-slide"><div class="shot-media"><img width="416" height="903" src="images/uledger/scenario-none-3mo.webp" alt="Sending to a contact with no recent activity in the last 3 months, shown with an envelope illustration" loading="lazy"></div></article>
+              <article class="refine-slide"><div class="shot-media"><img width="416" height="903" src="images/uledger/scenario-never.webp" alt="Sending to a contact you have not interacted with yet, shown with a paper airplane illustration" loading="lazy"></div></article>
+              <article class="refine-slide"><div class="shot-media" style="--shot-w:1082px"><img width="1082" height="903" src="images/uledger/multi-contact-carousel.webp" alt="Sending to several contacts at once, with the contacts in a carousel and shared recent activity listed below" loading="lazy"></div></article>
+            </div>
+          </div>
+          <div class="refine-controls" role="tablist" aria-label="Reactivity scenarios">
+            <button class="refine-item is-active" type="button" role="tab"><span class="refine-item-persona">Scenario 01</span><span class="refine-item-title">Recent activity</span><span class="refine-item-desc">When a contact has recent activities within the past three months, it allows for more relevant and timely communication.</span></button>
+            <button class="refine-item" type="button" role="tab"><span class="refine-item-persona">Scenario 02</span><span class="refine-item-title">No recent activity</span><span class="refine-item-desc">When a contact has no recent activities within the past three months but has old messages, it can still provide valuable context for future communications.</span></button>
+            <button class="refine-item" type="button" role="tab"><span class="refine-item-persona">Scenario 03</span><span class="refine-item-title">Never interacted</span><span class="refine-item-desc">When a contact has no recent activities within the past three months and no old messages, it may indicate a need for re-engagement or a different approach in communication.</span></button>
+            <button class="refine-item" type="button" role="tab"><span class="refine-item-persona">Multiple contacts</span><span class="refine-item-title">A carousel for several people</span><span class="refine-item-desc">The next scenario involves sending emails to multiple contacts. We used a carousel layout here too, and I think it looks really great.</span></button>
+          </div>
+        </div>
+        <div class="rd-grid-2 rd-reveal-done" style="margin-top:clamp(32px,4vw,48px);align-items:start">
+          <div class="rd-card rd-card--dark"><span class="rd-card-label">Reading the email itself</span><p style="margin-top:14px">We cannot show emails inside the add-in. To see what was in a previous email, you click it and a tab opens in the Blockchain Explorer, which is a separate platform.</p></div>
+          <div class="rd-card rd-card--dark"><span class="rd-card-label">Microcopy as instruction</span><p style="margin-top:14px">We added a small helper here for clarification, reading "Use the button below to send this email using ULedger Verify". I still think we need a helper for the previous state as well.</p></div>
+        </div>
+      </div>
+    </div>
+
+      <div class="rd-container">
+        <h2 id="green-for-inbound-blue-for-outbound">Green for inbound, blue for outbound.</h2>
+    <p>We decided to use green for inbound and blue for outbound communications. Each row also carries a worded tag and a direction arrow, so the difference never rests on colour alone. The same row has to work whether the message went to one person or to twelve.</p>
+        <div class="shots rd-reveal-done" style="--n:2;--nt:2;--nm:1;--shot-w:402px">
+          <figure class="shot" style="margin:0"><div class="shot-img"><img width="402" height="104" src="images/uledger/list-item-1.svg" alt="Activity row from one sender, tagged Inbound in green with a down-left arrow" loading="lazy"></div><figcaption><strong>Inbound, one sender.</strong> Green tag, arrow pointing in.</figcaption></figure>
+          <figure class="shot" style="margin:0"><div class="shot-img"><img width="401" height="108" src="images/uledger/list-item-2.svg" alt="Inbound activity row addressed to several people, with a plus-three counter after the addresses" loading="lazy"></div><figcaption><strong>Inbound, several people.</strong> The extra addresses collapse behind a counter.</figcaption></figure>
+          <figure class="shot" style="margin:0"><div class="shot-img"><img width="402" height="105" src="images/uledger/list-item-3.svg" alt="Activity row to one recipient, tagged Outbound in blue with an up-right arrow" loading="lazy"></div><figcaption><strong>Outbound, one recipient.</strong> Blue tag, arrow pointing out.</figcaption></figure>
+          <figure class="shot" style="margin:0"><div class="shot-img"><img width="402" height="108" src="images/uledger/list-item-4.svg" alt="Outbound activity row to several recipients, with a plus-three counter after the addresses" loading="lazy"></div><figcaption><strong>Outbound, several recipients.</strong> Same counter, same row height.</figcaption></figure>
+        </div>
+      </div>
+    
+<div class="cs-band rd-section--dark">
+      <div class="rd-container">
+        <h2 id="the-variations-i-did-not-ship">The variations I did not ship.</h2>
+    <p>Here are the other variations I came up with. The difference is where the main call to action, the send button, sits. I really wanted to test these options. The button placement feels too far from the main profile of the contacts, so I let them go on judgment rather than on evidence.</p>
+        <div class="shots rd-reveal-done" style="--n:3;--nt:3;--nm:1">
+          <figure class="shot" style="margin:0"><div class="shot-img"><img width="416" height="903" src="images/uledger/cta-variation-1.webp" alt="Variation with the Verify and Send Email button pinned to the bottom of the panel, below the activity list" loading="lazy"></div><figcaption>Send button pinned to the bottom, under the whole activity list.</figcaption></figure>
+          <figure class="shot" style="margin:0"><div class="shot-img"><img width="416" height="903" src="images/uledger/cta-variation-2.webp" alt="Variation with the send button placed after the recent activity block" loading="lazy"></div><figcaption>Send button after the activity block, still below the fold.</figcaption></figure>
+          <figure class="shot" style="margin:0"><div class="shot-img"><img width="416" height="903" src="images/uledger/cta-variation-3.webp" alt="Variation with a different spacing and order between the contact profile, activity, and send button" loading="lazy"></div><figcaption>A third order for the profile, the activity, and the button.</figcaption></figure>
+        </div>
+      </div>
+    </div>
+
+      <div class="rd-container">
+        <h2 id="can-i-see-if-my-contacts-on-my-teams-or-association-are-legi">"Can I see if my contacts on my teams or association are legit?"</h2>
+    <p>Paired with the fourth quote: "I have been receiving fake emails with my associate names and mistyped emails, is there a way to fix it?" The inspiration here comes from using the ULedger Network, specifically for contacts who are also on our products, on top of Outlook's own anti-spam features.</p>
+        <p class="rd-p rd-reveal-done" style="max-width:78ch;margin-bottom:clamp(28px,3.5vw,40px)">The approach is straightforward. We add a badge for verified contacts. If someone has the same name but a mistyped email address, which is increasingly common when you are targeting a large firm, we display a red notice. Users have to click the checkbox before they can click the send button.</p>
+        <div class="refine-carousel rd-reveal-done" data-carousel>
+          <div class="refine-viewport">
+            <button class="refine-arrow prev" type="button" aria-label="Previous state"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+            <button class="refine-arrow next" type="button" aria-label="Next state"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
+            <div class="refine-track">
+              <article class="refine-slide"><div class="shot-media"><img width="416" height="903" src="images/uledger/verify-1-default.webp" alt="An unverified contact with no badge and no warning, and no interaction history yet" loading="lazy"></div></article>
+              <article class="refine-slide"><div class="shot-media"><img width="416" height="903" src="images/uledger/verify-2-badge.webp" alt="A verified contact with a green badge beside the name and a tooltip reading This contact is verified by ULedger Verify" loading="lazy"></div></article>
+              <article class="refine-slide"><div class="shot-media"><img width="416" height="924" src="images/uledger/verify-3-mistyped.webp" alt="A mistyped address warning in red, with an I understand checkbox and the send button disabled until it is ticked" loading="lazy"></div></article>
+            </div>
+          </div>
+          <div class="refine-controls" role="tablist" aria-label="Verification states">
+            <button class="refine-item is-active" type="button" role="tab"><span class="refine-item-persona">State 01</span><span class="refine-item-title">Nothing on record</span><span class="refine-item-desc">No badge and no warning. The contact is not on the ULedger Network and nothing about the address looks wrong.</span></button>
+            <button class="refine-item" type="button" role="tab"><span class="refine-item-persona">State 02</span><span class="refine-item-title">Verified by the network</span><span class="refine-item-desc">A badge sits next to the name, with a tooltip that names who confirmed it. This only works for contacts who are also using our products.</span></button>
+            <button class="refine-item" type="button" role="tab"><span class="refine-item-persona">State 03</span><span class="refine-item-title">The name matches, the email does not</span><span class="refine-item-desc">A red notice, a warning about links and attachments, and a checkbox. The send button stays disabled until the checkbox is ticked.</span></button>
+          </div>
+        </div>
+      </div>
+    
+      <div class="rd-container">
+        <h2 id="i-want-to-see-my-previous-verified-emails-right-away">"I want to see my previous verified emails right away."</h2>
+    <p>In different situations, users can now see all of their previous activities and their email conversation with a specific contact. This is the request that turned the add-in from a send button into somewhere you go back to.</p>
+        <div class="refine-carousel rd-reveal-done" data-carousel>
+          <div class="refine-viewport">
+            <button class="refine-arrow prev" type="button" aria-label="Previous view"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+            <button class="refine-arrow next" type="button" aria-label="Next view"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
+            <div class="refine-track">
+              <article class="refine-slide"><div class="shot-media"><img width="416" height="1318" src="images/uledger/history-dashboard.webp" alt="The add-in open on its dashboard, with verified email counts, unique contacts, top 3 contacts, and the latest activity" loading="lazy"></div></article>
+              <article class="refine-slide"><div class="shot-media"><img width="416" height="903" src="images/uledger/history-contact.webp" alt="Recent activity scoped to one verified contact, with the Verify and Send Email button above it" loading="lazy"></div></article>
+              <article class="refine-slide"><div class="shot-media"><img width="416" height="1043" src="images/uledger/history-list.webp" alt="The full activity list filtered by a contact name, with inbound and outbound tags and pagination" loading="lazy"></div></article>
+            </div>
+          </div>
+          <div class="refine-controls" role="tablist" aria-label="History views">
+            <button class="refine-item is-active" type="button" role="tab"><span class="refine-item-persona">View 01</span><span class="refine-item-title">Straight away, on open</span><span class="refine-item-desc">Verified counts, unique contacts, the top 3 people you email, and your latest activity, all without opening a message first.</span></button>
+            <button class="refine-item" type="button" role="tab"><span class="refine-item-persona">View 02</span><span class="refine-item-title">Scoped to one contact</span><span class="refine-item-desc">While you are composing, the panel narrows to your history with the person you are writing to.</span></button>
+            <button class="refine-item" type="button" role="tab"><span class="refine-item-persona">View 03</span><span class="refine-item-title">The full list</span><span class="refine-item-desc">Search by contact, with inbound and outbound tags, a counter for multi-recipient threads, and pagination.</span></button>
+          </div>
+        </div>
+      </div>
+    
+      <div class="rd-container">
+        <h2 id="the-add-in-stopped-being-a-button-and-started-being-somewher">The add-in stopped being a button and started being somewhere you go.</h2>
+    <p>Three requests, one panel, 4 weeks of design. Here is what came out of it.</p>
+            <div class="cs-outcomes">
+      <ol class="cs-outcomes__list">
+      <li>
+        <span class="cs-outcomes__label">Engagement · reported by the client</span>
+        <h4 id="43-increase-in-engagement-duration">43% increase in engagement duration</h4>
+        <p>Version 1 gave people one button and no reason to stay. The dashboard hands them their verified counts, their top contacts, and their recent activity the moment the panel opens. ULedger reported a <strong style="color:var(--ink)">43% increase in user engagement duration</strong> after the update.</p>
+      </li>
+      <li>
+        <span class="cs-outcomes__label">Usage · reported by the client</span>
+        <h4 id="400-more-emails-sent-through-the-app">400% more emails sent through the app</h4>
+        <p>Getting to the dashboard no longer required opening or replying to an email first. You just have to be signed in. ULedger reported a <strong style="color:var(--ink)">400% increase in the number of emails sent</strong> using the app.</p>
+      </li>
+      <li>
+        <span class="cs-outcomes__label">Trust · reported by the client</span>
+        <h4 id="95-satisfaction-on-fake-email-detection">95% satisfaction on fake email detection</h4>
+        <p>The verified badge, the red notice on a mistyped address, and the checkbox you have to tick before the send button turns on. ULedger reported a <strong style="color:var(--ink)">95% satisfaction rating for fake email detection</strong>.</p>
+        <p>These three figures come from ULedger. I designed the work and did not run the measurement.</p>
+      </li>
+      <li>
+        <span class="cs-outcomes__label">Scope · shipped</span>
+        <h4 id="three-requests-inside-one-add-in-panel">Three requests inside one add-in panel</h4>
+        <p>Reactivity, contact verification, and email history all landed in a panel that cannot show much at once. I designed the flows, the states, and the design system behind them in <strong style="color:var(--ink)">4 weeks</strong>, then handed off to development.</p>
+      </li>
+      </ol>
+    </div>
+      </div>
+    
+<div class="cs-band rd-section--dark">
+      <div class="rd-container">
+        <h2 id="the-helper-i-would-put-back-and-the-tests-i-never-got-to-run">The helper I would put back, and the tests I never got to run.</h2>
+    <p>Two things stayed unfinished, and neither is a mystery to me. I know exactly what I would do with them if the project came back.</p>
+        <div class="fut rd-reveal-done" style="margin-top:18px">
+          <div><b>Put the helper back.</b><p>We dropped the line that explained how the add-on works. People still have to write or reply to an email before they can send a verified one, and nothing on screen says so any more. I would bring it back for the idle state, not just the sending state.</p></div>
+          <div><b>Test the CTA placements.</b><p>I drew several versions of where the send button should sit and picked one on judgment. The rejected placements put the button too far from the contact's profile, which is why I let them go. I still want that decision tested rather than argued.</p></div>
+          <div><b>Give the colours a hierarchy.</b><p>I used our main blue and green for two sets of data because we did not have a colour hierarchy yet. That is a shortcut and I knew it at the time. The next version of the system should say what blue and green mean before a screen uses them.</p></div>
+        </div>
+      </div>
+    </div>
+
+  <nav class="cs-prevnext" aria-label="More case studies">
+    <a class="cs-prevnext__card" href="work-design-system-case-study.html">
+      <span class="cs-prevnext__dir">&larr; Previous</span>
+      <span class="cs-prevnext__title">Design system</span>
+      <span class="cs-prevnext__desc">One source of truth for components, tokens, and the rules that keep them honest.</span>
+    </a>
+    <a class="cs-prevnext__card" href="work-map-case-study.html">
+      <span class="cs-prevnext__dir">Next &rarr;</span>
+      <span class="cs-prevnext__title">Audience Map Builder</span>
+      <span class="cs-prevnext__desc">Turning a scattered set of map bug-fixes into one audience model with five entry points.</span>
+    </a>
+  </nav>
+
+  </main>
+</div>
+
+<footer class="marquee-band">
+
+    <h2 class="sr-only">Let&rsquo;s design your product</h2>
+    <p class="sr-only">Product, UI/UX, Web, Wordpress, Marketing Design.</p>
+
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__track">
+          <span class="marquee__item">Let&rsquo;s design your product!</span>
+          <span class="marquee__item">Let&rsquo;s design your product!</span>
+          <span class="marquee__item">Let&rsquo;s design your product!</span>
+          <span class="marquee__item">Let&rsquo;s design your product!</span>
+      </div>
+      <div class="marquee__track">
+          <span class="marquee__item">Let&rsquo;s design your product!</span>
+          <span class="marquee__item">Let&rsquo;s design your product!</span>
+          <span class="marquee__item">Let&rsquo;s design your product!</span>
+          <span class="marquee__item">Let&rsquo;s design your product!</span>
+      </div>
+    </div>
+
+    <div class="marquee marquee--reverse" aria-hidden="true">
+      <div class="marquee__track">
+          <span class="marquee__item">Product | UI/UX | Web | Wordpress | Marketing Design |</span>
+          <span class="marquee__item">Product | UI/UX | Web | Wordpress | Marketing Design |</span>
+          <span class="marquee__item">Product | UI/UX | Web | Wordpress | Marketing Design |</span>
+          <span class="marquee__item">Product | UI/UX | Web | Wordpress | Marketing Design |</span>
+      </div>
+      <div class="marquee__track">
+          <span class="marquee__item">Product | UI/UX | Web | Wordpress | Marketing Design |</span>
+          <span class="marquee__item">Product | UI/UX | Web | Wordpress | Marketing Design |</span>
+          <span class="marquee__item">Product | UI/UX | Web | Wordpress | Marketing Design |</span>
+          <span class="marquee__item">Product | UI/UX | Web | Wordpress | Marketing Design |</span>
+      </div>
+    </div>
+
+  <div class="container footer__bottom">
+
+    <p class="t-p-small footer__copy">&copy; Designed by Ivan Jose</p>
+  </div>
+</footer>
+
+<script src="v3/v3.js?v=82"></script>
+<script src="case-study.js?v=82"></script>
+<script defer src="carousel-swipe.js?v=7"></script>
+<script defer src="scroll-hint.js?v=1"></script>
+<script type="text/javascript">
+    (function(c,l,a,r,i,t,y){if(window.self!==window.top)return;
+      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "xu2es8f588");
+  </script>
+<script>
+    var progress=document.getElementById("progress"),nav=document.getElementById("nav");
+    function ui(){var h=document.documentElement,sc=Math.max(h.scrollTop,document.body.scrollTop,window.pageYOffset||0),max=(h.scrollHeight-h.clientHeight)||1;progress.style.width=(sc/max*100)+"%";nav.classList.toggle("is-stuck",sc>16);}
+    window.addEventListener("scroll",ui,{passive:true});ui();
+    var spy=document.getElementById("spy"),links=[].slice.call(spy.querySelectorAll("a")),ids=links.map(function(a){return a.getAttribute("href").slice(1);});
+    var secs=ids.map(function(id){return document.getElementById(id);}).filter(Boolean);
+    var so=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){var i=ids.indexOf(e.target.id);links.forEach(function(l){l.classList.remove("is-active");});if(links[i])links[i].classList.add("is-active");}});},{rootMargin:"-45% 0px -50% 0px"});
+    secs.forEach(function(s){so.observe(s);});
+    var reduced=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if(!reduced){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target);}});},{threshold:.12});document.querySelectorAll(".rd-reveal:not(.in)").forEach(function(n){io.observe(n);});}
+    else{document.querySelectorAll(".rd-reveal").forEach(function(n){n.classList.add("in");});}
+
+    /* Image carousels. Same markup and controls as the map's video carousel, so
+       carousel-swipe.js (swipe, height sync, clip + "Show full" on mobile) picks
+       them up unchanged. There is more than one on this page, so this walks
+       every [data-carousel] instead of one id. Images have no duration, so
+       there is no auto-advance and no timer bar. */
+    (function(){
+      document.querySelectorAll(".refine-carousel[data-carousel]").forEach(function(root){
+        var track=root.querySelector(".refine-track");
+        var slides=[].slice.call(root.querySelectorAll(".refine-slide"));
+        var items=[].slice.call(root.querySelectorAll(".refine-item"));
+        if(!track||!slides.length||slides.length!==items.length)return;
+        var index=0;
+        function go(i){
+          index=(i+slides.length)%slides.length;
+          track.style.transform="translateX(-"+(index*100)+"%)";
+          items.forEach(function(item,n){
+            var a=n===index;
+            item.classList.toggle("is-active",a);
+            item.setAttribute("aria-selected",a?"true":"false");
+          });
+        }
+        items.forEach(function(item,n){item.addEventListener("click",function(){go(n);});});
+        var pv=root.querySelector(".refine-arrow.prev"),nx=root.querySelector(".refine-arrow.next");
+        if(pv)pv.addEventListener("click",function(){go(index-1);});
+        if(nx)nx.addEventListener("click",function(){go(index+1);});
+        go(0);
+      });
+    })();
+  </script>
+
+<!-- Shared image lightbox: click any content image to see it larger -->
+<div class="cs-lightbox" id="cs-lightbox" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-label="Enlarged image">
+  <div class="cs-lightbox__shell">
+    <button class="cs-lightbox__close" id="cs-lightbox-close" type="button" aria-label="Close">&times;</button>
+    <figure class="cs-lightbox__media">
+      <img id="cs-lightbox-image" src="" alt="">
+      <video id="cs-lightbox-video" hidden muted loop playsinline controls></video>
+      <figcaption class="cs-lightbox__caption">
+        <strong id="cs-lightbox-title"></strong>
+        <span id="cs-lightbox-text"></span>
+      </figcaption>
+    </figure>
+  </div>
+</div>
+</body>
+</html>
